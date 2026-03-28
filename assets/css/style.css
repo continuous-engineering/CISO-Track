@@ -142,6 +142,94 @@ nav:not(.mobile-bottom-nav) {
 .nav-links a.cissp-link.active { border-bottom-color: var(--cissp); }
 
 /* =============================================
+   NAV DROPDOWN (Cloud certs)
+   ============================================= */
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0 1rem;
+  height: 56px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-sans);
+  transition: color 0.15s;
+}
+
+.nav-dropdown-trigger:hover,
+.nav-dropdown-trigger.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+.nav-dropdown-trigger svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.nav-dropdown.open .nav-dropdown-trigger svg {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  min-width: 180px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  overflow: hidden;
+  z-index: 200;
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: block;
+}
+
+.nav-dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-bottom: none;
+  height: auto;
+  line-height: 1.4;
+  transition: background 0.1s, color 0.1s;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--bg3);
+  color: var(--text);
+  border-bottom: none;
+}
+
+.nav-dropdown-menu a .dd-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* =============================================
    MOBILE BOTTOM NAV
    ============================================= */
 

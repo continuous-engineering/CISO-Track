@@ -222,3 +222,19 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSuggestion();
   loadResumeWidget();
 });
+
+/* ── NAV CLOUD DROPDOWN ──────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  const dd = document.getElementById('nav-cloud-dd');
+  if (!dd) return;
+  const btn = dd.querySelector('.nav-dropdown-trigger');
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = dd.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', () => {
+    dd.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  });
+});
