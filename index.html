@@ -82,93 +82,9 @@
     </div>
   </div>
 
-  <!-- CERTIFICATION PROGRESS -->
+  <!-- CERTIFICATION PROGRESS — rendered dynamically by JS -->
   <h2 style="font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:1rem;">Certifications</h2>
-  <div class="grid-2" style="margin-bottom:2rem;">
-
-    <div class="card cism">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
-        <div>
-          <span class="badge badge-cism">CISM</span>
-          <h2 style="margin-top:0.5rem;">Information Security Manager</h2>
-          <p>ISACA · 150 questions · 4 hours · ~76% passing</p>
-        </div>
-        <span class="badge badge-wip">In Progress</span>
-      </div>
-      <div data-progress-bar="cism" data-total="20">
-        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.25rem;">
-          <span>Progress</span><span class="progress-label">0%</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill cism" style="width:0%"></div></div>
-      </div>
-      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
-        <a href="cism/index.html" class="btn btn-sm">Overview</a>
-        <a href="cism/domain1/index.html" class="btn btn-sm">Governance</a>
-        <a href="cism/domain2/index.html" class="btn btn-sm">Risk Mgmt</a>
-      </div>
-    </div>
-
-    <div class="card ccsk">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
-        <div>
-          <span class="badge badge-ccsk">CCSK</span>
-          <h2 style="margin-top:0.5rem;">Cloud Security Knowledge</h2>
-          <p>CSA · 60 questions · 90 min · ~80% passing</p>
-        </div>
-        <span style="font-size:0.75rem;color:var(--text-muted);">Starts Week 2</span>
-      </div>
-      <div data-progress-bar="ccsk" data-total="8">
-        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.25rem;">
-          <span>Progress</span><span class="progress-label">0%</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill ccsk" style="width:0%"></div></div>
-      </div>
-      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
-        <a href="ccsk/index.html" class="btn btn-sm">Overview</a>
-      </div>
-    </div>
-
-    <div class="card cobit">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
-        <div>
-          <span class="badge badge-cobit">COBIT</span>
-          <h2 style="margin-top:0.5rem;">COBIT 2019 Foundation</h2>
-          <p>ISACA · 75 questions · 2 hours · ~65% passing</p>
-        </div>
-        <span style="font-size:0.75rem;color:var(--text-muted);">Starts Week 5</span>
-      </div>
-      <div data-progress-bar="cobit" data-total="8">
-        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.25rem;">
-          <span>Progress</span><span class="progress-label">0%</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill cobit" style="width:0%"></div></div>
-      </div>
-      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
-        <a href="cobit/index.html" class="btn btn-sm">Overview</a>
-      </div>
-    </div>
-
-    <div class="card cissp">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
-        <div>
-          <span class="badge badge-cissp">CISSP</span>
-          <h2 style="margin-top:0.5rem;">Certified Information Systems Security</h2>
-          <p>ISC² · 100-150 questions · 3 hours · 70% passing</p>
-        </div>
-        <span style="font-size:0.75rem;color:var(--text-muted);">Starts Week 12</span>
-      </div>
-      <div data-progress-bar="cissp" data-total="16">
-        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.25rem;">
-          <span>Progress</span><span class="progress-label">0%</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill cissp" style="width:0%"></div></div>
-      </div>
-      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
-        <a href="cissp/index.html" class="btn btn-sm">Overview</a>
-      </div>
-    </div>
-
-  </div>
+  <div class="grid-2" id="cert-cards-grid" style="margin-bottom:2rem;"></div>
 
   <!-- KANBAN BOARD -->
   <h2 style="font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:1rem;">CISM Kanban — Phase 1</h2>
@@ -233,6 +149,17 @@
 <script src="assets/js/lock.js"></script>
 <script src="assets/js/mobile-nav.js"></script>
 <script>
+/* ── EXAM META (not in catalog — display only) ──────────────── */
+const EXAM_META = {
+  cism:  'ISACA · 150 questions · 4 hrs · ~76% pass',
+  ccsk:  'CSA · 60 questions · 90 min · ~80% pass',
+  cobit: 'ISACA · 75 questions · 2 hrs · ~65% pass',
+  cissp: 'ISC² · 100–150 questions · 3 hrs · 70% pass',
+  aws:   'AWS · 65 questions · 170 min · ~72% pass',
+  azure: 'Microsoft · 40–60 questions · 150 min · ~70% pass',
+  gcp:   'Google · 50–60 questions · 120 min · ~70% pass',
+};
+
 /* ── DASHBOARD INIT ────────────────────────── */
 document.addEventListener('DOMContentLoaded', async () => {
   const [cfg, summaries] = await Promise.all([
@@ -240,13 +167,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     CertDB.getAllSummaries(),
   ]);
 
+  const orderedCerts = (cfg.certOrder || cfg.selectedCerts)
+    .filter(id => cfg.selectedCerts.includes(id));
+
   /* ── HERO SUBTITLE ── */
-  const names = (cfg.certOrder || cfg.selectedCerts)
-    .filter(id => cfg.selectedCerts.includes(id))
-    .map(id => CERT_CATALOG[id]?.name || id);
-  const totalWeeks = (cfg.certOrder || cfg.selectedCerts)
-    .filter(id => cfg.selectedCerts.includes(id))
-    .reduce((a, id) => a + (CERT_CATALOG[id]?.estimateWeeks || 0), 0);
+  const names = orderedCerts.map(id => CERT_CATALOG[id]?.name || id);
+  const totalWeeks = orderedCerts.reduce((a, id) => a + (CERT_CATALOG[id]?.estimateWeeks || 0), 0);
   const hrs = (cfg.dailyMinutes || 120) / 60;
   const startFmt = new Date(cfg.startDate || '2026-03-28')
     .toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -269,7 +195,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const primaryItem = todayEntry.items[0];
     const cert = primaryItem?.cert;
     const items = todayEntry.items.map(it => it.domain.shortName || it.domain.name).join(' + ');
-
     document.getElementById('focus-title').textContent = 'Day ' + todayEntry.day + ' — ' + items;
     document.getElementById('focus-meta').innerHTML =
       Math.round(todayEntry.items.reduce((a,b)=>a+b.mins,0)/60*10)/10 + ' hrs &middot; ' + dateStr +
@@ -283,20 +208,68 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  /* ── PROGRESS BARS ── */
+  /* ── CERT CARDS — fully dynamic from config ── */
   const readSet = new Set(summaries.filter(s => s.fullyRead).map(s => s.pageId));
-  document.querySelectorAll('[data-progress-bar]').forEach(el => {
-    const certId = el.dataset.progressBar;
-    const cert = CERT_CATALOG[certId];
-    if (!cert) return;
-    const total = cert.domains.length;
-    const done = cert.domains.filter(d => readSet.has('/' + d.path) || readSet.has(d.path)).length;
-    const pct = total > 0 ? Math.round(done / total * 100) : 0;
-    const fill = el.querySelector('.progress-fill');
-    const label = el.querySelector('.progress-label');
-    if (fill) fill.style.width = pct + '%';
-    if (label) label.textContent = pct + '%';
-  });
+  const activeCertId = todayEntry?.items[0]?.cert?.id;
+
+  // Determine each cert's schedule status
+  const certStartWeeks = {};
+  let weekCursor = 1;
+  for (const id of orderedCerts) {
+    certStartWeeks[id] = weekCursor;
+    weekCursor += Math.ceil((CERT_CATALOG[id]?.estimateWeeks || 0));
+  }
+
+  const grid = document.getElementById('cert-cards-grid');
+  if (grid) {
+    grid.innerHTML = orderedCerts.map(certId => {
+      const cert = CERT_CATALOG[certId];
+      if (!cert) return '';
+
+      const total = cert.domains.length;
+      const done = cert.domains.filter(d => readSet.has('/' + d.path) || readSet.has(d.path)).length;
+      const pct = total > 0 ? Math.round(done / total * 100) : 0;
+
+      // Status badge
+      let statusHtml;
+      if (done === total && total > 0) {
+        statusHtml = '<span class="badge" style="background:rgba(63,185,80,0.15);color:#3fb950;">Complete</span>';
+      } else if (certId === activeCertId || (certStartWeeks[certId] === 1 && !activeCertId)) {
+        statusHtml = '<span class="badge badge-wip">In Progress</span>';
+      } else if (certStartWeeks[certId] > 1) {
+        statusHtml = '<span style="font-size:0.75rem;color:var(--text-muted);">Starts Week ' + certStartWeeks[certId] + '</span>';
+      } else {
+        statusHtml = '';
+      }
+
+      // Domain quicklinks — up to 2 domains
+      const quicklinks = cert.domains.slice(0, 2).map(dom =>
+        `<a href="${dom.path}" class="btn btn-sm">${dom.shortName || dom.name}</a>`
+      ).join('');
+
+      return `
+        <div class="card ${certId}">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
+            <div>
+              <span class="badge badge-${certId}" style="background:${cert.colorHex}22;color:${cert.colorHex};">${cert.name}</span>
+              <h2 style="margin-top:0.5rem;">${cert.fullName}</h2>
+              <p>${EXAM_META[certId] || cert.issuer}</p>
+            </div>
+            ${statusHtml}
+          </div>
+          <div data-progress-bar="${certId}">
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.25rem;">
+              <span>Progress</span><span class="progress-label">${pct}%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill ${certId}" style="width:${pct}%"></div></div>
+          </div>
+          <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <a href="${cert.indexPath || certId + '/index.html'}" class="btn btn-sm">Overview</a>
+            ${quicklinks}
+          </div>
+        </div>`;
+    }).join('');
+  }
 
   /* ── KANBAN ── */
   const doneTasks = await CertDB.getKanbanDone();
@@ -316,7 +289,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         doneList.appendChild(clone);
       }
     }
-
     el.addEventListener('click', async () => {
       if (el.classList.contains('done')) return;
       await CertDB.markKanbanDone(taskId);
@@ -332,16 +304,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         doneList.appendChild(clone);
       }
     });
-  });
-
-  /* ── CERT CARDS — show only selected ── */
-  document.querySelectorAll('[data-progress-bar]').forEach(el => {
-    const certId = el.dataset.progressBar;
-    const card = el.closest('.card');
-    if (!card) return;
-    if (!cfg.selectedCerts.includes(certId)) {
-      card.style.display = 'none';
-    }
   });
 });
 </script>
