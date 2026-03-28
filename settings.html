@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — CISO Cert Track</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('login.html'); }
+})();
+</script>
+<style>
+.settings-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.settings-section h2 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* Cert pick grid */
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 600px) {
+  .cert-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.cert-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--bg3);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none;
+}
+
+.cert-card.selected {
+  border-color: var(--cert-color, var(--accent));
+  background: color-mix(in srgb, var(--cert-color, var(--accent)) 8%, var(--bg3));
+}
+
+.cert-card input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  flex-shrink: 0;
+  accent-color: var(--cert-color, var(--accent));
+  cursor: pointer;
+}
+
+.cert-card-body { flex: 1; min-width: 0; }
+
+.cert-card-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.cert-card-full {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.cert-card-meta {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Sequence list */
+.seq-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.seq-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: grab;
+  transition: opacity 0.15s, box-shadow 0.15s;
+}
+
+.seq-item:active { cursor: grabbing; }
+.seq-item.dragging { opacity: 0.4; }
+.seq-item.drag-over { box-shadow: 0 0 0 2px var(--accent); }
+
+.seq-handle {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  line-height: 1;
+  font-size: 1.1rem;
+}
+
+.seq-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.seq-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.seq-label { flex: 1; font-size: 0.9rem; }
+
+.seq-weeks {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Toggle */
+.toggle-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.toggle-row:last-child { border-bottom: none; }
+
+.toggle-text { flex: 1; }
+
+.toggle-text strong { display: block; margin-bottom: 0.25rem; }
+
+.toggle-text p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch .slider {
+  position: absolute;
+  inset: 0;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggle-switch .slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 2px;
+  top: 2px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.toggle-switch input:checked + .slider {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.toggle-switch input:checked + .slider::before {
+  transform: translateX(20px);
+  background: #000;
+}
+
+/* Schedule summary */
+#schedule-summary {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.summary-cert-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.summary-cert-row:last-child { border-bottom: none; }
+
+/* Save button */
+.save-bar {
+  position: sticky;
+  bottom: 0;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  z-index: 50;
+}
+
+#save-msg {
+  font-size: 0.85rem;
+  color: var(--accent2);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+#save-msg.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="cissp/index.html" class="cissp-link">CISSP</a></li>
+    <li class="nav-dropdown" id="nav-cloud-dd">
+      <button class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+        Cloud
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <ul class="nav-dropdown-menu">
+        <li><a href="aws-security/index.html"><span class="dd-badge" style="background:#ff990022;color:#ff9900;">AWS</span>Security Specialty</a></li>
+        <li><a href="azure-security/index.html"><span class="dd-badge" style="background:#0078d422;color:#0078d4;">AZ</span>AZ-500</a></li>
+        <li><a href="gcp-security/index.html"><span class="dd-badge" style="background:#4285f422;color:#4285f4;">GCP</span>Cloud Security</a></li>
+      </ul>
+    </li>
+    <li><a href="settings.html" class="active">Settings</a></li>
+  </ul>
+</nav>
+
+<div class="container" style="max-width:760px;">
+
+  <div class="hero">
+    <h1>Your Study Configuration</h1>
+    <p>Pick your certs, set the order, and the schedule builds itself.</p>
+  </div>
+
+  <!-- STEP 1: PICK CERTS -->
+  <div class="settings-section">
+    <h2>Step 1 — Which certifications are you pursuing?</h2>
+    <div class="cert-grid" id="cert-grid">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+
+  <!-- STEP 2: SEQUENCE -->
+  <div class="settings-section">
+    <h2>Step 2 — In what order? (drag to reorder)</h2>
+    <ul class="seq-list" id="seq-list">
+      <!-- Injected by JS -->
+    </ul>
+    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.75rem;">
+      Only your selected certs appear here. Drag the handle to reorder.
+    </p>
+  </div>
+
+  <!-- STEP 3: OPTIONS -->
+  <div class="settings-section">
+    <h2>Step 3 — Study options</h2>
+
+    <div class="toggle-row">
+      <div class="toggle-text">
+        <strong>Lock chapters until quiz passed</strong>
+        <p>Next chapter is grayed out until you score 80% or higher on the current chapter's quiz. You can still navigate directly via URL — this is a reminder, not a hard block.</p>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggle-lock" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-text">
+        <strong>Daily study time</strong>
+        <p>Used to generate your day-by-day schedule.</p>
+      </div>
+      <select id="daily-hours" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.75rem;border-radius:6px;font-size:0.875rem;font-family:var(--font-sans);">
+        <option value="60">1 hour / day</option>
+        <option value="90">1.5 hours / day</option>
+        <option value="120" selected>2 hours / day</option>
+        <option value="180">3 hours / day</option>
+        <option value="240">4 hours / day</option>
+      </select>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-text">
+        <strong>Start date</strong>
+        <p>First day of your study plan.</p>
+      </div>
+      <input type="date" id="start-date" value="2026-03-28"
+        style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.75rem;border-radius:6px;font-size:0.875rem;font-family:var(--font-sans);">
+    </div>
+  </div>
+
+  <!-- SCHEDULE PREVIEW -->
+  <div class="settings-section">
+    <h2>Schedule preview</h2>
+    <div id="schedule-summary">Select at least one certification above.</div>
+  </div>
+
+</div>
+
+<div class="save-bar">
+  <span id="save-msg">Saved.</span>
+  <button class="btn btn-primary" id="save-btn" onclick="saveConfig()">Save and Rebuild Schedule</button>
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;&middot;&nbsp; Settings
+  <div class="footer-powered">Powered by <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a> &nbsp;&middot;&nbsp; <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a></div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/celebrate.js"></script>
+<script src="assets/js/mobile-nav.js"></script>
+<script>
+/* ── STATE ─── */
+let cfg = {};
+let dragSrc = null;
+
+const ALL_CERT_IDS = ['cism', 'ccsk', 'cobit', 'cissp', 'aws', 'azure', 'gcp'];
+
+/* ── INIT ─── */
+async function init() {
+  cfg = await CertConfig.load();
+  renderCertGrid();
+  renderSeqList();
+  renderPreview();
+}
+
+/* ── CERT GRID ─── */
+function renderCertGrid() {
+  const grid = document.getElementById('cert-grid');
+  grid.innerHTML = ALL_CERT_IDS.map(id => {
+    const cert = CERT_CATALOG[id];
+    const sel = cfg.selectedCerts.includes(id);
+    return `<label class="cert-card${sel ? ' selected' : ''}" style="--cert-color:${cert.colorHex};" data-cert="${id}">
+      <input type="checkbox" ${sel ? 'checked' : ''} onchange="toggleCert('${id}', this.checked)">
+      <div class="cert-card-body">
+        <div class="cert-card-name" style="color:${cert.colorHex}">${cert.name}</div>
+        <div class="cert-card-full">${cert.fullName}</div>
+        <div class="cert-card-meta">${cert.issuer} &nbsp;&middot;&nbsp; ~${cert.estimateWeeks} weeks</div>
+      </div>
+    </label>`;
+  }).join('');
+}
+
+function toggleCert(id, checked) {
+  if (checked) {
+    if (!cfg.selectedCerts.includes(id)) cfg.selectedCerts.push(id);
+    if (!cfg.certOrder.includes(id)) cfg.certOrder.push(id);
+  } else {
+    cfg.selectedCerts = cfg.selectedCerts.filter(c => c !== id);
+    cfg.certOrder = cfg.certOrder.filter(c => c !== id);
+  }
+  // Update card style
+  const card = document.querySelector(`.cert-card[data-cert="${id}"]`);
+  if (card) card.classList.toggle('selected', checked);
+  renderSeqList();
+  renderPreview();
+}
+
+/* ── SEQUENCE LIST ─── */
+function renderSeqList() {
+  const list = document.getElementById('seq-list');
+  // Show only selected certs in current order
+  const ordered = cfg.certOrder.filter(id => cfg.selectedCerts.includes(id));
+  if (ordered.length === 0) {
+    list.innerHTML = '<li style="color:var(--text-muted);font-size:0.875rem;padding:0.5rem;">No certs selected.</li>';
+    return;
+  }
+  list.innerHTML = ordered.map((id, i) => {
+    const cert = CERT_CATALOG[id];
+    return `<li class="seq-item" draggable="true" data-cert="${id}"
+        ondragstart="dndStart(event)" ondragover="dndOver(event)"
+        ondrop="dndDrop(event)" ondragend="dndEnd(event)">
+      <span class="seq-handle" title="Drag to reorder">&#8942;&#8942;</span>
+      <span class="seq-num">${i + 1}</span>
+      <span class="seq-badge" style="background:${cert.colorHex}22;color:${cert.colorHex}">${cert.name}</span>
+      <span class="seq-label">${cert.fullName}</span>
+      <span class="seq-weeks">~${cert.estimateWeeks}w</span>
+    </li>`;
+  }).join('');
+}
+
+/* ── DRAG AND DROP ─── */
+function dndStart(e) {
+  dragSrc = e.currentTarget;
+  dragSrc.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', dragSrc.dataset.cert);
+}
+
+function dndOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.seq-item').forEach(el => el.classList.remove('drag-over'));
+  e.currentTarget.classList.add('drag-over');
+}
+
+function dndDrop(e) {
+  e.preventDefault();
+  const target = e.currentTarget;
+  if (!dragSrc || dragSrc === target) return;
+
+  const fromId = dragSrc.dataset.cert;
+  const toId = target.dataset.cert;
+
+  const order = cfg.certOrder.filter(id => cfg.selectedCerts.includes(id));
+  const fromIdx = order.indexOf(fromId);
+  const toIdx = order.indexOf(toId);
+
+  // Reorder
+  order.splice(fromIdx, 1);
+  order.splice(toIdx, 0, fromId);
+
+  // Rebuild certOrder preserving unselected items at end
+  cfg.certOrder = [...order, ...cfg.certOrder.filter(id => !cfg.selectedCerts.includes(id))];
+
+  renderSeqList();
+  renderPreview();
+}
+
+function dndEnd(e) {
+  document.querySelectorAll('.seq-item').forEach(el => {
+    el.classList.remove('dragging', 'drag-over');
+  });
+}
+
+/* ── SCHEDULE PREVIEW ─── */
+function renderPreview() {
+  const el = document.getElementById('schedule-summary');
+  const dailyMins = parseInt(document.getElementById('daily-hours').value || '120');
+  const startDate = document.getElementById('start-date').value || '2026-03-28';
+
+  const tmpCfg = Object.assign({}, cfg, { dailyMinutes: dailyMins, startDate });
+  const plan = CertConfig.getStudyPlan(tmpCfg);
+
+  if (plan.length === 0) {
+    el.innerHTML = '<span style="color:var(--text-muted)">Select at least one certification above.</span>';
+    return;
+  }
+
+  // Group by cert and sum estimate
+  const certSummary = {};
+  for (const { cert, domain } of plan) {
+    if (!certSummary[cert.id]) certSummary[cert.id] = { cert, totalMins: 0, domains: 0 };
+    certSummary[cert.id].totalMins += domain.estimateMins;
+    certSummary[cert.id].domains++;
+  }
+
+  const totalMins = Object.values(certSummary).reduce((a, b) => a + b.totalMins, 0);
+  const totalDays = Math.ceil(totalMins / dailyMins);
+  const endDate = new Date(startDate);
+  endDate.setDate(endDate.getDate() + totalDays - 1);
+
+  const rows = Object.values(certSummary).map(({ cert, totalMins: tm, domains }) => {
+    const days = Math.ceil(tm / dailyMins);
+    return `<div class="summary-cert-row">
+      <span class="seq-badge" style="background:${cert.colorHex}22;color:${cert.colorHex};font-size:0.7rem;font-weight:700;padding:2px 7px;border-radius:4px;">${cert.name}</span>
+      <span style="flex:1;">${cert.fullName}</span>
+      <span style="color:var(--text-muted);font-size:0.8rem;">${domains} section${domains !== 1 ? 's' : ''} &nbsp;&middot;&nbsp; ~${days} days</span>
+    </div>`;
+  }).join('');
+
+  el.innerHTML = rows + `
+    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;gap:2rem;font-size:0.875rem;">
+      <div><div style="font-size:1.25rem;font-weight:700;color:var(--text);">${totalDays}</div><div style="color:var(--text-muted);">Total days</div></div>
+      <div><div style="font-size:1.25rem;font-weight:700;color:var(--text);">${Math.round(totalMins / 60)}h</div><div style="color:var(--text-muted);">Study hours</div></div>
+      <div><div style="font-size:1.25rem;font-weight:700;color:var(--text);">${endDate.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div><div style="color:var(--text-muted);">Est. completion</div></div>
+    </div>`;
+}
+
+/* ── SAVE ─── */
+async function saveConfig() {
+  cfg.lockChapters = document.getElementById('toggle-lock').checked;
+  cfg.dailyMinutes = parseInt(document.getElementById('daily-hours').value);
+  cfg.startDate = document.getElementById('start-date').value;
+  await CertConfig.save(cfg);
+
+  const msg = document.getElementById('save-msg');
+  msg.classList.add('show');
+  setTimeout(() => msg.classList.remove('show'), 2500);
+
+  // Navigate to schedule after short delay
+  setTimeout(() => { window.location.href = 'schedule.html'; }, 800);
+}
+
+/* ── OPTIONS CHANGE ─── */
+document.getElementById('daily-hours').addEventListener('change', renderPreview);
+document.getElementById('start-date').addEventListener('change', renderPreview);
+
+/* ── START ─── */
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>
