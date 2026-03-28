@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COBIT 2019 Foundation — CISO Cert Track</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script src="../assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="index.html" class="cobit-link active">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span style="color:var(--cobit);">COBIT 2019</span> Foundation</h1>
+    <p>ISACA &nbsp;·&nbsp; Start Week 5 &nbsp;·&nbsp; 75 questions &nbsp;·&nbsp; 2 hours &nbsp;·&nbsp; ~65% passing</p>
+  </div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <!-- ============================================================
+             SECTION 1: WHAT IS COBIT
+             ============================================================ -->
+        <h2>What Is COBIT — Exam Framing</h2>
+
+        <p>COBIT (Control Objectives for Information and Related Technology) is ISACA's governance and management framework for enterprise IT. Understanding the framing is critical before you memorize a single objective: <strong>COBIT is not a security framework — it is a governance framework for all of enterprise IT</strong>. Security is one element within that broader governance mandate.</p>
+
+        <p>The full name "enterprise IT governance" tells you the scope: any organization that relies on technology (which is every modern organization) can benefit from COBIT. The framework helps boards and executives govern IT by providing principles, objectives, and design guidance that can be tailored to any enterprise.</p>
+
+        <div class="callout info">
+          <div class="callout-title">CISM Advantage</div>
+          <p>If you hold CISM, you already understand governance. You know that governance sets direction and management executes. You know about aligning IT to business objectives, managing risk, and measuring performance. COBIT takes that same governance logic and applies it to all of enterprise IT — not just security. You are not learning a new concept; you are learning a new framework vocabulary for a concept you live every day.</p>
+        </div>
+
+        <p>The exam tests whether you understand COBIT 2019's specific structure, terminology, and design approach. You must know the principles, domains, objectives, capability levels, and design factors by name — not just the general concept. COBIT is a framework-specific exam. Precision of terminology matters.</p>
+
+        <!-- ============================================================
+             SECTION 2: COBIT 2019 STRUCTURE
+             ============================================================ -->
+        <h2>COBIT 2019 Structure — Memorize This</h2>
+
+        <h3>6 Governance System Principles</h3>
+
+        <p>These are the foundational principles of the entire COBIT 2019 governance system. The exam expects you to name all six and understand what each means.</p>
+
+        <table>
+          <tr>
+            <th>#</th>
+            <th>Principle</th>
+            <th>What It Means</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td><strong>Provide Stakeholder Value</strong></td>
+            <td>The governance system exists to create value for stakeholders — balancing benefits realization, resource optimization, and risk optimization. Governance is not an end in itself.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><strong>Holistic Approach</strong></td>
+            <td>Governance requires all components to work together: principles, policies, processes, organizational structures, culture, information, services and infrastructure, people, and skills. No single component alone creates effective governance.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><strong>Dynamic Governance System</strong></td>
+            <td>Governance must be adaptable. As the business, environment, regulations, and technology change, the governance system must respond. It is not a one-time design — it is continuously maintained.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><strong>Governance Distinct from Management</strong></td>
+            <td>Governance (Evaluate, Direct, Monitor — EDM) is distinct from management (Plan, Build, Run, Monitor — PBRM). This is a foundational COBIT distinction. The board governs; the executive manages. These are different functions with different actors and different objectives.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><strong>Tailored to Enterprise Needs</strong></td>
+            <td>COBIT provides a comprehensive framework, but it must be tailored to the specific enterprise using design factors. There is no one-size-fits-all implementation. The right scope and focus depend on the enterprise's strategy, size, risk profile, and regulatory context.</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td><strong>End-to-End Governance System</strong></td>
+            <td>COBIT covers the full enterprise — not just the IT department. All IT-related activities, whether performed by IT staff, business units, or third parties, fall within the scope of enterprise IT governance. It includes all stakeholders with roles in governance and management of IT.</td>
+          </tr>
+        </table>
+
+        <div class="callout exam">
+          <div class="callout-title">Exam Tip — Principles Questions</div>
+          <p>The exam will test these principles with scenario questions. The most commonly confused pair is #4 (Governance distinct from management) and #6 (End-to-end governance). Remember: #4 is about the nature of the two functions; #6 is about the organizational scope (all of the enterprise, not just IT). They are different dimensions.</p>
+        </div>
+
+        <h3>3 Governance Objectives</h3>
+
+        <p>COBIT 2019 identifies three overarching governance objectives, each with five supporting goals (15 goals total). The exam tests awareness of these objectives and what they represent.</p>
+
+        <table>
+          <tr>
+            <th>Objective</th>
+            <th>Description</th>
+            <th>5 Supporting Goals (Examples)</th>
+          </tr>
+          <tr>
+            <td><strong>Benefits Realization</strong></td>
+            <td>Achieving value from IT investments and capabilities — ensuring IT delivers what the business needs.</td>
+            <td>Portfolio of competitive products, business service continuity, customer service quality, staff productivity, compliance with external laws/regulations</td>
+          </tr>
+          <tr>
+            <td><strong>Risk Optimization</strong></td>
+            <td>Managing IT-related risk to an acceptable level — not eliminating risk, but managing it within tolerance.</td>
+            <td>Managed IT-related business risk, information security maturity, managed regulatory compliance risk, managed fraud risk, managed operational IT risk</td>
+          </tr>
+          <tr>
+            <td><strong>Resource Optimization</strong></td>
+            <td>Using IT resources (people, process, technology) optimally — getting maximum value from available resources without over- or under-investment.</td>
+            <td>IT cost optimization, managed IT assets, optimized sourcing, optimized IT skills, effective IT governance and management practices</td>
+          </tr>
+        </table>
+
+        <h3>37 Governance and Management Objectives — The 5 Domains</h3>
+
+        <p>COBIT 2019 has 40 governance and management objectives organized across 5 domains (COBIT 5 had 37; COBIT 2019 has 40 — the exam tests COBIT 2019 numbers). Each domain has a specific focus and type of objective.</p>
+
+        <table>
+          <tr>
+            <th>Domain</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Objectives</th>
+          </tr>
+          <tr>
+            <td style="color:var(--cobit);font-weight:700;">EDM</td>
+            <td>Evaluate, Direct and Monitor</td>
+            <td>Governance</td>
+            <td>5 objectives — board-level governance</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);font-weight:700;">APO</td>
+            <td>Align, Plan and Organize</td>
+            <td>Management</td>
+            <td>14 objectives — strategy and organization</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);font-weight:700;">BAI</td>
+            <td>Build, Acquire and Implement</td>
+            <td>Management</td>
+            <td>11 objectives — solutions delivery</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);font-weight:700;">DSS</td>
+            <td>Deliver, Service and Support</td>
+            <td>Management</td>
+            <td>6 objectives — IT operations</td>
+          </tr>
+          <tr>
+            <td style="color:var(--accent);font-weight:700;">MEA</td>
+            <td>Monitor, Evaluate and Assess</td>
+            <td>Management</td>
+            <td>4 objectives — monitoring and assurance</td>
+          </tr>
+        </table>
+
+        <div class="callout warning">
+          <div class="callout-title">Critical Distinction</div>
+          <p>EDM is the only governance domain. APO, BAI, DSS, and MEA are all management domains. This is the COBIT expression of Principle #4: Governance Distinct from Management. The exam will ask which domain performs governance — EDM only. The other four perform management functions even though MEA also includes monitoring activities.</p>
+        </div>
+
+        <h3>4 Design Factors</h3>
+
+        <p>COBIT 2019 introduced a design factor concept that replaced the simpler COBIT 5 enabler model. Design factors are the variables that shape how an enterprise should tailor its governance system. There are 11 design factors organized into 4 categories.</p>
+
+        <table>
+          <tr>
+            <th>Design Factor</th>
+            <th>Examples / Description</th>
+          </tr>
+          <tr>
+            <td><strong>Enterprise Strategy</strong></td>
+            <td>Growth/acquisition, innovation/differentiation, cost leadership, compliance/stability — the strategy determines where governance emphasis goes</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise Goals</strong></td>
+            <td>Linked to the three governance objectives (benefits, risk, resource); what outcomes matter most to this enterprise right now</td>
+          </tr>
+          <tr>
+            <td><strong>Risk Profile</strong></td>
+            <td>Current level of IT-related risk the enterprise faces — high-risk profile requires more intensive governance of risk objectives</td>
+          </tr>
+          <tr>
+            <td><strong>I&amp;T-Related Issues</strong></td>
+            <td>Known pain points: compliance issues, security incidents, IT project failures, service quality problems — signals where the governance system needs attention</td>
+          </tr>
+          <tr>
+            <td><strong>Threat Landscape</strong></td>
+            <td>Current threat environment — low, normal, high, or very high. Affects how much emphasis to place on risk-related management objectives</td>
+          </tr>
+          <tr>
+            <td><strong>Compliance Requirements</strong></td>
+            <td>Regulatory, contractual, and legal obligations that shape governance priorities and required controls</td>
+          </tr>
+          <tr>
+            <td><strong>IT Role</strong></td>
+            <td>Is IT a support function, a factory (operational), a strategic asset, or a turnaround engine? Role determines governance depth required</td>
+          </tr>
+          <tr>
+            <td><strong>Sourcing Model</strong></td>
+            <td>In-house, outsourced, cloud, hybrid — different sourcing models require different governance approaches for oversight and accountability</td>
+          </tr>
+          <tr>
+            <td><strong>IT Implementation Methods</strong></td>
+            <td>Traditional, agile, DevOps, hybrid — affects how build and delivery objectives are implemented and governed</td>
+          </tr>
+          <tr>
+            <td><strong>Technology Adoption Strategy</strong></td>
+            <td>First mover, follower, slow adopter — how aggressively the enterprise adopts new technology affects risk profile and required governance</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise Size</strong></td>
+            <td>Large enterprise, medium, small — smaller enterprises apply a simplified subset of COBIT objectives using the SME focus area</td>
+          </tr>
+        </table>
+
+        <h3>Focus Areas</h3>
+
+        <p>Focus areas are predefined collections of COBIT guidance for specific topics. They are not separate frameworks — they are lenses that apply COBIT to specific contexts:</p>
+
+        <ul>
+          <li><strong>DevOps</strong> — applying governance to agile and DevOps delivery models</li>
+          <li><strong>Information &amp; Technology Risk</strong> — deep dive on risk management across the governance system</li>
+          <li><strong>Small &amp; Medium Enterprise (SME)</strong> — simplified COBIT subset for smaller organizations</li>
+          <li><strong>Cloud Computing</strong> — governance considerations for cloud sourcing and services</li>
+          <li><strong>Privacy</strong> — governance of personal data and privacy compliance</li>
+        </ul>
+
+        <!-- ============================================================
+             SECTION 3: COBIT 2019 vs COBIT 5
+             ============================================================ -->
+        <h2>COBIT 2019 vs COBIT 5 — What Changed</h2>
+
+        <p>The exam will test whether you know the key differences between versions. Do not confuse COBIT 5 terminology with COBIT 2019 terminology — they are close enough to create traps.</p>
+
+        <table>
+          <tr>
+            <th>Element</th>
+            <th>COBIT 5</th>
+            <th>COBIT 2019</th>
+          </tr>
+          <tr>
+            <td>Principles</td>
+            <td>5 principles</td>
+            <td><strong>6 principles</strong> (added "End-to-End Governance")</td>
+          </tr>
+          <tr>
+            <td>Objectives</td>
+            <td>37 governance and management objectives</td>
+            <td><strong>40 governance and management objectives</strong> (3 added)</td>
+          </tr>
+          <tr>
+            <td>Enablers</td>
+            <td>7 enablers (People, Processes, etc.)</td>
+            <td>Replaced with <strong>components</strong> of governance system</td>
+          </tr>
+          <tr>
+            <td>Capability Model</td>
+            <td>Process Capability Model (ISO 15504 / SPICE)</td>
+            <td><strong>CMMI-based</strong> capability model (levels 0–5)</td>
+          </tr>
+          <tr>
+            <td>Design Guidance</td>
+            <td>Implementation guidance only</td>
+            <td><strong>Design factors</strong> — formal tailoring methodology added</td>
+          </tr>
+          <tr>
+            <td>Focus Areas</td>
+            <td>Not defined</td>
+            <td><strong>Focus areas</strong> concept introduced (DevOps, Cloud, SME, etc.)</td>
+          </tr>
+          <tr>
+            <td>Goals Cascade</td>
+            <td>Enterprise goals → IT goals → enabler goals (3-level)</td>
+            <td>Simplified to enterprise goals → alignment goals → governance/management objectives</td>
+          </tr>
+        </table>
+
+        <div class="callout exam">
+          <div class="callout-title">Exam Trap — Version Numbers</div>
+          <p>Questions about "how many principles" or "how many objectives" are testing which version you know. COBIT 2019 = 6 principles, 40 objectives. COBIT 5 = 5 principles, 37 objectives. The exam is COBIT 2019. Do not confuse these.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 4: GOVERNANCE vs MANAGEMENT IN COBIT
+             ============================================================ -->
+        <h2>Governance vs Management in COBIT</h2>
+
+        <p>This is the most important conceptual distinction in COBIT — and the one most likely to appear in exam questions. COBIT 2019 makes this distinction structural, not just conceptual.</p>
+
+        <h3>Governance — Evaluate, Direct, Monitor (EDM)</h3>
+
+        <p>Governance is the responsibility of the <strong>board of directors</strong> (or equivalent governing body). Governance answers the questions: What are our objectives? What level of risk is acceptable? Are we on track? Governance is performed through three verbs: <strong>Evaluate, Direct, Monitor.</strong></p>
+
+        <p>The EDM domain contains 5 governance objectives:</p>
+        <ul>
+          <li><strong>EDM01</strong> — Ensured Governance Framework Setting and Maintenance (establish and maintain the governance framework itself)</li>
+          <li><strong>EDM02</strong> — Ensured Benefits Delivery (governance of value delivery — are IT investments delivering expected benefits?)</li>
+          <li><strong>EDM03</strong> — Ensured Risk Optimization (governance of risk — is risk managed within appetite?)</li>
+          <li><strong>EDM04</strong> — Ensured Resource Optimization (governance of resources — are people, assets, and capabilities used efficiently?)</li>
+          <li><strong>EDM05</strong> — Ensured Stakeholder Engagement (governance of transparency and communication — are stakeholders appropriately informed?)</li>
+        </ul>
+
+        <h3>Management — Plan, Build, Run, Monitor (PBRM)</h3>
+
+        <p>Management is the responsibility of <strong>executive management</strong> (CEO, CIO, CISO, and their teams). Management answers: How do we achieve the governance direction? How do we execute? Management operates through four verbs: <strong>Plan, Build, Run, Monitor</strong> — which map to the four management domains:</p>
+
+        <ul>
+          <li><strong>APO</strong> (Align, Plan, Organize) = Plan</li>
+          <li><strong>BAI</strong> (Build, Acquire, Implement) = Build</li>
+          <li><strong>DSS</strong> (Deliver, Service, Support) = Run</li>
+          <li><strong>MEA</strong> (Monitor, Evaluate, Assess) = Monitor</li>
+        </ul>
+
+        <!-- ============================================================
+             SECTION 5: THE 40 OBJECTIVES
+             ============================================================ -->
+        <h2>The 40 Governance and Management Objectives</h2>
+
+        <h3>EDM — Evaluate, Direct and Monitor (5 Governance Objectives)</h3>
+        <table>
+          <tr><th>ID</th><th>Name</th><th>Focus</th></tr>
+          <tr><td>EDM01</td><td>Ensured Governance Framework Setting and Maintenance</td><td>The governance system itself — structure, principles, accountability</td></tr>
+          <tr><td>EDM02</td><td>Ensured Benefits Delivery</td><td>Value realization from IT investments</td></tr>
+          <tr><td>EDM03</td><td>Ensured Risk Optimization</td><td>Risk within appetite; risk treatment decisions</td></tr>
+          <tr><td>EDM04</td><td>Ensured Resource Optimization</td><td>Efficient use of people, processes, infrastructure</td></tr>
+          <tr><td>EDM05</td><td>Ensured Stakeholder Engagement</td><td>Transparency, communication, and stakeholder satisfaction</td></tr>
+        </table>
+
+        <h3>APO — Align, Plan and Organize (14 Management Objectives)</h3>
+        <table>
+          <tr><th>ID</th><th>Name</th><th>Focus</th></tr>
+          <tr><td>APO01</td><td>Managed I&amp;T Management Framework</td><td>Operating model for the IT function</td></tr>
+          <tr><td>APO02</td><td>Managed Strategy</td><td>IT strategy aligned with enterprise strategy</td></tr>
+          <tr><td>APO03</td><td>Managed Enterprise Architecture</td><td>Business, data, application, and technology architecture</td></tr>
+          <tr><td>APO04</td><td>Managed Innovation</td><td>Systematic identification and exploitation of technology innovations</td></tr>
+          <tr><td>APO05</td><td>Managed Portfolio</td><td>IT investment portfolio management</td></tr>
+          <tr><td>APO06</td><td>Managed Budget and Costs</td><td>IT financial management and cost allocation</td></tr>
+          <tr><td>APO07</td><td>Managed Human Resources</td><td>IT workforce planning, acquisition, and development</td></tr>
+          <tr><td>APO08</td><td>Managed Relationships</td><td>Business-IT relationship management</td></tr>
+          <tr><td>APO09</td><td>Managed Service Agreements</td><td>IT service level management</td></tr>
+          <tr><td>APO10</td><td>Managed Vendors</td><td>Third-party and supplier management</td></tr>
+          <tr><td>APO11</td><td>Managed Quality</td><td>Quality management across IT services and products</td></tr>
+          <tr><td>APO12</td><td>Managed Risk</td><td>Enterprise IT risk management processes</td></tr>
+          <tr><td>APO13</td><td>Managed Security</td><td>Information security management system</td></tr>
+          <tr><td>APO14</td><td>Managed Data</td><td>Data governance — data quality, classification, lifecycle (added in COBIT 2019)</td></tr>
+        </table>
+
+        <h3>BAI — Build, Acquire and Implement (11 Management Objectives)</h3>
+        <table>
+          <tr><th>ID</th><th>Name</th><th>Focus</th></tr>
+          <tr><td>BAI01</td><td>Managed Programs</td><td>Program management for significant IT initiatives</td></tr>
+          <tr><td>BAI02</td><td>Managed Requirements Definition</td><td>Business requirements for IT solutions</td></tr>
+          <tr><td>BAI03</td><td>Managed Solutions Identification and Build</td><td>Solution design and development</td></tr>
+          <tr><td>BAI04</td><td>Managed Availability and Capacity</td><td>Availability and performance planning</td></tr>
+          <tr><td>BAI05</td><td>Managed Organizational Change Enablement</td><td>Change management for IT-driven organizational change</td></tr>
+          <tr><td>BAI06</td><td>Managed IT Changes</td><td>Change control for IT systems and services</td></tr>
+          <tr><td>BAI07</td><td>Managed IT Change Acceptance and Transitioning</td><td>Release and deployment management</td></tr>
+          <tr><td>BAI08</td><td>Managed Knowledge</td><td>Knowledge management and capture</td></tr>
+          <tr><td>BAI09</td><td>Managed Assets</td><td>IT asset lifecycle management</td></tr>
+          <tr><td>BAI10</td><td>Managed Configuration</td><td>Configuration management and CMDB</td></tr>
+          <tr><td>BAI11</td><td>Managed Projects</td><td>IT project management methodology</td></tr>
+        </table>
+
+        <h3>DSS — Deliver, Service and Support (6 Management Objectives)</h3>
+        <table>
+          <tr><th>ID</th><th>Name</th><th>Focus</th></tr>
+          <tr><td>DSS01</td><td>Managed Operations</td><td>Day-to-day IT operations and facilities</td></tr>
+          <tr><td>DSS02</td><td>Managed Service Requests and Incidents</td><td>Incident and service request management</td></tr>
+          <tr><td>DSS03</td><td>Managed Problems</td><td>Problem management and root cause analysis</td></tr>
+          <tr><td>DSS04</td><td>Managed Continuity</td><td>Business continuity and disaster recovery for IT</td></tr>
+          <tr><td>DSS05</td><td>Managed Security Services</td><td>Operational information security controls</td></tr>
+          <tr><td>DSS06</td><td>Managed Business Process Controls</td><td>Controls within business process operations</td></tr>
+        </table>
+
+        <h3>MEA — Monitor, Evaluate and Assess (4 Management Objectives)</h3>
+        <table>
+          <tr><th>ID</th><th>Name</th><th>Focus</th></tr>
+          <tr><td>MEA01</td><td>Managed Performance and Conformance Monitoring</td><td>Monitoring IT performance against targets</td></tr>
+          <tr><td>MEA02</td><td>Managed System of Internal Control</td><td>Internal control effectiveness assessment</td></tr>
+          <tr><td>MEA03</td><td>Managed Compliance with External Requirements</td><td>Regulatory and contractual compliance monitoring</td></tr>
+          <tr><td>MEA04</td><td>Managed Assurance</td><td>Independent assurance and audit coordination (added in COBIT 2019)</td></tr>
+        </table>
+
+        <!-- ============================================================
+             SECTION 6: CAPABILITY LEVELS
+             ============================================================ -->
+        <h2>Capability Levels (0–5) — CMMI-Based in COBIT 2019</h2>
+
+        <p>COBIT 2019 adopted a CMMI-based capability model, replacing the ISO 15504/SPICE model used in COBIT 5. The levels measure how well each management or governance objective is being performed:</p>
+
+        <table>
+          <tr>
+            <th>Level</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+          <tr><td><strong>0</strong></td><td>Incomplete</td><td>Process is not implemented or does not achieve its purpose. No evidence of systematic execution.</td></tr>
+          <tr><td><strong>1</strong></td><td>Initial</td><td>Process is implemented and achieves its purpose. Implementation may be informal, undocumented, and inconsistent. People-dependent.</td></tr>
+          <tr><td><strong>2</strong></td><td>Managed</td><td>Process is planned, monitored, and adjusted. Products conform to requirements. Basic project management applied.</td></tr>
+          <tr><td><strong>3</strong></td><td>Defined</td><td>Process is documented, standardized, and integrated into organization-wide processes. Consistent execution across the enterprise.</td></tr>
+          <tr><td><strong>4</strong></td><td>Quantitatively Managed</td><td>Process is controlled using statistical and quantitative techniques. Performance is predictable within defined boundaries.</td></tr>
+          <tr><td><strong>5</strong></td><td>Optimizing</td><td>Continuous improvement. Process performance continuously improved through incremental and innovative changes. Proactive, benchmarked.</td></tr>
+        </table>
+
+        <div class="callout exam">
+          <div class="callout-title">Exam Tip — Capability vs Maturity</div>
+          <p>COBIT 2019 uses <em>capability</em> levels (0–5) assessed per objective, not a single maturity score for the whole organization. Most organizations target Level 3 (Defined) for critical objectives and accept Level 2 for less critical ones. The exam may ask what "target capability level" an organization should aim for — the answer depends on the enterprise's risk profile and objectives, not a single universal target.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 7: COBIT–CISM MAPPING
+             ============================================================ -->
+        <h2>How COBIT Maps to CISM Domains</h2>
+
+        <p>Your CISM background gives you a significant advantage because COBIT and CISM share conceptual foundations rooted in ISACA's governance philosophy. Here is where the overlap is strongest:</p>
+
+        <table>
+          <tr>
+            <th>CISM Domain</th>
+            <th>Most Relevant COBIT Objectives</th>
+            <th>Overlap Strength</th>
+          </tr>
+          <tr>
+            <td>Domain 1: Information Security Governance</td>
+            <td>EDM01–EDM05, APO01, APO02, APO12, APO13</td>
+            <td style="color:var(--accent2);">Very High — governance principles are nearly identical</td>
+          </tr>
+          <tr>
+            <td>Domain 2: Risk Management</td>
+            <td>EDM03, APO12, APO13, MEA03</td>
+            <td style="color:var(--accent2);">Very High — risk identification, assessment, treatment framework aligns directly</td>
+          </tr>
+          <tr>
+            <td>Domain 3: Security Program</td>
+            <td>APO13, DSS05, BAI02, BAI06, MEA01, MEA02</td>
+            <td style="color:var(--accent3);">High — program management and control monitoring overlap well</td>
+          </tr>
+          <tr>
+            <td>Domain 4: Incident Management</td>
+            <td>DSS02, DSS04, DSS05, MEA01</td>
+            <td style="color:var(--accent3);">Moderate-High — incident and continuity objectives align with CISM D4</td>
+          </tr>
+        </table>
+
+        <p>The key difference: CISM focuses exclusively on information security management. COBIT applies the same governance logic to all of IT — including IT service management, IT project delivery, IT asset management, and IT financial management. When you see a COBIT question about IT service management or IT project governance, translate it to the same governance mindset you used in CISM.</p>
+
+        <!-- ============================================================
+             SECTION 8: EXAM STRATEGY
+             ============================================================ -->
+        <h2>COBIT Exam Strategy</h2>
+
+        <p>Unlike CISM — which is scenario-based and tests judgment — COBIT Foundation is more framework-specific. You will see questions that ask you to identify the correct principle, the correct domain, or the correct objective by name. Terminology precision is required.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">How COBIT Exam Questions Work</div>
+          <ul>
+            <li><strong>Structure questions:</strong> "Which domain contains governance objectives?" → EDM only</li>
+            <li><strong>Principle questions:</strong> "Which principle states that governance must adapt to change?" → Dynamic Governance System</li>
+            <li><strong>Objective questions:</strong> "Which management objective covers IT risk management?" → APO12</li>
+            <li><strong>Design factor questions:</strong> "An enterprise is highly regulated with a conservative technology strategy. Which design factors most influence governance system design?" → Compliance requirements, IT role, technology adoption strategy</li>
+            <li><strong>Governance vs management:</strong> "The board reviews whether IT investments are delivering value. This is an example of which COBIT governance objective?" → EDM02</li>
+          </ul>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">Study Priority for 65% Pass</div>
+          <p>65% means you need to get about 49 of 75 questions right. Focus your energy: (1) all 6 principles — must know cold, (2) governance vs management distinction + EDM domain, (3) which objectives belong to which domain at a high level, (4) capability levels 0–5, (5) key differences from COBIT 5. The full 40-objective list is useful context but you rarely need to know specific objective numbers — you need to know domains and general purpose.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 9: FLASHCARDS
+             ============================================================ -->
+        <h2>Flashcards — COBIT 2019</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Click a card to flip it. Use arrow keys or buttons to navigate. Shuffle to randomize.</p>
+
+        <div id="fc-deck-cobit">
+          <div class="flashcard-container">
+            <div class="flashcard" id="fc-main-cobit">
+              <div class="flashcard-face front">
+                <div class="flashcard-label">Term / Concept</div>
+                <div class="flashcard-text" id="fc-front-text-cobit">Loading...</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-top:1rem;">Click to reveal answer</div>
+              </div>
+              <div class="flashcard-face back">
+                <div class="flashcard-label">Answer</div>
+                <div class="flashcard-answer" id="fc-back-text-cobit">...</div>
+              </div>
+            </div>
+          </div>
+          <div class="flashcard-controls">
+            <button class="btn btn-sm" data-fc="prev">← Prev</button>
+            <span class="fc-counter" id="fc-counter-cobit">1 / 15</span>
+            <button class="btn btn-sm" data-fc="next">Next →</button>
+            <button class="btn btn-sm" data-fc="shuffle" style="margin-left:0.5rem;">Shuffle</button>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             SECTION 10: QUIZ
+             ============================================================ -->
+        <h2>Practice Quiz — COBIT 2019</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">10 questions covering COBIT 2019 structure, principles, and domains. Target 75%+.</p>
+
+        <div id="quiz-container-cobit"></div>
+
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card cobit">
+        <h4>Quick Reference</h4>
+        <ul>
+          <li>75 questions</li>
+          <li>2 hours</li>
+          <li>Passing: ~65%</li>
+          <li>6 principles</li>
+          <li>40 objectives</li>
+          <li>5 domains</li>
+          <li>ISACA exam</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>The 6 Principles</h4>
+        <ul>
+          <li>Stakeholder value</li>
+          <li>Holistic approach</li>
+          <li>Dynamic governance</li>
+          <li>Governance ≠ mgmt</li>
+          <li>Tailored to enterprise</li>
+          <li>End-to-end governance</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>The 5 Domains</h4>
+        <ul>
+          <li style="color:var(--cobit);">EDM — Governance (5)</li>
+          <li>APO — Plan (14)</li>
+          <li>BAI — Build (11)</li>
+          <li>DSS — Run (6)</li>
+          <li>MEA — Monitor (4)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>3 Governance Objectives</h4>
+        <ul>
+          <li>Benefits Realization</li>
+          <li>Risk Optimization</li>
+          <li>Resource Optimization</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Focus Areas</h4>
+        <ul>
+          <li>DevOps</li>
+          <li>I&amp;T Risk</li>
+          <li>SME</li>
+          <li>Cloud Computing</li>
+          <li>Privacy</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Capability Levels</h4>
+        <ul>
+          <li>0 — Incomplete</li>
+          <li>1 — Initial</li>
+          <li>2 — Managed</li>
+          <li>3 — Defined</li>
+          <li>4 — Quantitatively Managed</li>
+          <li>5 — Optimizing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; COBIT 2019 Foundation &nbsp;·&nbsp; Started March 28, 2026
+</footer>
+
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/flashcards.js"></script>
+<script src="../assets/js/quiz.js"></script>
+<script>
+// ============================================================
+// COBIT FLASHCARDS
+// ============================================================
+const cobitCards = [
+  {
+    front: "What are the 6 COBIT 2019 Governance System Principles?",
+    back: "1. <strong>Provide Stakeholder Value</strong><br>2. <strong>Holistic Approach</strong><br>3. <strong>Dynamic Governance System</strong><br>4. <strong>Governance Distinct from Management</strong><br>5. <strong>Tailored to Enterprise Needs</strong><br>6. <strong>End-to-End Governance System</strong>"
+  },
+  {
+    front: "How many governance and management objectives does COBIT 2019 have, and how does that compare to COBIT 5?",
+    back: "COBIT 2019 has <strong>40 objectives</strong> (5 governance + 35 management). COBIT 5 had <strong>37 objectives</strong>. The three additions in COBIT 2019 are APO14 (Managed Data), MEA04 (Managed Assurance), and a restructured objective."
+  },
+  {
+    front: "What does EDM stand for and why is it the only governance domain?",
+    back: "<strong>Evaluate, Direct and Monitor</strong> — the three verbs of governance. EDM is the only governance domain because governance is the exclusive responsibility of the board of directors. The board evaluates strategic options, directs executive management, and monitors performance and compliance. APO, BAI, DSS, MEA are all management domains."
+  },
+  {
+    front: "What is the COBIT 2019 'Dynamic Governance System' principle?",
+    back: "The governance system must <strong>adapt to changes</strong> in the enterprise context — business strategy shifts, regulatory changes, technology evolution, threat landscape changes. A governance system that was appropriate 5 years ago may not be appropriate today. Governance must be continuously maintained, not designed once and left static."
+  },
+  {
+    front: "What are COBIT 2019 design factors?",
+    back: "Design factors are the variables that shape how an enterprise should tailor its COBIT governance system. There are 11 design factors including: enterprise strategy, enterprise goals, risk profile, I&T-related issues, threat landscape, compliance requirements, IT role, sourcing model, IT implementation methods, technology adoption strategy, and enterprise size."
+  },
+  {
+    front: "What is the difference between COBIT 5's 7 enablers and COBIT 2019's governance system components?",
+    back: "COBIT 5 had 7 <strong>enablers</strong> (Principles/Policies/Frameworks, Processes, Organizational Structures, Culture/Ethics/Behavior, Information, Services/Infrastructure/Applications, People/Skills/Competencies).<br><br>COBIT 2019 replaced this with governance system <strong>components</strong> — the same elements but reframed. The concept is similar but the terminology changed. Exam tests COBIT 2019 language."
+  },
+  {
+    front: "What are the 3 COBIT 2019 Governance Objectives?",
+    back: "1. <strong>Benefits Realization</strong> — IT delivers value to the enterprise<br>2. <strong>Risk Optimization</strong> — IT-related risk managed within tolerance<br>3. <strong>Resource Optimization</strong> — IT resources (people, process, tech) used efficiently<br><br>These three flow from governance to management through the goals cascade."
+  },
+  {
+    front: "Which COBIT domain manages IT risk at the management level? Which manages it at the governance level?",
+    back: "<strong>Management level:</strong> APO12 (Managed Risk) — the management process for identifying, assessing, and responding to IT risk.<br><br><strong>Governance level:</strong> EDM03 (Ensured Risk Optimization) — the board-level governance objective ensuring that risk is managed within appetite and that risk practices are effective."
+  },
+  {
+    front: "What does COBIT's 'Holistic Approach' principle mean?",
+    back: "Effective IT governance requires all governance system <strong>components to work together</strong> — processes alone are not enough. The components include: principles and policies, processes, organizational structures, culture/behavior, information, services and infrastructure, and people/skills. Governing only the processes while neglecting culture or skills creates gaps."
+  },
+  {
+    front: "What is a COBIT 2019 Focus Area?",
+    back: "Focus areas are predefined guidance collections that apply COBIT to <strong>specific enterprise contexts</strong>. Examples: DevOps focus area (agile governance), Cloud Computing focus area (cloud-specific governance), SME focus area (simplified subset for small enterprises), Privacy focus area, I&T Risk focus area.<br><br>Focus areas are not separate frameworks — they are topical views into COBIT."
+  },
+  {
+    front: "An enterprise has high regulatory exposure and a low risk appetite. Which COBIT design factors are most relevant to tailoring the governance system?",
+    back: "<strong>Compliance requirements</strong> (high regulatory exposure drives emphasis on MEA03 and risk-related objectives) and <strong>risk profile</strong> (low risk appetite means more intensive governance of EDM03 and APO12). Enterprise strategy and IT role also factor in — a conservative enterprise may emphasize stability over innovation."
+  },
+  {
+    front: "What capability level indicates that a process is fully documented, standardized, and consistently applied enterprise-wide?",
+    back: "<strong>Level 3 — Defined</strong>. At this level, the process is documented, standardized, and integrated across the organization. It is performed consistently. Level 2 (Managed) has project-level performance management but lacks enterprise standardization. Level 4 (Quantitatively Managed) adds statistical control on top of Level 3."
+  },
+  {
+    front: "What is the COBIT 2019 'End-to-End Governance System' principle?",
+    back: "IT governance applies to the <strong>entire enterprise</strong> — not just the IT department. Business units, management, the board, and third-party providers all have roles within the governance system. IT delivered by cloud providers, outsourcers, and business-unit shadow IT all fall within the scope of enterprise IT governance."
+  },
+  {
+    front: "Which COBIT management objective covers information security management at the management level?",
+    back: "<strong>APO13 — Managed Security</strong> covers the information security management system (ISMS) at the management level — establishing, operating, and maintaining security management practices.<br><br><strong>DSS05 — Managed Security Services</strong> covers the operational delivery of security services (day-to-day security controls).<br><br>Both are important; APO13 is strategic/management, DSS05 is operational/run."
+  },
+  {
+    front: "What changed in the capability model between COBIT 5 and COBIT 2019?",
+    back: "COBIT 5 used the <strong>ISO/IEC 15504 (SPICE)</strong> process capability model with levels 0–5 assessed via work product and process attributes.<br><br>COBIT 2019 adopted a <strong>CMMI-based</strong> capability model (also 0–5) with a simpler assessment approach. The level names differ slightly and the assessment method changed — but both use six levels from Incomplete (0) to Optimizing (5)."
+  }
+];
+
+// ============================================================
+// COBIT QUIZ QUESTIONS
+// ============================================================
+const cobitQuestions = [
+  {
+    q: "Which COBIT 2019 domain contains the governance objectives, as distinct from management objectives?",
+    options: [
+      "APO — Align, Plan and Organize",
+      "MEA — Monitor, Evaluate and Assess",
+      "EDM — Evaluate, Direct and Monitor",
+      "DSS — Deliver, Service and Support"
+    ],
+    answer: 2,
+    explanation: "EDM is the only governance domain in COBIT 2019. It reflects COBIT Principle #4: Governance Distinct from Management. The board performs governance through EDM. APO, BAI, DSS, and MEA are all management domains."
+  },
+  {
+    q: "COBIT 2019 has how many Governance System Principles, and how many total governance and management objectives?",
+    options: [
+      "5 principles, 37 objectives",
+      "6 principles, 40 objectives",
+      "7 principles, 37 objectives",
+      "6 principles, 35 objectives"
+    ],
+    answer: 1,
+    explanation: "COBIT 2019: 6 principles and 40 objectives. COBIT 5 had 5 principles and 37 objectives. Three objectives were added in COBIT 2019 including APO14 (Managed Data) and MEA04 (Managed Assurance)."
+  },
+  {
+    q: "An enterprise's board is reviewing whether IT investments are delivering the expected business benefits. Which COBIT 2019 governance objective does this represent?",
+    options: [
+      "EDM03 — Ensured Risk Optimization",
+      "APO05 — Managed Portfolio",
+      "EDM02 — Ensured Benefits Delivery",
+      "MEA01 — Managed Performance and Conformance Monitoring"
+    ],
+    answer: 2,
+    explanation: "EDM02 is the governance objective for benefits delivery — the board governing whether IT investments are achieving intended value. APO05 (Managed Portfolio) is the management-level process that handles portfolio management. MEA01 monitors performance at the management level. EDM03 governs risk, not benefits."
+  },
+  {
+    q: "A global financial institution is expanding into a new highly regulated market. Which COBIT design factor most directly shapes governance system priorities for this expansion?",
+    options: [
+      "Technology adoption strategy",
+      "Compliance requirements",
+      "Sourcing model",
+      "Enterprise size"
+    ],
+    answer: 1,
+    explanation: "Compliance requirements is the design factor that captures regulatory and legal obligations. New regulatory markets drive emphasis on MEA03 (Managed Compliance), APO12 (Managed Risk), and EDM03 (Risk Optimization). Technology adoption strategy, sourcing model, and size are relevant but less directly impacted by regulatory expansion."
+  },
+  {
+    q: "Which COBIT 2019 principle states that governance must adapt as the enterprise context changes?",
+    options: [
+      "Holistic Approach",
+      "Tailored to Enterprise Needs",
+      "Dynamic Governance System",
+      "End-to-End Governance System"
+    ],
+    answer: 2,
+    explanation: "Dynamic Governance System is the principle that governance must be continuously maintained and adapted to changes in business strategy, technology, risk, and regulations. Tailored to Enterprise Needs is about designing governance for the specific enterprise context. Holistic Approach is about all components working together."
+  },
+  {
+    q: "At which COBIT capability level is a process documented, standardized, and integrated into enterprise-wide practice?",
+    options: [
+      "Level 1 — Initial",
+      "Level 2 — Managed",
+      "Level 3 — Defined",
+      "Level 4 — Quantitatively Managed"
+    ],
+    answer: 2,
+    explanation: "Level 3 (Defined) is where processes are documented, standardized, and integrated across the enterprise consistently. Level 2 (Managed) has project-level management but lacks enterprise-wide standardization. Level 4 adds statistical/quantitative control on top of Level 3."
+  },
+  {
+    q: "Which COBIT management objective specifically covers information security management strategy and the ISMS?",
+    options: [
+      "DSS05 — Managed Security Services",
+      "APO13 — Managed Security",
+      "EDM03 — Ensured Risk Optimization",
+      "MEA02 — Managed System of Internal Control"
+    ],
+    answer: 1,
+    explanation: "APO13 covers the information security management system (ISMS) at the strategic management level. DSS05 covers operational security service delivery (day-to-day controls). EDM03 is the governance-level risk objective (board-level). MEA02 covers internal control effectiveness, not the ISMS itself."
+  },
+  {
+    q: "What is the primary difference between COBIT's governance objectives and management objectives?",
+    options: [
+      "Governance objectives are performed by the IT department; management objectives are performed by the board",
+      "Governance objectives are performed by the board (Evaluate, Direct, Monitor); management objectives are performed by executive management (Plan, Build, Run, Monitor)",
+      "Governance objectives are mandatory; management objectives are recommended",
+      "Governance objectives are measured at capability level 3 or higher; management objectives have no minimum level"
+    ],
+    answer: 1,
+    explanation: "COBIT Principle #4 — Governance Distinct from Management — establishes that governance (EDM: Evaluate, Direct, Monitor) is the board's responsibility, while management (Plan, Build, Run, Monitor across APO/BAI/DSS/MEA) is executive management's responsibility. These are distinct functions with different actors."
+  },
+  {
+    q: "A small enterprise is implementing COBIT for the first time. Which COBIT 2019 feature is designed to simplify COBIT adoption for smaller organizations?",
+    options: [
+      "The Dynamic Governance System principle",
+      "The SME Focus Area",
+      "The Holistic Approach principle",
+      "Capability Level 1 targets"
+    ],
+    answer: 1,
+    explanation: "The SME (Small and Medium Enterprise) Focus Area provides a predefined simplified subset of COBIT objectives and guidance tailored for smaller organizations. It reduces the scope of objectives that a small enterprise needs to implement, making COBIT more accessible without requiring adoption of all 40 objectives."
+  },
+  {
+    q: "Which of the following BEST represents the COBIT 2019 'Holistic Approach' principle in practice?",
+    options: [
+      "The board reviews IT risk across all business units, not just the IT department",
+      "An organization implements only the highest-priority COBIT objectives",
+      "Governance improvement addresses processes, culture, skills, and organizational structures together — not just process documentation",
+      "The governance system is designed once and does not change unless there is a major incident"
+    ],
+    answer: 2,
+    explanation: "The Holistic Approach principle means all governance system components must work together — processes, culture, organizational structures, skills, information, and infrastructure. Improving only process documentation without addressing culture or skills creates incomplete governance. Option A describes End-to-End scope. Option D contradicts the Dynamic Governance System principle."
+  }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  new FlashcardDeck(cobitCards, 'fc-deck-cobit');
+  new Quiz(cobitQuestions, 'quiz-container-cobit', 'cobit_overview');
+});
+</script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

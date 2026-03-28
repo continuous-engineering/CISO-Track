@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Classification &amp; Information Governance — Shared Reference</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body data-topic-id="/shared/data-classification" data-expected-mins="25">
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container-narrow">
+
+  <div class="hero">
+    <h1>Data Classification &amp; Information Governance</h1>
+    <p>Shared reference · ~25 min read · Covers CISM D3 · CCSK D9 · CISSP D2</p>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem;">
+      <span class="badge badge-cism">CISM D3</span>
+      <span class="badge badge-ccsk">CCSK D9</span>
+      <span class="badge badge-cissp">CISSP D2</span>
+    </div>
+  </div>
+
+  <div id="read-badge"></div>
+
+  <div class="study-content">
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="governance-function">1. Why Data Classification Is a Governance Function</h2>
+
+    <p>Data classification is frequently mislabeled as an IT activity. It is not. Classification is a <em>business governance</em> activity that determines how sensitive organizational information assets are, based on the business value they represent and the harm their unauthorized disclosure, modification, or destruction would cause. The IT organization implements the controls that classification levels require — but IT does not determine sensitivity. That determination belongs to the <strong>data owner</strong>: the business manager accountable for the information, its use, and its protection.</p>
+
+    <p>This distinction is one of the most consistently tested concepts across all three certifications. CISM positions data classification within the broader information security governance framework, where the security manager's role is to establish the classification policy and framework, and to ensure that data owners have the knowledge and accountability to apply it. CISSP and CCSK test the mechanics of classification and data handling, but both ground those mechanics in the same governance model: the data owner classifies, IT custodians implement controls.</p>
+
+    <p>The business case for classification is proportionate security. Not every piece of information in an organization carries the same risk profile or requires the same protection. A published press release requires no confidentiality protection. An unreleased earnings announcement requires the strongest available controls. Treating all information the same — either by protecting everything at the highest level (expensive and operationally constraining) or protecting everything at the lowest level (inadequate for sensitive data) — represents a failure of security governance. Classification enables the organization to invest security controls where the risk warrants them, and to relax controls where they add cost without adding value.</p>
+
+    <div class="callout exam">
+      <div class="callout-title">Data Owner vs. Custodian — Exam Trap</div>
+      <p>The data owner is a <em>business role</em> — the manager or executive accountable for a data set and its appropriate use. The data custodian is an <em>IT role</em> — the team responsible for implementing the storage, backup, access controls, and protection measures that the owner's classification requires. Classification decisions belong to the owner. The exam will present scenarios where IT makes classification decisions — this is always a governance failure. Equally, scenarios where the business owner ignores classification responsibilities and delegates them entirely to IT represent the same failure.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="schemes">2. Classification Schemes</h2>
+
+    <p>Multiple classification schemes exist across different contexts. The exam tests familiarity with the major schemes and, more importantly, the principles that apply regardless of which specific scheme is in use.</p>
+
+    <p>The <strong>government classification scheme</strong> — Top Secret, Secret, Confidential, Unclassified — is the baseline model that CISSP uses as its primary reference. Top Secret data is information whose unauthorized disclosure could cause exceptionally grave damage to national security. Secret data could cause serious damage. Confidential data could cause damage. Unclassified data does not meet any of the above thresholds. CISSP candidates should know this scheme precisely because it appears in Domain 2 questions about data handling and classification.</p>
+
+    <p>The more relevant scheme for most commercial environments is a three- or four-tier model. A typical commercial scheme uses: <strong>Restricted or Confidential</strong> (highest sensitivity — trade secrets, M&amp;A information, unreleased financials, strategic plans; access limited to specifically named individuals; breach would cause significant business harm or regulatory exposure); <strong>Internal or Private</strong> (sensitive to the organization but not at the highest level — employee records, internal financial data, business plans, system configurations; access limited to employees with legitimate need); and <strong>Public</strong> (information cleared for external distribution — marketing materials, published financial disclosures, product documentation; no confidentiality requirement). Some organizations add a fourth tier between Restricted and Internal to accommodate regulated data categories like PHI and PII that carry specific legal obligations.</p>
+
+    <p><strong>HIPAA-regulated data</strong> — Protected Health Information (PHI) — is effectively a classification category defined by law rather than by the organization's internal framework. PHI is any individually identifiable health information maintained or transmitted by a covered entity or business associate. The classification requirement is imposed by HIPAA's Privacy and Security Rules, not by the organization's internal classification policy. The organization's internal scheme must accommodate PHI as a distinct category with the specific controls HIPAA requires.</p>
+
+    <p><strong>PCI DSS</strong> defines cardholder data — primary account numbers, cardholder name, expiration date, service code — as a category requiring specific protection controls regardless of how the organization's internal scheme labels it. The PCI DSS scope determination process is essentially a classification exercise: identify where cardholder data exists, flows, and is processed, and apply the required controls to that scope.</p>
+
+    <div class="callout exam">
+      <div class="callout-title">Three Principles That Always Apply</div>
+      <p>Regardless of which classification scheme is in use, three principles hold across all certifications: (1) the <strong>highest classification level drives the control requirements</strong> — a document containing one sentence of Top Secret information is a Top Secret document, not a Confidential one; (2) classification is assigned by the <strong>data owner, not IT</strong>; and (3) classification should be applied <strong>at creation time</strong> — data that enters the organization without a classification label must be assigned one before it is stored, shared, or processed. Retroactive classification of large unclassified datasets is expensive, error-prone, and often incomplete.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="lifecycle">3. Data Lifecycle</h2>
+
+    <p>The data lifecycle framework describes the stages through which data passes from its creation to its eventual destruction. CCSK tests this framework extensively, with specific attention to how cloud environments change the security manager's responsibilities at each stage. CISSP tests the security controls applicable at each stage. CISM tests the governance framework that ensures appropriate controls exist across the lifecycle.</p>
+
+    <p>The six-phase lifecycle is: <strong>Create → Store → Use → Share → Archive → Destroy</strong>.</p>
+
+    <p><strong>Create</strong> is when data first comes into existence — through user input (form submissions, document creation), through automated processes (log generation, telemetry, system output), through data transformation (analytics generating derived datasets), or through ingestion from external sources (third-party data feeds, partner data sharing). Security requirements at this stage include: classification assignment at creation time, labeling, and ensuring that creation mechanisms do not introduce data quality or integrity issues. In cloud environments, creation happens across many more surfaces — APIs, microservices, serverless functions, IoT sensors — making comprehensive classification at creation significantly more challenging than in traditional environments.</p>
+
+    <p><strong>Store</strong> is the persistent retention of data in a storage system — databases, file shares, object storage, backup systems. Security controls at this stage include: encryption at rest, access controls enforcing least-privilege access, physical security of storage media (for on-premises systems), and logging of access. Retention policies are applied during the Store phase: data should not be retained longer than its retention requirement, because retaining unnecessary data increases breach exposure and regulatory risk without business benefit.</p>
+
+    <p><strong>Use</strong> is when data is actively being accessed and processed — loaded into application memory, queried from a database, displayed in a user interface, processed by an analytics pipeline. This is where access control enforcement is most active: who can see what, in what context, for what purpose. Security controls include: application-level authorization, data masking and tokenization for sensitive fields, privileged access management for database queries, and monitoring of unusual access patterns.</p>
+
+    <p><strong>Share</strong> is when data moves beyond its original system or organizational boundary — to a business partner, a cloud service provider, a customer, a regulator, or another internal system. Sharing is where data protection obligations are most likely to be violated inadvertently. Controls include: data transfer agreements (DPAs under GDPR, BAAs under HIPAA), encryption in transit, DLP controls that prevent sensitive data from leaving controlled channels, and logging of all outbound transfers. In cloud environments, sharing often happens through API integrations and federated access — the traditional perimeter model does not apply.</p>
+
+    <p><strong>Archive</strong> is long-term retention for compliance or business purposes — data that is no longer actively used but must be preserved for a defined period. Archived data carries the same classification and protection requirements as active data. The risks at this stage are often under-managed: archived data may be forgotten, may be retained beyond its required period (increasing breach exposure), or may be stored in formats or locations that make it difficult to produce for legal hold or e-discovery purposes. Controls include: retention schedule enforcement, access controls on archive systems, and periodic inventory to confirm what is being retained and why.</p>
+
+    <p><strong>Destroy</strong> is the secure disposal of data when it has reached the end of its retention requirement. Destruction methods must be appropriate to the classification level of the data being destroyed, and the method used for digital media must ensure that data cannot be recovered by any technically feasible means. For highly sensitive data, physical destruction may be required; for less sensitive data, cryptographic erasure or multi-pass overwriting may be sufficient. This phase is tested specifically in CISSP and CCSK.</p>
+
+    <div class="callout info">
+      <div class="callout-title">CCSK Nuance — Non-Sequential Lifecycle</div>
+      <p>CCSK tests the understanding that data does not flow through lifecycle phases strictly sequentially. Data in the Use phase can simultaneously be Shared with a partner and queued for Archival. Data that has been Archived can be returned to Use for a legal hold or analytics purpose. Data governance must account for these concurrent states — a data governance framework that assumes linear progression will fail to apply appropriate controls to data that occupies multiple lifecycle phases simultaneously.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="data-states">4. Data States and Controls</h2>
+
+    <p>The three states of data — at rest, in transit, and in use — each require different security controls. All three certifications test these states, with CCSK and CISSP testing technical control specifics and CISM testing the governance framework that ensures controls are applied consistently across all three states.</p>
+
+    <p><strong>Data at rest</strong> is data stored in any persistent medium — disk storage, databases, backup tapes, archival systems, object storage buckets. The primary control is encryption at rest using a strong algorithm (AES-256 is the current standard). Encryption at rest protects data from unauthorized access if the physical medium is stolen or if an attacker gains access to storage infrastructure without going through the application authentication layer. Access controls — least-privilege database permissions, encrypted filesystems with key management, object storage bucket policies — complement encryption by ensuring that even authorized access is limited to what is needed. In cloud environments, customer-managed encryption keys (CMEK) provide the organization with control over whether the CSP can access encrypted data, which is a data sovereignty consideration.</p>
+
+    <p><strong>Data in transit</strong> is data moving across a network — between client and server, between services, between data centers, between cloud regions, between the organization and its partners. The primary control is transport encryption: TLS 1.2 or 1.3 for HTTPS traffic, TLS for API calls, and TLS or IPSec for site-to-site connections. Email encryption presents a more complex picture because SMTP TLS does not guarantee end-to-end encryption — S/MIME or PGP provides message-level encryption where content protection must extend beyond the transport layer. VPN provides an encrypted tunnel for network traffic between endpoints. In cloud environments, encrypting data in transit between cloud services — not just between the user's browser and the cloud endpoint — requires explicit configuration; default cloud service configurations do not always enforce encryption between internal service-to-service calls.</p>
+
+    <p><strong>Data in use</strong> is data being actively processed in memory — loaded into application RAM, processed by a CPU, held in a database buffer. This is the hardest state to protect because encryption must be removed for the CPU to operate on data — the decrypted data exists in cleartext in memory during processing. Traditional encryption protects data at rest and in transit but is unavailable for data in use. This is an increasingly important attack surface: memory scraping attacks against point-of-sale terminals, for example, exploit the fact that card data is briefly in cleartext in memory even if it is encrypted on disk and in transit.</p>
+
+    <p>Emerging technologies address data in use: <strong>Intel SGX (Software Guard Extensions)</strong> and <strong>AMD SEV (Secure Encrypted Virtualization)</strong> create hardware-protected enclaves where code and data are encrypted in memory and inaccessible even to the operating system or hypervisor. <strong>Confidential computing</strong> is the broader category of these technologies — processing sensitive data in hardware-isolated, cryptographically protected environments. This is an active area of cloud security development and is tested in the CCSK exam as a cloud-specific data protection capability. Application-level controls — data masking, tokenization, format-preserving encryption — partially address the in-use problem by ensuring that only the minimum necessary data is ever in cleartext, and only for the minimum necessary duration.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Data in Use Is the Hardest Problem</div>
+      <p>Exam questions about data protection that present "encrypt all data" as the correct answer are testing whether you know that encryption does not protect data in use. If a question describes a scenario where a threat actor has compromised an application server and is accessing data being processed, encryption at rest and in transit provide no protection — the attacker has access at the point where decryption has already occurred. The correct control for data in use is hardware security technology (SGX/SEV), application-level access controls, and monitoring for anomalous memory access patterns.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="governance-vs-security">5. Information Governance vs. Data Security</h2>
+
+    <p>Information governance and data security are complementary but distinct. Getting their relationship right matters on the exam because they address different problems and require different organizational capabilities.</p>
+
+    <p><strong>Information governance</strong> is the overarching framework for managing information assets throughout their lifecycle. Governance answers the foundational questions: What information does the organization have? Who owns it? How long must it be kept? Who is authorized to access it? How should it be classified? When and how should it be destroyed? Information governance is a business management function — it involves legal, compliance, business unit leaders, records management, and the CISO. It produces the policies, standards, and structures within which data security operates. You cannot protect data you haven't inventoried, classified, and assigned ownership to.</p>
+
+    <p><strong>Data security</strong> is the set of technical and process controls — encryption, access management, DLP, monitoring, secure deletion — that protect information assets from unauthorized access, disclosure, modification, or destruction. Data security implements the requirements that information governance defines. A classification policy (governance) that says "Restricted data must be encrypted at rest with AES-256 and access must be logged" creates a data security requirement that the IT organization implements. Data security without information governance is controls applied inconsistently to poorly understood assets. Information governance without data security is policy without enforcement.</p>
+
+    <p>CISM frames information governance as a program component that the information security manager is responsible for establishing within the broader security governance function. CISSP frames data security as a Domain 2 topic (Asset Security) and tests the controls applicable to data at each lifecycle phase and in each state. CCSK integrates both perspectives for cloud-hosted data, where the governance framework must account for data that exists in environments the organization does not fully control.</p>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="retention-destruction">6. Retention and Destruction</h2>
+
+    <p>Retention and destruction are the final phase of data governance — and among the most under-managed in practice. Organizations tend to accumulate data indefinitely because deleting it feels risky, but excess data retention creates its own risks: larger breach scope when an incident occurs, higher e-discovery costs in litigation, and regulatory exposure for retaining data beyond permitted periods under GDPR and similar frameworks.</p>
+
+    <p>A <strong>retention schedule</strong> maps each data category to its required retention period, driven by legal requirements, regulatory mandates, and legitimate business needs. Legal requirements vary by data type and jurisdiction: financial records may require seven-year retention under tax law; employment records have their own requirements; medical records vary by jurisdiction and patient age. The retention schedule must be reviewed by Legal, Compliance, and business unit leaders — it is not an IT artifact. Once the retention schedule is established, the technical systems must enforce it: data that has met its retention requirement should be disposed of automatically (or flagged for disposal confirmation) rather than accumulated indefinitely.</p>
+
+    <p>Destruction methods must match the sensitivity of the data being destroyed and the medium on which it resides. <strong>NIST SP 800-88</strong> (Guidelines for Media Sanitization) is the authoritative reference for media sanitization methods, and CISSP tests this standard specifically.</p>
+
+    <p>NIST 800-88 defines three sanitization categories. <strong>Clear</strong> applies logical techniques (overwriting) to sanitize data in all user-addressable storage locations, protecting against simple non-invasive data recovery attempts. Clearing is appropriate for data that will be reused within a trusted environment — returning a laptop to the internal IT pool, for example. <strong>Purge</strong> applies physical or logical techniques that render data recovery infeasible using state-of-the-art laboratory techniques. Purging (including secure overwriting with multiple passes, degaussing of magnetic media, and cryptographic erasure) is appropriate for media that will leave the organization's control — equipment being resold, donated, or recycled. <strong>Destroy</strong> renders the media completely unusable and the data on it irrecoverable — physical shredding, disintegration, incineration, pulverization. Destruction is appropriate for media at end of life that will not be reused, particularly for media that has held highly classified or regulated data.</p>
+
+    <p><strong>Degaussing</strong> is a magnetic erasure technique that exposes magnetic media to a strong magnetic field, randomizing the magnetic domains that store data. Degaussing is effective for traditional spinning hard drives and magnetic tape. It is not effective for SSDs, flash storage, or optical media, where the physics of data storage are different. CISSP tests this distinction.</p>
+
+    <p><strong>Cryptographic erasure</strong> is the primary practical destruction method for cloud-hosted data. In cloud storage environments, the organization may not be able to physically destroy or degauss the media — it is managed by the CSP and may be shared with other tenants. Cryptographic erasure works by encrypting all data with a key, then destroying the key — making the data computationally irrecoverable even if the underlying bits remain on media. CCSK tests this as the standard cloud data destruction method. The organization must maintain key management infrastructure that can provably destroy specific keys on demand for this method to be legally and operationally effective.</p>
+
+    <div class="callout exam">
+      <div class="callout-title">Degaussing SSDs — A Common CISSP Trap</div>
+      <p>CISSP scenario questions about secure media disposal will sometimes include degaussing as an answer option for SSD or flash storage destruction. Degaussing is ineffective on SSDs — there are no magnetic domains to randomize. The correct answer for SSD destruction is physical destruction (shredding, incineration) or cryptographic erasure. Do not select degaussing for any non-magnetic media.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="self-check">Self-Check Questions</h2>
+
+    <p>Work through these questions without looking back. If you hesitate on any, that section needs another pass.</p>
+
+    <p><strong>1.</strong> A developer creates a document containing both public marketing copy and an unreleased product roadmap. What classification does the document receive, and who makes that determination?</p>
+
+    <div class="callout tip">
+      <div class="callout-title">Answer</div>
+      <p>The document receives the classification of its most sensitive component — the unreleased product roadmap. If that content is Restricted/Confidential in the organization's scheme, the entire document is Restricted/Confidential. The classification is determined by the data owner of the most sensitive content — the business manager accountable for the product roadmap. IT does not make this determination.</p>
+    </div>
+
+    <p><strong>2.</strong> An organization is migrating to cloud storage and wants to ensure that data destroyed in the cloud cannot be recovered. What method is appropriate, and why does physical destruction not apply?</p>
+
+    <div class="callout tip">
+      <div class="callout-title">Answer</div>
+      <p>Cryptographic erasure is the appropriate method. The organization does not control the physical media in a cloud environment — the CSP manages it and may reuse or reallocate it across tenants. Physical destruction is the CSP's responsibility and is not directly available to tenants. Cryptographic erasure — encrypting all data with a managed key, then destroying the key — renders the data computationally irrecoverable regardless of what happens to the physical media afterward.</p>
+    </div>
+
+    <p><strong>3.</strong> A threat actor compromises an application server and gains access to data being processed in memory. The organization has AES-256 encryption at rest and TLS in transit. Are those controls effective against this attack?</p>
+
+    <div class="callout tip">
+      <div class="callout-title">Answer</div>
+      <p>No. Both controls protect data in transit and at rest. Data being processed in memory is data in use — it has been decrypted to be processed. Encryption at rest and in transit provide no protection once the attacker has access to the execution environment. The relevant controls are hardware-enforced enclaves (Intel SGX, AMD SEV), application-level access controls, and anomalous memory access monitoring.</p>
+    </div>
+
+    <p><strong>4.</strong> During a BCP exercise, the team learns that the organization has been retaining customer records for 15 years when the legal requirement is 7 years. What governance function has failed, and what is the risk?</p>
+
+    <div class="callout tip">
+      <div class="callout-title">Answer</div>
+      <p>The retention schedule and data lifecycle management function has failed — specifically, the enforcement mechanism that should dispose of data when its retention period expires. The risks are: a larger breach scope (8 additional years of records that could be exposed), higher e-discovery costs in any litigation involving those customers, and potential regulatory exposure under GDPR and similar frameworks that require data to be deleted when the retention purpose has expired (the "storage limitation" principle).</p>
+    </div>
+
+    <p><strong>5.</strong> The CISM exam asks: "What is the MOST important first step in establishing a data classification program?" What is the answer?</p>
+
+    <div class="callout tip">
+      <div class="callout-title">Answer</div>
+      <p>Identify and assign data owners. Without data owners, there is no one with the authority or accountability to classify data. The classification policy, the scheme, and the control requirements all depend on having identified individuals who are responsible for specific information assets and whose judgment determines sensitivity level. Everything else — writing the policy, defining the scheme, training the custodians — follows from ownership assignment.</p>
+    </div>
+
+  </div><!-- /.study-content -->
+
+  <div id="reading-intel"></div>
+
+</div><!-- /.container-narrow -->
+
+<script src="../assets/js/db.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    setActiveNav();
+    refreshReadBadge();
+    loadSuggestion();
+  });
+</script>
+
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

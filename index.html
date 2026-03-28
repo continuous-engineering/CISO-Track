@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CISO Certification Track</title>
 <link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('login.html'); }
+})();
+</script>
 </head>
 <body>
 
@@ -83,8 +91,8 @@
       </div>
       <div style="margin-top:1rem;display:flex;gap:0.5rem;">
         <a href="cism/index.html" class="btn btn-sm">Overview</a>
-        <a href="cism/domain1/index.html" class="btn btn-sm">Domain 1</a>
-        <a href="cism/domain2/index.html" class="btn btn-sm">Domain 2</a>
+        <a href="cism/domain1/index.html" class="btn btn-sm">Governance</a>
+        <a href="cism/domain2/index.html" class="btn btn-sm">Risk Mgmt</a>
       </div>
     </div>
 
@@ -159,23 +167,23 @@
       <div class="kanban-task" data-task="cism_register">Register for exam</div>
       <div class="kanban-task" data-task="cism_buy_materials">Buy CISM Review Manual + QBank</div>
       <div class="kanban-task" data-task="isaca_join">Join ISACA</div>
-      <div class="kanban-task" data-task="cism_d3_read">Domain 3: Program Dev (read + notes)</div>
-      <div class="kanban-task" data-task="cism_d4_read">Domain 4: Incident Mgmt (read + notes)</div>
+      <div class="kanban-task" data-task="cism_d3_read">Security Program (read + notes)</div>
+      <div class="kanban-task" data-task="cism_d4_read">Incident Management (read + notes)</div>
       <div class="kanban-task" data-task="cism_cases">Case studies — frameworks in practice</div>
     </div>
 
     <div class="kanban-col">
       <h3>In Progress</h3>
-      <div class="kanban-task" data-task="cism_d1_read" style="border-color:var(--cism);">Domain 1: Governance (read + notes)</div>
-      <div class="kanban-task" data-task="cism_d2_read">Domain 2: Risk Management (read + notes)</div>
+      <div class="kanban-task" data-task="cism_d1_read" style="border-color:var(--cism);">Governance (read + notes)</div>
+      <div class="kanban-task" data-task="cism_d2_read">Risk Management (read + notes)</div>
     </div>
 
     <div class="kanban-col">
       <h3>In Review</h3>
-      <div class="kanban-task" data-task="cism_d1_q">Domain 1 practice questions (80%+)</div>
-      <div class="kanban-task" data-task="cism_d2_q">Domain 2 practice questions (80%+)</div>
-      <div class="kanban-task" data-task="cism_d3_q">Domain 3 practice questions (80%+)</div>
-      <div class="kanban-task" data-task="cism_d4_q">Domain 4 practice questions (80%+)</div>
+      <div class="kanban-task" data-task="cism_d1_q">Governance practice questions (80%+)</div>
+      <div class="kanban-task" data-task="cism_d2_q">Risk Management practice questions (80%+)</div>
+      <div class="kanban-task" data-task="cism_d3_q">Security Program practice questions (80%+)</div>
+      <div class="kanban-task" data-task="cism_d4_q">Incident Management practice questions (80%+)</div>
       <div class="kanban-task" data-task="cism_mock1">Mixed domain mock exam 1</div>
       <div class="kanban-task" data-task="cism_mock2">Mixed domain mock exam 2</div>
     </div>
@@ -192,7 +200,7 @@
   <div class="card" style="margin-bottom:2rem;">
     <h2 style="font-size:1rem;margin-bottom:1rem;">CISM Exam Mindset — Read This First</h2>
     <div class="study-content">
-      <p>You have 25 years of security and infrastructure experience plus 2 years of active CISO work. <strong>You already know how to do this job.</strong> The CISM exam tests whether you know how ISACA frames it.</p>
+      <p>The CISM exam tests whether you know how ISACA frames it.</p>
       <p>The single most important thing to internalize: <mark>CISM always picks the business-aligned answer over the purely technical one.</mark> When you see a question where one answer protects the business and another protects the systems, ISACA picks the business.</p>
       <p>The second most important rule: <mark>Senior management sponsorship is required for everything.</mark> Any security initiative needs executive buy-in. Full stop.</p>
       <p>The third rule: <mark>Risk-based decisions over compliance checkboxes.</mark> CISM wants you thinking about risk, not ticking boxes.</p>
@@ -218,5 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+<script src="assets/js/celebrate.js"></script>
+<script src="assets/js/mobile-nav.js"></script>
 </body>
 </html>

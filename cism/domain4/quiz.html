@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain 4 Quiz — CISM</title>
+<link rel="stylesheet" href="../../assets/css/style.css">
+<script src="../../assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../../login.html'); }
+})();
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Dashboard</a></li>
+    <li><a href="../../schedule.html">Schedule</a></li>
+    <li><a href="../index.html" class="cism-link active">CISM</a></li>
+    <li><a href="../../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container-narrow">
+
+  <div class="hero">
+    <h1><span style="color:var(--cism);">Incident Mgmt</span> — Practice Quiz</h1>
+    <p>Incident Management · 30 questions · Target: 80%+</p>
+  </div>
+
+  <div class="domain-nav" style="margin-bottom:1.5rem;">
+    <a href="../index.html">CISM Overview</a>
+    <a href="../domain1/index.html">Governance</a>
+    <a href="../domain2/index.html">Risk Mgmt</a>
+    <a href="index.html">Study Guide</a>
+    <a href="flashcards.html">Flashcards</a>
+    <a href="quiz.html" class="active">Quiz</a>
+  </div>
+
+  <div class="callout info" style="margin-bottom:1.5rem;">
+    <div class="callout-title">Quiz Rules</div>
+    <p>30 CISM-style scenario questions. Select your answer, then click Submit when done. Read every explanation — even for questions you got right. Scoring below 80%? Re-read the relevant study guide sections before retrying.</p>
+  </div>
+
+  <div id="quiz-container"></div>
+
+  <div style="margin-top:2rem;display:flex;gap:1rem;">
+    <a href="flashcards.html" class="btn">← Flashcards</a>
+    <a href="../../index.html" class="btn btn-primary">Back to Dashboard →</a>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CISM Domain 4 Quiz
+</footer>
+
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+<script>
+const questions = [
+  {
+    q: "A SIEM alert fires indicating that an internal workstation has made repeated connections to a known command-and-control server. The analyst investigates and confirms the workstation is actively beaconing to the C2 address. How should this situation be classified?",
+    options: [
+      "An event — it is normal network traffic that triggered a false positive",
+      "An alert — the behavior is suspicious but not yet confirmed as malicious",
+      "An incident — the connection to a confirmed C2 server is a security policy violation",
+      "A vulnerability — the workstation has a weakness that should be patched"
+    ],
+    answer: 2,
+    explanation: "An incident is a confirmed violation of security policy or confirmed harmful event. A workstation actively communicating with a known C2 server is a confirmed compromise — the investigation has moved past suspicion to confirmation. This is no longer an alert awaiting investigation; it is an active incident requiring immediate response: containment, escalation, and investigation of scope."
+  },
+  {
+    q: "A security analyst receives an alert that 50,000 failed login attempts occurred against the web application over 30 minutes. No successful logins were confirmed. How should the analyst classify this?",
+    options: [
+      "An event — no breach occurred, so no incident classification is needed",
+      "An alert requiring investigation to determine if any logins succeeded and whether this constitutes an incident",
+      "An incident — the volume of attempts constitutes a policy violation regardless of success",
+      "A vulnerability — the lack of account lockout must be remediated immediately"
+    ],
+    answer: 1,
+    explanation: "50,000 failed login attempts is a suspicious event that has generated an alert. The analyst must investigate: Did any succeed? Is this a credential stuffing attack that may have succeeded for weak passwords? Is there ongoing risk? Until investigation is complete, this is an alert — a hypothesis, not a confirmed incident. If the investigation reveals successful unauthorized access, it becomes an incident. The lack of account lockout is a vulnerability that should be escalated separately."
+  },
+  {
+    q: "A security operations team notifies the CISO that they have identified an active ransomware infection spreading across the corporate network. The CISO's FIRST action should be:",
+    options: [
+      "Log into affected systems to personally assess the scope of the infection",
+      "Activate the incident response plan, convene the incident response team, and make initial escalation decisions based on severity",
+      "Contact the cyber insurer immediately to begin a claim",
+      "Issue a statement to employees warning them not to open email attachments"
+    ],
+    answer: 1,
+    explanation: "The CISO's role is management and oversight, not technical investigation. The first action is to activate the IR plan and establish command-and-control of the response. This includes convening the IR team, assigning the incident commander, making initial severity classification and escalation decisions (does the CEO need to be notified now? Does legal counsel need to be activated?). The CISO should not be at the keyboard — that removes leadership from the response at the moment it is most needed."
+  },
+  {
+    q: "During an active ransomware incident, the technical team asks the CISO whether to shut down all systems immediately to stop the spread. What consideration should weigh MOST heavily in this decision?",
+    options: [
+      "Shutting down systems will stop the encryption immediately and should be done without delay",
+      "The IR plan should pre-define the containment approach — the CISO should follow the plan's guidance balancing containment speed with evidence preservation",
+      "Systems should not be shut down until law enforcement authorizes the action",
+      "The decision should be deferred to the IT team as a technical matter"
+    ],
+    answer: 1,
+    explanation: "Shutdown is a major containment decision with trade-offs: it stops spread but destroys volatile memory evidence (RAM) containing encryption keys, attacker activity, and live process data that is critical for investigation and potentially for decryption. The IR plan should pre-define this decision for ransomware scenarios — balancing containment urgency against forensic preservation. Ad hoc decision-making under pressure during an active incident is when the most mistakes are made."
+  },
+  {
+    q: "An incident responder discovers that a critical server involved in a confirmed breach has been turned off by an IT administrator who wanted to 'stop the attack.' What is the PRIMARY problem with this action?",
+    options: [
+      "The server cannot be used for business operations while it is off",
+      "Volatile memory evidence (RAM contents, running processes, network state) has been irretrievably destroyed",
+      "The attacker may have planted a backdoor that will reactivate when the server restarts",
+      "The IT administrator exceeded their authority by taking action without security team approval"
+    ],
+    answer: 1,
+    explanation: "Powering off a live system without capturing volatile memory destroys the most forensically valuable evidence: RAM contents (which may contain encryption keys, attacker credentials, malware code in memory), active network connections (showing attacker infrastructure), and running processes. This evidence exists only while the system is powered on and cannot be recovered. The order of volatility places RAM as the most volatile — always capture before powering down."
+  },
+  {
+    q: "A forensic investigator collects a hard drive image from a compromised server. Three weeks later, during litigation, the opposing party challenges whether the evidence was tampered with after collection. What document MOST directly addresses this challenge?",
+    options: [
+      "The incident report documenting the timeline of events",
+      "The chain of custody log documenting all evidence handling from collection through storage",
+      "The forensic investigator's professional certification and qualifications",
+      "The hash value of the original hard drive"
+    ],
+    answer: 1,
+    explanation: "Chain of custody documentation directly addresses tampering challenges by providing a complete, documented record of who had custody of the evidence, when, and under what conditions — from collection through storage and analysis. Hash values prove the image hasn't changed since collection; chain of custody proves who had it and how it was handled. Both are required for admissible evidence, but the chain of custody is the document that specifically answers 'was this tampered with after collection?'"
+  },
+  {
+    q: "During a forensic investigation, the team needs to collect evidence from a running server. In what order should they collect the following: (1) disk image, (2) RAM contents, (3) active network connections?",
+    options: [
+      "Disk image first — it contains the most complete record of attacker activity",
+      "RAM contents, then active network connections, then disk image — most volatile to least volatile",
+      "Active network connections, then disk image, then RAM",
+      "All three should be collected simultaneously to avoid any data changing"
+    ],
+    answer: 1,
+    explanation: "The order of volatility dictates collection sequence: most volatile first. RAM contents are lost the moment power is removed. Active network connections (ARP tables, TCP state, routing) are lost when network activity changes or the system is isolated. Disk contents persist after power-off. Always collect in order: RAM → network state → disk. Reversing this order means the most valuable evidence — often containing attacker credentials, malware in memory, or encryption keys — is lost."
+  },
+  {
+    q: "A large retailer suffers a payment card data breach. The breach is confirmed on a Tuesday. Under PCI DSS requirements, what notification obligation does the organization have?",
+    options: [
+      "Notify affected cardholders within 72 hours of confirmation",
+      "Notify the acquiring bank and relevant payment card brand immediately upon suspecting or confirming a breach",
+      "Notify the FTC within 30 days of breach confirmation",
+      "No mandatory notification — PCI DSS is a contractual standard, not a regulatory requirement"
+    ],
+    answer: 1,
+    explanation: "PCI DSS requires organizations to notify their acquiring bank and the relevant payment card brands (Visa, Mastercard, etc.) immediately upon suspecting or confirming a breach. This triggers the card brand's forensic investigation and fraud mitigation processes. Cardholder notification is typically handled by the card brands and issuing banks. PCI DSS notification is to the payment ecosystem — not directly to cardholders or government regulators (though state breach laws may also apply)."
+  },
+  {
+    q: "A global organization with EU customers confirms a personal data breach on Monday at 3:00 PM. Under GDPR, by when must they notify the supervisory authority?",
+    options: [
+      "Within 24 hours of discovery",
+      "Within 72 hours of becoming aware of the breach — by Thursday at 3:00 PM",
+      "Within 30 days of breach confirmation",
+      "Only if more than 1,000 individuals are affected"
+    ],
+    answer: 1,
+    explanation: "GDPR Article 33 requires notification to the relevant supervisory authority within 72 hours of becoming aware of a personal data breach — unless the breach is unlikely to result in risk to individuals. The 72-hour clock starts when the organization becomes aware, not when the breach occurred. From Monday 3:00 PM, the deadline is Thursday 3:00 PM. If notification cannot be made within 72 hours, it must be made without undue delay along with reasons for the delay."
+  },
+  {
+    q: "During an incident, the communications team asks the CISO to provide a public statement about the breach. The investigation is ongoing and the full scope is not yet determined. What is the MOST appropriate response?",
+    options: [
+      "Issue a detailed statement covering everything that is currently known to demonstrate transparency",
+      "Refuse all public communication until the investigation is complete",
+      "Issue a prepared holding statement acknowledging the incident is being investigated, without speculating on scope or cause",
+      "Have the CEO issue a statement to demonstrate leadership accountability"
+    ],
+    answer: 2,
+    explanation: "A holding statement — 'We are aware of an incident and are investigating with the assistance of external experts. We will provide updates as information becomes available' — acknowledges the situation without speculating. Premature disclosure of incomplete information creates multiple risks: incorrect facts that must be retracted, information that helps the attacker, and statements that may contradict regulatory filings. Silence is worse than a holding statement. Detail before facts are confirmed is worse than both."
+  },
+  {
+    q: "A healthcare organization suffers a ransomware attack that encrypts patient records. No data exfiltration has been confirmed, but encrypted data is inaccessible. Must the organization notify HHS under HIPAA?",
+    options: [
+      "No — notification is only required if PHI was exfiltrated and viewed by unauthorized parties",
+      "Yes — the encryption of PHI by an unauthorized party constitutes a breach unless the organization can demonstrate that PHI was not accessed or exfiltrated with low probability",
+      "Only if more than 500 individuals are affected in a single state",
+      "Only if the organization decides to pay the ransom"
+    ],
+    answer: 1,
+    explanation: "Under HIPAA, a breach is presumed to have occurred unless the covered entity can demonstrate through forensic analysis that there is a low probability that PHI was compromised (the 4-factor risk assessment). Ransomware encryption involves unauthorized access to PHI systems — the fact that data was 'only encrypted and not stolen' does not automatically exclude it from breach notification requirements. The organization must conduct the HIPAA risk assessment and document why notification is or is not required."
+  },
+  {
+    q: "The board of directors asks the CISO to explain the difference between RTO and RPO after a business continuity briefing. Which answer is MOST accurate?",
+    options: [
+      "RTO is the amount of data loss acceptable; RPO is the maximum time to restore operations",
+      "RTO is the target time to restore operations; RPO is the maximum acceptable data loss measured in time",
+      "RTO and RPO are equivalent metrics — both measure acceptable downtime",
+      "RPO applies to data recovery; RTO applies to hardware recovery"
+    ],
+    answer: 1,
+    explanation: "RTO (Recovery Time Objective) is a time duration: how long can this function be down before unacceptable impact occurs? RPO (Recovery Point Objective) is a data currency measure expressed as time: how old can the recovered data be? They address different dimensions — RTO asks 'how fast must we recover?'; RPO asks 'how much data loss can we absorb?' Both are set based on business impact analysis and drive different aspects of recovery strategy."
+  },
+  {
+    q: "An organization's e-commerce platform has an RTO of 2 hours and an RPO of 15 minutes. Which recovery strategy BEST meets these requirements?",
+    options: [
+      "Cold site with daily tape backups — can be restored within 24 hours",
+      "Warm site with hourly snapshots — can be restored within 4 hours with data from the previous hour",
+      "Hot site with near-real-time data replication — can be restored within 30 minutes with data from the last few minutes",
+      "On-premises backup with 4-hour restore window and 1-hour backup frequency"
+    ],
+    answer: 2,
+    explanation: "An RTO of 2 hours requires restoration within 2 hours. An RPO of 15 minutes requires data no older than 15 minutes at recovery. Cold site with daily backups fails both (24-hour restore, 24-hour data age). Warm site with hourly snapshots fails RPO (1-hour data age exceeds 15-minute RPO) and RTO (4-hour restore exceeds 2-hour RTO). On-premises fails RTO. Only the hot site with near-real-time replication meets both requirements simultaneously."
+  },
+  {
+    q: "A business impact analysis (BIA) has been completed. The payroll system has an MTD of 48 hours. The current recovery strategy has an estimated RTO of 60 hours. What action is required?",
+    options: [
+      "No action — RTO and MTD are approximate estimates and 60 hours is close to 48",
+      "Accept the gap as residual risk and document it in the risk register",
+      "The recovery strategy is unacceptable — RTO must be ≤ MTD; select a recovery strategy that can restore payroll within 48 hours",
+      "Extend the MTD to 72 hours to accommodate the current RTO"
+    ],
+    answer: 2,
+    explanation: "RTO must be less than or equal to MTD — this is a hard constraint. An RTO of 60 hours against an MTD of 48 hours means the recovery strategy will not restore operations before unacceptable consequences occur. This is not acceptable regardless of how close the numbers are. The organization must select a more capable recovery strategy. MTD is a business requirement derived from actual impact analysis — it cannot be arbitrarily extended to accommodate a poor recovery strategy."
+  },
+  {
+    q: "A CISO is designing the business continuity strategy for a trading firm. The core trading platform has an MTD of 30 minutes and an RPO of 0 (no data loss acceptable). Which recovery approach is appropriate?",
+    options: [
+      "Cold site with hourly backups — low cost and sufficient for most scenarios",
+      "Warm site with daily backups — balances cost and recovery capability",
+      "Active-active architecture with synchronous data replication across two geographically separated sites",
+      "Hot site with near-real-time replication — achieves RPO under 5 minutes and RTO under 4 hours"
+    ],
+    answer: 2,
+    explanation: "An MTD of 30 minutes and RPO of 0 are extremely aggressive requirements only achievable with active-active architecture: both sites process transactions simultaneously with synchronous replication ensuring no data loss, and failover is essentially instantaneous. A hot site with near-real-time replication achieves low RPO but not zero RPO (some replication lag exists), and a 4-hour RTO far exceeds the 30-minute MTD. Active-active is the only architecture that can meet both requirements."
+  },
+  {
+    q: "A CISO wants to test the organization's disaster recovery plan but cannot risk any disruption to production systems. Which test type is MOST appropriate?",
+    options: [
+      "Full interruption test — the most realistic and valuable test type",
+      "Parallel test — activate the recovery environment while production continues normally",
+      "Tabletop exercise — discussion-based review of the plan with key stakeholders",
+      "Checklist review — team reviews the DR plan document for accuracy"
+    ],
+    answer: 1,
+    explanation: "A parallel test activates the recovery environment (bringing the DR site online, restoring from backups, validating systems) while production continues running normally. This tests actual technical recovery capability — whether backup systems work, whether data is current, whether RTO can be achieved — without any risk to production. A tabletop or checklist review tests the plan document and people, not the technology. A full interruption test tests reality but carries production disruption risk the CISO has explicitly ruled out."
+  },
+  {
+    q: "An organization's IR plan calls for a tabletop exercise to be conducted annually. The CISO is evaluating whether the annual tabletop is sufficient for a financial services firm with high incident frequency. What is the MOST appropriate recommendation?",
+    options: [
+      "Annual tabletop exercises are the industry standard and are sufficient for all organizations",
+      "Add scenario-specific tabletop exercises quarterly, and conduct a parallel test annually to validate technical recovery capability",
+      "Replace tabletop exercises with full interruption tests to ensure maximum realism",
+      "Increase training frequency for the IR team as a substitute for additional exercises"
+    ],
+    answer: 1,
+    explanation: "High-incident-frequency environments need more than annual plan reviews. Quarterly scenario-based tabletops keep the IR team sharp across different attack scenarios and stress-test new playbooks. An annual parallel test validates that the technical infrastructure actually works. Full interruption tests are rarely appropriate for financial services due to business risk. Training increases capability but doesn't validate the plan itself. A layered testing program matches the organization's risk profile."
+  },
+  {
+    q: "Following a significant security incident, the CISO convenes a post-incident review. A business unit manager suggests the review focus on identifying which team members made mistakes so accountability can be maintained. How should the CISO respond?",
+    options: [
+      "Agree — accountability requires identifying who made errors and documenting them",
+      "Redirect the review toward process and control failures rather than individual blame — blame culture suppresses honest reporting and prevents learning",
+      "Agree to identify mistakes but limit consequences to coaching, not disciplinary action",
+      "Defer to HR on how to handle individual performance issues identified in the review"
+    ],
+    answer: 1,
+    explanation: "Post-incident reviews conducted as blame sessions create a culture where staff conceal mistakes to avoid punishment — which prevents the honest reporting and learning the PIR is designed to achieve. The CISO should redirect toward systemic analysis: What process failed? What control was absent? What training gap existed? Individual errors are almost always symptoms of systemic failures. The goal is to improve the system so the next person in the same situation makes the right decision, not to punish the last person who didn't."
+  },
+  {
+    q: "Three months after a data breach, the security team has implemented all recommended technical controls from the post-incident review. The CISO considers the incident fully closed. What critical step has been overlooked?",
+    options: [
+      "Filing the incident in the organization's incident history database",
+      "Ensuring that lessons learned have been incorporated back into the IR plan, risk register, and awareness training — not just technical controls",
+      "Conducting a follow-up penetration test to validate the new controls",
+      "Briefing the board on the incident remediation status"
+    ],
+    answer: 1,
+    explanation: "Technical control implementation is only one output of lessons learned. A complete PIR feedback loop updates: the IR plan (to fix process failures), the risk register (to reflect updated threat/control information), awareness training (to address human-factor failures), and potentially vendor contracts or policies. Closing an incident after only implementing technical fixes misses the systemic improvements that prevent recurrence at the program level. The incident is not fully addressed until all PIR action items across all dimensions are complete."
+  },
+  {
+    q: "During an incident, the legal department issues a legal hold covering all emails and documents related to the affected business systems for the past 90 days. The security team had planned to rebuild affected servers from scratch. What should the CISO do?",
+    options: [
+      "Proceed with the rebuild — security recovery takes priority over legal proceedings",
+      "Coordinate with legal counsel to ensure forensic preservation of all data subject to the hold before any rebuilds occur",
+      "Pause all incident response activities until legal review is complete",
+      "Archive the system backups and proceed with the rebuild — backups satisfy the legal hold requirement"
+    ],
+    answer: 1,
+    explanation: "Legal hold and incident recovery are not in conflict — but they must be coordinated. Before rebuilding servers that hold data subject to a legal hold, the security team must ensure forensically sound preservation of that data. Backups alone may not satisfy legal hold requirements if they don't capture all relevant data in an admissible format. The CISO must coordinate with legal counsel to confirm what evidence must be preserved and how before authorizing any destructive recovery activity."
+  },
+  {
+    q: "An employee reports receiving a targeted spear-phishing email impersonating the CEO requesting an urgent wire transfer. The employee did not click any links or transfer funds. What is the correct classification?",
+    options: [
+      "An incident — the organization was targeted and must report to regulators",
+      "An event — no policy was violated, no harm occurred, and no system was compromised",
+      "An alert requiring investigation to determine if similar emails targeted others and if the CEO's identity was spoofed or account compromised",
+      "A near-miss that requires no further action since no harm occurred"
+    ],
+    answer: 2,
+    explanation: "A targeted spear-phishing attempt is more than a neutral event — it is a signal that warrants investigation. Is this the only target or part of a broader campaign? Was the CEO's account compromised, enabling the spoofing? Are there other employees who may have clicked? This is an alert state: suspicious activity confirmed, investigation required to determine if an incident has occurred (e.g., if another employee transferred funds) and to understand the threat. Treating it as a complete non-event misses a threat intelligence opportunity."
+  },
+  {
+    q: "The CISO is briefing the CEO on an ongoing critical incident. The CEO asks: 'Do we need to notify our board of directors?' What factors should drive the CISO's recommendation?",
+    options: [
+      "Board notification is required only after the incident is fully resolved",
+      "Board notification depends on incident severity, regulatory obligations, potential material business impact, and whether the board has a defined role in the IR escalation plan",
+      "The CISO should not recommend board notification — that is the CEO's decision alone",
+      "Board notification is always required for any confirmed security incident"
+    ],
+    answer: 1,
+    explanation: "Board notification decisions are governance calls that must be pre-defined in the escalation matrix of the IR plan. Factors include: Does the incident create material financial exposure that the board has fiduciary responsibility to know? Does it trigger SEC disclosure requirements for public companies? Does the organization's IR plan define board notification criteria? For P1/critical incidents with significant business impact, board notification is typically appropriate — but the trigger criteria should never be decided for the first time during an active incident."
+  },
+  {
+    q: "A company experiences a breach of customer PII that affects residents of California, New York, and Texas. Each state has different breach notification laws with different timelines and content requirements. What is the correct approach?",
+    options: [
+      "Notify all affected individuals under the most stringent single state's requirements",
+      "Comply with each state's specific notification requirements independently, using the most restrictive timeline as the operational target",
+      "Notify the FTC, which will handle multi-state coordination",
+      "Notify under GDPR requirements, which supersede state laws for any EU-connected data"
+    ],
+    answer: 1,
+    explanation: "Multi-state incidents require compliance with each state's specific breach notification law. Requirements differ in notification timelines, required content, whether the state AG must be notified, and what constitutes a breach. The practical approach is to use the most restrictive timeline operationally (to avoid missing any deadline) while ensuring each notification meets the content requirements of the relevant state. There is no federal pre-emption that harmonizes state breach laws, and the FTC does not coordinate state breach notifications."
+  },
+  {
+    q: "After containing a ransomware incident, the recovery team proposes restoring from the most recent backup, which was taken 6 hours before the ransomware detonated. Forensic analysis shows the attacker had access for 3 weeks before detonation. What is the PRIMARY risk of restoring from the 6-hour backup?",
+    options: [
+      "The backup may not contain all transactions from the past 6 hours",
+      "The backup likely contains attacker-planted backdoors, malware, or modified configurations from the 3-week compromise period",
+      "The restore process will take too long given the 6-hour data loss",
+      "The backup format may not be compatible with the rebuilt server environment"
+    ],
+    answer: 1,
+    explanation: "When an attacker has been in the environment for 3 weeks, any backup made during that period may contain attacker artifacts: backdoors, webshells, modified binaries, scheduled tasks, or persistence mechanisms. Restoring from the 6-hour backup (made during the compromise period) risks restoring the attacker's tools along with business data. Recovery must restore from a backup that predates the initial compromise — 3+ weeks ago. This may mean accepting greater data loss than the 6-hour backup would require."
+  },
+  {
+    q: "An information security manager is asked to help select the appropriate BCP test for a scenario where the organization needs to validate that staff know their roles and that the plan covers a ransomware scenario — without any system activation. Which test type is correct?",
+    options: [
+      "Parallel test",
+      "Full interruption test",
+      "Tabletop exercise",
+      "Simulation exercise"
+    ],
+    answer: 2,
+    explanation: "A tabletop exercise is explicitly designed to test that staff know their roles and that the plan covers the specified scenario — through facilitated discussion, without activating any systems. Participants walk through the ransomware scenario: who declares the incident? Who is called? What decisions are made at each stage? What does the IR plan say to do? Gaps are identified through discussion. No systems are touched, no recovery infrastructure is activated. This is the lowest-cost, zero-disruption test type that directly addresses the stated objectives."
+  },
+  {
+    q: "During a major incident, the CISO has been managing the response for 14 hours. The technical team has contained the breach and is beginning eradication. A journalist contacts the communications team for a statement. What is the correct process?",
+    options: [
+      "The CISO should provide a briefing to the journalist explaining the technical details of what occurred",
+      "The designated communications spokesperson should issue a pre-approved holding statement, coordinated with legal counsel",
+      "Decline all media inquiries until the incident is fully resolved",
+      "Issue a brief statement confirming the incident and providing a preliminary assessment of scope"
+    ],
+    answer: 1,
+    explanation: "The designated communications spokesperson — not the CISO — handles all media interactions. During an active incident, the CISO's focus must remain on response management. A pre-approved holding statement ('We are aware of an incident, have taken immediate steps to contain it, and are investigating with external experts. We will provide updates as information is verified.') acknowledges the situation without disclosing unverified details, helping the attacker, or creating legal exposure. The CISO briefs the communications team; the communications team speaks publicly."
+  },
+  {
+    q: "An organization's DRP was last tested 18 months ago with a parallel test that succeeded. A new data center has since been added, and cloud infrastructure now hosts 40% of production workloads. What is the PRIMARY concern about the current DRP?",
+    options: [
+      "The DRP should be retested on a more frequent schedule regardless of infrastructure changes",
+      "The DRP may not cover the new data center and cloud infrastructure — making the tested plan materially incomplete for the current environment",
+      "Cloud infrastructure cannot be covered in a DRP since it is the provider's responsibility",
+      "The DRP requires board approval after any infrastructure changes"
+    ],
+    answer: 1,
+    explanation: "A DRP that does not reflect the current infrastructure is a plan for the organization that no longer exists. A new data center and 40% cloud infrastructure represent material changes in scope, recovery procedures, dependencies, and RTOs/RPOs. The previously tested DRP cannot be relied upon to recover the current environment. The plan must be updated to include the new infrastructure and retested. Cloud infrastructure recovery under shared responsibility is specifically the customer's concern — the cloud provider doesn't recover your application configuration and data."
+  },
+  {
+    q: "A CISO at a publicly traded company is informed of a material cybersecurity incident at 9:00 AM on a Monday. Under SEC cybersecurity disclosure rules, when must the company file an 8-K disclosing the incident?",
+    options: [
+      "Within 72 hours of discovery",
+      "Within 4 business days of determining the incident is material",
+      "Within 30 days of incident containment",
+      "After completing the post-incident review"
+    ],
+    answer: 1,
+    explanation: "Under the SEC's 2023 cybersecurity disclosure rules, public companies must disclose material cybersecurity incidents on Form 8-K within four business days of determining that the incident is material. The 4-day clock starts at the materiality determination, not the initial discovery. The CISO must work with legal counsel to make and document the materiality determination promptly, as both premature and delayed disclosure carry SEC enforcement risk. This adds a significant governance obligation to the incident response process for public companies."
+  },
+  {
+    q: "An organization uses a third-party cloud provider for its primary customer database. The cloud provider reports a data center outage affecting the organization's systems. The organization's customers are demanding to know what happened. Who is responsible for notifying customers about the service disruption and potential data impact?",
+    options: [
+      "The cloud provider, since the outage originated in their infrastructure",
+      "Both parties share equal notification responsibility to affected customers",
+      "The organization — regulatory and contractual obligations to customers run with the data controller, not the infrastructure provider",
+      "Neither party until the full scope of impact is determined"
+    ],
+    answer: 2,
+    explanation: "Under virtually all data protection frameworks (GDPR, US state laws, HIPAA), notification obligations belong to the data controller — the organization that collected and is responsible for the customer data — not the processor or infrastructure provider. The cloud provider caused the disruption but the organization owns the regulatory and contractual relationship with customers. The organization cannot delegate notification obligations to its vendors, though it may coordinate with the vendor on timeline and facts. This is why contracts must include prompt vendor incident notification requirements."
+  },
+  {
+    q: "A CISO is evaluating the organization's incident response capability maturity. Which situation BEST indicates the IR program is operating at a high maturity level?",
+    options: [
+      "The organization has never experienced a significant security incident",
+      "The IR plan document is comprehensive and has been reviewed by legal counsel",
+      "Incident response exercises are conducted regularly across multiple scenarios, PIR findings consistently feed program improvements, and MTTD and MTTR metrics are tracked and trending downward",
+      "The IR team holds relevant professional certifications in incident response"
+    ],
+    answer: 2,
+    explanation: "IR program maturity is demonstrated through measurable operational effectiveness, not document quality or absence of incidents. High maturity is evidenced by: regular multi-scenario testing that keeps skills current; a functioning PIR feedback loop that continuously improves the program based on actual incidents and exercises; and metrics (MTTD, MTTR) that show the program is working and improving over time. The absence of incidents may reflect luck, not capability. Documents and certifications are inputs to capability, not the capability itself."
+  }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  new Quiz(questions, 'quiz-container', 'cism_d4_quiz');
+});
+</script>
+<script src="../../assets/js/celebrate.js"></script>
+<script src="../../assets/js/mobile-nav.js"></script>
+</body>
+</html>

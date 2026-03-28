@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Study Schedule — CISO Cert Track</title>
 <link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('login.html'); }
+})();
+</script>
 </head>
 <body>
 
@@ -322,5 +330,7 @@
 </footer>
 
 <script src="assets/js/app.js"></script>
+<script src="assets/js/celebrate.js"></script>
+<script src="assets/js/mobile-nav.js"></script>
 </body>
 </html>

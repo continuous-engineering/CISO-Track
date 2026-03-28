@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCSK Overview — CISO Cert Track</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script src="../assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="index.html" class="ccsk-link active">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span style="color:var(--ccsk);">CCSK</span> — Certificate of Cloud Security Knowledge</h1>
+    <p>CSA &nbsp;·&nbsp; Start Week 2 (parallel with CISM) &nbsp;·&nbsp; 60 questions &nbsp;·&nbsp; 90 minutes</p>
+  </div>
+
+  <div class="domain-nav">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#shared-responsibility">Shared Responsibility</a>
+    <a href="#d1">D1: Concepts</a>
+    <a href="#d2">D2: Governance</a>
+    <a href="#d3">D3: Legal</a>
+    <a href="#d4">D4: Compliance</a>
+    <a href="#d5">D5: Info Gov</a>
+    <a href="#d6">D6: Mgmt Plane</a>
+    <a href="#d7">D7: Infrastructure</a>
+    <a href="#d8">D8: Virtualization</a>
+    <a href="#d9">D9: Incident</a>
+    <a href="#d10">D10: AppSec</a>
+    <a href="#d11">D11: Data</a>
+    <a href="#d12">D12: IAM</a>
+    <a href="#d13">D13: SecaaS</a>
+    <a href="#d14">D14: Related Tech</a>
+    <a href="#flashcards">Flashcards</a>
+    <a href="#quiz">Quiz</a>
+  </div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <!-- ===================== OVERVIEW ===================== -->
+        <h2 id="overview">What Is CCSK and How Is It Different?</h2>
+
+        <p>The Certificate of Cloud Security Knowledge is the Cloud Security Alliance's flagship certification — not a practitioner credential in the ISC² or ISACA sense, but a knowledge validation exam tied directly to CSA's own body of work. The primary source document is the CSA Security Guidance for Critical Areas of Focus in Cloud Computing v4 (the "CSA Guidance"), supplemented by the ENISA Cloud Computing Risk Assessment report. CCSK is open-book: you can download both documents and have them available during the exam. That sounds easy until you realize that 60 questions in 90 minutes gives you 90 seconds per question, and looking everything up is not a real strategy.</p>
+
+        <p>As a sitting CISO with 25 years behind you, you already understand cloud security in practice. What CCSK tests is whether you understand how <em>CSA specifically frames and labels</em> cloud security concepts. CSA has its own vocabulary, its own reference architecture, its own controls matrix, and its own opinionated positions on shared responsibility. CCSK questions are written to test those framings — not just whether you know that encryption matters in the cloud, but whether you know exactly how CSA carves up cloud responsibility, which layers the customer owns in IaaS vs. PaaS vs. SaaS, and what CSA's data security lifecycle phases are called. The terminology and the framework are the exam.</p>
+
+        <p>The exam is delivered online, open-book, and you can take it at home. CSA provides the official token after registration. No proctoring. This makes it feel low-stakes — it isn't. The 80% passing threshold is real, and the questions are specific enough that domain-level knowledge of the Guidance document is required. Plan 2–3 weeks of focused study on the 14 domains.</p>
+
+        <!-- ===================== EXAM STRUCTURE ===================== -->
+        <h2 id="exam-structure">Exam Structure</h2>
+
+        <table>
+          <tr><th>Element</th><th>Detail</th></tr>
+          <tr><td>Questions</td><td>60 multiple choice, 4 options each</td></tr>
+          <tr><td>Time</td><td>90 minutes</td></tr>
+          <tr><td>Passing score</td><td>~80% (48/60 correct)</td></tr>
+          <tr><td>Delivery</td><td>Online, unproctored, open-book</td></tr>
+          <tr><td>Source materials</td><td>CSA Security Guidance v4, ENISA Cloud Risk Assessment</td></tr>
+          <tr><td>Price</td><td>$395 USD (includes one retake token)</td></tr>
+          <tr><td>Validity</td><td>No expiration (though CSA recommends re-examination when Guidance is updated)</td></tr>
+          <tr><td>Domains</td><td>14 domains across CSA Guidance v4</td></tr>
+        </table>
+
+        <div class="callout exam">
+          <div class="callout-title">Open-Book Reality Check</div>
+          <p>Open-book does not mean "google the answer." The time constraint makes it impossible to look up more than 2–3 things per exam. Treat it as closed-book during study. Use the source documents as a safety net, not a crutch. What you actually need to know cold: shared responsibility boundaries across service models, the data security lifecycle phases, the Cloud Controls Matrix purpose, STAR registry levels, and CSA's cloud reference architecture layers.</p>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">CCSK vs CCSP</div>
+          <p>CCSK (CSA) and CCSP (ISC²) are not the same credential. CCSK is knowledge-based, open-book, no experience requirement. CCSP requires 5 years of IT experience, is proctored, and covers 6 domains with far more operational depth. CCSK is the right first cloud security credential — it validates that you understand the CSA framework, which underpins much of the broader cloud security industry thinking.</p>
+        </div>
+
+        <!-- ===================== SHARED RESPONSIBILITY ===================== -->
+        <h2 id="shared-responsibility">The Shared Responsibility Model — Core of CCSK</h2>
+
+        <p>If you understand one thing deeply for CCSK, make it shared responsibility. CSA's framing is the most tested concept across all 14 domains. The model answers: in any given cloud service arrangement, who is responsible for securing what? The answer changes depending on the service model (IaaS, PaaS, SaaS) and cannot be assumed — it must be negotiated and documented in contracts.</p>
+
+        <h3>IaaS — Infrastructure as a Service</h3>
+        <p>The provider manages physical security, the hypervisor layer, and network infrastructure. The customer owns everything above the hypervisor: operating systems, patches, middleware, runtime, application code, data, and identity management. The customer also controls their virtual network configuration. In IaaS, the customer has the most control and the most responsibility. Examples: AWS EC2, Azure VMs, GCP Compute Engine. CCSK frames this as: the customer is responsible for security <em>in</em> the cloud; the provider is responsible for security <em>of</em> the cloud.</p>
+
+        <h3>PaaS — Platform as a Service</h3>
+        <p>The provider adds the runtime environment, middleware, and OS management on top of the IaaS stack. The customer responsibility shifts up — now focused on application code and data security. The customer no longer patches the OS or manages the runtime. However, the customer still controls application-level security configurations, authentication integration, and data handling. Examples: AWS Elastic Beanstalk, Azure App Service, Google App Engine, Heroku. CCSK specifically notes that PaaS blurs the boundaries most — what the provider manages vs. what the customer configures in the platform varies significantly by provider.</p>
+
+        <h3>SaaS — Software as a Service</h3>
+        <p>The provider manages everything through the application layer. The customer's responsibility shrinks to: data governance, access management (who gets an account, what permissions they have), and how the application is configured (security settings the SaaS exposes). The customer does not manage the application code, the platform, or the infrastructure. Examples: Salesforce, Office 365, Google Workspace, ServiceNow. Critical CCSK point: even in SaaS, the customer retains responsibility for their data classification, data governance policies, and ensuring the SaaS meets their compliance obligations — the provider's certifications (SOC 2, ISO 27001) do not automatically satisfy the customer's compliance requirements.</p>
+
+        <table>
+          <tr>
+            <th>Layer</th>
+            <th>IaaS Customer</th>
+            <th>PaaS Customer</th>
+            <th>SaaS Customer</th>
+          </tr>
+          <tr><td>Physical / DC</td><td style="color:var(--ccsk)">Provider</td><td style="color:var(--ccsk)">Provider</td><td style="color:var(--ccsk)">Provider</td></tr>
+          <tr><td>Network / Storage</td><td style="color:var(--ccsk)">Provider</td><td style="color:var(--ccsk)">Provider</td><td style="color:var(--ccsk)">Provider</td></tr>
+          <tr><td>Hypervisor</td><td style="color:var(--ccsk)">Provider</td><td style="color:var(--ccsk)">Provider</td><td style="color:var(--ccsk)">Provider</td></tr>
+          <tr><td>OS / Runtime</td><td style="color:var(--accent3)">Customer</td><td style="color:var(--ccsk)">Provider</td><td style="color:var(--ccsk)">Provider</td></tr>
+          <tr><td>Middleware / App</td><td style="color:var(--accent3)">Customer</td><td style="color:var(--accent3)">Customer</td><td style="color:var(--ccsk)">Provider</td></tr>
+          <tr><td>Data</td><td style="color:var(--accent3)">Customer</td><td style="color:var(--accent3)">Customer</td><td style="color:var(--accent3)">Customer</td></tr>
+          <tr><td>Identity / Access</td><td style="color:var(--accent3)">Customer</td><td style="color:var(--accent3)">Customer</td><td style="color:var(--accent3)">Customer</td></tr>
+        </table>
+
+        <div class="callout tip">
+          <div class="callout-title">Exam Pattern: Shared Responsibility Questions</div>
+          <p>CCSK questions on shared responsibility typically present a scenario ("a company migrates their ERP to a SaaS provider — who is responsible for ensuring the data is encrypted at rest?") and test whether you correctly scope customer vs. provider responsibility for that service model. The trick: data and identity always remain customer responsibility in all models. The OS and runtime flip to provider in PaaS. Everything flips to provider in SaaS except data governance and access management.</p>
+        </div>
+
+        <h3>Deployment Models</h3>
+        <p>CCSK tests four cloud deployment models. <strong>Public cloud</strong>: infrastructure owned and operated by a cloud provider, shared among multiple tenants, resources provisioned on-demand. Security controls and isolation are the provider's responsibility. <strong>Private cloud</strong>: cloud infrastructure provisioned for a single organization, may be managed by that organization or a third party, on-premises or hosted. The organization retains more control but also more responsibility. <strong>Hybrid cloud</strong>: a composition of two or more distinct cloud infrastructures (private, community, or public) that remain unique entities but are bound together by standardized or proprietary technology enabling data and application portability. <strong>Community cloud</strong>: infrastructure shared by several organizations that have shared concerns (security requirements, policy, compliance). Often underestimated — relevant for government and regulated industry scenarios.</p>
+
+        <!-- ===================== DOMAIN 1 ===================== -->
+        <h2 id="d1">Domain 1 — Cloud Computing Concepts and Architectures</h2>
+
+        <p>Domain 1 establishes CSA's definitional baseline — the vocabulary the rest of the exam is built on. CSA adopts the NIST SP 800-145 definition of cloud computing (on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service) but extends it with its own reference architecture. For CCSK, knowing the NIST five essential characteristics, four deployment models, and three service models isn't optional — it's table stakes, and questions will test whether you recognize the CSA framing versus other frameworks.</p>
+
+        <p>The CSA Cloud Reference Architecture (a.k.a. the Enterprise Architecture for Cloud) is the key document here. It defines cloud computing along two axes: the service and deployment models. What CCSK specifically tests from Domain 1: the concept of the <strong>cloud trust boundary</strong> (where customer control ends and provider control begins), the difference between <strong>cloud bursting</strong> and simply running workloads in multiple clouds, and the concept of <strong>cloud brokers, carriers, auditors, and consumers</strong> as distinct roles in the cloud ecosystem. CSA's reference architecture layer cake — from physical hardware through virtualization, cloud service, orchestration, and up to the business application — defines how security controls map to each layer.</p>
+
+        <p>Also in Domain 1: CSA's framing of multitenancy security. In cloud, multiple customers share physical hardware. The isolation guarantees that prevent tenant A from accessing tenant B's data are the provider's responsibility (in IaaS, that's hypervisor isolation). But the <em>configuration</em> mistakes that expose data across tenants are often the customer's fault. CCSK wants you to understand that multitenancy is a fundamental cloud characteristic — not a risk to be eliminated but a condition to be secured against.</p>
+
+        <!-- ===================== DOMAIN 2 ===================== -->
+        <h2 id="d2">Domain 2 — Governance and Enterprise Risk Management</h2>
+
+        <p>Domain 2 maps cloud computing onto enterprise governance and risk management frameworks. For a sitting CISO, the content is familiar territory reframed for cloud. The key CCSK angle: governance structures and risk management processes designed for on-premises environments do not automatically extend to cloud. When you outsource infrastructure to a cloud provider, you do not outsource risk — you outsource certain controls while retaining accountability for outcomes. This is the governance tension CCSK wants you to articulate.</p>
+
+        <p>CSA specifically emphasizes that cloud contracts are the primary governance instrument. Unlike on-premises where you own and inspect everything, your leverage in cloud is contractual and audit-based. CCSK tests whether you know what governance artifacts a cloud relationship requires: a Cloud Service Agreement (CSA) that defines service levels and security commitments, a right-to-audit clause (or equivalent transparency mechanism), data handling obligations, breach notification requirements, and exit/portability provisions. The Cloud Controls Matrix (CCM) — CSA's control framework — is the instrument for specifying which controls exist and who owns them.</p>
+
+        <p>Risk management in Domain 2 focuses on cloud-specific risk categories: supply chain risk (you're inheriting your provider's risk posture), regulatory risk (data sovereignty, jurisdiction issues), operational risk (you lose direct control over infrastructure), and reputational risk (a provider breach affects you even if your controls were sound). CSA frames risk tolerance as the driver for cloud adoption decisions — not all workloads belong in public cloud, and the governance model must reflect those risk-based decisions.</p>
+
+        <!-- ===================== DOMAIN 3 ===================== -->
+        <h2 id="d3">Domain 3 — Legal Issues, Contracts and Electronic Discovery</h2>
+
+        <p>Domain 3 covers the legal dimension of cloud — an area where CCSK does not expect legal expertise but does expect security leaders to understand the risk surface. The core topics: data sovereignty (where is the data physically stored, and which jurisdiction's laws govern it?), privacy regulations (GDPR, CCPA, and their implications for cloud data processing), electronic discovery (how do you respond to a legal hold or litigation request when data lives in a multi-tenant cloud environment?), and contract due diligence.</p>
+
+        <p>CCSK is specific about e-discovery challenges in cloud. Traditional e-discovery assumes you can image a disk, freeze a server, or pull logs. In cloud, especially multi-tenant cloud, you typically cannot: you don't have physical access, your data may be commingled with other tenants' data at the storage layer, and the provider's terms may limit what forensic access they'll grant. CCSK wants you to know that e-discovery planning must be built into cloud contracts <em>before</em> you need it, not after a litigation hold arrives.</p>
+
+        <p>International considerations: data flows across borders in cloud by default. CCSK tests awareness that EU-US data transfers are governed by data transfer mechanisms (Standard Contractual Clauses, Binding Corporate Rules), that some jurisdictions require data to stay within national borders (data residency requirements), and that the provider's data center locations determine which law enforcement and government access regimes apply. The fact that your data is in AWS us-east-1 means US law — including the CLOUD Act — potentially applies.</p>
+
+        <!-- ===================== DOMAIN 4 ===================== -->
+        <h2 id="d4">Domain 4 — Compliance and Audit Management</h2>
+
+        <p>Domain 4 addresses how compliance obligations are met and audited in cloud environments. The CCSK-specific tension: your compliance obligations do not transfer to your cloud provider when you migrate. You retain accountability for SOX, HIPAA, PCI-DSS, or whatever regulatory regime applies to you. Your cloud provider's certifications (SOC 2 Type II, ISO 27001, FedRAMP, PCI-DSS QSA attestation) reduce your audit burden for the controls the provider manages — but only for those controls, and only if the provider's scope covers your workloads.</p>
+
+        <p>CSA's Cloud Controls Matrix (CCM) is the primary instrument for Domain 4. The CCM is a control framework specifically designed for cloud — 197 control objectives mapped to cloud service models, deployment models, and security domains. It also cross-maps to major compliance frameworks (ISO 27001, NIST CSF, PCI-DSS, HIPAA, SOC 2). CCSK tests whether you understand the CCM's structure and purpose: it's a tool for performing gap analysis, specifying control ownership in contracts, and assessing cloud provider posture. The STAR Registry is where providers self-disclose or get third-party assessed against the CCM — STAR Level 1 is self-assessment, Level 2 is third-party audit.</p>
+
+        <p>Audit in cloud requires rethinking traditional audit approaches. Right-to-audit clauses are rare with hyperscalers — AWS, Azure, and GCP don't let you walk their data centers. Instead, they provide third-party audit reports (SOC 2, ISO certs), compliance documentation, and service-specific configuration tools. CCSK wants you to understand that this changes the auditor's role: instead of direct inspection, you're reviewing provider attestations and verifying customer-side controls independently.</p>
+
+        <!-- ===================== DOMAIN 5 ===================== -->
+        <h2 id="d5">Domain 5 — Information Governance</h2>
+
+        <p>Domain 5 is where CSA frames data governance specifically for cloud. The anchor concept is the <strong>Data Security Lifecycle</strong> — CSA's six-phase model for how data moves through its useful life, and what security controls apply at each phase. This is one of the most directly tested frameworks in all of CCSK. Know the six phases cold: <strong>Create → Store → Use → Share → Archive → Destroy.</strong></p>
+
+        <p>For each phase, CCSK asks: where is the data? Who has access? What controls apply? Phase 1 (Create) includes data that's generated, received, or transformed — data classification decisions happen here. Phase 2 (Store) includes data at rest — encryption, access controls, backup. Phase 3 (Use) includes data being actively processed — runtime protection, memory security, DLP. Phase 4 (Share) includes data moved to another party — transmission security, access control, DLP at egress. Phase 5 (Archive) covers long-term retention — access controls over time, encryption key management for archived data. Phase 6 (Destroy) covers secure deletion — in cloud, this is complex because you don't control the physical media; CSA says cryptographic erasure (destroying the encryption keys) is the cloud-appropriate destruction mechanism.</p>
+
+        <p>Information governance in cloud also requires understanding data location awareness. You need to know where your data is (which region, which AZ), who can access it (provider staff, government subpoenas, other tenants), and how it's protected at each lifecycle phase. CSA's framing: data governance policies must be applied at creation and enforced throughout — you cannot retrofit governance onto data that's already in production without classification.</p>
+
+        <div class="callout info">
+          <div class="callout-title">Data Security Lifecycle — Exam Critical</div>
+          <p>Create &rarr; Store &rarr; Use &rarr; Share &rarr; Archive &rarr; Destroy. These are CSA's exact phase names. Questions will test the order, what controls apply at each phase, and specifically what "Destroy" means in cloud (cryptographic erasure, not physical destruction). Do not confuse this with NIST's data lifecycle or any other framework's version.</p>
+        </div>
+
+        <!-- ===================== DOMAIN 6 ===================== -->
+        <h2 id="d6">Domain 6 — Management Plane and Business Continuity</h2>
+
+        <p>Domain 6 covers what CSA calls the <strong>management plane</strong> — the cloud console, APIs, and administrative interfaces that control all cloud resources. This is one of the highest-leverage attack surfaces in cloud. Compromise of the management plane is equivalent to owning every system in the cloud account simultaneously. A stolen AWS root access key, an exposed Azure portal credential, or a compromised GCP service account with admin permissions gives an attacker the ability to exfiltrate data, destroy infrastructure, spin up cryptomining resources, and create backdoors — all through the cloud provider's own APIs.</p>
+
+        <p>CCSK specifically tests management plane security controls: MFA on all console accounts (especially root/owner accounts), use of IAM roles instead of long-lived access keys, limiting API key scope to least privilege, monitoring management plane activity through cloud-native audit logs (AWS CloudTrail, Azure Activity Log, GCP Cloud Audit Logs), and securing the CI/CD pipeline that deploys infrastructure-as-code. The management plane is also where privilege escalation paths in cloud differ from on-premises — in cloud, an IAM misconfiguration that grants a developer "iam:*" effectively grants them full admin, a path that doesn't exist in traditional AD environments.</p>
+
+        <p>Business continuity in cloud is the second major topic. CSA frames BCP/DR in cloud around the provider's availability zones and regions. Key concepts: AZ-level failures (rare but have happened), region-level failures (rarer but have occurred), provider-level outages (the 2021 AWS us-east-1 outage, the 2023 Azure AD outage). CCSK wants you to know that even in cloud, active-active multi-region DR requires customer design — it doesn't happen automatically. The provider guarantees their infrastructure is highly available within their SLAs; the customer is responsible for designing their architecture to meet their own RTO/RPO objectives.</p>
+
+        <!-- ===================== DOMAIN 7 ===================== -->
+        <h2 id="d7">Domain 7 — Infrastructure Security</h2>
+
+        <p>Domain 7 covers the security of cloud infrastructure components: compute, network, storage, and the management interfaces over them. The CCSK framing distinguishes between what the provider secures (physical hardware, the hypervisor, the physical network) and what the customer must secure (virtual network configuration, security groups, OS hardening, storage access policies). This is shared responsibility made concrete at the infrastructure layer.</p>
+
+        <p>Network security in cloud is fundamentally different from on-premises. Traditional perimeter security — the firewall at the edge of the data center — doesn't map directly to cloud. In cloud, your "network" is a software-defined construct. Security groups (AWS), Network Security Groups (Azure), and VPC firewall rules (GCP) are your perimeter. Microsegmentation is the cloud-native security model: every workload defines its own inbound/outbound rules. CCSK tests awareness that the east-west traffic monitoring problem is harder in cloud — traditionally you'd tap a switch; in cloud you need flow logs and virtual TAPs that may not capture all traffic.</p>
+
+        <p>Storage security is a persistent exam topic because storage misconfiguration is the most common cloud breach vector. S3 bucket public exposure, Azure Blob public access, GCP storage bucket ACLs — these are configuration mistakes made in the management plane. CCSK frames storage security around: access control (private by default, explicit grants), encryption at rest (provider-managed vs. customer-managed keys), and audit logging of data access. The key CCSK nuance: provider-managed encryption protects you if someone steals a physical disk, but not if they compromise your account credentials. Customer-managed keys (BYOK — Bring Your Own Key) add a separation of duties that protects against provider-side compromise.</p>
+
+        <!-- ===================== DOMAIN 8 ===================== -->
+        <h2 id="d8">Domain 8 — Virtualization and Containers</h2>
+
+        <p>Domain 8 covers the two core abstraction technologies of cloud: virtualization (hypervisors, VMs) and containers (Docker, Kubernetes). The security model differs substantially between them, and CCSK tests whether you understand how. Hypervisors provide strong isolation between VMs — different tenants' VMs running on the same physical host are isolated by the hypervisor layer (VMware ESXi, KVM, Hyper-V, AWS Nitro). The attack surface is hypervisor escape vulnerabilities — rare but catastrophic when they occur, and the provider is responsible for patching the hypervisor. The customer has no visibility into the hypervisor layer in public cloud.</p>
+
+        <p>Container security has a different threat model. Containers share the host OS kernel — there is no hypervisor-level isolation between containers running on the same host. If a container escape vulnerability is exploited, the attacker reaches the shared kernel. CCSK covers the container security controls: image hardening (minimal base images, no unnecessary packages, non-root users), image registry security (signing, scanning for vulnerabilities before deployment), runtime security (syscall filtering via seccomp, capability restrictions, read-only filesystems), and network policy (microsegmentation between pods/containers). Orchestration security — Kubernetes RBAC, API server access control, etcd encryption — is also in scope.</p>
+
+        <p>The key CCSK framing for Domain 8: neither VMs nor containers are inherently more secure — they have different security properties that require different controls. VMs offer stronger isolation but are heavier; containers offer faster deployment and density but share the kernel. The security architecture must match the risk posture. CSA recommends defense-in-depth for both: don't rely on isolation alone, apply controls at the image, runtime, and network layers.</p>
+
+        <!-- ===================== DOMAIN 9 ===================== -->
+        <h2 id="d9">Domain 9 — Incident Response</h2>
+
+        <p>Domain 9 addresses how incident response changes in cloud — and the changes are significant. On-premises IR assumes physical access to systems, the ability to image disks and capture memory, and full control over network forensics. In cloud, none of those assumptions hold. You cannot physically access a compromised EC2 instance. Volatile memory may not be capturable depending on the service. Logs may be incomplete if you didn't configure logging before the incident. And in a multi-tenant environment, provider-side forensics involve legal processes that can take weeks.</p>
+
+        <p>CSA frames cloud IR around preparation: you must configure logging, monitoring, and forensic capability before the incident occurs. Specifically: enable cloud provider audit logs (CloudTrail, Activity Log) and ship them to an immutable, separate account or SIEM. Configure VPC flow logs and DNS query logs. Define the incident response playbook for cloud-specific scenarios (account compromise, resource hijacking, data exfiltration via storage). Establish provider communication channels — know your provider's abuse reporting and security contact processes before you need them.</p>
+
+        <p>The shared environment complicates IR coordination. When an incident spans a cloud provider's infrastructure (e.g., a vulnerability in a shared hypervisor), the provider may be investigating simultaneously — you may get limited information about what they're doing. Evidence preservation is also harder: in cloud, spinning down a compromised instance may destroy volatile evidence, but leaving it running may allow continued attacker access. CSA recommends: snapshot the instance before isolation, preserve all logs, then isolate. The key exam concept: in cloud, IR capability must be designed in at provisioning time, not improvised during the incident.</p>
+
+        <!-- ===================== DOMAIN 10 ===================== -->
+        <h2 id="d10">Domain 10 — Application Security</h2>
+
+        <p>Domain 10 covers application security in cloud-native development contexts. The CCSK angle is not OWASP Top 10 (that's general AppSec knowledge) — it's how cloud changes the application security model. The key shifts: applications in cloud are typically distributed, microservices-based, and communicate over APIs rather than in-process calls. This changes the threat model substantially: API security, service-to-service authentication, and secrets management become primary concerns.</p>
+
+        <p>CSA emphasizes the concept of shifting security left — integrating security into the CI/CD pipeline rather than treating it as a gate at the end. In cloud-native development, the deployment velocity (dozens of deployments per day for some teams) makes traditional point-in-time security review impossible. CCSK tests awareness of SAST (static analysis in the build pipeline), DAST (dynamic testing against running environments), SCA (software composition analysis for open source dependencies), container image scanning, and IaC security scanning (detecting misconfigurations in Terraform, CloudFormation before deployment). The management plane connects here: if a developer's pipeline role has overly permissive IAM, a compromised pipeline becomes a cloud account compromise.</p>
+
+        <p>Secrets management is a specific Domain 10 topic. Hardcoded credentials in code repositories are responsible for a significant fraction of cloud breaches. CSA's recommended approach: use cloud-native secrets managers (AWS Secrets Manager, Azure Key Vault, GCP Secret Manager) with automatic rotation, federated identity for service-to-service authentication (no static credentials at all), and scanning repositories for accidentally committed secrets. CCSK also covers the specific risks of serverless (Lambda, Azure Functions) applications: the attack surface shifts to the function's IAM role and the event inputs — traditional network-based defenses don't apply.</p>
+
+        <!-- ===================== DOMAIN 11 ===================== -->
+        <h2 id="d11">Domain 11 — Data Security and Encryption</h2>
+
+        <p>Domain 11 is one of the most heavily tested domains. It covers encryption, key management, data residency, and cloud-specific data protection mechanisms. The core tension CCSK tests: encryption protects data, but only if you control the keys. Handing your encryption keys to your cloud provider gives you encryption against external attackers but not against the provider itself — or against government orders served to the provider. Customer-managed keys (BYOK or HYOK — Hold Your Own Key) shift key custody back to the customer, providing stronger separation of duties at the cost of more operational complexity.</p>
+
+        <p>Key management in cloud is a distinct discipline. CSA covers: cloud-native KMS (AWS KMS, Azure Key Vault, GCP Cloud KMS) for managing keys within the cloud environment; HSM-backed key management for high-assurance scenarios (AWS CloudHSM, Azure Dedicated HSM); BYOK where the customer generates keys outside the cloud and imports them; and HYOK where keys never leave the customer's on-premises HSM. The exam tests which model applies to which risk scenario — HYOK is appropriate when your threat model includes the cloud provider itself, BYOK is appropriate for separation of duties, provider-managed KMS is appropriate when the threat model is external attackers only.</p>
+
+        <p>Data in transit, at rest, and in use: CCSK covers all three states but specifically highlights data-in-use as an emerging area (confidential computing, encrypted enclaves). More practically tested: TLS configuration for data in transit (the customer is responsible for enforcing TLS in their application, not just relying on the load balancer terminating it), and encryption-at-rest defaults vs. customer-managed keys. Tokenization and data masking are also covered — CSA presents them as alternatives to encryption for specific use cases where the data must be processed by third parties (e.g., payment processing, analytics).</p>
+
+        <!-- ===================== DOMAIN 12 ===================== -->
+        <h2 id="d12">Domain 12 — Identity, Entitlement and Access Management</h2>
+
+        <p>Domain 12 is where cloud identity gets its own deep treatment. IAM in cloud is architecturally different from traditional enterprise identity. In on-premises environments, you have an AD domain, Kerberos, and LDAP. In cloud, identity is software-defined and global — a single IAM policy can grant access to resources spanning hundreds of accounts, regions, and services. The blast radius of a misconfigured IAM policy or compromised credential is correspondingly larger. CCSK frames cloud IAM around three core concepts: <strong>identity</strong> (who or what is requesting access), <strong>entitlement</strong> (what access is granted), and <strong>access management</strong> (how access is enforced and monitored).</p>
+
+        <p>Federated identity is central to cloud IAM. Most enterprises don't manage separate cloud identities — they federate their corporate IdP (Active Directory, Okta, Ping) to cloud providers using SAML or OIDC. CCSK tests the mechanics of federation: the IdP issues assertions (SAML tokens or OIDC JWT tokens), the cloud provider's IAM service trusts the IdP, and the user's cloud permissions are determined by role mappings in the cloud IAM configuration. The security risk in federation: if your IdP is compromised, every cloud account that trusts it is compromised. CCSK also covers service-to-service identity — in cloud, applications and services need identities too (AWS IAM roles, Azure Managed Identities, GCP Service Accounts), and over-privileged service identities are a primary privilege escalation path.</p>
+
+        <p>Privileged access in cloud is different from traditional PAM. The concept of a "root" account (AWS) or "Global Administrator" (Azure AD) in cloud has no direct on-premises equivalent — these are not just elevated accounts, they're accounts that can override all access controls, remove all guardrails, and change every configuration. CCSK emphasizes: root accounts should be unused day-to-day, protected with hardware MFA, and monitored for any use. Privileged access should be granted through just-in-time mechanisms (AWS IAM Identity Center, PIM in Azure AD) with session recording and automatic expiration. The broader CCSK principle: in cloud, identity is the new perimeter — network-based controls are insufficient without strong IAM.</p>
+
+        <!-- ===================== DOMAIN 13 ===================== -->
+        <h2 id="d13">Domain 13 — Security as a Service</h2>
+
+        <p>Domain 13 covers Security as a Service (SecaaS) — third-party security services delivered via the cloud. The category includes: Identity and Access Management as a Service (IAMaaS), Data Loss Prevention as a Service, Email Security as a Service, SIEM as a Service (cloud-native SIEM like Splunk Cloud, Microsoft Sentinel), Web Application Firewall as a Service (WAF), Vulnerability Assessment as a Service, and more. CCSK's framing is that these services follow the same shared responsibility logic as other SaaS — you consume the security capability but remain responsible for configuring it correctly and integrating it into your security program.</p>
+
+        <p>CSA published a SecaaS category guide that defines 10 categories of SecaaS. CCSK tests awareness of these categories and the security considerations for each. Key exam points: SecaaS providers have access to your security-sensitive data (logs, traffic, vulnerability data) — their security posture matters as much as the security the service provides. Evaluate SecaaS providers the same way you evaluate any cloud provider: look for SOC 2 Type II, ISO 27001, data handling agreements, and breach notification commitments. Also test: data portability when you switch providers, and whether the SecaaS provider's log access survives an incident involving your primary cloud provider.</p>
+
+        <p>Cloud Access Security Brokers (CASBs) are a SecaaS category that CCSK specifically covers in Domain 13. A CASB sits between users and cloud services, providing visibility, compliance enforcement, data security, and threat protection across cloud applications — both sanctioned and shadow IT. CCSK tests the three deployment modes: API-based (post-upload scanning, limited real-time control), forward proxy (user traffic goes through the CASB before reaching the cloud), and reverse proxy (traffic goes through the CASB after authentication but before the cloud service processes it). Each mode has different coverage and limitations.</p>
+
+        <!-- ===================== DOMAIN 14 ===================== -->
+        <h2 id="d14">Domain 14 — Related Technologies</h2>
+
+        <p>Domain 14 catches the emerging and specialized cloud security topics that don't fit neatly into the other domains: Big Data security, IoT in cloud, serverless (Functions as a Service), and the general principle of cloud-specific security for technologies that are often deployed in or enabled by cloud. CCSK does not go deep on any of these — Domain 14 is the most lightly weighted domain and tests broad awareness rather than detailed controls knowledge.</p>
+
+        <p>Big Data in cloud: Hadoop, Spark, data lakes on S3/GCS/ADLS. CCSK's framing: big data workloads aggregate data at scale, often combining multiple sources of varying sensitivity — the data governance challenges are the data security lifecycle applied at massive scale. Access control and encryption for data lakes (fine-grained authorization with tools like Apache Ranger) and the challenge of applying data classification consistently across petabyte-scale datasets. IoT in cloud: IoT devices often have constrained security capabilities, use cloud-based management planes (AWS IoT Core, Azure IoT Hub), and present a massive scale of potentially compromised endpoints that could be used to attack the cloud backend. CCSK frames IoT security around device identity, firmware signing, and the risk of cloud management plane compromise through IoT backends.</p>
+
+        <p>Serverless security is increasingly relevant. Functions-as-a-Service (Lambda, Azure Functions, GCP Cloud Functions) eliminate infrastructure management but shift the security surface. The function's IAM role is the attack target — an over-privileged Lambda function that can be triggered by an attacker-controlled event source becomes an IAM privilege escalation path. CCSK also covers the event injection attack: serverless functions often process untrusted input (S3 object metadata, SQS messages, API Gateway payloads) — the attacker controls the event data that triggers the function, making injection attacks (SQL injection via event parameters, SSRF via callback URLs in event data) a primary concern.</p>
+
+        <!-- ===================== DEEP DIVES ===================== -->
+        <h2 id="ccm">Cloud Controls Matrix (CCM) — Deep Dive</h2>
+
+        <p>The Cloud Controls Matrix is CSA's cloud-specific control framework, currently at version 4. It contains 197 control objectives organized into 17 control domains (not the same as the 14 exam domains — the CCM domains are more granular). Every control objective is mapped to: cloud service applicability (IaaS, PaaS, SaaS), cloud deployment type, and a responsibility matrix showing which controls are provider responsibilities, customer responsibilities, or shared. The CCM also cross-maps to major compliance frameworks: ISO 27001/27002, NIST CSF, NIST SP 800-53, PCI-DSS, HIPAA, SOC 2, FedRAMP, and others.</p>
+
+        <p>For CCSK, you need to understand the CCM's purpose and structure — not memorize all 197 controls. Key exam points: the CCM is used by customers to assess cloud provider posture (as a questionnaire — the CAIQ, the Consensus Assessments Initiative Questionnaire, is the CCM formatted as yes/no questions for providers to answer), by auditors to evaluate cloud security maturity, and by organizations to identify control gaps when migrating workloads to cloud. The STAR Registry is where providers publicly post their CAIQ responses and third-party audit results. STAR Level 1 is self-assessment (CAIQ). STAR Level 2 requires a third-party assessment against the CCM (similar to ISO 27001 certification). STAR Level 3 adds continuous monitoring.</p>
+
+        <h2 id="mgmt-plane">Management Plane — Why It's the Crown Jewel</h2>
+
+        <p>The management plane deserves its own deep dive because it cuts across nearly every CCSK domain. The management plane is the control layer of cloud: the AWS Console and CLI, the Azure Portal and ARM, the GCP Console and gcloud CLI, and all the APIs they expose. Everything that exists in your cloud environment was created through the management plane, can be modified through the management plane, and can be destroyed through the management plane. This is the highest-value target in cloud environments, bar none.</p>
+
+        <p>What makes management plane security different: in on-premises environments, compromising a server gives you that server. In cloud, compromising the management plane gives you everything. A single set of stolen admin credentials enables an attacker to enumerate all resources, exfiltrate all data, destroy all backups, create persistent backdoor accounts, and modify all security controls — through legitimate-looking API calls that may blend with normal operational traffic. CCSK wants you to know the defensive controls: enforce MFA on all human accounts, disable root API access entirely, use SCPs (Service Control Policies) or Azure Policy to enforce guardrails that even admins cannot override, rotate credentials automatically, and alert on any root account usage or privilege escalation.</p>
+
+        <h2 id="data-lifecycle">Data Security Lifecycle — Full Reference</h2>
+
+        <table>
+          <tr><th>Phase</th><th>Definition</th><th>Key Controls</th><th>Cloud Specifics</th></tr>
+          <tr>
+            <td><strong>1. Create</strong></td>
+            <td>Data is generated, received, modified, or copied</td>
+            <td>Data classification, labeling, DLP</td>
+            <td>Apply classification at input; API gateways enforce classification tagging</td>
+          </tr>
+          <tr>
+            <td><strong>2. Store</strong></td>
+            <td>Data is committed to a storage medium</td>
+            <td>Encryption at rest, access controls, backup</td>
+            <td>S3/Blob/GCS ACLs; customer-managed keys; versioning for ransomware resilience</td>
+          </tr>
+          <tr>
+            <td><strong>3. Use</strong></td>
+            <td>Data is actively accessed and processed</td>
+            <td>Memory protection, process isolation, DLP</td>
+            <td>Compute instance IAM roles; secrets management; no hardcoded creds</td>
+          </tr>
+          <tr>
+            <td><strong>4. Share</strong></td>
+            <td>Data is exchanged with other parties</td>
+            <td>TLS in transit, DLP at egress, access control</td>
+            <td>VPC flow logs; egress filtering; pre-signed URLs with expiration</td>
+          </tr>
+          <tr>
+            <td><strong>5. Archive</strong></td>
+            <td>Data moves to long-term storage</td>
+            <td>Retention controls, access restriction, key management</td>
+            <td>Glacier/Archive tiers; key rotation impacts archived data; lifecycle policies</td>
+          </tr>
+          <tr>
+            <td><strong>6. Destroy</strong></td>
+            <td>Data is permanently removed</td>
+            <td>Secure deletion, verification</td>
+            <td>Cryptographic erasure (destroy the key); provider data deletion SLAs; multi-tenant complication</td>
+          </tr>
+        </table>
+
+        <div class="callout danger">
+          <div class="callout-title">Destroy Phase Exam Trap</div>
+          <p>In cloud, you cannot guarantee physical destruction of storage media — you don't own the hardware. CSA's answer is <strong>cryptographic erasure</strong>: encrypt all data with customer-managed keys, then destroy the keys. The data becomes permanently unreadable even though the provider still holds the ciphertext. This is the correct CCSK answer to "how do you ensure data destruction in a cloud environment."</p>
+        </div>
+
+        <!-- ===================== EXAM MINDSET ===================== -->
+        <h2>CCSK Exam Mindset</h2>
+
+        <div class="callout exam">
+          <div class="callout-title">Calibration for a 25-Year CISO</div>
+          <p>You will instinctively reach for answers grounded in your operational experience. Some of those will be wrong on CCSK because CSA uses specific framings that differ from general security practice. The four most common traps:</p>
+          <ul>
+            <li><strong>Shared responsibility scope</strong> — Don't assume. Know exactly what shifts at IaaS/PaaS/SaaS boundaries.</li>
+            <li><strong>Data lifecycle phase names</strong> — CSA's six phases have specific names. "Disposal" is not the right word; "Destroy" is.</li>
+            <li><strong>Key management ownership</strong> — "The cloud encrypts my data" is incomplete. Who controls the keys determines who can decrypt.</li>
+            <li><strong>STAR levels</strong> — Know Level 1 (CAIQ self-assessment), Level 2 (third-party audit), Level 3 (continuous monitoring).</li>
+          </ul>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">Study Priority Order</div>
+          <p>Domains by exam weight and difficulty for an experienced CISO:</p>
+          <ul>
+            <li><strong>Master first:</strong> Domain 11 (Data/Encryption), Domain 12 (IAM), Domain 6 (Management Plane), Domain 5 (Info Gov + Data Lifecycle)</li>
+            <li><strong>Review carefully:</strong> Domain 1 (Concepts — CSA-specific vocabulary), Domain 4 (Compliance/CCM/STAR), Domain 9 (IR in cloud)</li>
+            <li><strong>Lighter touch:</strong> Domain 3 (Legal — awareness only), Domain 13 (SecaaS categories), Domain 14 (Emerging tech — broad awareness)</li>
+          </ul>
+        </div>
+
+        <!-- ===================== FLASHCARDS ===================== -->
+        <h2 id="flashcards">Flashcards</h2>
+        <p>Click to flip. Use arrow keys or buttons to navigate. Covers key CCSK terms, frameworks, and exam gotchas.</p>
+
+        <div id="fc-deck-ccsk">
+          <div class="flashcard-container">
+            <div class="flashcard">
+              <div class="flashcard-face front">
+                <div class="flashcard-label">CCSK Flashcard</div>
+                <div class="flashcard-text">Loading...</div>
+              </div>
+              <div class="flashcard-face back">
+                <div class="flashcard-label">Answer</div>
+                <div class="flashcard-answer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="flashcard-controls">
+            <button class="btn btn-sm" data-fc="prev">&#8592; Prev</button>
+            <span class="fc-counter">1 / 18</span>
+            <button class="btn btn-sm" data-fc="next">Next &#8594;</button>
+            <button class="btn btn-sm" data-fc="shuffle">Shuffle</button>
+          </div>
+        </div>
+
+        <!-- ===================== QUIZ ===================== -->
+        <h2 id="quiz">CCSK Practice Quiz</h2>
+        <p>10 questions covering key CCSK concepts. Tests CSA-specific framings, not just general cloud security knowledge.</p>
+        <div id="quiz-container"></div>
+
+        <!-- ===================== RESOURCES ===================== -->
+        <h2>Study Resources</h2>
+        <div class="grid-2" style="margin-top:1rem;">
+          <div class="card">
+            <h3>Primary Source Documents</h3>
+            <ul style="font-size:0.875rem;list-style:none;margin-top:0.75rem;">
+              <li style="margin-bottom:0.5rem;"><a href="https://cloudsecurityalliance.org/research/guidance" target="_blank">CSA Security Guidance v4</a> — the exam source document; download and bookmark</li>
+              <li style="margin-bottom:0.5rem;"><a href="https://www.enisa.europa.eu/publications/cloud-computing-risk-assessment" target="_blank">ENISA Cloud Risk Assessment</a> — second source document; lighter weight on exam</li>
+              <li style="margin-bottom:0.5rem;"><a href="https://cloudsecurityalliance.org/research/cloud-controls-matrix" target="_blank">CSA Cloud Controls Matrix v4</a> — know the structure and purpose</li>
+              <li><a href="https://cloudsecurityalliance.org/star" target="_blank">STAR Registry</a> — understand Level 1/2/3 distinctions</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Practice and Assessment</h3>
+            <ul style="font-size:0.875rem;list-style:none;margin-top:0.75rem;">
+              <li style="margin-bottom:0.5rem;"><a href="https://ccsk.cloudsecurityalliance.org" target="_blank">CSA CCSK Exam Portal</a> — official registration and token purchase</li>
+              <li style="margin-bottom:0.5rem;">CSA CCSK Study Guide — available from CSA website with exam purchase</li>
+              <li style="margin-bottom:0.5rem;">CSA CCSK Free Training — online training modules at cloudsecurityalliance.org/education</li>
+              <li>Boson ExSim for CCSK — third-party practice questions; most accurate mock exam available</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /study-content -->
+    </div><!-- /main-content -->
+
+    <div class="sidebar">
+      <div class="card">
+        <h4>Quick Reference</h4>
+        <ul>
+          <li>60 questions</li>
+          <li>90 minutes</li>
+          <li>~80% passing (48/60)</li>
+          <li>Open-book</li>
+          <li>14 domains</li>
+          <li>No experience req</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Domains</h4>
+        <ul>
+          <li><a href="#d1">D1: Concepts &amp; Architecture</a></li>
+          <li><a href="#d2">D2: Governance &amp; Risk</a></li>
+          <li><a href="#d3">D3: Legal &amp; eDiscovery</a></li>
+          <li><a href="#d4">D4: Compliance &amp; Audit</a></li>
+          <li><a href="#d5">D5: Information Governance</a></li>
+          <li><a href="#d6">D6: Management Plane</a></li>
+          <li><a href="#d7">D7: Infrastructure</a></li>
+          <li><a href="#d8">D8: Virtualization</a></li>
+          <li><a href="#d9">D9: Incident Response</a></li>
+          <li><a href="#d10">D10: Application Security</a></li>
+          <li><a href="#d11">D11: Data &amp; Encryption</a></li>
+          <li><a href="#d12">D12: IAM</a></li>
+          <li><a href="#d13">D13: SecaaS</a></li>
+          <li><a href="#d14">D14: Related Tech</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Key CSA Frameworks</h4>
+        <ul>
+          <li>Shared Responsibility Model</li>
+          <li>Data Security Lifecycle (6)</li>
+          <li>Cloud Controls Matrix v4</li>
+          <li>STAR Registry (L1/L2/L3)</li>
+          <li>CAIQ (self-assessment)</li>
+          <li>CSA Reference Architecture</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Source Documents</h4>
+        <ul>
+          <li><a href="https://cloudsecurityalliance.org/research/guidance" target="_blank">CSA Guidance v4</a></li>
+          <li><a href="https://www.enisa.europa.eu/publications/cloud-computing-risk-assessment" target="_blank">ENISA Risk Assessment</a></li>
+          <li><a href="https://cloudsecurityalliance.org/research/cloud-controls-matrix" target="_blank">CCM v4</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Other Certifications</h4>
+        <ul>
+          <li><a href="../cism/index.html" class="cism-link">CISM — ISACA</a></li>
+          <li><a href="../cobit/index.html" class="cobit-link">COBIT — ISACA</a></li>
+          <li><a href="../cissp/index.html" class="cissp-link">CISSP — ISC²</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /layout-sidebar -->
+
+</div><!-- /container -->
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; Personal Study System &nbsp;·&nbsp; Started March 28, 2026
+</footer>
+
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/flashcards.js"></script>
+<script src="../assets/js/quiz.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ===================== FLASHCARDS =====================
+  const ccskCards = [
+    {
+      front: "What are the six phases of CSA's Data Security Lifecycle?",
+      back: "<strong>Create → Store → Use → Share → Archive → Destroy</strong><br><br>In cloud, 'Destroy' is achieved via <em>cryptographic erasure</em> — destroying the encryption keys rather than physical media destruction, because the customer does not own or control the underlying hardware."
+    },
+    {
+      front: "In IaaS, PaaS, and SaaS — which layers always remain the customer's responsibility regardless of service model?",
+      back: "<strong>Data and Identity/Access Management</strong> are always customer responsibilities across all three service models. Even in SaaS, the customer controls who has accounts, what permissions they hold, and how the data is classified and governed. The provider manages everything else in SaaS."
+    },
+    {
+      front: "What is the CSA STAR Registry and what are its three levels?",
+      back: "<strong>STAR = Security, Trust, Assurance and Risk Registry</strong><br><br><strong>Level 1:</strong> Self-assessment — provider completes the CAIQ (Consensus Assessments Initiative Questionnaire) against the CCM. Publicly posted, no independent verification.<br><br><strong>Level 2:</strong> Third-party assessment — independent auditor verifies CCM compliance (similar to ISO 27001 audit).<br><br><strong>Level 3:</strong> Continuous monitoring — automated, ongoing attestation of security controls."
+    },
+    {
+      front: "What is the Cloud Controls Matrix (CCM) and how is it used?",
+      back: "CSA's cloud-specific control framework with <strong>197 control objectives</strong> across 17 domains. Used for:<br><br>• <strong>Customer:</strong> Gap analysis when migrating to cloud; specifying control ownership in contracts<br>• <strong>Auditor:</strong> Assessing cloud provider security maturity<br>• <strong>Provider:</strong> Self-disclosure via CAIQ (STAR Level 1)<br><br>Cross-maps to ISO 27001, NIST CSF, PCI-DSS, HIPAA, SOC 2, FedRAMP."
+    },
+    {
+      front: "What is the difference between BYOK and HYOK in cloud key management?",
+      back: "<strong>BYOK (Bring Your Own Key):</strong> Customer generates the encryption key outside the cloud and imports it into the provider's KMS. The key lives in the provider's KMS service but was generated by the customer. Protects against misconfiguration; does NOT fully protect against provider-side legal orders.<br><br><strong>HYOK (Hold Your Own Key):</strong> Keys never leave the customer's on-premises HSM. The cloud provider never has possession of the key material. Highest separation of duties — appropriate when threat model includes the cloud provider itself."
+    },
+    {
+      front: "What makes the cloud management plane uniquely dangerous compared to on-premises admin access?",
+      back: "In on-premises environments, compromising one admin account typically compromises one system or segment. <strong>In cloud, compromising the management plane compromises everything simultaneously</strong> — all resources, all regions, all data — via legitimate-looking API calls.<br><br>An attacker with stolen cloud admin credentials can: enumerate all resources, exfiltrate all data, destroy all backups, create persistent backdoor accounts, and disable all security controls — without ever touching an operating system."
+    },
+    {
+      front: "What is cryptographic erasure and when does CSA say it should be used?",
+      back: "Cryptographic erasure (a.k.a. crypto-shredding) means <strong>destroying the encryption keys</strong> rather than destroying the physical storage media. The ciphertext remains on disk, but without the keys it is permanently unreadable.<br><br>CSA says this is the <strong>correct destruction method in cloud</strong> because customers do not own or control the physical hardware. The provider's media disposal processes may not satisfy the customer's data destruction requirements, but destroying the keys achieves the same security outcome."
+    },
+    {
+      front: "What are the four cloud deployment models and when is each appropriate?",
+      back: "<strong>Public Cloud:</strong> Multi-tenant, provider-owned, on-demand. Maximum elasticity, minimum customer control.<br><br><strong>Private Cloud:</strong> Single-tenant, may be on-prem or hosted. More control, more responsibility, less elasticity.<br><br><strong>Hybrid Cloud:</strong> Combination of public and private, interoperable. Workload portability between environments.<br><br><strong>Community Cloud:</strong> Shared infrastructure for organizations with common concerns (regulatory, mission). Common in government and healthcare."
+    },
+    {
+      front: "What are the three CASB deployment modes and their trade-offs?",
+      back: "<strong>API Mode:</strong> Connects to cloud services via API post-event. Scans data already uploaded. No real-time inline blocking for uploads; good for discovering existing data and enforcing policies at rest.<br><br><strong>Forward Proxy:</strong> Users route through the CASB before reaching the cloud. Inline; can block in real-time. Requires endpoint agent or PAC file configuration.<br><br><strong>Reverse Proxy:</strong> After authentication, traffic routes through CASB before reaching the service. No endpoint agent required; works for any device. Limited to services that support IdP-based auth chaining."
+    },
+    {
+      front: "In cloud incident response, what must be done before an incident occurs to enable effective response?",
+      back: "CSA emphasizes IR capability must be <strong>designed in at provisioning time</strong>, not improvised during the incident. Specifically:<br><br>• Enable cloud audit logs (CloudTrail, Azure Activity Log) and ship to an immutable, separate account<br>• Enable VPC/network flow logs<br>• Define IR playbooks for cloud-specific scenarios (account compromise, storage exfiltration, resource hijacking)<br>• Establish provider communication channels (abuse/security contacts)<br>• Test evidence collection procedures (snapshot before isolation)"
+    },
+    {
+      front: "What does CSA say about e-discovery in cloud, and why is it challenging?",
+      back: "Traditional e-discovery assumes physical access to systems and isolated media. In cloud:<br><br>• You cannot image a server (no physical access)<br>• Data may be <strong>commingled with other tenants' data</strong> at the storage layer<br>• Provider forensic access requires legal process (can take weeks)<br>• Log completeness depends on pre-incident configuration<br><br>CSA's answer: <strong>negotiate e-discovery provisions in contracts before you need them</strong>, configure comprehensive logging from day one, and document where data lives across regions/services."
+    },
+    {
+      front: "How does container security differ from VM security, and what does CSA emphasize?",
+      back: "VMs are isolated by the <strong>hypervisor</strong> — different tenants' VMs on the same host cannot access each other's memory. Strong isolation; attack surface is hypervisor escape (rare, provider responsibility to patch).<br><br>Containers share the <strong>host OS kernel</strong> — no hypervisor isolation. A container escape vulnerability reaches the shared kernel. Controls required:<br><br>• Image hardening (minimal base, non-root users)<br>• Registry security (scanning, signing)<br>• Runtime security (seccomp, capabilities, read-only FS)<br>• Network policy (pod-level microsegmentation)<br>• Kubernetes RBAC and API server security"
+    },
+    {
+      front: "What is federated identity in cloud and what is the primary security risk?",
+      back: "Federated identity means the corporate IdP (AD, Okta, Ping) issues authentication assertions (SAML tokens or OIDC JWTs) that cloud providers trust, so users authenticate to corporate identity and are granted cloud access based on group/role mappings.<br><br><strong>Primary risk:</strong> If the corporate IdP is compromised, <em>every cloud account that trusts it is compromised simultaneously</em>. The IdP becomes the crown jewel — a single identity plane controlling all cloud access. MFA at the IdP level and anomaly detection on federation events are critical controls."
+    },
+    {
+      front: "What compliance obligation transfers to the cloud provider when you migrate to SaaS?",
+      back: "<strong>None. Zero.</strong><br><br>Your compliance obligations (SOX, HIPAA, PCI-DSS, GDPR) remain yours regardless of where the workload runs. The provider's certifications (SOC 2, ISO 27001, PCI-DSS QSA attestation) reduce your audit burden for the controls <em>the provider manages</em> — but only for those controls, and only if their scope covers your workloads.<br><br>You must verify scope, review the provider's audit reports, and demonstrate that your customer-side controls satisfy the remaining compliance requirements. Your compliance team still has to sign off."
+    },
+    {
+      front: "What are the NIST five essential characteristics of cloud computing that CSA adopts?",
+      back: "From NIST SP 800-145, CSA adopts these five as definitional:<br><br>1. <strong>On-demand self-service</strong> — provision without human provider interaction<br>2. <strong>Broad network access</strong> — accessible over the network via standard mechanisms<br>3. <strong>Resource pooling</strong> — multi-tenant model, dynamic assignment<br>4. <strong>Rapid elasticity</strong> — scale out and in, appears unlimited to the consumer<br>5. <strong>Measured service</strong> — metered, pay-per-use, transparent utilization reporting"
+    },
+    {
+      front: "What is the CAIQ and how does it relate to STAR Level 1?",
+      back: "The <strong>Consensus Assessments Initiative Questionnaire (CAIQ)</strong> is the Cloud Controls Matrix formatted as a set of yes/no questions that cloud providers answer to disclose their security controls.<br><br>STAR Level 1 = a provider publishes their completed CAIQ on the CSA STAR Registry. It is <strong>self-assessment only</strong> — no independent verification. It provides transparency but not assurance. Customers use it to compare providers or identify gaps before requiring a Level 2 assessment."
+    },
+    {
+      front: "In serverless (FaaS), what shifts in the security threat model and what are the primary attack vectors?",
+      back: "In serverless, you don't manage the OS, runtime, or server. The attack surface shifts to:<br><br>1. <strong>IAM role of the function</strong> — an over-privileged Lambda/Function role is a privilege escalation path. The function's role should follow least privilege strictly.<br>2. <strong>Event injection</strong> — the function processes untrusted event data (S3 metadata, SQS messages, API Gateway payloads). Injection attacks (SQLi, SSRF, command injection) via event inputs.<br>3. <strong>Third-party dependencies</strong> — supply chain risk in function packages<br><br>Traditional network-based controls (VPC perimeter, WAF) don't protect function-to-function calls by default."
+    },
+    {
+      front: "What data security lifecycle phase is most complex in cloud, and why?",
+      back: "<strong>Destroy</strong> is the most cloud-specific challenge.<br><br>In on-premises environments, you physically destroy or degauss media. In cloud, you do not own the hardware — the provider controls media disposal. You cannot guarantee that your data's physical storage is destroyed to your standards.<br><br>CSA's solution: <strong>cryptographic erasure</strong>. All data should be encrypted with customer-managed keys from creation. Destroying the keys renders all copies of the data permanently unreadable, even if the provider retains physical media. This requires that key management is in the customer's control from the start — you cannot retrofit cryptographic erasure if provider-managed keys were used."
+    }
+  ];
+
+  new FlashcardDeck(ccskCards, 'fc-deck-ccsk');
+
+  // ===================== QUIZ =====================
+  const ccskQuestions = [
+    {
+      q: "A company migrates their CRM to a SaaS provider that holds ISO 27001 and SOC 2 Type II certifications. The company is subject to GDPR. Which of the following correctly describes the post-migration compliance posture?",
+      options: [
+        "The company's GDPR obligations are satisfied by the provider's ISO 27001 certification.",
+        "The company retains GDPR accountability for data subject rights, data governance, and access management, even though the provider manages the platform.",
+        "The provider assumes GDPR compliance obligations for all personal data processed in the SaaS platform.",
+        "The company can remove GDPR from scope by documenting reliance on the provider's SOC 2 report."
+      ],
+      answer: 1,
+      explanation: "In any service model, the customer retains accountability for their compliance obligations. The provider's certifications cover the controls the provider manages — they do not transfer the customer's regulatory obligations. Under GDPR, the company remains the data controller; the SaaS provider is a data processor. Data subject rights, lawful basis for processing, access management, and data governance remain the customer's responsibility."
+    },
+    {
+      q: "An organization wants to ensure that data stored in a cloud provider's object storage cannot be recovered after deletion, even if the provider's storage media is later seized. What is the CSA-recommended approach?",
+      options: [
+        "Request a certificate of destruction from the cloud provider after deleting the data.",
+        "Use secure deletion APIs provided by the cloud storage service.",
+        "Use customer-managed encryption keys throughout the data lifecycle and destroy the keys when the data should be destroyed.",
+        "Ensure the data is stored in a region with strong data sovereignty laws that require provider-side media destruction."
+      ],
+      answer: 2,
+      explanation: "CSA recommends cryptographic erasure as the cloud-appropriate data destruction mechanism. Because customers do not control physical media, physical destruction guarantees are not available. By encrypting all data with customer-managed keys (BYOK or HYOK) and then destroying those keys, the ciphertext remaining on provider media becomes permanently unreadable — effectively destroying the data regardless of the physical media's fate."
+    },
+    {
+      q: "In the CSA Data Security Lifecycle, which phase covers data being actively queried, modified, or processed in memory by an application?",
+      options: [
+        "Store",
+        "Share",
+        "Use",
+        "Create"
+      ],
+      answer: 2,
+      explanation: "The 'Use' phase covers data being actively accessed and processed — in memory, by applications, in real-time. The key security concerns at this phase include memory protection, process isolation, runtime DLP, and secrets management. 'Store' covers data at rest; 'Share' covers data being transmitted to another party; 'Create' covers the initial generation or receipt of data."
+    },
+    {
+      q: "A cloud provider holds PCI-DSS QSA attestation for their IaaS platform. A retail company uses this provider to host their payment processing application. Which of the following is most accurate?",
+      options: [
+        "The retail company's cardholder data environment is automatically in scope for PCI-DSS compliance based on the provider's attestation.",
+        "The retail company is exempt from PCI-DSS requirements for all systems hosted on the PCI-compliant IaaS.",
+        "The provider's PCI-DSS attestation covers the infrastructure layer; the retail company remains responsible for their application, OS security, and data handling controls.",
+        "The retail company should remove PCI-DSS from their assessment scope and rely entirely on the provider's documentation."
+      ],
+      answer: 2,
+      explanation: "The shared responsibility model determines which PCI-DSS controls apply to the provider vs. the customer. The provider's PCI-DSS attestation covers their scope — physical security, hypervisor, network infrastructure. In IaaS, the customer owns the OS, application, and data — all of which have PCI-DSS requirements that the customer must satisfy independently. The customer's QSA will require documentation of both the provider's controls and the customer's own."
+    },
+    {
+      q: "Which STAR Registry level requires a third-party independent assessment of a cloud provider's security controls against the Cloud Controls Matrix?",
+      options: [
+        "STAR Level 1 — Self-Assessment",
+        "STAR Level 2 — Third-Party Assessment",
+        "STAR Level 3 — Continuous Monitoring",
+        "STAR is a self-assessment program only; third-party verification is handled separately through ISO 27001."
+      ],
+      answer: 1,
+      explanation: "STAR Level 2 requires an independent third-party audit of the provider against the CCM. This is analogous to obtaining ISO 27001 certification from an accredited certification body — an external auditor verifies the provider's security posture. STAR Level 1 is self-assessment via the CAIQ with no independent verification. STAR Level 3 adds continuous automated monitoring attestation on top of the Level 2 foundation."
+    },
+    {
+      q: "An attacker gains access to a cloud account's management plane credentials. Compared to gaining similar admin access to a single on-premises server, the impact is most likely:",
+      options: [
+        "Similar — administrative access gives the same level of control in both environments.",
+        "Lower — cloud providers enforce additional controls that limit what compromised credentials can access.",
+        "Significantly higher — management plane access in cloud enables control over all resources, all regions, and all data simultaneously through legitimate API calls.",
+        "Higher only if the attacker knows the specific service APIs; otherwise access is limited."
+      ],
+      answer: 2,
+      explanation: "Management plane compromise in cloud is uniquely catastrophic because a single credential set controls the entire cloud environment — all regions, all services, all data. Unlike on-premises where admin access to one server affects that server, cloud management plane access allows an attacker to enumerate all resources, exfiltrate all data, destroy all backups, create persistent backdoor accounts, and disable security controls — all via legitimate-looking API calls that may not be distinguished from normal administrative activity."
+    },
+    {
+      q: "A security team discovers an employee's S3 bucket containing sensitive customer data was publicly accessible for 30 days. The data was not encrypted. In terms of the CSA shared responsibility model for IaaS, what is the most accurate assessment?",
+      options: [
+        "This is a provider failure — the provider should have prevented public bucket access.",
+        "This is a customer failure — in IaaS, access control configuration for storage is the customer's responsibility.",
+        "Responsibility is shared equally — the provider should have warned the customer about the public configuration.",
+        "This is a provider failure because storage security is below the hypervisor layer."
+      ],
+      answer: 1,
+      explanation: "In IaaS, the customer is responsible for configuring access controls on storage resources — S3 bucket policies, ACLs, and public access blocks are customer-managed configurations. The provider is responsible for the storage infrastructure itself (hardware, durability, availability), not for enforcing customer-specific access control policies. AWS does provide warnings for public buckets (since 2018), but the configuration responsibility — and therefore the failure — is the customer's."
+    },
+    {
+      q: "Which cloud IAM scenario presents the highest risk of widespread account compromise in federated identity architectures?",
+      options: [
+        "A single service account with read-only access to one production database is compromised.",
+        "The corporate IdP that issues SAML assertions trusted by all cloud accounts is compromised.",
+        "A developer's personal IAM user with S3 read access to one bucket is compromised.",
+        "A cloud provider's IAM service experiences a brief outage affecting authentication."
+      ],
+      answer: 1,
+      explanation: "In federated identity, the corporate IdP is the trust anchor for all cloud accounts. Every cloud account that trusts the IdP will honor assertions issued by it. Compromising the IdP means an attacker can forge SAML assertions or OIDC tokens to impersonate any identity — including cloud administrators — across every cloud account in the federation simultaneously. This is why CSA emphasizes that the IdP itself becomes the highest-value security target in a cloud-first environment."
+    },
+    {
+      q: "An organization deploying containerized workloads in cloud asks whether containers or VMs provide stronger tenant isolation. What is the CSA-aligned answer?",
+      options: [
+        "Containers provide stronger isolation because they are more lightweight and easier to restart.",
+        "VMs provide stronger isolation because the hypervisor creates hardware-enforced barriers that containers, which share the host kernel, do not provide.",
+        "Isolation is equivalent between VMs and containers if the orchestration platform is properly configured.",
+        "Neither provides isolation; cloud multi-tenancy depends entirely on network segmentation."
+      ],
+      answer: 1,
+      explanation: "VMs are isolated by the hypervisor — a software (or hardware-assisted) layer that prevents one VM from accessing another's memory, even on the same physical host. Containers share the host OS kernel; there is no hypervisor-level boundary between containers. A container escape vulnerability allows an attacker to reach the kernel and potentially access other containers on the same host. CSA is clear: VMs provide stronger isolation boundaries than containers. This doesn't make containers wrong to use — just that additional controls (seccomp, AppArmor, network policy) are required to compensate."
+    },
+    {
+      q: "What does CSA specifically recommend for responding to a security incident involving a compromised cloud compute instance, to preserve forensic evidence before isolation?",
+      options: [
+        "Immediately terminate the instance to prevent further data access by the attacker.",
+        "Snapshot the instance and preserve all relevant logs before isolating the instance from the network.",
+        "Contact the cloud provider's security team first and await their forensic instructions before taking any action.",
+        "Restore the instance from the last known-good backup and document the restoration as the IR response."
+      ],
+      answer: 1,
+      explanation: "CSA's IR guidance for cloud: snapshot the compromised instance before isolation to preserve volatile state and file system evidence, then preserve all relevant logs (cloud audit logs, application logs, network flow logs), then isolate the instance from the network. Immediately terminating destroys forensic evidence. Waiting for provider guidance loses critical response time. Restoring from backup without forensic preservation eliminates the ability to understand the attack scope and vector."
+    }
+  ];
+
+  new Quiz(ccskQuestions, 'quiz-container', 'ccsk_overview');
+
+});
+</script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

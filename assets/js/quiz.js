@@ -1,14 +1,17 @@
 /* =============================================
-   QUIZ ENGINE
+   QUIZ ENGINE — CISO CERT TRACK
+   Scoring, explanations, celebrations, badges
    ============================================= */
 
 class Quiz {
-  constructor(questions, containerId, quizId) {
+  constructor(questions, containerId, quizId, opts = {}) {
     this.questions = this.shuffle([...questions]);
     this.container = document.getElementById(containerId);
     this.quizId = quizId;
+    this.domainName = opts.domainName || 'Quiz';
     this.answers = {};
     this.submitted = false;
+    this.startTime = Date.now();
     this.init();
   }
 
@@ -45,17 +48,16 @@ class Quiz {
     `).join('');
 
     this.container.innerHTML = html + `
-      <div style="text-align:center;margin-top:1.5rem;">
+      <div style="text-align:center;margin-top:1.5rem;display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
         <button class="btn btn-primary" id="quiz-submit">Submit Answers</button>
-        <button class="btn" id="quiz-reset" style="margin-left:0.5rem;display:none;">Reset</button>
+        <button class="btn" id="quiz-reset" style="display:none;">Try Again</button>
       </div>
       <div class="quiz-score" id="quiz-score" style="display:none;margin-top:1.5rem;"></div>
     `;
 
     this.container.querySelectorAll('.quiz-option').forEach(el => {
-      el.addEventListener('click', () => this.select(parseInt(el.dataset.qi), parseInt(el.dataset.oi)));
+      el.addEventListener('click', () => this.select(+el.dataset.qi, +el.dataset.oi));
     });
-
     document.getElementById('quiz-submit')?.addEventListener('click', () => this.submit());
     document.getElementById('quiz-reset')?.addEventListener('click', () => this.reset());
   }
@@ -68,53 +70,69 @@ class Quiz {
     qEl.querySelectorAll('.quiz-option')[oi].classList.add('selected');
   }
 
-  submit() {
+  async submit() {
     if (this.submitted) return;
+    const unanswered = this.questions.length - Object.keys(this.answers).length;
+    if (unanswered > 0) {
+      if (!confirm(`${unanswered} question(s) unanswered. Submit anyway?`)) return;
+    }
     this.submitted = true;
 
+    const timeTaken = Math.round((Date.now() - this.startTime) / 1000);
     let correct = 0;
+
     this.questions.forEach((q, qi) => {
       const opts = document.getElementById(`q-${qi}`).querySelectorAll('.quiz-option');
       const chosen = this.answers[qi];
       const right = q.answer;
-
       opts.forEach((o, oi) => {
         if (oi === right) o.classList.add('correct');
         else if (oi === chosen && chosen !== right) o.classList.add('incorrect');
       });
-
       if (chosen === right) correct++;
-
       const exp = document.getElementById(`exp-${qi}`);
       if (exp) exp.classList.add('visible');
     });
 
     const pct = Math.round(correct / this.questions.length * 100);
-    const passed = pct >= 75;
+    const passed = pct >= 80;
+    const mins = Math.floor(timeTaken / 60);
+    const secs = timeTaken % 60;
+    const timeStr = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
 
     const scoreEl = document.getElementById('quiz-score');
     if (scoreEl) {
       scoreEl.style.display = 'block';
       scoreEl.innerHTML = `
         <div class="score-number ${passed ? 'pass' : 'fail'}">${pct}%</div>
-        <p style="margin-top:0.5rem;color:var(--text-muted);">${correct} / ${this.questions.length} correct</p>
-        <p style="font-size:0.85rem;margin-top:0.25rem;color:${passed ? 'var(--accent2)' : 'var(--accent4)'}">
-          ${passed ? '✓ Passing score (75%+)' : '✗ Below passing. Review weak areas and retry.'}
+        <p style="margin-top:0.5rem;color:var(--text-muted);">
+          ${correct} / ${this.questions.length} correct &nbsp;·&nbsp; ${timeStr}
+        </p>
+        <p style="font-size:0.875rem;margin-top:0.25rem;color:${passed ? 'var(--accent2)' : 'var(--accent4)'}">
+          ${passed ? '✓ Passed (80%+ gate)' : '✗ Below 80% — review weak areas and retry'}
         </p>
       `;
     }
 
     document.getElementById('quiz-submit').style.display = 'none';
-    const resetBtn = document.getElementById('quiz-reset');
-    if (resetBtn) resetBtn.style.display = 'inline-flex';
+    const rb = document.getElementById('quiz-reset');
+    if (rb) rb.style.display = 'inline-flex';
 
-    // Save score
-    if (typeof saveQuizScore === 'function') saveQuizScore(this.quizId, correct, this.questions.length);
+    // Save to IndexedDB
+    if (typeof CertDB !== 'undefined') {
+      await CertDB.saveQuizScore(this.quizId, correct, this.questions.length);
+    }
+
+    // Celebrations
+    if (typeof celebrateQuizPass === 'function') {
+      celebrateQuizPass(pct, this.domainName);
+    }
   }
 
   reset() {
     this.answers = {};
     this.submitted = false;
+    this.startTime = Date.now();
     this.questions = this.shuffle([...this.questions]);
     this.render();
   }

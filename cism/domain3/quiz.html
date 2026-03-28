@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain 3 Quiz — CISM</title>
+<link rel="stylesheet" href="../../assets/css/style.css">
+<script src="../../assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../../login.html'); }
+})();
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Dashboard</a></li>
+    <li><a href="../../schedule.html">Schedule</a></li>
+    <li><a href="../index.html" class="cism-link active">CISM</a></li>
+    <li><a href="../../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container-narrow">
+
+  <div class="hero">
+    <h1><span style="color:var(--cism);">Sec Program</span> — Practice Quiz</h1>
+    <p>Information Security Program · 30 questions · Target: 80%+</p>
+  </div>
+
+  <div class="domain-nav" style="margin-bottom:1.5rem;">
+    <a href="../index.html">CISM Overview</a>
+    <a href="../domain1/index.html">Governance</a>
+    <a href="../domain2/index.html">Risk Mgmt</a>
+    <a href="index.html">Study Guide</a>
+    <a href="flashcards.html">Flashcards</a>
+    <a href="quiz.html" class="active">Quiz</a>
+  </div>
+
+  <div class="callout info" style="margin-bottom:1.5rem;">
+    <div class="callout-title">Quiz Rules</div>
+    <p>30 CISM-style scenario questions. Select your answer, then click Submit when done. Read every explanation — even for questions you got right. Scoring below 80%? Re-read the relevant study guide sections before retrying.</p>
+  </div>
+
+  <div id="quiz-container"></div>
+
+  <div style="margin-top:2rem;display:flex;gap:1rem;">
+    <a href="flashcards.html" class="btn">← Flashcards</a>
+    <a href="../domain4/index.html" class="btn">Next: Domain 4 →</a>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CISM Domain 3 Quiz
+</footer>
+
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+<script>
+const questions = [
+  {
+    q: "A newly appointed CISO joins an organization that has no formal security program. Stakeholders are requesting immediate deployment of a SIEM and endpoint detection tools. What should the CISO do FIRST?",
+    options: [
+      "Procure and deploy the SIEM and EDR tools as requested to address immediate threats",
+      "Conduct a current state assessment and develop a security program strategy",
+      "Draft an information security policy to establish organizational requirements",
+      "Hire additional security analysts to staff the new tools"
+    ],
+    answer: 1,
+    explanation: "The first action for a new CISO building a program is always current state assessment followed by strategy development. Tools without strategy create operational noise rather than security value. You cannot make sound investment decisions without understanding the risk landscape, gaps, and business priorities first."
+  },
+  {
+    q: "A CISO is developing a security program charter to present to the CEO. Which element is MOST critical to include in this document?",
+    options: [
+      "A list of technical controls the security team will implement",
+      "The annual budget request for the security program",
+      "The formal authority, scope, and reporting structure of the security function",
+      "A compliance matrix mapping regulations to control requirements"
+    ],
+    answer: 2,
+    explanation: "The charter's primary purpose is to establish organizational authority and legitimacy for the security function. Without formally documented authority, scope, and reporting structure, the CISO has no mandate to enforce policies, require access to systems, or hold business units accountable. The charter empowers the function before any other work can be done effectively."
+  },
+  {
+    q: "An information security manager is selecting controls to address a newly identified risk. The risk assessment shows potential annual loss of $400,000. A proposed control costs $350,000 per year and would reduce the annualized loss to $50,000. What is the BEST conclusion?",
+    options: [
+      "The control is justified because it reduces the ALE significantly",
+      "The control is not justified because its cost nearly equals the original risk exposure",
+      "The control requires board approval before implementation",
+      "The control should be deferred until a cheaper alternative is found"
+    ],
+    answer: 0,
+    explanation: "ROSI = (ALE before − ALE after) − control cost = ($400K − $50K) − $350K = $0. While the break-even ROSI suggests marginal financial justification, the control reduces exposure by $350,000 per year — exactly covering its cost. However, in CISM terms, the more precise answer is that the control IS justified because ALE reduction ($350K) equals the control cost — any non-financial benefits (compliance, reputational protection) tip the balance positive. If a cheaper alternative exists, that should be explored, but the control as stated is not unjustified."
+  },
+  {
+    q: "Senior management has approved the information security strategy. The CISO is now building the program roadmap. Which initiative should be HIGHEST priority in the near-term phase?",
+    options: [
+      "Implementing advanced threat hunting capabilities",
+      "Addressing the highest-risk gaps identified in the current state assessment",
+      "Deploying a unified compliance management platform",
+      "Establishing a security awareness program for all employees"
+    ],
+    answer: 1,
+    explanation: "Roadmap prioritization must be risk-driven. The current state assessment identified the most significant gaps relative to risk — those gaps represent the highest current exposure. Near-term phases should close the most dangerous vulnerabilities in the security program first. Advanced capabilities and compliance platforms come after foundational risks are addressed."
+  },
+  {
+    q: "An organization is procuring a cloud-based HR platform that will process sensitive employee data. The vendor presents a SOC 2 Type II report as evidence of their security posture. The security team wants to conduct their own audit. Which response is MOST appropriate?",
+    options: [
+      "Accept the SOC 2 Type II report as sufficient audit evidence and proceed with procurement",
+      "Require a full on-site audit before signing the contract",
+      "Review the SOC 2 report scope and exceptions; negotiate right-to-audit for matters not covered",
+      "Reject vendors who will not submit to a direct security audit"
+    ],
+    answer: 2,
+    explanation: "A SOC 2 Type II report is legitimate audit evidence — but it has defined scope, and exceptions noted in the report require review. The correct approach is to review the report thoroughly, understand what it covers and what it doesn't, and negotiate contractual right-to-audit for gaps or future reassessments. Rejecting all vendors who won't allow direct audits would exclude most large cloud providers from consideration."
+  },
+  {
+    q: "A major e-commerce company is evaluating whether to accept a vendor's proposed contract that omits a data destruction clause. The vendor hosts customer payment data. What should the information security manager recommend?",
+    options: [
+      "Accept the contract since the vendor has ISO 27001 certification",
+      "Accept the contract with the understanding that data destruction will be requested at offboarding",
+      "Require the data destruction clause before signing — it is a non-negotiable security requirement",
+      "Defer to legal counsel to determine if data destruction is a legal requirement"
+    ],
+    answer: 2,
+    explanation: "Data destruction/return clauses are foundational security requirements in vendor contracts — especially for payment data under PCI DSS. Without a contractual obligation, the organization has no enforceable mechanism to ensure customer data is destroyed when the relationship ends, creating ongoing breach risk and regulatory exposure. This is a non-negotiable security requirement, not a negotiating preference."
+  },
+  {
+    q: "A financial services firm uses a single managed security service provider (MSSP) for all security monitoring, incident response, and vulnerability management. The CISO raises a concern about this arrangement. What risk is the CISO MOST likely concerned about?",
+    options: [
+      "The MSSP may not have sufficient staff to handle multiple incidents simultaneously",
+      "Concentration risk — over-reliance on a single vendor creates a critical single point of failure",
+      "The MSSP's pricing will increase over time as the organization becomes dependent",
+      "Regulatory requirements may prohibit outsourcing security functions"
+    ],
+    answer: 1,
+    explanation: "Concentration risk is the primary concern when all security functions are with a single provider. If the MSSP is breached, goes out of business, or suffers a service disruption, the organization's entire security operations capability is compromised simultaneously. A single vendor for all critical security services is a single point of failure at the program level."
+  },
+  {
+    q: "An information security manager is designing a security awareness program. The training completion rate is currently 95%, but phishing simulation click rates remain at 18% — well above the 5% target. What should the CISO conclude?",
+    options: [
+      "The training program is effective because 95% completion is excellent",
+      "Training completion is high but the program is not achieving its behavioral objectives",
+      "The phishing simulations are too difficult and should be made easier",
+      "18% click rate is acceptable given the sophistication of modern phishing"
+    ],
+    answer: 1,
+    explanation: "Completion rate measures attendance, not behavior change. A 95% completion rate with 18% phishing click rates is a clear signal that employees are completing the training without retaining or applying the knowledge. The security awareness program must be redesigned — content, delivery, relevance, and reinforcement should be examined. The goal is behavior change, not compliance completion."
+  },
+  {
+    q: "The board of directors asks the CISO what type of security training executives should receive. Which response BEST reflects the correct training approach for this audience?",
+    options: [
+      "The same security awareness training as all other employees, for consistency",
+      "Technical security training covering authentication protocols and encryption",
+      "Training focused on governance responsibilities, social engineering targeting executives, and regulatory liability",
+      "Annual compliance training covering the organization's information security policy"
+    ],
+    answer: 2,
+    explanation: "Role-based training for executives addresses their specific threat profile and responsibilities: they are primary targets for spear phishing, business email compromise, and social engineering. They also need to understand their governance obligations and the regulatory liability they carry as officers. Generic or technical training is misaligned with executive roles and needs."
+  },
+  {
+    q: "A software development team has proposed skipping a security architecture review for a new application because 'security testing will be done before launch.' What should the information security manager do?",
+    options: [
+      "Agree — security testing at the end of the SDLC is the standard approach",
+      "Require the security architecture review and explain that late-stage finding remediation is 10–100x more costly than design-phase corrections",
+      "Require security testing during development but defer the architecture review to the next release",
+      "Escalate to the CIO to mandate security testing as a release gate"
+    ],
+    answer: 1,
+    explanation: "SDLC security integration is most cost-effective in early phases. Findings discovered in architecture review are corrected at design cost — a few hours of rework. The same vulnerability discovered post-deployment may require re-architecting the solution, re-testing, and potential breach remediation. The information security manager should enforce the security review, not defer it, with a clear business case for why early-stage security is more efficient."
+  },
+  {
+    q: "An organization's development team wants to deploy a code change directly to production on Friday afternoon, bypassing the change management process due to competitive pressure. What security concern should be escalated MOST urgently?",
+    options: [
+      "The change may introduce performance degradation during high-traffic periods",
+      "Bypassing change management removes the security review that could detect vulnerabilities or misconfigurations before deployment",
+      "The deployment window is too short for proper testing",
+      "The development team may not have sufficient production access"
+    ],
+    answer: 1,
+    explanation: "Change management is a critical security control. The security review embedded in change management is designed to catch vulnerabilities, configuration errors, and access control changes before they reach production. Bypassing it for competitive pressure removes that control entirely — any security defect in the change goes live without review. This is a governance concern requiring escalation, not accommodation."
+  },
+  {
+    q: "A CISO is preparing a budget justification for a new identity and access management platform costing $600,000 annually. Current identity-related incidents cost the organization an estimated $900,000 per year in remediation and downtime. What is the strongest argument for the investment?",
+    options: [
+      "The platform will enable the organization to achieve ISO 27001 certification",
+      "Industry peers are investing in IAM platforms at a similar rate",
+      "The platform is expected to reduce identity-related incident costs by 80%, yielding $720,000 in annual savings against a $600,000 cost — a positive ROSI of $120,000",
+      "IAM is a regulatory requirement under multiple applicable frameworks"
+    ],
+    answer: 2,
+    explanation: "ROSI-based financial justification is the most compelling argument for senior management. $900K × 80% reduction = $720K annual savings. $720K savings − $600K cost = $120K positive ROSI. This frames the investment as a financial return, not a cost center. Compliance and peer benchmarks are supporting arguments but weaker than direct financial ROI."
+  },
+  {
+    q: "An organization's security program has been operating for three years. The CISO notices that the program roadmap has not been updated since year one, despite two business acquisitions and a major regulatory change. What is the PRIMARY risk of this situation?",
+    options: [
+      "The security team may be unaware of new technical vulnerabilities",
+      "The security program may be misaligned with current business risk, leaving new assets and obligations unaddressed",
+      "The board may question the CISO's competence during the next governance review",
+      "Regulatory auditors may penalize the organization for having an outdated roadmap"
+    ],
+    answer: 1,
+    explanation: "A stale roadmap is a strategic alignment failure. Two acquisitions added new assets, systems, and risk exposure. A regulatory change created new obligations. If the roadmap doesn't reflect these changes, the security program is not covering the actual risk landscape — which means the organization has blind spots it is unaware of. This is the primary risk."
+  },
+  {
+    q: "During a vendor security assessment, the team discovers that a critical payment processor uses a subcontractor for data storage that has never been assessed. What term BEST describes this risk?",
+    options: [
+      "Concentration risk",
+      "Fourth-party risk",
+      "Inherent vendor risk",
+      "Supply chain interruption risk"
+    ],
+    answer: 1,
+    explanation: "Fourth-party risk arises from vendors used by your vendors — parties with whom you have no direct contractual relationship but who handle your data or support your services. The subcontractor storing payment data is your fourth party. You can only manage this risk indirectly — by requiring your payment processor to impose security requirements on their subcontractors and provide evidence of compliance."
+  },
+  {
+    q: "A security team is selecting a controls framework for a new security program. The organization is a US federal contractor subject to NIST requirements. Which framework is MOST appropriate as the primary reference?",
+    options: [
+      "CIS Controls — most actionable and practically oriented",
+      "ISO/IEC 27002 — internationally recognized and broad",
+      "NIST SP 800-53 — specifically designed for federal information systems",
+      "COBIT — best for governance and audit requirements"
+    ],
+    answer: 2,
+    explanation: "US federal contractors are subject to NIST SP 800-53 requirements (and often NIST SP 800-171 for CUI handling). The framework selection should match the primary regulatory obligation. For federal contractors, NIST 800-53 is not just best-practice — it is the mandated baseline. Other frameworks may be used as supplements but NIST 800-53 is the primary reference."
+  },
+  {
+    q: "An information security manager is establishing security requirements for a new SaaS vendor that will process customer personally identifiable information (PII). Which control should be given HIGHEST priority in the vendor contract?",
+    options: [
+      "The vendor must conduct annual penetration testing",
+      "The vendor must notify the organization of a data breach within 72 hours",
+      "The vendor must achieve ISO 27001 certification within 12 months",
+      "The vendor must provide monthly security reports"
+    ],
+    answer: 1,
+    explanation: "Breach notification timelines are the highest-priority contractual control for a vendor processing PII. Organizations typically have regulatory obligations (GDPR, state breach laws) with specific notification windows — often 72 hours. If the vendor doesn't notify the organization promptly, the organization cannot meet its own regulatory obligations. Notification requirements are foundational; other controls (pen testing, certifications, reporting) are important but secondary."
+  },
+  {
+    q: "A CISO wants to measure the effectiveness of the security program's controls implementation. Which metric is a LEADING indicator that new risk exposure is entering the environment?",
+    options: [
+      "Mean time to remediate critical vulnerabilities",
+      "Number of security incidents in the past quarter",
+      "Open critical vulnerability count trending upward over 60 days",
+      "Percentage of systems with endpoint protection installed"
+    ],
+    answer: 2,
+    explanation: "A KRI (Key Risk Indicator) is a leading indicator — it signals that risk is increasing before an incident occurs. Open critical vulnerabilities trending upward over 60 days signals that the attack surface is growing and remediation is falling behind. This is a forward-looking signal that requires action. MTTR and incident counts are lagging/concurrent metrics; endpoint coverage is a process metric."
+  },
+  {
+    q: "The legal department informs the CISO that the organization is about to enter a new market in the European Union, which will trigger GDPR compliance obligations. What should be the CISO's FIRST response?",
+    options: [
+      "Immediately purchase a GDPR compliance management platform",
+      "Assess current security program controls against GDPR requirements and identify gaps",
+      "Hire a dedicated data protection officer (DPO) to manage GDPR compliance",
+      "Notify the board that a new regulatory requirement will require additional security investment"
+    ],
+    answer: 1,
+    explanation: "Before spending money, hiring, or escalating, the CISO needs to understand the gap. A current state assessment against GDPR requirements (lawful basis, data mapping, breach notification, security controls, consent management) reveals what already exists and what is missing. This assessment drives the compliance roadmap and informs what investments and roles are actually needed."
+  },
+  {
+    q: "An organization is evaluating whether to outsource its security operations center (SOC) to a managed security service provider. The security team argues this would reduce in-house expertise. Which consideration should weigh MOST heavily in this decision?",
+    options: [
+      "Whether the MSSP's hourly rate is lower than the equivalent in-house salary cost",
+      "Whether the MSSP can provide comparable or superior detection and response capability while maintaining the organization's accountability for risk outcomes",
+      "Whether the MSSP has more security analysts than the current internal team",
+      "Whether the outsourcing decision requires board approval"
+    ],
+    answer: 1,
+    explanation: "The CISM principle for outsourcing security functions is that capability must be maintained or improved, and organizational accountability cannot be outsourced. The MSSP must deliver equivalent or better detection and response; simultaneously, the organization remains accountable for its security risk outcomes regardless of who operates the SOC. The governance question is whether accountability can be maintained — not simply whether it's cheaper."
+  },
+  {
+    q: "A developer team lead reports that the security team's mandatory code review process is adding two weeks to every sprint cycle and impacting delivery velocity. How should the CISO address this?",
+    options: [
+      "Eliminate mandatory code reviews to restore development velocity",
+      "Maintain code reviews as-is — security cannot be compromised for delivery speed",
+      "Work with development leadership to streamline the review process — automate SAST tooling, risk-tier applications, and reduce manual review to high-risk code changes only",
+      "Require developers to conduct security reviews themselves to remove the bottleneck"
+    ],
+    answer: 2,
+    explanation: "Security controls that significantly impede business processes will be worked around or abandoned. The CISO's role is to find the right balance — using risk-based approaches to apply rigorous review where it matters most (high-risk changes, critical applications) and automated tooling to reduce manual overhead for lower-risk code. Abandoning review entirely removes a critical SDLC control; maintaining an unworkable process will be overridden by business pressure."
+  },
+  {
+    q: "When is it appropriate to formally accept a security risk rather than mitigating it?",
+    options: [
+      "When the security team does not have the budget to implement a control",
+      "When the residual risk after all feasible controls is within the organization's defined risk appetite, documented and approved by appropriate authority",
+      "When the CISO determines that the risk is low based on professional judgment",
+      "When regulatory requirements do not specifically mandate controls for this risk"
+    ],
+    answer: 1,
+    explanation: "Risk acceptance requires three conditions under CISM: the residual risk must be within the organization's risk appetite; the decision must be documented; and it must be approved by an authority commensurate with the risk level — not just the security team. Budget constraints are a practical reality but not a governance justification for acceptance. The CISO alone cannot accept organizational risk."
+  },
+  {
+    q: "A new information security manager discovers that the organization has 12 separate compliance programs each managed independently (PCI, HIPAA, SOX, state laws, etc.). What is the MOST effective improvement the manager can recommend?",
+    options: [
+      "Hire a compliance manager for each regulatory domain to ensure dedicated coverage",
+      "Consolidate all compliance programs into a unified control framework mapped to all applicable requirements",
+      "Prioritize compliance with the most stringent single regulation and accept gaps in others",
+      "Automate compliance reporting using a GRC platform to reduce manual overhead"
+    ],
+    answer: 1,
+    explanation: "Multiple parallel compliance programs create redundancy, inconsistency, and audit fatigue. The correct approach is an integrated control framework — one set of controls designed to satisfy all applicable requirements simultaneously, with documentation mapping each control to the relevant obligations. This reduces cost, improves consistency, and prevents the situation where a control satisfies one regulation but conflicts with another."
+  },
+  {
+    q: "The CISO is designing security baselines for cloud workloads. Which statement BEST describes the role of a security baseline?",
+    options: [
+      "A baseline defines the optimal security configuration that maximizes protection",
+      "A baseline establishes the minimum mandatory security configuration for a system type, below which risk is unacceptable",
+      "A baseline is a recommended configuration that systems should aim to achieve",
+      "A baseline is used only for compliance documentation purposes"
+    ],
+    answer: 1,
+    explanation: "A security baseline is the floor — the minimum mandatory security configuration below which the organization will not operate a system. It is not aspirational (that's a target state) and not a recommendation (that's a guideline). Any system not meeting the baseline represents unacceptable risk requiring remediation or a formal exception with compensating controls and risk acceptance."
+  },
+  {
+    q: "An organization relies on a single cloud provider for all production infrastructure, disaster recovery, and data backup. The CISO presents this to the board as a risk. What is the correct term for this risk and what is the primary concern?",
+    options: [
+      "Vendor lock-in risk — the organization cannot migrate away without significant cost",
+      "Concentration risk — if the provider experiences a significant outage or breach, the organization loses production, DR, and backup simultaneously",
+      "Cloud security risk — the shared responsibility model creates gaps in security coverage",
+      "Availability risk — cloud providers have lower uptime SLAs than on-premises infrastructure"
+    ],
+    answer: 1,
+    explanation: "Concentration risk arises when over-reliance on a single entity creates a single point of failure. Using the same provider for production, DR, and backup means a single provider event eliminates all three layers of resilience simultaneously. If the provider suffers a regional outage, a security breach, or a business failure, the organization has no working backup strategy. This is the core concern the CISO must surface."
+  },
+  {
+    q: "A CISO presents a security program report to senior management showing that 98% of policies have been signed and training completion is at 96%. Management is pleased with the results. What critical perspective is MISSING from this report?",
+    options: [
+      "The report should show compliance against each applicable regulation",
+      "The report should show whether controls are actually effective at reducing risk — not just whether process metrics are met",
+      "The report should include the security team's headcount and budget utilization",
+      "The report should include the number of security incidents reported in the period"
+    ],
+    answer: 1,
+    explanation: "Process metrics (policy sign-off, training completion) measure whether activities occurred — not whether they are working. A program with 98% policy acknowledgment can still have unacceptable breach rates. Senior management needs outcome metrics: risk reduction achieved, control effectiveness measures, incident trends, and residual risk posture. Process metrics without outcome metrics present an incomplete and potentially misleading picture."
+  },
+  {
+    q: "An organization's security team has implemented controls based on the CIS Controls framework. A regulator notifies the organization that it must now demonstrate NIST SP 800-53 compliance. What is the MOST efficient approach?",
+    options: [
+      "Rebuild the entire control framework using NIST 800-53 as the primary reference",
+      "Map existing CIS Controls implementation to NIST 800-53 control families to identify coverage and gaps",
+      "Adopt NIST 800-53 as the primary framework and retire the CIS Controls",
+      "Hire a consultant to determine if the two frameworks are compatible"
+    ],
+    answer: 1,
+    explanation: "CIS Controls and NIST 800-53 have significant overlap. The most efficient approach is to map existing controls to the required framework — most controls will satisfy NIST 800-53 requirements, reducing the actual gap. A full rebuild discards existing investment unnecessarily. Framework mapping is a standard activity for organizations operating under multiple compliance regimes."
+  },
+  {
+    q: "A security manager is assessing a potential vendor that provides network monitoring services. The vendor will have read access to network traffic logs containing sensitive data. Which assessment activity is MOST important?",
+    options: [
+      "Reviewing the vendor's financial stability to ensure they remain in business",
+      "Reviewing the vendor's security controls for protecting data they access, including their own internal access controls and breach response",
+      "Reviewing the vendor's industry certifications and awards",
+      "Confirming the vendor has cyber liability insurance coverage"
+    ],
+    answer: 1,
+    explanation: "A vendor with access to sensitive network traffic is a high-risk third party — a breach of the vendor's environment means a breach of your data. The most critical assessment area is whether the vendor's own security controls adequately protect the data they will access: access control, encryption, data handling, incident response, and breach notification. Insurance and certifications are secondary considerations."
+  },
+  {
+    q: "A security manager proposes implementing separation of duties controls across the finance and IT departments. The CFO objects, saying it will slow operations. What is the MOST appropriate response?",
+    options: [
+      "Defer to the CFO's judgment — business operations must take priority",
+      "Implement separation of duties only in IT and defer the finance requirement",
+      "Present the risk of not implementing SoD — fraud, error, regulatory exposure — and work with the CFO to find an implementation that meets control objectives with minimum operational disruption",
+      "Escalate to the CEO to override the CFO's objection"
+    ],
+    answer: 2,
+    explanation: "SoD is a fundamental fraud prevention control in finance — its absence creates significant audit findings and regulatory exposure. The correct approach is to quantify the risk of not implementing it (regulatory fines, fraud exposure, audit findings) and collaborate with the CFO to design an implementation that achieves the control objective with acceptable operational impact. Deferring entirely abandons a critical control; immediate escalation without collaboration damages relationships unnecessarily."
+  },
+  {
+    q: "A CISO is building a security program for a company that recently completed three acquisitions. Which activity should happen FIRST to scope the program correctly?",
+    options: [
+      "Extend existing security policies to cover all acquired entities immediately",
+      "Conduct a gap assessment of each acquired entity's security posture against the parent company's standards",
+      "Hire security staff from each acquired company to maintain familiarity",
+      "Require all acquired entities to pass a security audit within 90 days"
+    ],
+    answer: 1,
+    explanation: "Before applying standards or requiring audits, you must understand the current state of the acquired entities. A gap assessment reveals what controls exist, what risks they carry, and what integration challenges exist. Without this baseline, extending policies is administrative theater — you don't know if the policies are being met or what's required to bring the entities into compliance. Assessment first; policy and audit requirements follow."
+  },
+  {
+    q: "An organization's security awareness program shows that finance department employees have the highest rate of business email compromise (BEC) incidents despite completing the same training as other departments. What is the MOST likely root cause and appropriate response?",
+    options: [
+      "Finance employees are more susceptible to social engineering than other employees",
+      "The training is not role-specific — finance employees need targeted training on BEC, wire fraud, and invoice fraud scenarios specific to their job functions",
+      "Finance employees should be given more frequent training sessions",
+      "BEC attacks are too sophisticated to prevent through training alone — technical controls are required"
+    ],
+    answer: 1,
+    explanation: "Role-based training addresses the specific threat profile of each audience. Finance employees face BEC, wire transfer fraud, and invoice manipulation — these require training with finance-specific scenarios and red flags, not generic phishing awareness. The root cause of continued incidents despite training completion is that the training content is mismatched to the audience's actual threat environment. Technical controls (email filtering, dual approval for transfers) should complement role-based training."
+  }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  new Quiz(questions, 'quiz-container', 'cism_d3_quiz');
+});
+</script>
+<script src="../../assets/js/celebrate.js"></script>
+<script src="../../assets/js/mobile-nav.js"></script>
+</body>
+</html>

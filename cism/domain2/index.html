@@ -3,8 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Domain 2: Information Security Risk Management — CISM</title>
+<title>Information Risk Management</title>
 <link rel="stylesheet" href="../../assets/css/style.css">
+<script src="../../assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../../login.html'); }
+})();
+</script>
 </head>
 <body>
 
@@ -23,16 +31,16 @@
 <div class="container">
 
   <div class="hero">
-    <h1><span style="color:var(--cism);">Domain 2</span> — Information Security Risk Management</h1>
+    <h1><span style="color:var(--cism);">Risk Mgmt</span> — Information Security Risk Management</h1>
     <p>20% of exam · ~30 questions · Days 10–16 · Week 2–3</p>
   </div>
 
   <div class="domain-nav">
     <a href="../index.html">CISM Overview</a>
-    <a href="../domain1/index.html">Domain 1</a>
-    <a href="index.html" class="active">Domain 2</a>
-    <a href="../domain3/index.html">Domain 3</a>
-    <a href="../domain4/index.html">Domain 4</a>
+    <a href="../domain1/index.html">Governance</a>
+    <a href="index.html" class="active">Risk Mgmt</a>
+    <a href="../domain3/index.html">Sec Program</a>
+    <a href="../domain4/index.html">Incident Mgmt</a>
     <a href="flashcards.html">Flashcards</a>
     <a href="quiz.html">Quiz</a>
   </div>
@@ -362,9 +370,11 @@
 </div>
 
 <footer>
-  CISO Certification Track &nbsp;·&nbsp; CISM Domain 2 &nbsp;·&nbsp; Information Security Risk Management
+  CISO Certification Track &nbsp;·&nbsp; CISM — Information Risk Management &nbsp;·&nbsp; Information Security Risk Management
 </footer>
 
 <script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/celebrate.js"></script>
+<script src="../../assets/js/mobile-nav.js"></script>
 </body>
 </html>

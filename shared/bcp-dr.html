@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Continuity &amp; Disaster Recovery — Shared Reference</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body data-topic-id="/shared/bcp-dr" data-expected-mins="35">
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container-narrow">
+
+  <div class="hero">
+    <h1>Business Continuity &amp; Disaster Recovery</h1>
+    <p>Shared reference · ~35 min read · Covers CISM D4 · CCSK D11 · CISSP D7 · COBIT DSS04</p>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem;">
+      <span class="badge badge-cism">CISM D4</span>
+      <span class="badge badge-ccsk">CCSK D11</span>
+      <span class="badge badge-cissp">CISSP D7</span>
+      <span class="badge badge-cobit">COBIT DSS04</span>
+    </div>
+  </div>
+
+  <div id="read-badge"></div>
+
+  <div class="study-content">
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="bcp-vs-drp">1. BCP vs. DRP — The Clear Distinction</h2>
+
+    <p>Business continuity planning and disaster recovery planning are related but distinct disciplines that are frequently conflated — including in exam answers. Getting the distinction right is a first-principles requirement for all four certifications.</p>
+
+    <p><strong>Business Continuity Planning (BCP)</strong> is the organizational capability to maintain or rapidly resume critical business functions during and after a disruption. BCP is business-focused: it covers all the functions the organization must sustain to survive — sales, operations, customer service, regulatory compliance, supply chain, human resources — not just IT. A BCP addresses questions like: How do we process payroll if our primary office is inaccessible for two weeks? How do we serve customers if our contact center is destroyed? How do we maintain regulatory filings if key personnel are unavailable? BCP is the umbrella under which DRP lives.</p>
+
+    <p><strong>Disaster Recovery Planning (DRP)</strong> is the technical capability to restore IT systems, data, and infrastructure following a disrupting event. DRP is IT-focused: it defines how systems are backed up, how they are recovered, how data is restored, and in what priority order. DRP answers questions like: How long does it take to restore the ERP system from backup? Can we fail over the customer database to a secondary site in under four hours? What backup media is available and where is it stored? DRP is a subset of BCP — it addresses the IT recovery component of business continuity, not the full business continuity problem.</p>
+
+    <p>The exam distinction is straightforward: if a question describes a scenario about whether the organization can survive a disruption and maintain its business functions, the answer is BCP. If the question is about recovering IT systems and data, it is DRP. Both are management responsibilities — the CISO or Business Continuity Manager owns these programs at the program level, though business unit leaders own the business continuity objectives for their functions and IT owns the technical recovery procedures.</p>
+
+    <div class="callout exam">
+      <div class="callout-title">CISM Exam Framing</div>
+      <p>CISM positions BCP and DRP as components of the information security program's resilience function. The information security manager is responsible for ensuring these programs exist, are tested, are aligned with business objectives, and are integrated with incident management. When CISM asks what the information security manager does when a major incident results in prolonged system unavailability, the answer involves activating BCP/DRP — not rebuilding systems personally. The management function is coordination and activation, not technical execution.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="metrics">2. Key Metrics — Memorize These</h2>
+
+    <p>These recovery metrics are tested by all four certifications, with CISSP testing calculations and precise definitions, and CISM/COBIT testing how they are established and governed. Know all five metrics, their definitions, and the mathematical relationship between them.</p>
+
+    <p><strong>RTO — Recovery Time Objective</strong> is the maximum time the business can tolerate a specific function being unavailable before the disruption causes unacceptable impact. RTO is set by the business based on operational requirements, contractual obligations, and regulatory requirements — it is not set by IT. IT's job is to build a recovery capability that can meet the RTO the business establishes. An RTO of four hours means the business has determined that if the system is down for more than four hours, the damage to business operations becomes unacceptable. IT must design its recovery architecture to restore that system within four hours.</p>
+
+    <p><strong>RPO — Recovery Point Objective</strong> is the maximum data loss the business can accept — expressed as the point in time to which data must be restored after recovery. An RPO of one hour means the business can tolerate losing up to one hour of data. This directly determines backup frequency: if the RPO is one hour, backups must occur at least every hour. If the RPO is 15 minutes, near-continuous replication is required. Like RTO, RPO is set by business requirements. Financial transaction systems may have an RPO of near-zero; a marketing content repository may have an RPO of 24 hours.</p>
+
+    <p><strong>MTD / MAD — Maximum Tolerable Downtime / Maximum Acceptable Downtime</strong> (the two terms are used interchangeably across different frameworks) is the absolute maximum time period a business function can be unavailable before the organization suffers irreversible damage — loss that cannot be recovered even after systems are restored. Beyond the MTD, the damage is permanent: customers have defected, contracts have lapsed, regulatory penalties have been assessed, or the organization cannot recover financially. The MTD is always greater than or equal to the RTO. The RTO must always be set below the MTD, because the RTO defines when recovery must be complete, and recovery must be complete before the MTD is reached.</p>
+
+    <p><strong>WRT — Work Recovery Time</strong> is the time required after systems are back online to restore data, validate system integrity, test functionality, and confirm that the recovered system is ready for production use. Bringing a system online is not the same as restoring it to a production-ready state — data must be reconciled, backlogs must be processed, and validation tests must pass.</p>
+
+    <p><strong>MTPD — Maximum Tolerable Period of Disruption</strong> is the same concept as MTD, used in ISO 22301 (the business continuity management standard) rather than the NIST or ISACA frameworks. If an exam question uses MTPD, treat it as MTD.</p>
+
+    <p>The critical mathematical relationship is: <strong>RTO + WRT ≤ MTD</strong>. Recovery time plus work recovery time must be less than or equal to the maximum tolerable downtime. If it is not, the organization will exceed its MTD before it has a fully functioning system — meaning irreversible damage occurs before recovery is complete. This is a design constraint, not a suggestion.</p>
+
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--card-radius);padding:1.25rem;margin:1.5rem 0;overflow-x:auto;">
+      <table style="min-width:0;display:table;width:100%;">
+        <tr>
+          <th>Metric</th>
+          <th>What It Measures</th>
+          <th>Set By</th>
+          <th>Drives</th>
+        </tr>
+        <tr>
+          <td><strong>RPO</strong></td>
+          <td>Maximum tolerable data loss (time)</td>
+          <td>Business</td>
+          <td>Backup frequency, replication strategy</td>
+        </tr>
+        <tr>
+          <td><strong>RTO</strong></td>
+          <td>Maximum tolerable downtime before unacceptable impact</td>
+          <td>Business</td>
+          <td>Recovery architecture, site strategy, staffing</td>
+        </tr>
+        <tr>
+          <td><strong>WRT</strong></td>
+          <td>Time to validate and make system production-ready after restoration</td>
+          <td>IT/Operations</td>
+          <td>Testing procedures, data reconciliation approach</td>
+        </tr>
+        <tr>
+          <td><strong>MTD/MAD</strong></td>
+          <td>Absolute maximum before irreversible damage</td>
+          <td>Business</td>
+          <td>Constrains RTO: RTO must be &lt; MTD</td>
+        </tr>
+        <tr>
+          <td><strong>MTPD</strong></td>
+          <td>ISO 22301 equivalent of MTD</td>
+          <td>Business</td>
+          <td>Same as MTD</td>
+        </tr>
+      </table>
+      <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.75rem;margin-bottom:0;"><strong>Key relationship:</strong> RTO + WRT ≤ MTD (always)</p>
+    </div>
+
+    <div class="callout exam">
+      <div class="callout-title">CISSP Calculation Trap</div>
+      <p>CISSP will sometimes present a scenario with given RTO, WRT, and MTD values and ask whether the recovery plan is adequate. The test: add RTO + WRT. If the sum exceeds MTD, the plan fails — recovery will not be complete before irreversible damage occurs. Example: RTO = 6 hours, WRT = 3 hours, MTD = 8 hours. RTO + WRT = 9 hours > 8 hours MTD. The plan is inadequate — reduce RTO or WRT, or accept a higher MTD.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="bia">3. Business Impact Analysis</h2>
+
+    <p>The Business Impact Analysis is the analytical foundation of the entire BCP program. Everything that comes after — recovery strategies, site selection, backup frequency, staffing requirements — is derived from BIA findings. Running strategy development before a BIA is a sequencing error that all four certifications will penalize.</p>
+
+    <p>The BIA accomplishes four things. First, it <strong>identifies critical business processes</strong> — the processes whose disruption would result in unacceptable impact to the organization. Not all processes are equally critical; the BIA sorts them by criticality based on the impact of disruption. Second, it <strong>maps dependencies</strong> for each critical process: what people, systems, vendors, facilities, and data are required for that process to operate? A critical process that depends on a third-party vendor requires the vendor to be included in the continuity analysis. Third, it <strong>quantifies the impact of disruption</strong> at defined time intervals — what is the impact if this process is unavailable for one hour? Four hours? One day? One week? The impact quantification is what drives the RTO and RPO requirements: when the impact becomes unacceptable is when the RTO sits. Fourth, it <strong>establishes recovery priorities</strong> — when multiple critical processes are disrupted simultaneously (which is what happens in a major disaster), recovery must occur in a defined order based on criticality.</p>
+
+    <p>The BIA produces three primary outputs: a prioritized list of critical business functions with their RTO and RPO requirements; an interdependency map that shows which systems, people, and third parties each critical function relies on; and a maximum tolerable downtime estimate for each function. These outputs are the requirements document that the BCP and DRP are designed to meet.</p>
+
+    <p>Who runs the BIA and who approves it are two distinct questions with different answers. The BIA is typically conducted by the business continuity program manager or the information security manager, working with business unit managers who provide the business-side input on impact and tolerances. The BIA findings are approved by executive management — because the RTO and RPO requirements embedded in the BIA represent business commitments that require executive authorization. An IT manager approving BIA outputs without executive sign-off is a governance gap that CISM will test.</p>
+
+    <div class="callout exam">
+      <div class="callout-title">BIA Before Strategy — Always</div>
+      <p>The most reliably tested BCP sequencing rule across CISM and CISSP: the BIA precedes recovery strategy development. You cannot select appropriate recovery strategies without knowing the RTO and RPO requirements. A question that presents a scenario where a BCP is being developed and asks what should be done first will have BIA as the correct answer, regardless of what other plausible-sounding options are presented (drafting the plan, selecting recovery sites, training the team).</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="strategies">4. Recovery Strategies</h2>
+
+    <p>Recovery strategy selection is a direct output of the BIA. The RTO requirement for each critical function determines which recovery strategy is appropriate — a function with an RTO of two hours cannot be served by a cold site that takes two weeks to provision. Cost and RTO requirements are inversely related: the shorter the RTO, the higher the infrastructure investment required.</p>
+
+    <p>A <strong>hot site</strong> is a fully equipped, fully configured, operational duplicate of the primary environment. It contains current-state data (through continuous or near-continuous replication) and can accept production workloads immediately, or within minutes of activation. Hot sites provide the lowest possible RTO — appropriate for functions with RTO requirements of less than four hours, typically including core financial systems, customer-facing platforms, and regulatory compliance systems. The cost is high because it requires maintaining a full duplicate infrastructure that sits idle under normal operations. Hot sites may be operated by the organization itself, co-located in a separate data center, or provided by a managed recovery services vendor.</p>
+
+    <p>A <strong>warm site</strong> has the infrastructure and systems in place but is not fully configured or loaded with current data. It can be brought to production readiness in hours to a day. Warm sites represent the middle ground on cost and RTO — appropriate for functions with RTO requirements in the four- to twenty-four-hour range. The gap between a warm site's baseline state and production-ready state must be clearly documented and tested.</p>
+
+    <p>A <strong>cold site</strong> provides physical space, power, and connectivity — but no IT equipment configured for the organization's use. Bringing a cold site to production requires procuring or shipping equipment, installing and configuring systems, restoring data from backup, and validating functionality. Cold sites take days to weeks to activate. They are appropriate only for functions with RTO requirements measured in days, typically lower-criticality administrative functions where business impact from extended downtime is tolerable. Cold sites are low-cost because no standby infrastructure is maintained.</p>
+
+    <p><strong>Cloud recovery</strong> has substantially changed the economics of hot and warm sites. Cloud infrastructure can be provisioned in minutes through infrastructure-as-code, eliminating the traditional capital cost of maintaining standby physical infrastructure. Cloud-based "hot" recovery (where current-state data is continuously replicated to cloud infrastructure and compute can be activated on demand) can achieve hot-site RTOs at costs closer to traditional warm sites. This is one reason cloud migration has BC/DR implications that the CCSK exam tests specifically.</p>
+
+    <p>A <strong>reciprocal agreement</strong> is an arrangement between two organizations to host each other's operations in the event of a disaster affecting one party. Reciprocal agreements are low-cost because no dedicated standby infrastructure is required. They are also low-reliability for several reasons: the partner organization may be experiencing their own disaster (a natural disaster that affects an entire geographic region affects both parties); the partner's systems and infrastructure may not support the other organization's applications and data formats; and the capacity that the partner is willing to commit may be insufficient during a real activation. Reciprocal agreements are generally considered inadequate for critical systems with short RTO requirements.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Mobile Recovery Units</div>
+      <p>Mobile recovery units — self-contained trailers or vehicles equipped with IT infrastructure — are a niche option used primarily by organizations with geographically dispersed operations or specific requirements for on-site recovery in locations where data center facilities are unavailable. They are rarely the right answer on a certification exam unless the scenario specifically describes a remote or field operations context.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="development">5. BCP Development Process</h2>
+
+    <p>The BCP development process follows a structured sequence. The sequence matters because outputs of each step are inputs to the next — skipping or reordering steps produces a plan that lacks analytical grounding and may not actually meet business requirements.</p>
+
+    <p>Step one is <strong>program initiation and executive sponsorship</strong>. BCP programs that lack executive commitment will fail — not in development, but in activation. A plan that executives have not approved will not receive the budget commitments it requires, will not be tested with the rigor that reveals gaps, and will not be activated promptly when needed because decision-makers are not familiar with it. Executive sponsorship must be secured before substantive work begins.</p>
+
+    <p>Step two is the <strong>BIA</strong>, as discussed in section 3. This step defines the requirements that the entire BCP is designed to meet. It is the analytical foundation and must be complete before strategy development begins.</p>
+
+    <p>Step three is <strong>risk assessment</strong>: what events could cause the disruptions that the BCP is designed to address? This step identifies the threat landscape — natural disasters relevant to the organization's geography, infrastructure failures, supply chain disruptions, cyber incidents, pandemic-level events — and assesses the likelihood and potential impact of each. Risk assessment informs strategy selection by identifying which scenarios require which types of recovery capability.</p>
+
+    <p>Step four is <strong>strategy development</strong>: selecting the recovery approaches for each critical function based on its RTO/RPO requirements and the organization's risk tolerance. This is where hot/warm/cold site decisions, cloud recovery strategies, and staffing recovery approaches are made. Strategy selection is a business and financial decision that requires executive approval — the cost of a hot site vs. a warm site involves capital commitments that IT cannot authorize unilaterally.</p>
+
+    <p>Step five is <strong>plan development</strong>: documenting the actual procedures, contact lists, recovery scripts, escalation paths, and decision trees that make up the BCP and DRP. The plan must be specific enough to be executable by someone who was not involved in writing it. Abstract plans fail in activations because responders don't know what to do next.</p>
+
+    <p>Steps six and seven — <strong>training and testing</strong> — are where most organizations under-invest. Training ensures that personnel understand their roles and can execute their responsibilities. Testing validates that the plan actually works as designed. An untested plan is a hypothesis about recovery capability, not a demonstrated capability. The testing methods in the next section represent increasing levels of rigor and confidence.</p>
+
+    <p>Step eight is <strong>maintenance</strong>: the BCP must be reviewed and updated after significant organizational changes (acquisitions, new systems, major infrastructure changes), after each incident or activation, after each test that reveals gaps, and at minimum annually. A BCP that was accurate three years ago may be dangerously wrong today if the organization has changed significantly.</p>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="testing">6. Testing Methods — In Order of Rigor</h2>
+
+    <p>Testing is what converts a BCP from a document to a validated capability. All four certifications test the knowledge of testing methods, their relative strengths, and when each is appropriate. Know these five methods in order of rigor and cost.</p>
+
+    <p>A <strong>tabletop exercise</strong> is a discussion-based activity in which key stakeholders walk through a hypothetical disruption scenario, talking through what they would do at each stage without actually executing any procedures or activating any systems. Tabletops are low-cost, cause no operational disruption, and are highly effective at identifying gaps in role clarity, escalation procedures, communication protocols, and decision-making authority. They do not test whether technical recovery procedures actually work. Tabletops are the most common form of BCP testing and are appropriate for initial plan validation, introducing new team members to the plan, and testing specific scenarios (what would we do if this building were inaccessible for a week?).</p>
+
+    <p>A <strong>structured walkthrough</strong> (sometimes called a walkthrough test) is a more detailed version of the tabletop: the team goes through the BCP plan section by section, reviewing each procedure and confirming that it is accurate, complete, and executable. The walkthrough is documentation-focused rather than scenario-focused. It catches errors, outdated contact information, missing procedures, and ambiguous instructions. It still does not test technical execution.</p>
+
+    <p>A <strong>simulation</strong> takes the scenario realism of a tabletop further by creating a more immersive hypothetical environment — sometimes with realistic communications (fake news alerts, simulated executive communications) and time pressure. Participants make decisions as they would in a real activation. Simulations are effective for testing decision-making under pressure and identifying where the human elements of the plan (judgment, communication, escalation) break down. Systems are still not actually activated.</p>
+
+    <p>A <strong>parallel test</strong> activates the recovery site and attempts to bring up systems there while the primary production environment continues to operate normally. This is the first testing method that actually validates technical recovery capability — the team goes through the real recovery procedures, restores data, configures systems, and verifies that the recovered environment is functional. The parallel test carries no production risk because the primary environment is unaffected. It does carry recovery site cost (the site is activated, which may incur charges or capacity commitments) and responder time. The parallel test reveals technical recovery gaps that tabletops cannot: backup restoration failures, configuration errors, missing credentials, version incompatibilities.</p>
+
+    <p>A <strong>full interruption test</strong> takes the primary production environment offline and forces actual failover to the recovery site for a period. This is the highest-confidence test — it validates not just that recovery procedures work in isolation but that the organization can actually operate from the recovery site under real conditions. It also carries the highest risk and cost: production systems are actually disrupted, and if the recovery site fails to function as expected, the organization has no fallback during the test. Full interruption tests are rarely conducted because the operational risk is substantial. They are appropriate for organizations with extremely high availability requirements and mature BCP programs where the risk of an unknown failure is higher than the operational disruption risk of the test itself.</p>
+
+    <div class="callout exam">
+      <div class="callout-title">Testing Method Selection — Context Matters</div>
+      <p>When a CISM or CISSP question asks which testing method is "best," the answer depends on context. If the question describes a newly developed plan being tested for the first time, tabletop is correct — you don't full-interruption test an unproven plan. If the question describes a mature program seeking to validate technical recovery capability without risking production, parallel test is correct. If the question describes a high-security environment where the organization must demonstrate actual failover capability, full interruption may be appropriate. Tabletop is most common; full interruption is most thorough. Neither is universally "best."</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="cloud">7. Cloud BCP/DRP Considerations</h2>
+
+    <p>Cloud environments change the BCP/DRP calculus in ways that are specifically tested by the CCSK exam and increasingly referenced in CISSP and CISM content. The changes are both positive (cloud enables recovery options that are more cost-effective and faster than traditional approaches) and challenging (cloud introduces dependencies and constraints that must be understood and planned for).</p>
+
+    <p>Cloud's most significant positive contribution to BC/DR is <strong>multi-region redundancy</strong> at a cost that was previously achievable only by large enterprises. A cloud-native application designed with multi-region architecture can fail over to a different geographic region automatically, within seconds, without human intervention. The cloud provider manages the physical infrastructure replication; the organization's responsibility is to architect for failover, test it, and verify that the RTO requirements are met. Infrastructure-as-code means recovery environments can be provisioned programmatically — eliminating the manual configuration work that made traditional warm site activation slow and error-prone.</p>
+
+    <p>Cloud also enables <strong>elastic recovery capacity</strong>: the organization doesn't pay for idle standby infrastructure under normal conditions. A cloud "hot site" can be implemented by maintaining data replication to a secondary region and pre-configuring the deployment pipeline to activate compute on demand. The cost is the replication and storage overhead, not the full compute cost of maintaining a duplicate production environment 24/7.</p>
+
+    <p>The challenging aspects of cloud BC/DR are the constraints that come from the shared responsibility model. <strong>Data residency during recovery</strong> is a significant concern: if primary operations are in one geographic region and the recovery region is in a different country, the data at rest in the recovery region may be subject to different legal requirements — including data sovereignty laws that may prohibit certain data from residing in certain jurisdictions at all. A European-headquartered organization cannot simply fail over to a US-region cloud without assessing GDPR implications for data residency. Recovery architecture must account for data residency requirements, not just technical performance.</p>
+
+    <p><strong>CSP SLAs versus organizational RTO requirements</strong> is another gap that must be evaluated explicitly. Cloud providers publish SLAs for their managed services — but those SLAs measure service availability, not the organization's specific RTO. The cloud provider may have an SLA of 99.9% availability, but if the organization's RTO for a critical system is two hours, and the CSP's SLA permits up to four hours of downtime per year, the SLA does not guarantee RTO compliance. Recovery architecture must ensure that the organization can meet its own RTO requirements regardless of the CSP SLA.</p>
+
+    <p>Shared infrastructure risk is the final cloud-specific concern: cloud outages affect all tenants simultaneously. A major CSP service disruption in a region is not an isolated event — it affects every organization using that service in that region. The organization cannot rely on a secondary environment that uses the same CSP service in the same region as a recovery option for events that affect that CSP service. Geographic diversity across CSP regions, or multi-cloud strategies, may be necessary for organizations with the highest availability requirements.</p>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2 id="cross-cert">8. Cross-Cert Distinctions</h2>
+
+    <p>Each certification tests BCP/DR through a different lens. A question that appears identical across certifications may have a different correct answer depending on which certifications's framing it adopts.</p>
+
+    <h3>CISM — Program Governance</h3>
+    <p>CISM positions BCP and DRP as security program responsibilities that require executive sponsorship, BIA-grounded strategy, tested plans, and annual maintenance. The information security manager owns the program; the business owns the objectives (RTO, RPO). CISM will not test backup rotation methods or RAID levels — it tests whether the program exists, whether it is tested, whether BIA output drove strategy selection, and whether executive management has approved the plan and its underlying business commitments. The governance failure mode CISM tests most frequently is IT setting RTO/RPO targets without business input — which produces plans that meet technical capabilities but may not meet business requirements.</p>
+
+    <h3>CISSP — Technical Depth and Precise Metrics</h3>
+    <p>CISSP tests the full technical spectrum: backup methods (full, incremental, differential), RAID levels and their recovery characteristics, clustering and high-availability architectures, and the precise metric definitions and their relationships. CISSP will ask calculation questions involving RTO, RPO, WRT, and MTD. It will test which backup strategy minimizes restore time (full backup with incremental restores requires restoring the full backup plus every incremental; full backup with differential restores requires restoring only the full backup and the latest differential). It will test the difference between synchronous and asynchronous replication and their implications for RPO. CISSP candidates need the technical depth that CISM does not require.</p>
+
+    <h3>CCSK — Cloud-Native Recovery</h3>
+    <p>CCSK tests multi-region redundancy, geographic data distribution, CSP failover capabilities, and the contractual and compliance dimensions of cloud recovery. Key CCSK concepts: the shared responsibility model determines who is accountable for which recovery components; the organization cannot rely on CSP SLAs to guarantee organizational RTO compliance; data residency during failover must be assessed against regulatory requirements; and cloud-native architectures (microservices, containerization, managed databases) have different recovery characteristics than traditional lift-and-shift deployments.</p>
+
+    <h3>COBIT — DSS04 Process Governance</h3>
+    <p>COBIT's DSS04 (Manage Continuity) defines IT continuity management as a process with defined activities, ownership, metrics, and governance oversight. Key COBIT process activities include: define the business continuity policy; conduct the BIA; develop the IT continuity plan; test the plan; train personnel; and maintain and improve the plan. DSS04 metrics include: percentage of critical systems with tested recovery plans, time to activate IT continuity procedures, and number of BCP plan deficiencies identified in testing. COBIT does not test technical recovery methods — it tests whether the process is designed, owned, measured, and continuously improved.</p>
+
+    <div class="callout exam">
+      <div class="callout-title">Quick Reference — What Each Cert Emphasizes</div>
+      <p><strong>CISM:</strong> Program ownership, BIA-first sequence, executive approval, annual testing and maintenance, integration with security program.<br>
+      <strong>CISSP:</strong> Metric definitions and calculations (RTO + WRT ≤ MTD), backup strategies, RAID, hot/warm/cold site technical characteristics, testing method selection.<br>
+      <strong>CCSK:</strong> Multi-region cloud redundancy, data residency during failover, CSP SLA vs. RTO alignment, shared infrastructure risk.<br>
+      <strong>COBIT:</strong> DSS04 process definition, process ownership, continuity metrics, governance oversight and continuous improvement.</p>
+    </div>
+
+  </div><!-- /.study-content -->
+
+  <div id="reading-intel"></div>
+
+</div><!-- /.container-narrow -->
+
+<script src="../assets/js/db.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    setActiveNav();
+    refreshReadBadge();
+    loadSuggestion();
+  });
+</script>
+
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

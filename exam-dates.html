@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Dates &amp; Registration — CISO Cert Track</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* ---- Page-specific overrides ---- */
+
+  .reg-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .reg-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: 1.25rem;
+    transition: border-color 0.15s;
+  }
+
+  .reg-card:hover { border-color: var(--accent); }
+  .reg-card.cism:hover   { border-color: var(--cism); }
+  .reg-card.ccsk:hover   { border-color: var(--ccsk); }
+  .reg-card.cobit:hover  { border-color: var(--cobit); }
+  .reg-card.cissp:hover  { border-color: var(--cissp); }
+
+  .reg-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .reg-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+  }
+
+  .reg-card-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .reg-detail-list {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .reg-detail-list li {
+    display: flex;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  .reg-detail-list li strong {
+    color: var(--text);
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 80px;
+  }
+
+  .reg-note {
+    background: var(--bg3);
+    border-left: 2px solid var(--accent3);
+    border-radius: 0 4px 4px 0;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .reg-note strong { color: var(--accent3); }
+
+  .reg-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .price-tag {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent2);
+    letter-spacing: -0.02em;
+  }
+
+  .price-tag small {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0;
+  }
+
+  /* ---- Planner section ---- */
+
+  .planner-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .planner-row {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem 1rem;
+    align-items: start;
+  }
+
+  .planner-row-main {}
+
+  .planner-cert-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  .planner-cert-name {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .planner-target-window {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .planner-countdown {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    min-height: 1.4em;
+    line-height: 1.5;
+  }
+
+  .planner-countdown .countdown-number {
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .planner-countdown.status-far    .countdown-number { color: var(--accent2); }
+  .planner-countdown.status-close  .countdown-number { color: var(--accent3); }
+  .planner-countdown.status-final  .countdown-number { color: var(--accent4); }
+  .planner-countdown.status-week   .countdown-number { color: var(--accent4); }
+  .planner-countdown.status-ready  .countdown-number { color: var(--accent2); }
+
+  .planner-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    white-space: nowrap;
+    margin-top: 0.35rem;
+  }
+
+  .pill-ready    { background: rgba(63,185,80,0.15);   color: var(--accent2); }
+  .pill-almost   { background: rgba(210,153,34,0.15);  color: var(--accent3); }
+  .pill-keep     { background: rgba(248,81,73,0.15);   color: var(--accent4); }
+  .pill-no-data  { background: rgba(139,148,158,0.12); color: var(--text-muted); }
+
+  .planner-row-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  .date-input-wrap {
+    display: none;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-end;
+    margin-top: 0.5rem;
+  }
+
+  .date-input-wrap.visible { display: flex; }
+
+  .date-input-wrap input[type="date"] {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.65rem;
+    min-height: 38px;
+    outline: none;
+    width: 150px;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+    color-scheme: dark;
+  }
+
+  .date-input-wrap input[type="date"]:focus {
+    border-color: var(--accent);
+  }
+
+  .date-set-indicator {
+    font-size: 0.78rem;
+    color: var(--accent2);
+    display: none;
+  }
+
+  .date-set-indicator.visible {
+    display: block;
+  }
+
+  /* ---- Lead callout ---- */
+  .lead-callout {
+    background: var(--bg2);
+    border: 1px solid var(--accent);
+    border-radius: var(--card-radius);
+    padding: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .lead-callout p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .lead-callout p + p {
+    margin-top: 0.6rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  /* ---- Badge overrides for certs not in base CSS ---- */
+  .badge-aws   { background: rgba(255,153,0,0.15);   color: #ff9900; }
+  .badge-azure { background: rgba(0,120,212,0.2);    color: #4db6f5; }
+  .badge-gcp   { background: rgba(66,133,244,0.15);  color: #7baaf7; }
+
+  /* ---- Section divider ---- */
+  .section-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin: 0 0 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Desktop: 2-col registration grid */
+  @media (min-width: 769px) {
+    .reg-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .reg-detail-list {
+      grid-template-columns: 1fr;
+    }
+
+    .planner-row {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+
+    .planner-row-actions {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .date-input-wrap {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .date-input-wrap input[type="date"] {
+      width: 160px;
+    }
+  }
+</style>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('login.html'); }
+})();
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="schedule.html">Study Schedule</a></li>
+    <li><a href="exam-dates.html" class="active">Exam Dates</a></li>
+    <li><a href="cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>Exam Registration &amp; Scheduling</h1>
+    <p>Register early. Lock the date. The commitment makes the prep real.</p>
+  </div>
+
+  <!-- LEAD CALLOUT -->
+  <div class="lead-callout">
+    <p>Booking the exam date is the single most important study decision you can make. It creates a real deadline. Pick the date first, then work backwards.</p>
+    <p>Suggested lead times: <strong>CISM</strong> — book 6 weeks out. &nbsp;<strong>CISSP</strong> — book 8 weeks out. &nbsp;<strong>AWS / Azure / GCP</strong> — book 4–6 weeks out, these are more tactical, less cramming-intensive.</p>
+  </div>
+
+  <!-- =============================================
+       SECTION 1: REGISTRATION INFO
+       ============================================= -->
+
+  <h2 class="section-heading">Registration Info</h2>
+
+  <div class="reg-grid" id="reg-grid">
+
+    <!-- CISM -->
+    <div class="reg-card cism">
+      <div class="reg-card-header">
+        <div>
+          <div class="reg-card-title">CISM</div>
+          <div class="reg-card-subtitle">Information Security Manager &nbsp;·&nbsp; ISACA</div>
+        </div>
+        <span class="badge badge-cism">CISM</span>
+      </div>
+      <ul class="reg-detail-list">
+        <li><strong>Format</strong> 150 questions · 4 hours · passing 450/800</li>
+        <li><strong>Register</strong> ISACA.org via Pearson VUE — year-round</li>
+        <li><strong>Scheduling</strong> On-demand at Pearson VUE testing centers or remote</li>
+        <li><strong>Retake</strong> No mandatory waiting period after pass or fail</li>
+      </ul>
+      <div class="reg-note">
+        <strong>Tip:</strong> ISACA membership saves ~$185 on the exam ($135/yr). Join before registering — it pays for itself immediately.
+      </div>
+      <div class="reg-card-footer">
+        <div>
+          <div class="price-tag">$575 <small>member</small></div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">$760 non-member &nbsp;·&nbsp; $135/yr membership</div>
+        </div>
+        <a href="https://www.isaca.org/credentialing/cism" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Register Now &rarr;</a>
+      </div>
+    </div>
+
+    <!-- CCSK v5 -->
+    <div class="reg-card ccsk">
+      <div class="reg-card-header">
+        <div>
+          <div class="reg-card-title">CCSK v5</div>
+          <div class="reg-card-subtitle">Certificate of Cloud Security Knowledge &nbsp;·&nbsp; CSA</div>
+        </div>
+        <span class="badge badge-ccsk">CCSK</span>
+      </div>
+      <ul class="reg-detail-list">
+        <li><strong>Format</strong> 60 questions · 120 minutes · 80% passing (48/60)</li>
+        <li><strong>Open book</strong> CSA Guidance document allowed during exam</li>
+        <li><strong>Register</strong> cloudsecurityalliance.org — on-demand, anytime</li>
+        <li><strong>Scheduling</strong> Online, self-proctored, take anywhere</li>
+      </ul>
+      <div class="reg-note">
+        <strong>Note:</strong> v5 is current as of 2025. Exam updated from v4. Price includes 2 attempts within 2 years.
+      </div>
+      <div class="reg-card-footer">
+        <div>
+          <div class="price-tag">$445 <small>USD</small></div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">2 attempts included · 2-year window</div>
+        </div>
+        <a href="https://cloudsecurityalliance.org/education/ccsk/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Register Now &rarr;</a>
+      </div>
+    </div>
+
+    <!-- COBIT 2019 Foundation -->
+    <div class="reg-card cobit">
+      <div class="reg-card-header">
+        <div>
+          <div class="reg-card-title">COBIT 2019 Foundation</div>
+          <div class="reg-card-subtitle">Governance Framework &nbsp;·&nbsp; ISACA</div>
+        </div>
+        <span class="badge badge-cobit">COBIT</span>
+      </div>
+      <ul class="reg-detail-list">
+        <li><strong>Format</strong> 75 questions · 2 hours · 65% passing</li>
+        <li><strong>Register</strong> ISACA — remote proctored or testing center</li>
+        <li><strong>Scheduling</strong> Year-round, flexible scheduling via ISACA</li>
+      </ul>
+      <div class="reg-note">
+        <strong>Note:</strong> Price varies (~$250–300). Check ISACA directly for current pricing. ISACA membership discount applies here too.
+      </div>
+      <div class="reg-card-footer">
+        <div>
+          <div class="price-tag">~$250–300 <small>USD</small></div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">Check ISACA for current price</div>
+        </div>
+        <a href="https://www.isaca.org/credentialing/cobit-foundation" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Register Now &rarr;</a>
+      </div>
+    </div>
+
+    <!-- CISSP -->
+    <div class="reg-card cissp">
+      <div class="reg-card-header">
+        <div>
+          <div class="reg-card-title">CISSP</div>
+          <div class="reg-card-subtitle">Certified Info Systems Security Professional &nbsp;·&nbsp; ISC2</div>
+        </div>
+        <span class="badge badge-cissp">CISSP</span>
+      </div>
+      <ul class="reg-detail-list">
+        <li><strong>Format</strong> 100–150 questions (CAT) · 3 hours · 700/1000 passing</li>
+        <li><strong>Register</strong> Pearson VUE — year-round</li>
+        <li><strong>Retake</strong> 30 days → 90 days → 180 days (max 3×/year)</li>
+      </ul>
+      <div class="reg-note">
+        <strong>Experience req:</strong> Must have 5 years in 2+ CISSP domains. No experience yet? You become an <em>Associate of ISC2</em> and have 6 years to get it endorsed.
+      </div>
+      <div class="reg-card-footer">
+        <div>
+          <div class="price-tag">$749 <small>USD</small></div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">Pearson VUE · global testing centers</div>
+        </div>
+        <a href="https://www.isc2.org/certifications/cissp" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Register Now &rarr;</a>
+      </div>
+    </div>
+
+    <!-- AWS Security Specialty -->
+    <div class="reg-card" style="border-color:rgba(255,153,0,0.2);">
+      <div class="reg-card-header">
+        <div>
+          <div class="reg-card-title">AWS Security Specialty</div>
+          <div class="reg-card-subtitle">SCS-C02 &nbsp;·&nbsp; Amazon Web Services</div>
+        </div>
+        <span class="badge badge-aws">AWS</span>
+      </div>
+      <ul class="reg-detail-list">
+        <li><strong>Format</strong> 65 questions · 170 minutes · ~75% passing (scaled)</li>
+        <li><strong>Register</strong> Pearson VUE or PSI — year-round</li>
+        <li><strong>Retake</strong> 14 days after fail</li>
+      </ul>
+      <div class="reg-note">
+        <strong>Note:</strong> AWS Cloud Practitioner or any Associate-level cert is recommended but not required. Focus on IAM, encryption, GuardDuty, Security Hub.
+      </div>
+      <div class="reg-card-footer">
+        <div>
+          <div class="price-tag">$300 <small>USD</small></div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">Pearson VUE or PSI</div>
+        </div>
+        <a href="https://aws.amazon.com/certification/certified-security-specialty/" target="_blank" rel="noopener" class="btn btn-sm" style="border-color:#ff9900;color:#ff9900;">Register Now &rarr;</a>
+      </div>
+    </div>
+
+    <!-- AZ-500 -->
+    <div class="reg-card" style="border-color:rgba(0,120,212,0.2);">
+      <div class="reg-card-header">
+        <div>
+          <div class="reg-card-title">AZ-500</div>
+          <div class="reg-card-subtitle">Microsoft Azure Security Technologies</div>
+        </div>
+        <span class="badge badge-azure">AZURE</span>
+      </div>
+      <ul class="reg-detail-list">
+        <li><strong>Format</strong> ~45 questions · 100 minutes · 700/1000 passing</li>
+        <li><strong>Register</strong> Pearson VUE — year-round</li>
+        <li><strong>Retake</strong> 24 hrs → 14 days → 14 days (max 5 attempts/year)</li>
+      </ul>
+      <div class="reg-note">
+        <strong>Note:</strong> Exam content updates periodically. Review the <em>Skills Measured</em> document on Microsoft Learn before your exam date — changes happen mid-cycle.
+      </div>
+      <div class="reg-card-footer">
+        <div>
+          <div class="price-tag">$165 <small>USD</small></div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">Lowest price in this stack</div>
+        </div>
+        <a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/" target="_blank" rel="noopener" class="btn btn-sm" style="border-color:#4db6f5;color:#4db6f5;">Register Now &rarr;</a>
+      </div>
+    </div>
+
+    <!-- GCP Professional Cloud Security Engineer -->
+    <div class="reg-card" style="border-color:rgba(66,133,244,0.2);">
+      <div class="reg-card-header">
+        <div>
+          <div class="reg-card-title">GCP Cloud Security Engineer</div>
+          <div class="reg-card-subtitle">Professional Certification &nbsp;·&nbsp; Google Cloud</div>
+        </div>
+        <span class="badge badge-gcp">GCP</span>
+      </div>
+      <ul class="reg-detail-list">
+        <li><strong>Format</strong> ~50 questions · 2 hours</li>
+        <li><strong>Register</strong> Kryterion Webassessor — year-round</li>
+        <li><strong>Experience</strong> Recommended: 3+ yrs industry, 1+ yr GCP</li>
+      </ul>
+      <div class="reg-note">
+        <strong>Note:</strong> Register via Google Cloud Webassessor (Kryterion). Remote or in-person. Passing score not published numerically — pass/fail result.
+      </div>
+      <div class="reg-card-footer">
+        <div>
+          <div class="price-tag">$200 <small>USD</small></div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">Kryterion Webassessor</div>
+        </div>
+        <a href="https://cloud.google.com/learn/certification/cloud-security-engineer" target="_blank" rel="noopener" class="btn btn-sm" style="border-color:#7baaf7;color:#7baaf7;">Register Now &rarr;</a>
+      </div>
+    </div>
+
+  </div><!-- /reg-grid -->
+
+  <!-- =============================================
+       SECTION 2: TARGET DATE PLANNER
+       ============================================= -->
+
+  <h2 class="section-heading">Target Date Planner</h2>
+
+  <div class="callout info" style="margin-bottom:1.5rem;">
+    <div class="callout-title">Set your dates — then work backwards</div>
+    <p>Enter your target exam date for each cert. The planner tracks countdown and shows your readiness based on quiz scores. Dates are saved locally in your browser.</p>
+  </div>
+
+  <div class="planner-grid" id="planner-grid">
+    <!-- Populated by JS -->
+  </div>
+
+</div><!-- /container -->
+
+<footer style="border-top:1px solid var(--border);padding:1.5rem 1rem;text-align:center;font-size:0.8rem;color:var(--text-muted);">
+  CISO Cert Track &nbsp;·&nbsp; All data stored locally in your browser &nbsp;·&nbsp; Started March 28, 2026
+</footer>
+
+<script src="assets/js/db.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+/* =============================================
+   EXAM DATES PAGE — PLANNER JS
+   ============================================= */
+
+const EXAMS = [
+  {
+    id:        'cism',
+    label:     'CISM',
+    badgeClass: 'badge-cism',
+    window:    'Weeks 8–9 &nbsp;·&nbsp; target May 16 – May 30, 2026',
+    quizIds:   ['cism-d1', 'cism-d2', 'cism-d3', 'cism-d4'],
+    settingKey: 'examDate_cism',
+  },
+  {
+    id:        'ccsk',
+    label:     'CCSK',
+    badgeClass: 'badge-ccsk',
+    window:    'Weeks 10–11 &nbsp;·&nbsp; target June 6 – June 20, 2026',
+    quizIds:   ['ccsk-d1', 'ccsk-d2', 'ccsk-d3'],
+    settingKey: 'examDate_ccsk',
+  },
+  {
+    id:        'cobit',
+    label:     'COBIT',
+    badgeClass: 'badge-cobit',
+    window:    'Weeks 13–14 &nbsp;·&nbsp; target July 4 – July 18, 2026',
+    quizIds:   ['cobit-d1', 'cobit-d2'],
+    settingKey: 'examDate_cobit',
+  },
+  {
+    id:        'cissp',
+    label:     'CISSP',
+    badgeClass: 'badge-cissp',
+    window:    'Weeks 20–22 &nbsp;·&nbsp; target Sep 5 – Sep 19, 2026',
+    quizIds:   ['cissp-d1', 'cissp-d2', 'cissp-d3', 'cissp-d4', 'cissp-d5', 'cissp-d6', 'cissp-d7', 'cissp-d8'],
+    settingKey: 'examDate_cissp',
+  },
+  {
+    id:        'aws',
+    label:     'AWS Security',
+    badgeClass: 'badge-aws',
+    window:    'Weeks 26–28 &nbsp;·&nbsp; target Oct 17 – Nov 7, 2026',
+    quizIds:   ['aws-d1', 'aws-d2', 'aws-d3'],
+    settingKey: 'examDate_aws',
+  },
+  {
+    id:        'az500',
+    label:     'AZ-500',
+    badgeClass: 'badge-azure',
+    window:    'Weeks 30–32 &nbsp;·&nbsp; target Nov 21 – Dec 5, 2026',
+    quizIds:   ['az500-d1', 'az500-d2', 'az500-d3'],
+    settingKey: 'examDate_az500',
+  },
+  {
+    id:        'gcp',
+    label:     'GCP Security',
+    badgeClass: 'badge-gcp',
+    window:    'Weeks 34–36 &nbsp;·&nbsp; target Jan 2 – Jan 16, 2027',
+    quizIds:   ['gcp-d1', 'gcp-d2', 'gcp-d3'],
+    settingKey: 'examDate_gcp',
+  },
+];
+
+/* ---- Countdown helpers ---- */
+
+function daysUntil(isoDate) {
+  const now  = new Date();
+  const then = new Date(isoDate + 'T00:00:00');
+  now.setHours(0, 0, 0, 0);
+  return Math.round((then - now) / 86400000);
+}
+
+function countdownStatus(days) {
+  if (days < 0)   return { cls: 'status-ready',  msg: 'Exam date passed.' };
+  if (days === 0) return { cls: 'status-final',  msg: 'Today is exam day. Go.' };
+  if (days < 7)   return { cls: 'status-ready',  msg: "You're ready. Trust your prep." };
+  if (days < 14)  return { cls: 'status-week',   msg: 'This is it — review frameworks + formulas only.' };
+  if (days < 30)  return { cls: 'status-final',  msg: 'Final push — mock exams daily.' };
+  if (days < 60)  return { cls: 'status-close',  msg: 'Getting close — increase intensity.' };
+  return           { cls: 'status-far',   msg: 'On track — keep studying.' };
+}
+
+function renderCountdown(days, examLabel) {
+  const { cls, msg } = countdownStatus(days);
+  if (days < 0) {
+    return `<span class="planner-countdown ${cls}"><span class="countdown-number">${Math.abs(days)}d ago</span> — ${msg}</span>`;
+  }
+  return `<span class="planner-countdown ${cls}"><span class="countdown-number">${days} days</span> until ${examLabel} — ${msg}</span>`;
+}
+
+/* ---- Readiness pill ---- */
+
+function readinessPill(avgScore) {
+  if (avgScore === null) {
+    return `<span class="planner-status-pill pill-no-data">No quiz data yet</span>`;
+  }
+  if (avgScore >= 80) {
+    return `<span class="planner-status-pill pill-ready">&#10003; Ready to Schedule</span>`;
+  }
+  if (avgScore >= 50) {
+    return `<span class="planner-status-pill pill-almost">&#9679; Almost Ready</span>`;
+  }
+  return `<span class="planner-status-pill pill-keep">&#9679; Keep Studying</span>`;
+}
+
+/* ---- Build row HTML ---- */
+
+function buildPlannerRow(exam, savedDate, scores) {
+  // Compute avg score across relevant quiz IDs
+  let total = 0, count = 0;
+  exam.quizIds.forEach(qid => {
+    const s = scores.find(s => s.quizId === qid);
+    if (s && typeof s.best === 'number') { total += s.best; count++; }
+  });
+  const avgScore = count > 0 ? Math.round(total / count) : null;
+
+  const hasDate = !!savedDate;
+  const days    = hasDate ? daysUntil(savedDate) : null;
+
+  const countdownHtml = hasDate
+    ? renderCountdown(days, exam.label)
+    : `<span class="planner-countdown" style="color:var(--text-muted);font-size:0.82rem;">No date set — tap Set Reminder</span>`;
+
+  const dateInputMin = new Date().toISOString().slice(0, 10);
+  const dateValue    = hasDate ? savedDate : '';
+
+  return `
+    <div class="planner-row" id="planner-row-${exam.id}">
+      <div class="planner-row-main">
+        <div class="planner-cert-header">
+          <span class="badge ${exam.badgeClass}">${exam.label}</span>
+          ${readinessPill(avgScore)}
+          ${avgScore !== null ? `<span style="font-size:0.78rem;color:var(--text-muted);">avg ${avgScore}%</span>` : ''}
+        </div>
+        <div class="planner-target-window">${exam.window}</div>
+        <div id="countdown-${exam.id}">${countdownHtml}</div>
+        <div class="date-input-wrap${hasDate ? '' : ' visible'}" id="date-wrap-${exam.id}">
+          <input
+            type="date"
+            id="date-input-${exam.id}"
+            value="${dateValue}"
+            min="${dateInputMin}"
+            aria-label="Target exam date for ${exam.label}"
+          >
+          <button
+            type="button"
+            class="btn btn-sm btn-primary"
+            id="date-save-${exam.id}"
+            data-exam="${exam.id}"
+          >Save</button>
+          ${hasDate ? `<button type="button" class="btn btn-sm" id="date-clear-${exam.id}" data-exam="${exam.id}" style="color:var(--accent4);border-color:var(--accent4);">Clear</button>` : ''}
+        </div>
+        <div
+          class="date-set-indicator${hasDate ? ' visible' : ''}"
+          id="date-indicator-${exam.id}"
+          style="font-size:0.78rem;color:var(--accent2);margin-top:0.3rem;"
+        >${hasDate ? `Target: ${formatDate(savedDate)}` : ''}</div>
+      </div>
+      <div class="planner-row-actions">
+        <button
+          type="button"
+          class="btn btn-sm"
+          id="reminder-btn-${exam.id}"
+          data-exam="${exam.id}"
+          aria-expanded="${hasDate ? 'true' : 'false'}"
+        >${hasDate ? 'Edit Date' : 'Set Reminder'}</button>
+      </div>
+    </div>
+  `;
+}
+
+function formatDate(isoDate) {
+  const d = new Date(isoDate + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+/* ---- Render planner ---- */
+
+async function renderPlanner() {
+  const grid = document.getElementById('planner-grid');
+  if (!grid) return;
+
+  // Load all quiz scores and saved dates in parallel
+  const [scores, ...savedDates] = await Promise.all([
+    (typeof CertDB !== 'undefined' ? CertDB.getAllQuizScores() : Promise.resolve([])),
+    ...EXAMS.map(e => (typeof CertDB !== 'undefined'
+      ? CertDB.getSetting(e.settingKey)
+      : Promise.resolve(null))),
+  ]);
+
+  let html = '';
+  EXAMS.forEach((exam, i) => {
+    html += buildPlannerRow(exam, savedDates[i], scores);
+  });
+
+  grid.innerHTML = html;
+  wireReminderButtons(scores);
+}
+
+/* ---- Wire buttons ---- */
+
+function wireReminderButtons(scores) {
+  EXAMS.forEach(exam => {
+    const reminderBtn = document.getElementById(`reminder-btn-${exam.id}`);
+    const saveBtn     = document.getElementById(`date-save-${exam.id}`);
+    const clearBtn    = document.getElementById(`date-clear-${exam.id}`);
+    const dateInput   = document.getElementById(`date-input-${exam.id}`);
+    const dateWrap    = document.getElementById(`date-wrap-${exam.id}`);
+    const indicator   = document.getElementById(`date-indicator-${exam.id}`);
+    const countdown   = document.getElementById(`countdown-${exam.id}`);
+
+    if (reminderBtn) {
+      reminderBtn.addEventListener('click', () => {
+        const expanded = reminderBtn.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          dateWrap.classList.remove('visible');
+          reminderBtn.setAttribute('aria-expanded', 'false');
+        } else {
+          dateWrap.classList.add('visible');
+          reminderBtn.setAttribute('aria-expanded', 'true');
+          if (dateInput) dateInput.focus();
+        }
+      });
+    }
+
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async () => {
+        const val = dateInput ? dateInput.value : '';
+        if (!val) return;
+
+        if (typeof CertDB !== 'undefined') {
+          await CertDB.setSetting(exam.settingKey, val);
+        }
+
+        const days = daysUntil(val);
+        if (countdown) countdown.innerHTML = renderCountdown(days, exam.label);
+        if (indicator) {
+          indicator.textContent = `Target: ${formatDate(val)}`;
+          indicator.classList.add('visible');
+        }
+
+        dateWrap.classList.remove('visible');
+        if (reminderBtn) {
+          reminderBtn.textContent = 'Edit Date';
+          reminderBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        // Re-add clear button if not present
+        if (!document.getElementById(`date-clear-${exam.id}`)) {
+          const clearHtml = `<button type="button" class="btn btn-sm" id="date-clear-${exam.id}" data-exam="${exam.id}" style="color:var(--accent4);border-color:var(--accent4);">Clear</button>`;
+          dateWrap.insertAdjacentHTML('beforeend', clearHtml);
+          wireClearButton(exam);
+        }
+      });
+
+      // Allow saving with Enter key
+      if (dateInput) {
+        dateInput.addEventListener('keydown', e => {
+          if (e.key === 'Enter') saveBtn.click();
+        });
+      }
+    }
+
+    if (clearBtn) wireClearButton(exam);
+  });
+}
+
+function wireClearButton(exam) {
+  const clearBtn  = document.getElementById(`date-clear-${exam.id}`);
+  const dateWrap  = document.getElementById(`date-wrap-${exam.id}`);
+  const indicator = document.getElementById(`date-indicator-${exam.id}`);
+  const countdown = document.getElementById(`countdown-${exam.id}`);
+  const reminderBtn = document.getElementById(`reminder-btn-${exam.id}`);
+  const dateInput = document.getElementById(`date-input-${exam.id}`);
+
+  if (!clearBtn) return;
+
+  clearBtn.addEventListener('click', async () => {
+    if (typeof CertDB !== 'undefined') {
+      await CertDB.setSetting(exam.settingKey, null);
+    }
+    if (dateInput) dateInput.value = '';
+    if (indicator) {
+      indicator.textContent = '';
+      indicator.classList.remove('visible');
+    }
+    if (countdown) {
+      countdown.innerHTML = `<span class="planner-countdown" style="color:var(--text-muted);font-size:0.82rem;">No date set — tap Set Reminder</span>`;
+    }
+    if (reminderBtn) {
+      reminderBtn.textContent = 'Set Reminder';
+      reminderBtn.setAttribute('aria-expanded', 'false');
+    }
+    dateWrap.classList.remove('visible');
+    clearBtn.remove();
+  });
+}
+
+/* ---- Boot ---- */
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderPlanner);
+} else {
+  renderPlanner();
+}
+</script>
+<script src="assets/js/mobile-nav.js"></script>
+<script src="assets/js/celebrate.js"></script>
+</body>
+</html>

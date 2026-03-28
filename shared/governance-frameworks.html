@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Governance Frameworks — NIST, ISO, COBIT, CIS</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body data-expected-mins="30" data-topic-id="/shared/governance-frameworks.html">
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>Governance Frameworks <span style="color:var(--text-muted);font-weight:400;">— NIST, ISO, COBIT, CIS</span></h1>
+    <p>Shared reference · CISM D1 · CISSP D1 · CCSK D2 · COBIT core</p>
+  </div>
+
+  <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+    <span class="badge badge-cism">CISM D1+D2</span>
+    <span class="badge badge-ccsk">CCSK D2+D3</span>
+    <span class="badge badge-cobit">COBIT core</span>
+    <span class="badge badge-cissp">CISSP D1</span>
+  </div>
+
+  <div id="read-badge"></div>
+  <div id="reading-intel"></div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <!-- ======================================================
+             SECTION 1 — WHY FRAMEWORKS MATTER ON EXAMS
+             ====================================================== -->
+        <h2 id="why-frameworks">Why Frameworks Matter on Exams</h2>
+
+        <p>Practitioners with 25 years of experience often know the underlying security concepts better than the frameworks that codify them. The exam problem is the reverse: you may know exactly how to run a vulnerability management program, but if you can't map that activity to the correct framework, domain, and exam-expected vocabulary, you'll lose points on questions where the "right" answer is the framework answer, not the practitioner answer.</p>
+
+        <p>These exams test framework <em>knowledge</em> in three distinct ways. First, recognition: given a description of an activity or control, identify which framework it belongs to. Second, structure: given a framework name, identify its components, domains, functions, or layers. Third, purpose distinction: given a scenario, identify which framework is the appropriate reference — the exam will never accept "any framework" as an answer when there's a clearly most-appropriate one.</p>
+
+        <p>The orientation you need is practical: treat frameworks as the vocabulary the exam community uses to communicate about security program activities. When a CISM question describes a governance process, it's using COBIT or ISO 27001 vocabulary. When a CISSP question describes a risk management process, it's using NIST RMF or SP 800-53 vocabulary. When a CCSK question describes a cloud security program, it's using CSF or the CSA Cloud Controls Matrix vocabulary. Matching framework vocabulary to the right exam community is the first skill to build.</p>
+
+        <div class="callout info">
+          <div class="callout-title">Framework Orientation</div>
+          <p><strong>COBIT</strong> = IT governance framework. Tells you <em>what to govern</em> and <em>who decides</em>. <strong>ISO 27001</strong> = ISMS requirements. Tells you <em>what to manage</em> for information security. <strong>NIST CSF</strong> = risk-based cybersecurity program structure. Tells you <em>how to organize</em> your security activities. <strong>NIST SP 800-53</strong> = controls catalogue. Tells you <em>what specific controls</em> to implement. Do not confuse these — each exam tests you on which framework answers which question.</p>
+        </div>
+
+
+        <!-- ======================================================
+             SECTION 2 — NIST CSF 2.0
+             ====================================================== -->
+        <h2 id="nist-csf">NIST Cybersecurity Framework (CSF) 2.0</h2>
+
+        <p>The NIST CSF is a risk-based framework for organizing and communicating cybersecurity activities. Originally published in 2014 in response to Executive Order 13636, CSF 1.1 quickly became the most widely adopted voluntary cybersecurity framework in the United States and gained significant international adoption. CSF 2.0 was released in 2024 with the most significant structural change since the framework's creation: the addition of a sixth function, GOVERN.</p>
+
+        <h3>The Six Functions of CSF 2.0</h3>
+
+        <p>The CSF organizes security activities into six high-level functions. These are not sequential steps — they run concurrently as continuous program activities:</p>
+
+        <p><strong>GOVERN (new in 2.0)</strong> — Establishes and monitors the organization's cybersecurity risk management strategy, expectations, and policy. This function covers organizational context, risk management strategy, cybersecurity supply chain risk management, roles and responsibilities, policies and procedures, and oversight. The GOVERN function reflects recognition that cybersecurity risk management must be a governance activity — not just an operational one. For exam purposes, GOVERN is what connects the CSF to enterprise risk management and board-level accountability.</p>
+
+        <p><strong>IDENTIFY</strong> — Develops organizational understanding of cybersecurity risk to systems, assets, data, and capabilities. Covers asset management, business environment context, governance (in CSF 1.1 this was here; in 2.0 it moved to GOVERN), risk assessment, and risk management strategy. You cannot manage what you don't know you have — IDENTIFY is the foundation.</p>
+
+        <p><strong>PROTECT</strong> — Implements appropriate safeguards to ensure delivery of critical infrastructure services. Covers identity management and access control, awareness and training, data security, information protection processes, maintenance, and protective technology. PROTECT is where most security control implementation lives.</p>
+
+        <p><strong>DETECT</strong> — Develops and implements activities to identify cybersecurity events. Covers anomalies and events detection, security continuous monitoring, and detection processes. DETECT answers: how will we know when something goes wrong?</p>
+
+        <p><strong>RESPOND</strong> — Develops and implements activities to take action regarding a detected cybersecurity incident. Covers response planning, communications, analysis, mitigation, and improvements. RESPOND is where incident response process lives.</p>
+
+        <p><strong>RECOVER</strong> — Develops and implements activities to maintain resilience plans and restore capabilities impaired by cybersecurity events. Covers recovery planning, improvements, and communications. RECOVER is where business continuity and disaster recovery align with CSF.</p>
+
+        <h3>Framework Tiers</h3>
+
+        <p>CSF Tiers describe the degree of rigor and sophistication in an organization's cybersecurity risk management practices. They are not maturity levels and not meant to be "achieved" sequentially — they describe the current organizational posture for framing target state discussions.</p>
+
+        <ul>
+          <li><strong>Tier 1 — Partial:</strong> Risk management practices are ad hoc and reactive. Limited awareness of cybersecurity risk at the organizational level. No formalized process.</li>
+          <li><strong>Tier 2 — Risk Informed:</strong> Risk management practices are approved by management but may not be organizational policy. Awareness of cybersecurity risk but inconsistent application across the organization.</li>
+          <li><strong>Tier 3 — Repeatable:</strong> Risk management practices are formally approved as policy and expressed as policy. Organization-wide approach, regularly updated based on changes in requirements and threat landscape.</li>
+          <li><strong>Tier 4 — Adaptive:</strong> Organization adapts its cybersecurity practices based on lessons learned and predictive indicators. Active participation in sharing information with external parties. Risk management is a continuous, adaptive process.</li>
+        </ul>
+
+        <div class="callout warning">
+          <div class="callout-title">Tiers Are Not Maturity Levels</div>
+          <p>This is a common exam trap. CSF Tiers do not define a required progression path and Tier 4 is not the goal for every organization. A small organization with limited threat exposure may appropriately operate at Tier 2. The point is that Tier descriptions provide a shared vocabulary for organizations to discuss their current cybersecurity posture and define target state. The question is not "which Tier should we be at?" but "does our Tier reflect an appropriate level of rigor for our risk environment?"</p>
+        </div>
+
+        <h3>Framework Profiles</h3>
+
+        <p>A CSF Profile represents an organization's unique alignment of Framework requirements with its business requirements, risk tolerance, and resources. <strong>Current Profile</strong> describes the cybersecurity outcomes that are currently being achieved. <strong>Target Profile</strong> describes the desired cybersecurity outcomes. The gap between Current and Target drives prioritization of security investments and activities. Profiles are organization-specific — there is no standard profile that all organizations should adopt.</p>
+
+        <h3>How Each Certification Uses the CSF</h3>
+
+        <p><strong>CISM:</strong> CSF provides a governance-aligned structure for the information security program. The GOVERN function maps directly to CISM's governance domain. The progression from IDENTIFY through RECOVER aligns with how CISM describes security program domains. In CISM exam questions, CSF is referenced as a program structure framework — the vehicle for organizing security activities and reporting security posture to the board.</p>
+
+        <p><strong>CISSP:</strong> CSF is referenced in the context of risk management and security program structure. CISSP Domain 1 (Security and Risk Management) uses CSF as an example of how to organize a security program around risk management principles. CISSP exam questions may reference specific CSF functions to test whether you can identify which function an activity belongs to.</p>
+
+        <p><strong>CCSK:</strong> CSF applies to cloud security program organization. The Cloud Security Alliance guidance references CSF as a framework for organizing cloud security controls and assessing cloud security program maturity. In a cloud context, each CSF function has cloud-specific implementations: IDENTIFY includes cloud asset discovery, PROTECT includes cloud-native access controls, DETECT includes cloud SIEM and log analysis.</p>
+
+        <h3>CSF 1.1 vs CSF 2.0 — What to Know for Exams</h3>
+
+        <p>The most significant change is the addition of GOVERN. In CSF 1.1, governance-related activities were distributed across IDENTIFY (particularly the Governance category). CSF 2.0 elevates governance to a standalone function, reflecting the consensus that cybersecurity governance cannot be buried inside an operational function. For exams: if a question was written before 2024, it may reference CSF 1.1's five functions. If it references six functions or mentions GOVERN explicitly, it's testing CSF 2.0. Both versions remain in active use. If the exam doesn't specify a version, know both — and note that the operational functions (IDENTIFY through RECOVER) are the same in both versions.</p>
+
+
+        <!-- ======================================================
+             SECTION 3 — ISO/IEC 27001
+             ====================================================== -->
+        <h2 id="iso-27001">ISO/IEC 27001 — ISMS Requirements</h2>
+
+        <p>ISO/IEC 27001 is the international standard for Information Security Management Systems (ISMS). It defines requirements — not guidance — for establishing, implementing, maintaining, and continually improving an ISMS. The distinction between requirements and guidance is critical for exam answers: ISO 27001 says what you must do; ISO 27002 tells you how.</p>
+
+        <h3>What ISO 27001 Defines</h3>
+
+        <p>ISO 27001 specifies the management system requirements for information security. A management system is a set of interrelated or interacting elements of an organization to establish policies and objectives and processes to achieve those objectives. For information security, the management system includes: the organizational context and stakeholder requirements, leadership commitment and policy, risk assessment and treatment processes, documented information requirements, operational controls, performance evaluation, and continual improvement processes.</p>
+
+        <p>The key word throughout ISO 27001 is "shall" — this is mandatory language. Every "shall" statement is an auditable requirement. ISO 27001 certification means an accredited third-party auditor has verified that your organization meets all the "shall" requirements.</p>
+
+        <h3>The Annex A Controls</h3>
+
+        <p><strong>ISO 27001:2013</strong> contained 114 controls organized in 14 domains (A.5 through A.18). These are referenced in the Statement of Applicability (SoA) — the document that lists which controls are applicable to the organization, which have been implemented, and which have been excluded with justification.</p>
+
+        <p><strong>ISO 27001:2022</strong> reduced and reorganized to 93 controls in 4 themes: Organizational controls (37), People controls (8), Physical controls (14), and Technological controls (34). The 2022 revision also added 11 new controls covering areas like threat intelligence, cloud services security, ICT readiness for business continuity, and data masking.</p>
+
+        <p>For exam purposes: if the question specifies a version, use the correct count. If it doesn't specify, 114 (2013) or 93 (2022) may both be correct depending on exam vintage. CISM and CISSP exams currently in circulation may reference either version — know both numbers.</p>
+
+        <h3>ISO 27002 — Code of Practice</h3>
+
+        <p>ISO 27002 is the companion standard to ISO 27001. Where 27001 says "you shall implement controls," 27002 explains implementation guidance for each control. Organizations implementing ISO 27001 use 27002 as their implementation reference. ISO 27002 is not certifiable — you certify to 27001, you implement using 27002. CISM and CISSP questions that reference specific control implementation details are drawing on 27002 guidance even when they reference 27001.</p>
+
+        <h3>ISO 27005 — IS Risk Management</h3>
+
+        <p>ISO 27005 provides guidelines for information security risk management in support of ISO 27001. It implements the risk management requirements of ISO 27001 (Clause 6.1 — actions to address risks and opportunities) using terminology aligned to ISO 31000. ISO 27005 is the bridge between the enterprise risk management language of ISO 31000 and the information security management requirements of ISO 27001.</p>
+
+        <h3>PDCA — Plan-Do-Check-Act</h3>
+
+        <p>The ISO management system framework uses a Plan-Do-Check-Act cycle for continual improvement. <strong>Plan:</strong> establish the ISMS, define scope, conduct risk assessment, develop risk treatment plan. <strong>Do:</strong> implement the risk treatment plan and controls. <strong>Check:</strong> monitor, measure, audit, and review ISMS performance against policy and objectives. <strong>Act:</strong> take corrective actions, implement improvements. This cycle is not just an implementation model — it's the structure of the ISO 27001 certification audit.</p>
+
+        <h3>Key ISO 27001 Clauses</h3>
+
+        <table>
+          <thead>
+            <tr><th>Clause</th><th>Title</th><th>What It Requires</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>4</td><td>Context of the Organization</td><td>Understand internal/external context; identify interested parties; define ISMS scope</td></tr>
+            <tr><td>5</td><td>Leadership</td><td>Top management commitment; information security policy; roles and responsibilities</td></tr>
+            <tr><td>6</td><td>Planning</td><td>Risk assessment methodology; risk treatment plan; information security objectives</td></tr>
+            <tr><td>7</td><td>Support</td><td>Resources; competence; awareness; communication; documented information</td></tr>
+            <tr><td>8</td><td>Operation</td><td>Implement risk treatment; manage operational risk; control documented information</td></tr>
+            <tr><td>9</td><td>Performance Evaluation</td><td>Monitoring; measurement; internal audit; management review</td></tr>
+            <tr><td>10</td><td>Improvement</td><td>Nonconformities; corrective actions; continual improvement</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout exam">
+          <div class="callout-title">CISM — ISO 27001 Exam Points</div>
+          <p>CISM most frequently references ISO 27001 in the context of governance and ISMS design. Key exam points: (1) ISO 27001 certification is a governance decision — it demonstrates external verification of the security management system. (2) The Statement of Applicability (SoA) is a mandatory document — it records which Annex A controls apply and why. (3) Management review (Clause 9.3) is a governance activity — senior management must formally review ISMS performance at planned intervals. Questions about who reviews ISMS effectiveness: senior management, not the CISO alone.</p>
+        </div>
+
+
+        <!-- ======================================================
+             SECTION 4 — COBIT 2019
+             ====================================================== -->
+        <h2 id="cobit">COBIT 2019</h2>
+
+        <p>COBIT 2019 is ISACA's governance framework for enterprise IT. It defines what needs to be governed and managed in IT and provides detailed process descriptions, activities, and metrics. COBIT is the framework most aligned with CISM's governance vocabulary, and the COBIT exam tests the framework structure in significant detail.</p>
+
+        <h3>Six Governance Principles</h3>
+
+        <p>COBIT 2019 is built on six governance system principles that define how to design and implement a governance system:</p>
+
+        <ol>
+          <li><strong>Provide Stakeholder Value:</strong> Governance exists to create value for stakeholders — owners, customers, employees, suppliers, regulators. Every governance decision traces back to whether it delivers, preserves, or enables stakeholder value.</li>
+          <li><strong>Holistic Approach:</strong> Governance of enterprise IT requires attention to all components of the governance system — not just technology. Processes, organizational structures, culture, information, services, people, and infrastructure are all governance components.</li>
+          <li><strong>Dynamic Governance System:</strong> As conditions change — new technologies, new regulations, new business models — the governance system must adapt. COBIT 2019's design factor approach enables tailoring the governance system to current conditions.</li>
+          <li><strong>Governance Distinct from Management:</strong> Governance evaluates, directs, and monitors. Management plans, builds, runs, and monitors. The board and executive management govern; operational teams manage. This distinction runs throughout COBIT and aligns precisely with CISM's governance/management split.</li>
+          <li><strong>Tailored to Enterprise Needs:</strong> No single governance system fits all organizations. COBIT 2019 introduces design factors — enterprise strategy, risk profile, regulatory environment, IT sourcing model, etc. — to tailor the governance system to organizational context.</li>
+          <li><strong>End-to-End Governance System:</strong> IT governance must cover the full enterprise, not just the IT department. Business units that use IT are part of the governance scope. External service providers are part of the governance scope.</li>
+        </ol>
+
+        <h3>The 40 Governance and Management Objectives</h3>
+
+        <p>COBIT 2019 organizes its guidance into 40 governance and management objectives across five domains. The COBIT exam tests objective names, domain assignments, and what each objective covers:</p>
+
+        <p><strong>EDM — Evaluate, Direct and Monitor (5 objectives)</strong> — The governance domain. The board evaluates options, directs management, and monitors performance against objectives.</p>
+        <ul>
+          <li>EDM01: Ensured Governance Framework Setting and Maintenance</li>
+          <li>EDM02: Ensured Benefits Delivery</li>
+          <li>EDM03: Ensured Risk Optimisation</li>
+          <li>EDM04: Ensured Resource Optimisation</li>
+          <li>EDM05: Ensured Stakeholder Engagement</li>
+        </ul>
+
+        <p><strong>APO — Align, Plan and Organize (14 objectives)</strong> — Strategic alignment of IT with the enterprise. Covers strategy, architecture, innovation, human resources, quality, risk management, security management, and relationship management with business units.</p>
+        <ul>
+          <li>APO01–APO14 cover: IT management framework, strategy, enterprise architecture, innovation, portfolio management, budget and costs, HR, relationships, service agreements, vendors, quality management, risk management, security management, and data management.</li>
+        </ul>
+
+        <p><strong>BAI — Build, Acquire and Implement (11 objectives)</strong> — Acquiring and building IT capabilities. Covers solutions design, requirements definition, solution development, testing, change management, configuration management, knowledge management, asset management, and projects.</p>
+
+        <p><strong>DSS — Deliver, Service and Support (6 objectives)</strong> — Operational delivery of IT services. Covers operations management, service requests, incident management, problem management, continuity management, and security services.</p>
+
+        <p><strong>MEA — Monitor, Evaluate and Assess (4 objectives)</strong> — Monitoring and assurance. Covers performance management, internal control systems, compliance, and assurance providing.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">COBIT Exam — Domain and Objective Knowledge</div>
+          <p>The COBIT exam tests detailed knowledge of which objectives belong to which domain. Know the five domain acronyms and their full names. Know that EDM is the governance domain (5 objectives) and the other four are management domains. Know EDM03 (risk), APO12 (risk management), APO13 (security management), and DSS05 (security services) by name — these are the most commonly referenced in cross-exam questions. The exam will give you a scenario and ask which COBIT objective it falls under.</p>
+        </div>
+
+        <h3>Design Factors</h3>
+
+        <p>COBIT 2019 introduced design factors as the mechanism for tailoring the governance system. Eleven design factors: enterprise strategy, enterprise goals, risk profile, IT-related issues, threat landscape, compliance requirements, IT role in the enterprise, IT sourcing model, IT implementation methods, technology adoption strategy, and enterprise size. Each design factor influences which COBIT objectives are most relevant and at what capability level they should be implemented. This replaces COBIT 5's simpler capability maturity model approach with a more context-sensitive tailoring methodology.</p>
+
+        <h3>COBIT and CISM Alignment</h3>
+
+        <p>CISM and COBIT are deeply aligned because both emerge from the ISACA community and share governance vocabulary. The governance/management split, the concept of value delivery, risk optimization as a governance objective, and the role of the board in setting IT direction — all these appear identically in both frameworks. For exam purposes: when a CISM question uses governance vocabulary, the answer structure often mirrors COBIT's EDM domain logic. When a CISM question discusses security management processes, the structure often mirrors COBIT's APO and DSS domains.</p>
+
+
+        <!-- ======================================================
+             SECTION 5 — NIST SP 800-53
+             ====================================================== -->
+        <h2 id="sp-800-53">NIST SP 800-53 — Security and Privacy Controls</h2>
+
+        <p>NIST Special Publication 800-53 is the most comprehensive security and privacy controls catalogue available for information systems. Originally developed for U.S. federal agencies under FISMA, it has become a widely used reference for commercial organizations as well, particularly those with defense, government, or healthcare customer bases. The current version is Revision 5.</p>
+
+        <h3>What It Is</h3>
+
+        <p>SP 800-53 provides a catalogue of security and privacy controls organized into 20 control families. Each control has a base control definition and control enhancements that add specificity or rigor. The controls are technology-agnostic — they describe what must be done, not how to implement it in any specific technology. SP 800-53B provides control baselines — pre-selected sets of controls for different system impact levels.</p>
+
+        <h3>The 20 Control Families</h3>
+
+        <table>
+          <thead>
+            <tr><th>Identifier</th><th>Family</th><th>Identifier</th><th>Family</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>AC</td><td>Access Control</td><td>MP</td><td>Media Protection</td></tr>
+            <tr><td>AT</td><td>Awareness and Training</td><td>PE</td><td>Physical and Environmental Protection</td></tr>
+            <tr><td>AU</td><td>Audit and Accountability</td><td>PL</td><td>Planning</td></tr>
+            <tr><td>CA</td><td>Assessment, Authorization, and Monitoring</td><td>PM</td><td>Program Management</td></tr>
+            <tr><td>CM</td><td>Configuration Management</td><td>PS</td><td>Personnel Security</td></tr>
+            <tr><td>CP</td><td>Contingency Planning</td><td>PT</td><td>Personally Identifiable Information Processing and Transparency</td></tr>
+            <tr><td>IA</td><td>Identification and Authentication</td><td>RA</td><td>Risk Assessment</td></tr>
+            <tr><td>IR</td><td>Incident Response</td><td>SA</td><td>System and Services Acquisition</td></tr>
+            <tr><td>MA</td><td>Maintenance</td><td>SC</td><td>System and Communications Protection</td></tr>
+            <tr><td>—</td><td>—</td><td>SI</td><td>System and Information Integrity</td></tr>
+            <tr><td>—</td><td>—</td><td>SR</td><td>Supply Chain Risk Management</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Control Baselines</h3>
+
+        <p>SP 800-53B defines three control baselines aligned to FIPS 199 impact levels:</p>
+        <ul>
+          <li><strong>Low Impact Baseline:</strong> Systems where loss of confidentiality, integrity, or availability would have limited adverse effect. Smallest set of controls.</li>
+          <li><strong>Moderate Impact Baseline:</strong> Systems where impact would be serious. The most commonly applicable baseline in practice.</li>
+          <li><strong>High Impact Baseline:</strong> Systems where impact would be severe or catastrophic. Comprehensive control set with numerous enhancements. Required for classified systems and high-stakes federal systems.</li>
+        </ul>
+
+        <p>Organizations tailoring their control selection start with the baseline for their system's impact level, then overlay additional controls based on organization-specific risk factors identified in the risk assessment.</p>
+
+        <h3>SP 800-53 vs. ISO 27002 — Two Controls Catalogues</h3>
+
+        <p>SP 800-53 and ISO 27002 serve the same function — both are controls catalogues that organizations use to select and implement security controls. The key differences: SP 800-53 is more prescriptive, more granular, and tied to a specific framework (NIST RMF) with explicit baseline levels. ISO 27002 is more principles-based, less prescriptive, and designed for global use without a baseline structure. Organizations in regulated U.S. contexts (federal, defense contractors, healthcare) typically reference SP 800-53. Organizations in international or commercial contexts without U.S. government requirements typically reference ISO 27002. Many organizations map between them — NIST maintains a cross-reference mapping between the two frameworks.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">CISSP — SP 800-53 Exam Points</div>
+          <p>CISSP Domain 1 references SP 800-53 frequently. Know: (1) It's a controls catalogue, not a governance framework. (2) It's used in conjunction with NIST RMF — Step 2 (Select) of RMF involves selecting controls from SP 800-53. (3) The 20 control family identifiers are worth memorizing — exam questions may describe a control scenario and ask which family it belongs to. (4) Control baselines are impact-based (Low/Moderate/High) — know that Moderate is the most common starting point for general-purpose enterprise systems.</p>
+        </div>
+
+
+        <!-- ======================================================
+             SECTION 6 — CIS CONTROLS v8
+             ====================================================== -->
+        <h2 id="cis-controls">CIS Controls v8</h2>
+
+        <p>The CIS Controls (formerly SANS Top 20, then CIS Top 20) are a prioritized set of security actions designed to stop the most prevalent and damaging attacks. Published by the Center for Internet Security, the controls are developed through a community-based process incorporating threat intelligence and practitioner experience.</p>
+
+        <h3>The 18 CIS Controls</h3>
+
+        <p>CIS Controls v8 reorganized from 20 controls to 18, restructuring around how organizations manage assets and safeguards in a modern environment:</p>
+
+        <ol>
+          <li>Inventory and Control of Enterprise Assets</li>
+          <li>Inventory and Control of Software Assets</li>
+          <li>Data Protection</li>
+          <li>Secure Configuration of Enterprise Assets and Software</li>
+          <li>Account Management</li>
+          <li>Access Control Management</li>
+          <li>Continuous Vulnerability Management</li>
+          <li>Audit Log Management</li>
+          <li>Email and Web Browser Protections</li>
+          <li>Malware Defenses</li>
+          <li>Data Recovery</li>
+          <li>Network Infrastructure Management</li>
+          <li>Network Monitoring and Defense</li>
+          <li>Security Awareness and Skills Training</li>
+          <li>Service Provider Management</li>
+          <li>Application Software Security</li>
+          <li>Incident Response Management</li>
+          <li>Penetration Testing</li>
+        </ol>
+
+        <h3>Implementation Groups</h3>
+
+        <p>CIS Controls v8 organizes controls into three Implementation Groups (IGs) based on organizational risk profile and resources:</p>
+
+        <ul>
+          <li><strong>IG1 — Basic Cyber Hygiene:</strong> 56 safeguards that every organization should implement regardless of size. These represent the foundational controls that address the most common attacks against all organizations. If an organization is at IG1, they have essential cyber hygiene in place.</li>
+          <li><strong>IG2 — Foundational:</strong> Includes all IG1 safeguards plus additional safeguards appropriate for organizations with modest resources and security staff. Addresses most of the threats facing organizations with moderate risk profiles.</li>
+          <li><strong>IG3 — Organizational:</strong> Includes all IG1 and IG2 safeguards plus safeguards for organizations with mature security programs, dedicated security staff, and higher threat exposure. Covers sophisticated attacks and threat intelligence integration.</li>
+        </ul>
+
+        <h3>How CIS Controls Map to Other Frameworks</h3>
+
+        <p>CIS provides explicit mappings between v8 controls and NIST CSF functions, NIST SP 800-53 controls, ISO 27001 Annex A, and other frameworks. This makes CIS Controls useful as a "translator" between frameworks — if you know where an activity sits in CIS, you can find the corresponding reference in any other framework via the mapping. For exam purposes: CIS Controls are most frequently referenced in CISM Domain 3 (Information Security Program) as a practical prioritized control framework, and in CISSP as an example of a threat-informed control selection approach.</p>
+
+
+        <!-- ======================================================
+             SECTION 7 — ITIL 4
+             ====================================================== -->
+        <h2 id="itil">ITIL 4</h2>
+
+        <p>ITIL (Information Technology Infrastructure Library) is the IT service management framework published by Axelos. ITIL 4 was released in 2019 and represents a significant evolution from ITIL v3's process-focused library to a holistic operating model for IT service management.</p>
+
+        <h3>ITIL 4 Core Concepts</h3>
+
+        <p>ITIL 4 centers on the Service Value System (SVS), which describes how components and activities work together to create value. The SVS includes guiding principles, governance, the service value chain, practices (previously "processes"), and continual improvement. The service value chain has six activities: Plan, Improve, Engage, Design &amp; Transition, Obtain/Build, and Deliver &amp; Support.</p>
+
+        <p>ITIL 4 defines 34 management practices replacing ITIL v3's 26 processes. Practices are divided into General Management Practices (14), Service Management Practices (17), and Technical Management Practices (3).</p>
+
+        <h3>Security-Relevant ITIL Practices</h3>
+
+        <p><strong>Incident Management</strong> — The practice of minimizing the negative impact of incidents by restoring normal service operation as quickly as possible. ITIL's incident management process (classification → logging → investigation → resolution → closure) aligns with CISM Domain 4's incident response content and is referenced in COBIT DSS02.</p>
+
+        <p><strong>Change Enablement</strong> — Previously called Change Management. Controls the lifecycle of all changes, protecting against unauthorized changes and ensuring that approved changes are implemented without disruption. Every security team that has struggled with implementing security changes through IT change management processes is operating in an ITIL Change Enablement context.</p>
+
+        <p><strong>Information Security Management</strong> — ITIL 4 has a dedicated Information Security Management practice that aligns with ISO 27001 requirements. It covers security policies, controls, and the interface between IT service management security activities and the broader ISMS.</p>
+
+        <p><strong>Service Continuity Management</strong> — Ensures that IT services can continue operating during and after disruptive events. This practice aligns with CISM's BCP/DR content and CISSP Domain 7 (Security Operations) continuity content.</p>
+
+        <p><strong>Problem Management</strong> — Identifies and addresses root causes of incidents, preventing recurrence. Security incidents that become problems (recurring incidents from the same root cause) flow into problem management. This is relevant for CISM Domain 4 post-incident review.</p>
+
+        <h3>ITIL and COBIT Relationship</h3>
+
+        <p>COBIT provides governance objectives and management objectives for IT; ITIL provides operational process guidance for delivering IT services. They are complementary: COBIT DSS domain objectives align with ITIL service management practices. COBIT's APO09 (service agreements) and DSS01 (operations management) directly reference ITIL practice areas. For CISM and COBIT exam questions: COBIT is the governance framework; ITIL is the operational execution framework. A question about what process to use for managing incidents in an ITIL-operating environment has an ITIL answer; a question about governance oversight of incident management has a COBIT answer.</p>
+
+
+        <!-- ======================================================
+             SECTION 8 — FRAMEWORK COMPARISON TABLE
+             ====================================================== -->
+        <h2 id="comparison">Framework Comparison Table</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Framework</th>
+              <th>Publisher</th>
+              <th>Focus Area</th>
+              <th>Cert References</th>
+              <th>Primary Use</th>
+              <th>Certifiable?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>NIST CSF 2.0</strong></td>
+              <td>NIST (U.S. Gov)</td>
+              <td>Risk-based cybersecurity program</td>
+              <td>CISM, CISSP, CCSK</td>
+              <td>Organizing and communicating cybersecurity activities; program structure</td>
+              <td>No (voluntary; no cert)</td>
+            </tr>
+            <tr>
+              <td><strong>ISO/IEC 27001</strong></td>
+              <td>ISO / IEC</td>
+              <td>ISMS requirements</td>
+              <td>CISM, CISSP</td>
+              <td>Establishing a certifiable ISMS; compliance with security management requirements</td>
+              <td>Yes (third-party audit)</td>
+            </tr>
+            <tr>
+              <td><strong>ISO 27002</strong></td>
+              <td>ISO / IEC</td>
+              <td>Security controls implementation guidance</td>
+              <td>CISM, CISSP</td>
+              <td>Guidance on implementing Annex A controls; control selection reference</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td><strong>ISO 27005</strong></td>
+              <td>ISO / IEC</td>
+              <td>IS risk management</td>
+              <td>CISM, CISSP</td>
+              <td>Risk assessment methodology for ISO 27001 implementation</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td><strong>COBIT 2019</strong></td>
+              <td>ISACA</td>
+              <td>IT governance and management</td>
+              <td>CISM, COBIT exam</td>
+              <td>Governance of enterprise IT; defining what to govern and manage in IT</td>
+              <td>COBIT exam (knowledge cert)</td>
+            </tr>
+            <tr>
+              <td><strong>NIST SP 800-53</strong></td>
+              <td>NIST</td>
+              <td>Security and privacy controls catalogue</td>
+              <td>CISSP, CISM</td>
+              <td>Control selection for U.S. federal and compliant commercial systems; tied to NIST RMF</td>
+              <td>No (used in FedRAMP, FISMA)</td>
+            </tr>
+            <tr>
+              <td><strong>NIST RMF</strong></td>
+              <td>NIST (SP 800-37)</td>
+              <td>Risk management for information systems</td>
+              <td>CISSP, CISM</td>
+              <td>System authorization lifecycle; structured risk management from design to decommission</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td><strong>CIS Controls v8</strong></td>
+              <td>CIS</td>
+              <td>Prioritized security controls</td>
+              <td>CISM (D3), CISSP</td>
+              <td>Practical, threat-informed prioritized control implementation; SMB to enterprise</td>
+              <td>CIS Benchmarks (configs); no ISMS cert</td>
+            </tr>
+            <tr>
+              <td><strong>ITIL 4</strong></td>
+              <td>Axelos / PeopleCert</td>
+              <td>IT service management</td>
+              <td>CISM (D4), COBIT</td>
+              <td>Operational delivery of IT services; incident, change, continuity processes</td>
+              <td>Yes (ITIL 4 Foundation etc.)</td>
+            </tr>
+            <tr>
+              <td><strong>CSA CCM</strong></td>
+              <td>Cloud Security Alliance</td>
+              <td>Cloud controls</td>
+              <td>CCSK primarily</td>
+              <td>Cloud-specific controls mapped to cloud service layers; CSP assessment tool</td>
+              <td>CSA STAR (self-assessment or cert)</td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <!-- ======================================================
+             SECTION 9 — EXAM-SPECIFIC FRAMEWORK RULES
+             ====================================================== -->
+        <h2 id="exam-rules">Exam-Specific Framework Rules</h2>
+
+        <h3>CISM — Framework Exam Behavior</h3>
+
+        <p>CISM questions reference frameworks to test governance literacy. Two frameworks dominate: COBIT (for IT governance structure) and ISO 27001 (for ISMS requirements and governance documentation). When a CISM question asks what governance framework to reference for security program structure, the answer is typically COBIT. When it asks what framework provides the ISMS requirements, the answer is ISO 27001.</p>
+
+        <p>Critical CISM framework rules:</p>
+        <ul>
+          <li><strong>"What should be done FIRST?"</strong> is a favorite CISM question type. The framework-correct first step in any new governance initiative is always to understand business context and obtain senior management commitment — before selecting any framework, writing any policy, or implementing any control. This is both ISO 27001 (Clause 4 — Context) and COBIT (governance design starting with stakeholder needs) logic.</li>
+          <li>CISM treats frameworks as tools that support governance, not as ends in themselves. A question asking why to adopt ISO 27001 should be answered with business benefit (external assurance, regulatory acceptance, structured program management) — not technical detail.</li>
+          <li>COBIT and CISM share governance vocabulary deliberately. When COBIT terms appear in CISM questions (EDM, APO, governance vs. management), the COBIT-correct answer and the CISM-correct answer are usually the same answer.</li>
+        </ul>
+
+        <h3>CISSP — Framework Exam Behavior</h3>
+
+        <p>CISSP references a different primary framework set than CISM. The dominant CISSP frameworks are NIST-family: NIST CSF, NIST RMF (SP 800-37), NIST SP 800-53, and FIPS publications. ISO frameworks appear but are secondary. When a CISSP question asks which framework to use for control selection in a U.S. federal context, SP 800-53 is the answer. When it asks about the system authorization process, NIST RMF is the answer.</p>
+
+        <p>Key CISSP framework distinctions:</p>
+        <ul>
+          <li>NIST CSF = <em>how to structure</em> a cybersecurity program (GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER)</li>
+          <li>NIST RMF = <em>how to authorize</em> an information system (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor)</li>
+          <li>NIST SP 800-53 = <em>what controls</em> to select within RMF Step 2</li>
+          <li>FIPS 199 = <em>how to categorize</em> system impact level (used in RMF Step 1 — Categorize)</li>
+          <li>FIPS 200 = minimum security requirements for federal systems (defines why baselines in SP 800-53 exist)</li>
+        </ul>
+
+        <div class="callout warning">
+          <div class="callout-title">CISSP — Don't Confuse the NIST Publications</div>
+          <p>NIST CSF, NIST RMF, SP 800-53, SP 800-30, and FIPS publications are all distinct and serve different purposes. A question about "what framework should be used to categorize a system" → FIPS 199 (impact categorization). "What framework selects controls after categorization" → NIST RMF Step 2 referencing SP 800-53. "What framework structures a risk-based security program for an organization" → NIST CSF. These are not interchangeable. Match the specific activity to the specific publication.</p>
+        </div>
+
+        <h3>CCSK — Framework Exam Behavior</h3>
+
+        <p>CCSK uses a different framework reference set than either CISM or CISSP. The Cloud Security Alliance (CSA) frameworks dominate: the CSA Cloud Controls Matrix (CCM) and the CSA Guidance document are the primary references. NIST CSF is referenced as a cloud security program structure. ISO 27001 and ISO 27017 (cloud-specific controls extension) appear but are secondary to CSA materials.</p>
+
+        <p>CCSK framework rules:</p>
+        <ul>
+          <li>CSA CCM is the primary cloud controls reference — it maps controls to service delivery models (IaaS, PaaS, SaaS) and to shared responsibility. Know that CCM exists and what it does.</li>
+          <li>ISO 27017 is the cloud-specific extension to ISO 27002 — it adds cloud-specific controls for both CSPs and cloud customers. CCSK references it for cloud security control implementation.</li>
+          <li>NIST CSF applies to cloud security programs — the functions (GOVERN through RECOVER) apply regardless of delivery model.</li>
+          <li>The exam specifically tests cloud-context differences: governance of a multi-cloud environment requires different approaches than single-organization on-premises governance. Frameworks must be adapted for shared responsibility.</li>
+        </ul>
+
+        <h3>COBIT — Framework Exam Behavior</h3>
+
+        <p>The COBIT Foundation exam tests the COBIT framework itself more deeply than any of the other certifications test any other framework. This exam expects detailed knowledge of:</p>
+        <ul>
+          <li>All five domain acronyms and their full names (EDM, APO, BAI, DSS, MEA)</li>
+          <li>The count of objectives per domain (5, 14, 11, 6, 4 = 40 total)</li>
+          <li>Key objective names within each domain, particularly EDM01–EDM05, APO12, APO13, DSS05, and MEA02</li>
+          <li>The six governance system principles</li>
+          <li>The distinction between governance (EDM) and management (APO, BAI, DSS, MEA)</li>
+          <li>Design factors and how they influence governance system design</li>
+          <li>How COBIT relates to other frameworks (COBIT references ISO 27001, ITIL, NIST CSF — it doesn't replace them)</li>
+        </ul>
+
+        <div class="callout exam">
+          <div class="callout-title">Final Framework Disambiguation</div>
+          <p><strong>COBIT</strong> answers: what should IT governance look like and who is responsible for what? <strong>ISO 27001</strong> answers: what must an ISMS contain to be certifiable? <strong>NIST CSF</strong> answers: how should a cybersecurity program be structured and communicated? <strong>NIST SP 800-53</strong> answers: what specific controls should a system implement? <strong>CIS Controls</strong> answers: what should we implement first given limited resources? <strong>ITIL</strong> answers: how should IT services be delivered and managed operationally? Never substitute one for another on an exam — each answers a different question.</p>
+        </div>
+
+      </div><!-- .study-content -->
+    </div><!-- .main-content -->
+
+    <div class="sidebar">
+      <div class="sidebar-toggle">On This Page</div>
+      <div class="sidebar-content">
+        <div class="card">
+          <h4>Sections</h4>
+          <ul>
+            <li><a href="#why-frameworks">Why Frameworks Matter</a></li>
+            <li><a href="#nist-csf">NIST CSF 2.0</a></li>
+            <li><a href="#iso-27001">ISO/IEC 27001</a></li>
+            <li><a href="#cobit">COBIT 2019</a></li>
+            <li><a href="#sp-800-53">NIST SP 800-53</a></li>
+            <li><a href="#cis-controls">CIS Controls v8</a></li>
+            <li><a href="#itil">ITIL 4</a></li>
+            <li><a href="#comparison">Comparison Table</a></li>
+            <li><a href="#exam-rules">Exam Rules</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>CSF 2.0 Functions</h4>
+          <ul>
+            <li>GOVERN (new in 2.0)</li>
+            <li>IDENTIFY</li>
+            <li>PROTECT</li>
+            <li>DETECT</li>
+            <li>RESPOND</li>
+            <li>RECOVER</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>COBIT Domains</h4>
+          <ul>
+            <li>EDM — 5 objectives (gov)</li>
+            <li>APO — 14 objectives</li>
+            <li>BAI — 11 objectives</li>
+            <li>DSS — 6 objectives</li>
+            <li>MEA — 4 objectives</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>ISO 27001 Key Numbers</h4>
+          <ul>
+            <li>2013: 114 controls / 14 domains</li>
+            <li>2022: 93 controls / 4 themes</li>
+            <li>Clauses 4–10 are auditable</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Framework Purpose</h4>
+          <ul>
+            <li>COBIT → IT governance</li>
+            <li>ISO 27001 → ISMS reqs</li>
+            <li>NIST CSF → program structure</li>
+            <li>SP 800-53 → controls catalogue</li>
+            <li>CIS → prioritized hygiene</li>
+            <li>ITIL → service mgmt ops</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Links In</h4>
+          <ul>
+            <li><a href="../cism/domain1/index.html">CISM Domain 1</a></li>
+            <li><a href="../cissp/domain1/index.html">CISSP Domain 1</a></li>
+            <li><a href="../cobit/index.html">COBIT</a></li>
+            <li><a href="../ccsk/index.html">CCSK</a></li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- .sidebar -->
+
+  </div><!-- .layout-sidebar -->
+
+</div><!-- .container -->
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; Shared Reference &nbsp;·&nbsp; Governance Frameworks
+</footer>
+
+<script src="../assets/js/db.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

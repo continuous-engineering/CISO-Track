@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISO Cert Track</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  body { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1.5rem; }
+
+  .login-wrap {
+    width: 100%; max-width: 400px;
+  }
+
+  .login-brand {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .login-brand .wordmark {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text);
+  }
+
+  .login-brand .wordmark span { color: var(--accent); }
+
+  .login-brand .tagline {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.35rem;
+  }
+
+  .login-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .login-card h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+  }
+
+  .field { margin-bottom: 1.25rem; }
+
+  .field label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .field input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: var(--text);
+    font-family: var(--font-sans);
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+  }
+
+  .field input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .field input::placeholder { color: var(--text-muted); }
+
+  #login-btn {
+    width: 100%;
+    padding: 0.875rem;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+    transition: background 0.15s;
+    margin-top: 0.5rem;
+  }
+
+  #login-btn:hover { background: #79b8ff; }
+
+  #login-error {
+    display: none;
+    font-size: 0.85rem;
+    color: var(--accent4);
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .login-footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .login-footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .login-footer a:hover { color: var(--text); }
+
+  .powered {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .powered a { color: var(--text-muted); }
+  .powered a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="login-wrap">
+
+  <div class="login-brand">
+    <div class="wordmark"><span>CISO</span> Cert Track</div>
+    <div class="tagline">CISM - CCSK - COBIT - CISSP - AWS - Azure - GCP</div>
+  </div>
+
+  <div class="login-card">
+    <h2>Your personal study system</h2>
+
+    <div class="field">
+      <label for="name-input">Your name</label>
+      <input type="text" id="name-input" placeholder="How should I address you?" autocomplete="name" autocapitalize="words">
+    </div>
+
+    <div class="field">
+      <label for="pw-input">Access password</label>
+      <input type="password" id="pw-input" placeholder="Password" autocomplete="current-password">
+    </div>
+
+    <button id="login-btn">Enter</button>
+
+    <div id="login-error">Incorrect password. Try again.</div>
+  </div>
+
+  <div class="powered">
+    Powered by <a href="https://continuia.ai" target="_blank">continuia.ai</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://continuous.engineering" target="_blank">continuous.engineering</a>
+  </div>
+
+</div>
+
+<script src="assets/js/db.js"></script>
+<script>
+const PASSWORD = 'CISO';
+
+async function checkAlreadyIn() {
+  const session = await CertDB.getSetting('session');
+  if (session?.authenticated) {
+    window.location.replace('index.html');
+  }
+}
+
+checkAlreadyIn();
+
+document.getElementById('login-btn').addEventListener('click', doLogin);
+document.getElementById('pw-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('name-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('pw-input').focus();
+});
+
+async function doLogin() {
+  const name = document.getElementById('name-input').value.trim();
+  const pw   = document.getElementById('pw-input').value;
+  const err  = document.getElementById('login-error');
+
+  if (!name) {
+    document.getElementById('name-input').focus();
+    return;
+  }
+
+  if (pw !== PASSWORD) {
+    err.style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+    return;
+  }
+
+  err.style.display = 'none';
+
+  await Promise.all([
+    CertDB.setSetting('session', { authenticated: true, date: new Date().toISOString() }),
+    CertDB.setSetting('userName', name),
+  ]);
+
+  window.location.replace('index.html');
+}
+</script>
+</body>
+</html>

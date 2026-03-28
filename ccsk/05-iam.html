@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identity &amp; Access Management in the Cloud — CCSK Domain 5</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-topic-id="/ccsk/05-iam.html" data-expected-mins="35">
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="index.html" class="ccsk-link active">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span style="color:var(--ccsk);">CCSK Domain 5</span> — Identity &amp; Access Management in the Cloud</h1>
+    <p>CSA Guidance v4 · Identity is the perimeter · ~35 min</p>
+  </div>
+
+  <div id="read-badge"></div>
+
+  <div class="domain-nav">
+    <a href="index.html">CCSK Overview</a>
+    <a href="01-cloud-concepts.html">D1: Concepts</a>
+    <a href="05-iam.html" class="active">D5: IAM</a>
+    <a href="09-data-security.html">D9: Data</a>
+  </div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;">
+          <a href="index.html">CCSK</a> → Domain 5: Identity &amp; Access Management
+        </div>
+
+        <!-- ===================== IAM IS THE PERIMETER ===================== -->
+        <h2 id="identity-is-perimeter">Why IAM Is the Most Critical Cloud Security Control</h2>
+
+        <p>In traditional on-premises environments, the network perimeter — firewalls, DMZs, intrusion detection systems at the edge — was the primary security boundary. Attackers outside the perimeter were assumed to be threats; users inside the perimeter were granted a degree of implicit trust. Physical network access was required to reach most internal systems. This model was imperfect but coherent.</p>
+
+        <p>Cloud dissolves that perimeter entirely. Your management console is accessible from anywhere on the internet. Your APIs are publicly routable by design. Your storage buckets, your compute instances, your database endpoints — all of these can be made accessible from the internet with a configuration change. The network boundary is no longer a reliable primary control. What remains when the perimeter disappears? Identity. Every access request to every cloud resource goes through an identity verification step. The question "who are you and what are you allowed to do?" — answered by the IAM system — becomes the fundamental security control in cloud.</p>
+
+        <p>This is not a metaphor or a marketing slogan. It is a structural feature of how cloud access works. When a developer opens the AWS console, AWS does not check whether they are on the corporate network — it checks whether they can authenticate as a valid IAM user with the appropriate permissions. When an application running in a Lambda function tries to read an S3 bucket, S3 does not check whether the request came from inside the VPC — it checks whether the function's execution role has s3:GetObject permission on that bucket. Identity and authorization are the control plane for everything.</p>
+
+        <p>The implication is direct: IAM misconfiguration is the leading cause of cloud breaches. Overly permissive IAM policies, exposed access keys, stale credentials, accounts without MFA, service accounts with admin-level privileges — these represent the actual attack surface in cloud environments. Hardening IAM is not one security control among many; it is the security control that all others depend on.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">CCSK Exam Point — Identity Is the New Perimeter</div>
+          <p>CSA's Guidance uses this framing explicitly. When CCSK questions describe a cloud security scenario and ask what the most important control is, the answer will very frequently be IAM-related — strong authentication, least-privilege access, privileged access management. If you are uncertain between a network control and an identity control, the identity control is usually the more correct answer in cloud contexts.</p>
+        </div>
+
+        <!-- ===================== IDENTITY FEDERATION ===================== -->
+        <h2 id="identity-federation">Identity Federation: SAML 2.0, OAuth 2.0, OpenID Connect</h2>
+
+        <p>Identity federation allows users to authenticate with one identity system and access resources in another system without re-authenticating. In cloud contexts, federation is the mechanism that allows employees to use their corporate directory credentials to access cloud provider consoles, SaaS applications, and inter-cloud services. Understanding the three primary federation protocols — SAML 2.0, OAuth 2.0, and OpenID Connect — is essential CCSK content.</p>
+
+        <h3>SAML 2.0</h3>
+
+        <p>Security Assertion Markup Language 2.0 is an XML-based standard for exchanging authentication and authorization data between parties. It was designed primarily for enterprise use cases — specifically, enabling SSO for web applications. The three actors in a SAML transaction are:</p>
+
+        <ul>
+          <li><strong>Identity Provider (IdP):</strong> The authoritative source of identity information. The IdP authenticates the user and issues SAML assertions. In an enterprise context, this is typically Active Directory with ADFS, or a cloud IdP like Okta or Azure AD.</li>
+          <li><strong>Service Provider (SP):</strong> The application the user wants to access. The SP relies on the IdP's assertion to grant access. In cloud contexts, the SP might be AWS, Salesforce, or any SAML-enabled SaaS application.</li>
+          <li><strong>Principal:</strong> The user being authenticated.</li>
+        </ul>
+
+        <p>The SAML flow: the user attempts to access the SP; the SP redirects to the IdP; the user authenticates at the IdP (username/password, MFA, etc.); the IdP issues a digitally signed XML assertion stating "this user authenticated successfully and has these attributes"; the assertion is returned to the SP, which validates the signature and grants access. The SP trusts the IdP's assertion because it trusts the IdP's signing certificate, established in a prior configuration step.</p>
+
+        <p>SAML 2.0 is the standard for enterprise-to-cloud SSO and for cloud console federation. AWS IAM federation, Azure AD enterprise application integration, and Okta's integration with SaaS applications all run on SAML 2.0. For the CCSK exam, SAML is the enterprise federation standard — it handles authentication assertions (who you are) and, optionally, authorization attributes (what groups or roles you belong to).</p>
+
+        <h3>OAuth 2.0</h3>
+
+        <p>OAuth 2.0 is an authorization framework — not an authentication protocol. This distinction trips up many candidates. OAuth 2.0 allows an application (the "client") to obtain limited access to a resource server on behalf of a resource owner (a user), without the user sharing their credentials with the client. It is the "login with Google" / "connect this app to your Twitter account" protocol.</p>
+
+        <p>The OAuth 2.0 flow: the user tells the client application "I want you to access my data at resource server X"; the client redirects the user to the authorization server (operated by the resource server's owner); the user authenticates and consents to the requested permissions; the authorization server issues an access token to the client; the client presents the access token to the resource server to access the protected resource on the user's behalf.</p>
+
+        <p>What OAuth 2.0 does not do: it does not tell the client who the user is. OAuth 2.0 is about authorization (what the client can do) not authentication (who the user is). Using a raw OAuth 2.0 access token for authentication is an anti-pattern — the token proves the client is authorized to act, not that it knows the user's identity. This limitation gave rise to OpenID Connect.</p>
+
+        <p>In cloud IAM contexts, OAuth 2.0 is used for API authorization — cloud provider APIs, SaaS platform APIs, and microservice-to-microservice authorization. The access token is the credential; scopes define what the token allows. Leaked OAuth tokens are a significant attack vector because they grant application-level access without requiring username/password authentication.</p>
+
+        <h3>OpenID Connect (OIDC)</h3>
+
+        <p>OpenID Connect is an identity layer built on top of OAuth 2.0. It adds authentication semantics to OAuth's authorization framework. Where OAuth 2.0 issues an access token (which says "this client can do X"), OpenID Connect additionally issues an ID token (which says "this user is who they say they are"). The ID token is a JSON Web Token (JWT) containing claims about the authenticated user: their unique identifier (sub), their name, their email, and the authentication time.</p>
+
+        <p>OIDC is the modern standard for user authentication in cloud-native applications. It is what "Sign in with Google," "Sign in with Apple," and enterprise IdP integrations with modern SaaS applications use. GitHub Actions, for example, uses OIDC to issue short-lived tokens to CI/CD pipelines, allowing pipelines to authenticate to cloud providers without storing long-lived access keys as secrets.</p>
+
+        <p><strong>How they work together:</strong> In practice, enterprise cloud identity architectures use all three. SAML 2.0 federates the corporate Active Directory with cloud provider consoles for human users. OAuth 2.0 authorizes API access and service-to-service communication. OIDC authenticates users in cloud-native web and mobile applications. The corporate IdP (Okta, Azure AD, Ping) acts as the hub, issuing SAML assertions, OAuth tokens, and OIDC ID tokens to different relying parties.</p>
+
+        <!-- ===================== SSO ===================== -->
+        <h2 id="sso">Single Sign-On in Cloud</h2>
+
+        <p>Single Sign-On allows a user to authenticate once and access multiple applications and systems without re-authenticating for each. In cloud environments, SSO is an operational necessity — without it, employees managing multiple cloud providers, dozens of SaaS applications, and internal systems would face an unmanageable proliferation of credentials, leading inevitably to password reuse, weak passwords, and credential sprawl.</p>
+
+        <p><strong>Benefits of SSO in cloud:</strong> Centralized authentication enforcement means that enforcing MFA at the IdP layer enforces MFA for all SSO-connected applications simultaneously. Deprovisioning a terminated employee's IdP account immediately revokes access to all connected applications — a critical control given that access revocation latency is a major cause of insider threat incidents. Centralized authentication logs give security operations a single source of authentication telemetry across the application portfolio.</p>
+
+        <p><strong>The single point of failure concern:</strong> SSO is also a concentration risk. Compromise of the IdP — or of an account with high privilege in the IdP — grants an attacker access to every application the IdP federates with. This is why the IdP itself must be the most hardened system in the environment: break-glass accounts with strong protection, MFA universally enforced, privileged IdP admin accounts under PAM controls, and continuous monitoring of IdP configuration changes. An attacker who can add a rogue federation trust to your IdP, or who compromises an IdP administrator account, can effectively own every downstream application.</p>
+
+        <p>A second, less dramatic failure mode: IdP availability. If your IdP is unavailable, nobody can authenticate to any SSO-federated application. Redundancy, geographic distribution, and SLA requirements for the IdP service are operational security concerns that deserve the same rigor as the IdP's security controls.</p>
+
+        <!-- ===================== CLOUD PROVIDER IAM ===================== -->
+        <h2 id="cloud-provider-iam">Cloud Provider IAM: Concepts Across AWS, Azure, and GCP</h2>
+
+        <p>While each major cloud provider implements IAM differently, they share common conceptual building blocks that the CCSK exam expects you to understand at a framework level. You do not need provider-specific implementation details for CCSK, but you need to understand the structural patterns.</p>
+
+        <p><strong>Users</strong> are human identities authenticated to the cloud provider. They have credentials (username/password for console access, access keys for programmatic access). Users should be the exception in production cloud environments — most authentication should be done through roles and federated identities, not long-lived user credentials.</p>
+
+        <p><strong>Groups</strong> are collections of users that share a common set of permissions. Managing permissions through groups rather than individual user policy attachments reduces administrative complexity and the risk of inconsistent permission application.</p>
+
+        <p><strong>Roles</strong> are identity constructs that are assumed rather than assigned. A role has a set of permissions attached to it, but rather than belonging to a specific user, roles are assumed temporarily by entities that need them — EC2 instances, Lambda functions, developers performing specific high-privilege operations, external identities from federated identity providers. Roles issue temporary credentials (via STS in AWS) that expire, reducing the risk from credential exposure. Role-based access is the correct model for cloud service accounts and for privileged human access.</p>
+
+        <p><strong>Policies</strong> define what actions are permitted on what resources under what conditions. In AWS IAM, policies are JSON documents attached to users, groups, or roles. Azure uses role assignments that attach built-in or custom role definitions to principals. GCP uses IAM bindings that assign roles to members on specific resources. The principle of least privilege — granting only the permissions necessary for the specific function — is the governing discipline for policy authorship across all providers.</p>
+
+        <p><strong>Azure Active Directory (now Entra ID)</strong> adds identity governance capabilities on top of the basic IAM primitives: privileged identity management (PIM), access reviews, entitlement management, and Conditional Access policies that allow access decisions based on user, device, location, and risk signals. The convergence of IdP functionality and cloud IAM in Azure's model means organizations running primarily on Azure have a single control plane for both corporate identity and cloud resource authorization — with both the security benefits (single enforcement point) and risks (single point of compromise) that implies.</p>
+
+        <!-- ===================== PAM ===================== -->
+        <h2 id="pam">Privileged Access Management in Cloud</h2>
+
+        <p>The cloud management console — the AWS console, the Azure portal, the GCP Cloud Console — is the most powerful attack surface in your cloud environment. An authenticated session in the cloud console with broad permissions can create resources, modify security configurations, exfiltrate data, delete backups, and destroy entire environments. This is not a hypothetical; it is what attackers do in cloud breaches. Capital One's 2019 breach resulted from an SSRF vulnerability that allowed the attacker to retrieve credentials for an IAM role with overly broad S3 permissions — effectively a management plane access scenario through a different vector.</p>
+
+        <p>PAM in cloud has the same goal as PAM in traditional environments — ensuring that the most powerful credentials are the most carefully controlled — but the implementation differs in important ways:</p>
+
+        <p><strong>No root access in routine operations.</strong> The cloud provider "root account" or equivalent is the nuclear option — it bypasses IAM policies and has access to billing, account closure, and security configuration that cannot be restricted by IAM. Root credentials should never be used for routine operations. They should be protected with the strongest possible MFA, stored in a physical safe or break-glass process, and audited for any use outside a documented emergency procedure.</p>
+
+        <p><strong>Administrator roles with MFA enforcement.</strong> IAM policies can require MFA authentication for specific actions — creating new IAM users, modifying IAM policies, changing account security settings. This is a critical control for sensitive management plane operations.</p>
+
+        <p><strong>Separation of duties.</strong> The administrator who provisions infrastructure should not be the same identity that modifies billing settings or IAM policies. Role segregation in cloud IAM is the technical implementation of the same control that governs financial systems — no single identity should have unbounded authority.</p>
+
+        <!-- ===================== JIT ACCESS ===================== -->
+        <h2 id="jit-access">Just-in-Time Access in Cloud</h2>
+
+        <p>Just-in-Time (JIT) access is the practice of granting elevated permissions only for the specific window of time they are needed, rather than maintaining standing elevated access continuously. In cloud environments, JIT access is implemented through role assumption with short-lived credentials: a developer who needs to perform a privileged operation requests a role assumption, authenticates with MFA, receives temporary credentials valid for a defined period (15 minutes, 1 hour), performs the operation, and the credentials expire automatically.</p>
+
+        <p>JIT access in cloud is enabled by the ephemeral credential model that cloud providers support natively. AWS STS, Azure PIM, and GCP Cloud Identity support time-limited, just-in-time role elevations. The security benefit is significant: an attacker who compromises a developer's primary credentials cannot abuse them to perform privileged operations because the developer does not have standing elevated access. They would need to separately compromise the MFA token to assume the privileged role.</p>
+
+        <p>JIT is particularly important for break-glass access scenarios — the ability to access production systems during an emergency — because it creates an audit trail of every privilege elevation, the duration of access, and what actions were performed during the elevated window.</p>
+
+        <!-- ===================== SERVICE ACCOUNTS ===================== -->
+        <h2 id="service-accounts">Service Accounts and Machine Identities</h2>
+
+        <p>Human users are not the only entities that need to authenticate to cloud services. Applications, CI/CD pipelines, monitoring agents, automation scripts — all of these need cloud credentials to perform their functions. Machine identities are often the most neglected aspect of cloud IAM and the most frequent source of high-severity vulnerabilities.</p>
+
+        <p>Common failure patterns with machine identities:</p>
+
+        <ul>
+          <li><strong>Long-lived access keys embedded in code.</strong> Developers who need to give an application cloud access sometimes generate an IAM user access key and hardcode it in application configuration. When that code is committed to a public GitHub repository — which happens regularly — the credentials are exposed. Secret scanning tools (GitHub's built-in scanning, TruffleHog, git-secrets) detect these patterns, but prevention is better: never use long-lived access keys for application authentication.</li>
+          <li><strong>Overly permissive service account roles.</strong> The principle of least privilege is frequently violated for service accounts because the team provisioning them defaults to "give it Admin access and we'll restrict it later." Later never comes. A service account with admin privileges attached to a publicly accessible Lambda function is a catastrophic misconfiguration.</li>
+          <li><strong>Stale service accounts.</strong> Applications and services are decommissioned; their service accounts are not. Stale credentials with no active owner and no regular review accumulate over time. If those credentials are ever exposed, there is no owner to notice the exposure and no one monitoring for anomalous usage.</li>
+        </ul>
+
+        <p>The correct pattern for machine identities: use provider-native role-based authentication wherever possible (instance roles, execution roles, workload identity). These provide automatically-rotated short-lived credentials, require no manual key management, and leave a clear authorization trail. Where long-lived credentials are unavoidable, store them in a secrets management service (AWS Secrets Manager, Azure Key Vault, HashiCorp Vault), rotate them automatically, and scope them to the minimum permissions required.</p>
+
+        <!-- ===================== ZERO TRUST ===================== -->
+        <h2 id="zero-trust">Zero Trust and Identity in Cloud</h2>
+
+        <p>Zero Trust is an architectural model based on the principle of "never trust, always verify." It rejects the implicit trust granted to users and devices based on their network location — being inside the corporate network does not make you trusted — and replaces it with explicit verification of every access request based on identity, device health, context, and least-privilege authorization.</p>
+
+        <p>Cloud is both the driver of Zero Trust adoption and the environment where Zero Trust is most naturally implemented. Because cloud resources are accessible from anywhere — corporate network, home network, public WiFi, partner network — the network perimeter never offered meaningful protection for cloud assets. Zero Trust in cloud means:</p>
+
+        <ul>
+          <li>Every user authenticates to every application, regardless of network origin</li>
+          <li>Every service authenticates to every other service — no implicit trust between microservices within the same VPC</li>
+          <li>Authorization is evaluated per-request based on current context, not assumed from a past authentication event</li>
+          <li>Access is granted to the minimum scope required for the specific operation, not to an entire system or environment</li>
+          <li>All access is logged, and anomalous access patterns trigger investigation</li>
+        </ul>
+
+        <p>For the CCSK exam, Zero Trust framing positions identity as the primary trust boundary in cloud, which is consistent with the overall domain theme. When a question asks about compensating controls for the absence of network perimeter security in cloud, the answer will involve identity verification, not network controls.</p>
+
+        <!-- ===================== SHARED RESPONSIBILITY FOR IAM ===================== -->
+        <h2 id="shared-responsibility-iam">Shared Responsibility for IAM</h2>
+
+        <p>The shared responsibility model for IAM is more consistent across service models than it is for other security domains, but the specific controls that fall within the customer's scope shift based on the service model.</p>
+
+        <p>Across all service models — IaaS, PaaS, and SaaS — the <strong>customer always retains responsibility for identity management</strong>. The customer defines which users exist, what credentials they use, which roles they are assigned, and what access they have. The cloud provider may operate the underlying IAM infrastructure, but the customer owns the identity governance decisions. In SaaS, even though the provider operates the application and the IAM system within it, the customer is responsible for provisioning the right users, revoking access for departed employees, and ensuring that access rights are appropriate. If a Salesforce administrator gives a sales representative access to all customer records in Salesforce, that is the customer's misconfiguration, not Salesforce's.</p>
+
+        <p>The controls that shift based on service model: in IaaS, the customer manages IAM for the operating system (local user accounts, SSH key management, service account passwords) in addition to the cloud provider IAM layer. In PaaS, the OS-level identity management disappears from the customer's scope. In SaaS, the customer's scope is limited to managing users, roles, and permissions within the SaaS application's provided IAM interface — they cannot modify the underlying identity infrastructure.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">CCSK Exam Trap — Federated Identity Does Not Transfer Identity Responsibility</div>
+          <p>A common exam trap: "The company uses federated identity with Azure AD. Who is responsible for identity management — the customer or Microsoft?" The answer is the customer. Federation means Microsoft's infrastructure handles the authentication transaction, but the customer's identity administrators control the Azure AD tenant — who is in it, what groups they belong to, what access they have. Federation is a technical mechanism for authentication; it does not transfer identity governance responsibility to the provider. In all service models, the customer remains the accountable party for identity management decisions. This is exam-guaranteed content — expect at least one question that tests this exact point.</p>
+        </div>
+
+        <!-- ===================== PREV/NEXT ===================== -->
+        <div style="display:flex;justify-content:space-between;margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);">
+          <div>
+            <a href="01-cloud-concepts.html" style="color:var(--ccsk);">← Domain 1: Cloud Concepts</a>
+          </div>
+          <div>
+            <a href="09-data-security.html" style="color:var(--ccsk);">Domain 9: Data Security →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <h4>Topics</h4>
+        <ul>
+          <li><a href="#identity-is-perimeter">Identity as the Perimeter</a></li>
+          <li><a href="#identity-federation">SAML / OAuth / OIDC</a></li>
+          <li><a href="#sso">Single Sign-On</a></li>
+          <li><a href="#cloud-provider-iam">Cloud Provider IAM</a></li>
+          <li><a href="#pam">Privileged Access Mgmt</a></li>
+          <li><a href="#jit-access">Just-in-Time Access</a></li>
+          <li><a href="#service-accounts">Service Accounts</a></li>
+          <li><a href="#zero-trust">Zero Trust</a></li>
+          <li><a href="#shared-responsibility-iam">Shared Responsibility</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Key Terms</h4>
+        <ul>
+          <li>IdP / SP</li>
+          <li>SAML 2.0 assertion</li>
+          <li>OAuth 2.0 access token</li>
+          <li>OIDC / JWT / ID token</li>
+          <li>Least privilege</li>
+          <li>JIT access</li>
+          <li>Instance role / execution role</li>
+          <li>Zero Trust</li>
+          <li>Break-glass access</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Exam Traps</h4>
+        <ul>
+          <li>OAuth 2.0 = authorization, not authentication</li>
+          <li>Federation does not transfer identity responsibility</li>
+          <li>Customer always owns identity governance</li>
+          <li>Root account = never routine use</li>
+          <li>IAM misconfiguration = #1 cloud breach cause</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="reading-intel"></div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CCSK Domain 5 &nbsp;·&nbsp; Identity &amp; Access Management
+</footer>
+
+<script src="../assets/js/db.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

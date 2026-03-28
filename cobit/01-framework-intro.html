@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COBIT 2019 — Framework Introduction</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body data-topic-id="/cobit/01-framework-intro.html" data-expected-mins="25">
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="index.html" class="cobit-link active">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span style="color:var(--cobit);">COBIT 2019</span> — Framework Introduction</h1>
+    <p>ISACA · Governance &amp; Management of Enterprise IT · ~25 min</p>
+  </div>
+
+  <div id="read-badge"></div>
+
+  <div class="domain-nav">
+    <a href="index.html">COBIT Overview</a>
+    <a href="01-framework-intro.html" class="active">Framework Intro</a>
+    <a href="02-principles.html">Principles</a>
+  </div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;">
+          <a href="index.html">COBIT</a> → Framework Introduction
+        </div>
+
+        <!-- ===================== WHAT IS COBIT ===================== -->
+        <h2 id="what-is-cobit">What Is COBIT 2019?</h2>
+
+        <p>COBIT — Control Objectives for Information and Related Technology — is ISACA's framework for the governance and management of enterprise information and technology. Published by ISACA (the same organization behind CISM and CRISC), COBIT 2019 is the current version, released in 2018 as a significant evolution from COBIT 5. It is the most widely adopted framework for enterprise IT governance globally, used by organizations ranging from large multinational corporations to mid-sized enterprises to government agencies.</p>
+
+        <p>Before anything else, establish the framing: COBIT is not a security framework. It is a governance framework for all of enterprise IT. Security is an important element within COBIT's scope, but it sits alongside IT risk management, IT strategy, IT architecture, IT operations, and IT service management as one of many domains that a well-governed enterprise IT function must address. This distinction matters for the exam because questions about COBIT's purpose will expect you to frame it as enterprise IT governance, not specifically as information security governance.</p>
+
+        <p>COBIT's primary goal is to help boards, executives, and management ensure that enterprise IT creates value, manages risk, and uses resources responsibly. The framework provides a structured vocabulary, a set of governance and management objectives, guidance on how to design a governance system for a specific organization's context, and a capability assessment model for measuring governance maturity.</p>
+
+        <!-- ===================== AUDIENCE ===================== -->
+        <h2 id="audience">COBIT's Audience: A Multi-Layer Framework</h2>
+
+        <p>COBIT is explicitly designed to serve multiple organizational levels simultaneously, which is part of what makes it both powerful and initially confusing. It speaks to different audiences in different ways:</p>
+
+        <p><strong>Board of directors and senior executives:</strong> COBIT provides governance principles and a high-level objectives framework that boards can use to fulfill their oversight responsibilities for IT. It translates technical IT governance concerns into the language of business value, risk, and resource optimization that boards understand and are accountable for. When a board asks "are we getting value from our IT investments and are we managing IT risk appropriately?" — COBIT provides the framework for answering that question.</p>
+
+        <p><strong>IT management and senior IT leadership (including CISOs):</strong> COBIT provides the management objectives and process guidance needed to translate board-level governance direction into operational execution. The management domains (APO — Align, Plan, Organize; BAI — Build, Acquire, Implement; DSS — Deliver, Service, Support; MEA — Monitor, Evaluate, Assess) provide structured guidance for IT management functions. For a CISO, the APO12 (Managed Risk) and APO13 (Managed Security) objectives within COBIT are directly applicable to security program management.</p>
+
+        <p><strong>Auditors and assurance professionals:</strong> COBIT's capability model and defined objectives provide an auditable framework against which IT governance and management can be assessed. Internal and external auditors use COBIT as a basis for IT audit programs, evaluating whether governance objectives are being met and whether management processes are effective.</p>
+
+        <p><strong>Risk and compliance professionals:</strong> COBIT maps to major regulatory frameworks and standards (ISO 27001, NIST CSF, GDPR, SOX, HIPAA), making it a useful integration layer for organizations managing multiple compliance obligations simultaneously.</p>
+
+        <!-- ===================== HOW COBIT DIFFERS ===================== -->
+        <h2 id="cobit-vs-others">How COBIT Differs from CISM, ISO 27001, and ITIL</h2>
+
+        <p>Understanding where COBIT fits relative to the other frameworks you know is essential for answering exam questions that test this distinction:</p>
+
+        <p><strong>COBIT vs. CISM:</strong> CISM (Certified Information Security Manager) is a professional certification that validates the knowledge and skills of an individual information security manager. COBIT is an organizational governance framework that defines how an enterprise should govern and manage its IT. CISM belongs to a person; COBIT belongs to an organization. CISM focuses specifically on information security; COBIT covers all of enterprise IT governance. In practice, a CISO who holds CISM operates within an organizational governance framework that COBIT might define — the two are complementary. COBIT's governance vocabulary and principles reinforce what CISM teaches about governance vs. management; CISM's domain knowledge informs how a practitioner implements COBIT's security-related objectives.</p>
+
+        <p><strong>COBIT vs. ISO 27001:</strong> ISO 27001 is an international standard for information security management systems (ISMS). Its primary focus is information security — protecting the confidentiality, integrity, and availability of information assets. ISO 27001 is certifiable (organizations can be audited and certified against it). COBIT is a governance framework for all of enterprise IT and is not itself a certifiable standard. Organizations frequently use COBIT to frame IT governance and ISO 27001 to structure information security management within that governance framework — they are complementary, not competing.</p>
+
+        <p><strong>COBIT vs. ITIL:</strong> ITIL (Information Technology Infrastructure Library) is a framework focused on IT service management — how IT services are designed, delivered, and continually improved. ITIL's primary concern is operational service delivery. COBIT's concern is governance and management — the direction, oversight, and performance measurement of IT. ITIL provides detailed operational process guidance (incident management, change management, service desk); COBIT provides governance objectives that ensure IT operations are aligned with business strategy and risk appetite. Organizations often use ITIL to implement the operational processes that COBIT's management objectives require.</p>
+
+        <!-- ===================== EVOLUTION ===================== -->
+        <h2 id="evolution">The Evolution of COBIT: From 1 to 2019</h2>
+
+        <p>COBIT was first published by ISACA in 1996 as an audit-focused tool for IT control objectives. Understanding its evolution contextualizes the framework's current design philosophy:</p>
+
+        <p><strong>COBIT 1 (1996):</strong> Originally a set of IT audit objectives derived from existing IT standards. Focused on control objectives for IT auditing and assurance. Audience: primarily IT auditors.</p>
+
+        <p><strong>COBIT 2 (1998) and COBIT 3 (2000):</strong> Expanded scope to include IT management and business process orientation. Began to address IT governance as distinct from IT audit.</p>
+
+        <p><strong>COBIT 4.1 (2007):</strong> Major maturation. Introduced business goals, IT goals, and process goals in a structured alignment model. Introduced the maturity model for assessing control effectiveness. Became widely adopted in enterprise environments and by auditors globally.</p>
+
+        <p><strong>COBIT 5 (2012):</strong> Fundamental redesign. Introduced the five COBIT 5 principles (Meeting Stakeholder Needs; Covering the Enterprise End-to-End; Applying a Single, Integrated Framework; Enabling a Holistic Approach; Separating Governance from Management). Consolidated several related ISACA frameworks (Val IT, Risk IT) into a single integrated model. Introduced the concept of enablers — factors that individually and collectively influence whether something works. Widely adopted but criticized for complexity.</p>
+
+        <p><strong>COBIT 2019:</strong> Major update to COBIT 5. Key changes include:</p>
+        <ul>
+          <li>Replaced "principles" with a revised set of six governance system principles and three framework principles</li>
+          <li>Replaced "enablers" with "components" — the building blocks of the governance system</li>
+          <li>Introduced design factors — contextual factors that influence how COBIT should be tailored to a specific organization</li>
+          <li>Introduced focus areas — specialized governance topics that can be addressed using COBIT's core model</li>
+          <li>Added capability levels aligned with CMMI (Capability Maturity Model Integration) rather than the COBIT 5 maturity model, for better alignment with industry standards</li>
+          <li>Increased the total number of governance and management objectives from 37 to 40</li>
+          <li>Provided explicit design guidance — a structured process for organizations to design their specific COBIT implementation</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="callout-title">CISM Advantage</div>
+          <p>If you hold CISM, COBIT 2019's governance vs. management distinction is already familiar. COBIT draws the same line CISM does: boards and executives set direction (governance); managers execute (management). COBIT formalizes this with the EDM domain (Evaluate, Direct, Monitor — governance) and the APO/BAI/DSS/MEA domains (management). The governance logic is the same; COBIT applies it to all of enterprise IT rather than specifically to information security.</p>
+        </div>
+
+        <!-- ===================== KEY COMPONENTS ===================== -->
+        <h2 id="key-components">COBIT 2019 Key Components</h2>
+
+        <p>COBIT 2019 organizes itself around three interrelated constructs: the governance system, the governance framework, and the core model.</p>
+
+        <p><strong>The governance system</strong> is the complete set of components — principles, policies, processes, organizational structures, culture, information, services, and people — that an organization uses to govern and manage IT. The governance system is what actually exists in the organization. COBIT's goal is to guide the design and operation of an effective governance system tailored to the organization's context.</p>
+
+        <p><strong>The governance framework</strong> is the set of concepts, principles, and definitions that describe what a governance system should be and why. It is the theoretical foundation — the "why and what" layer — upon which the governance system (the "how and who" layer) is built. The six governance system principles are the core of the governance framework.</p>
+
+        <p><strong>The core model</strong> is the set of 40 governance and management objectives organized into five domains. This is the practical content of COBIT — the specific objectives that an organization should work toward, with associated practices, activities, and performance metrics. The five domains are: EDM (Evaluate, Direct, Monitor — governance domain), APO (Align, Plan, Organize), BAI (Build, Acquire, Implement), DSS (Deliver, Service, Support), and MEA (Monitor, Evaluate, Assess).</p>
+
+        <!-- ===================== GOVERNANCE SYSTEM COMPONENTS ===================== -->
+        <h2 id="governance-components">The Seven Governance System Components</h2>
+
+        <p>COBIT 2019 defines seven types of components that make up a governance system. Effective governance requires all seven to work together — no single component alone is sufficient. This is the operational expression of the "Holistic Approach" principle:</p>
+
+        <ol>
+          <li><strong>Principles, Policies &amp; Frameworks:</strong> The documented guidance that translates desired behavior into practical direction. Governance policies set the expectations; standards and procedures operationalize them.</li>
+          <li><strong>Processes:</strong> Organized sets of practices and activities to achieve objectives and produce outputs supporting achievement of IT-related goals. COBIT's 40 governance and management objectives each have associated process guidance.</li>
+          <li><strong>Organizational Structures:</strong> The decision-making entities — boards, committees, management roles — that are key to governance. The IT steering committee, the risk committee, the CISO role, the architecture review board are all organizational structure components.</li>
+          <li><strong>Culture, Ethics &amp; Behavior:</strong> The values, ethics, and informal norms that shape how individuals and groups behave in the organization. A culture that treats security as a cost center to be minimized will undermine any governance framework, regardless of how well the processes and policies are designed.</li>
+          <li><strong>Information:</strong> The information required for the governance system to function effectively — performance metrics, risk assessments, audit findings, financial data. Governance without information is directional blindness.</li>
+          <li><strong>Services, Infrastructure &amp; Applications:</strong> The IT services, infrastructure, and applications that enable and support governance and management processes. This includes GRC tools, ITSM platforms, ERP systems, and the technology that the governance processes themselves rely on.</li>
+          <li><strong>People, Skills &amp; Competencies:</strong> The human capabilities required for the governance system to function. Governance objectives require people with the right knowledge and skills to execute them; skill gaps are governance gaps.</li>
+        </ol>
+
+        <!-- ===================== DESIGN FACTORS ===================== -->
+        <h2 id="design-factors">Design Factors: Tailoring COBIT to Your Context</h2>
+
+        <p>One of COBIT 2019's most significant advances over COBIT 5 is the introduction of design factors — the contextual variables that an organization should consider when designing its governance system. Design factors acknowledge that a governance system appropriate for a large, regulated financial institution is not appropriate for a small technology startup, and that COBIT must be tailored, not applied uniformly.</p>
+
+        <p>COBIT 2019 defines ten design factors:</p>
+
+        <ol>
+          <li><strong>Enterprise strategy:</strong> The organization's strategic posture (growth/acquisition, innovation/differentiation, cost leadership, compliance/stability) influences what governance objectives are most critical.</li>
+          <li><strong>Enterprise goals:</strong> The specific business outcomes the organization is trying to achieve, which IT governance must support.</li>
+          <li><strong>Risk profile:</strong> The current risk exposure of the organization — what risks have been accepted, what risks are currently exceeding tolerance, what the risk appetite is across categories.</li>
+          <li><strong>I&amp;T-related issues:</strong> Known problems and pain points in the organization's current IT governance and management — the specific gaps and deficiencies the governance system needs to address.</li>
+          <li><strong>Threat landscape:</strong> The external threat environment the organization faces — sector-specific threats, emerging threat vectors, the organization's attractiveness as a target.</li>
+          <li><strong>Compliance requirements:</strong> The regulatory, legal, and contractual obligations that the organization must meet, which governance processes must enable.</li>
+          <li><strong>Role of IT:</strong> Whether IT is a support function (IT as a cost center enabling operations), a strategic enabler (IT creating competitive differentiation), or a core business capability (IT as a revenue-generating product).</li>
+          <li><strong>Sourcing model:</strong> How IT capabilities are sourced — internally, through outsourcing, cloud services, or hybrid models. Sourcing decisions affect which governance objectives are most important and how they are implemented.</li>
+          <li><strong>IT implementation methods:</strong> The methodologies used for IT delivery — agile, DevOps, waterfall, traditional ITSM. Governance must accommodate the delivery method, not constrain it into irrelevance.</li>
+          <li><strong>Enterprise size:</strong> The scale of the organization. Governance appropriate for a 50,000-person multinational is not appropriate for a 200-person company. COBIT 2019 provides explicit small/medium enterprise guidance as a focus area.</li>
+        </ol>
+
+        <!-- ===================== FOCUS AREAS ===================== -->
+        <h2 id="focus-areas">Focus Areas: Applying COBIT to Specific Domains</h2>
+
+        <p>Focus areas are specialized governance and management topics that can be addressed using COBIT's core model as the foundation, with additional domain-specific guidance layered on top. Focus areas allow organizations to use COBIT as a platform for addressing specific strategic or operational concerns without requiring a full COBIT implementation from scratch.</p>
+
+        <p>Current COBIT 2019 focus areas include: DevOps, IT risk management, small and medium enterprises, cloud computing, privacy, and cybersecurity. For the exam, note that these focus areas extend COBIT rather than replacing it — an organization implementing COBIT's cloud focus area still uses the 40 core governance and management objectives, with additional cloud-specific guidance about which objectives are most critical and how to adapt standard practices for cloud-delivered IT.</p>
+
+        <!-- ===================== WHY COBIT FOR CISM ===================== -->
+        <h2 id="cobit-for-cism">Why COBIT Matters for the CISM Holder</h2>
+
+        <p>CISM and COBIT share the most important concept in governance: the distinction between governing (setting direction, evaluating results) and managing (planning, building, running, monitoring). CISM builds this distinction into its domain structure — Domain 1 (Information Security Governance) is explicitly about governance-level activity: strategy, policy, board accountability. COBIT formalizes exactly the same distinction with its EDM (governance) and APO/BAI/DSS/MEA (management) domain separation.</p>
+
+        <p>As a CISM practitioner, COBIT provides the organizational framework within which your information security management program operates. The security governance work you do as a CISO — developing security strategy, managing the security program, reporting to the board — maps directly to COBIT's APO13 (Managed Security) and EDM03 (Ensured Risk Optimization) objectives. When the board asks whether IT is being governed effectively and risk is being managed appropriately, COBIT is the vocabulary in which that conversation happens.</p>
+
+        <p>Understanding COBIT also positions you to speak credibly with internal audit, the CFO, and the board about IT governance maturity — not just security maturity. A CISO who understands COBIT can participate in enterprise-wide governance discussions, not just security-specific ones, which is a material advantage in a role where business alignment is as important as technical depth.</p>
+
+        <!-- ===================== PREV/NEXT ===================== -->
+        <div style="display:flex;justify-content:space-between;margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);">
+          <div>
+            <a href="index.html" style="color:var(--cobit);">← COBIT Overview</a>
+          </div>
+          <div>
+            <a href="02-principles.html" style="color:var(--cobit);">The Six Principles →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <h4>Topics</h4>
+        <ul>
+          <li><a href="#what-is-cobit">What Is COBIT 2019</a></li>
+          <li><a href="#audience">Audience</a></li>
+          <li><a href="#cobit-vs-others">COBIT vs. CISM / ISO / ITIL</a></li>
+          <li><a href="#evolution">Evolution: 1 to 2019</a></li>
+          <li><a href="#key-components">Key Components</a></li>
+          <li><a href="#governance-components">7 System Components</a></li>
+          <li><a href="#design-factors">Design Factors</a></li>
+          <li><a href="#focus-areas">Focus Areas</a></li>
+          <li><a href="#cobit-for-cism">COBIT for CISM Holders</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Key Terms</h4>
+        <ul>
+          <li>Governance system</li>
+          <li>Governance framework</li>
+          <li>Core model (40 objectives)</li>
+          <li>EDM / APO / BAI / DSS / MEA</li>
+          <li>Design factors (10)</li>
+          <li>Focus areas</li>
+          <li>7 governance system components</li>
+          <li>CMMI capability levels</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Exam Traps</h4>
+        <ul>
+          <li>COBIT ≠ security framework (IT governance)</li>
+          <li>COBIT ≠ certifiable standard (like ISO 27001)</li>
+          <li>COBIT ≠ ITIL (governance vs. service mgmt)</li>
+          <li>Design factors → tailoring required</li>
+          <li>EDM = governance; APO/BAI/DSS/MEA = management</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="reading-intel"></div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; COBIT 2019 &nbsp;·&nbsp; Framework Introduction
+</footer>
+
+<script src="../assets/js/db.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

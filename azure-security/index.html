@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AZ-500: Microsoft Azure Security Technologies</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body data-topic-id="azure-security/overview" data-expected-mins="35">
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+    <li><a href="../aws-security/index.html">AWS Sec</a></li>
+    <li><a href="../azure-security/index.html" class="active">AZ-500</a></li>
+    <li><a href="../gcp-security/index.html">GCP Sec</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span style="color:#0078d4;">AZ-500</span> — Microsoft Azure Security Technologies</h1>
+    <p>Microsoft &nbsp;·&nbsp; ~45 questions &nbsp;·&nbsp; 100 minutes &nbsp;·&nbsp; 700 / 1000 passing</p>
+  </div>
+
+  <div id="read-badge"></div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <!-- ============================================================
+             OVERVIEW
+             ============================================================ -->
+        <h2>What Is AZ-500</h2>
+
+        <p>AZ-500 is Microsoft's Azure Security Engineer Associate certification. It validates the ability to implement and manage security controls across Azure infrastructure, identity, networking, and data services, and to use Microsoft's native security operations tools. Unlike the broader AZ-900 or AZ-104 credentials, AZ-500 is specifically scoped to security — it is the Azure analog to the AWS Security Specialty and the Google Professional Cloud Security Engineer.</p>
+
+        <p>The exam is associate-level, meaning Microsoft positions it as achievable without years of Azure experience, but the question scenarios are practical and assumption-heavy. Microsoft has been aggressive in updating AZ-500 to reflect the Entra ID rebranding (previously Azure Active Directory) and the ongoing consolidation of security tools under the Defender for Cloud and Microsoft Sentinel umbrellas. Any study material more than 18 months old may use outdated product names.</p>
+
+        <p>For a CISM or CISSP holder, the governance and operations sections of this exam will be familiar in structure. The technology layer is Azure-specific and Microsoft-biased — the exam consistently favors native Microsoft solutions (Sentinel over third-party SIEM, Defender for Cloud over third-party CSPM) even where alternatives exist. Accept this as an exam strategy, not a real-world prescription.</p>
+
+        <table>
+          <tr><th>Element</th><th>Detail</th></tr>
+          <tr><td>Questions</td><td>~40–60 (mix of multiple choice, multi-select, drag-and-drop, case studies)</td></tr>
+          <tr><td>Time</td><td>100 minutes</td></tr>
+          <tr><td>Passing score</td><td>700 / 1000 (scaled)</td></tr>
+          <tr><td>Delivery</td><td>Pearson VUE test centers or online proctored</td></tr>
+          <tr><td>Price</td><td>$165 USD</td></tr>
+          <tr><td>Prerequisites</td><td>Recommended: AZ-104 (Azure Administrator) or equivalent experience</td></tr>
+          <tr><td>Renewal</td><td>Annual (free online assessment to renew)</td></tr>
+        </table>
+
+        <h2>Domain Breakdown</h2>
+
+        <table>
+          <tr><th>Domain</th><th>Topic</th><th>Weight</th></tr>
+          <tr><td>1</td><td>Manage Identity and Access</td><td>25–30%</td></tr>
+          <tr><td>2</td><td>Secure Networking</td><td>20–25%</td></tr>
+          <tr><td>3</td><td>Secure Compute, Storage, and Databases</td><td>20–25%</td></tr>
+          <tr><td>4</td><td>Manage Security Operations</td><td>25–30%</td></tr>
+        </table>
+
+        <div class="callout exam">
+          <div class="callout-title">Domain Weight Strategy</div>
+          <p>Domains 1 and 4 are co-equally the heaviest, each at 25–30%. Identity and Security Operations together represent up to 60% of the exam. If you have limited time, master Entra ID (Conditional Access, PIM, Managed Identity) and Microsoft Sentinel (data connectors, analytics rules, incidents, playbooks) above everything else.</p>
+        </div>
+
+        <!-- ============================================================
+             DOMAIN 1 — IDENTITY AND ACCESS
+             ============================================================ -->
+        <h2>Domain 1 — Manage Identity and Access (25–30%)</h2>
+
+        <p>Microsoft's identity platform is the most mature and deeply integrated in the enterprise cloud market. The exam tests it extensively because Azure's entire security model is built on Entra ID as the identity backbone. Everything from service-to-service communication to conditional access enforcement flows through Entra ID.</p>
+
+        <h3>Microsoft Entra ID (Formerly Azure Active Directory)</h3>
+
+        <p>Entra ID is Microsoft's cloud-native identity and access management service. A tenant is the Entra ID instance associated with an organization — it is the trust boundary for authentication and authorization. Key objects in Entra ID: users (human identities, synced from on-premises AD or cloud-native), groups (used for access assignment and dynamic membership), service principals (the identity of an application registered in Entra ID), and managed identities (Azure-managed service principals for Azure resources — more on this below).</p>
+
+        <p>Azure AD Connect (now Entra Connect) synchronizes on-premises Active Directory to Entra ID. The sync creates a hybrid identity environment where users authenticate once and access both on-premises and cloud resources. The exam tests the difference between cloud-only, synced, and hybrid identity architectures, and when each is appropriate.</p>
+
+        <h3>Authentication Methods</h3>
+
+        <p>Multi-factor authentication in Entra ID supports: Microsoft Authenticator app (push notification, passwordless phone sign-in), FIDO2 security keys (hardware tokens, highest phishing resistance), Windows Hello for Business (biometric/PIN on managed devices), SMS/voice (legacy, lower assurance), and TOTP apps. Microsoft's passwordless strategy centers on FIDO2 and Authenticator — questions about "most secure" authentication method should default to FIDO2 security keys.</p>
+
+        <p>Conditional Access is the policy engine that gates authentication outcomes. A Conditional Access policy has: assignments (who it applies to, what cloud apps, what conditions — device platform, location, sign-in risk, user risk) and access controls (grant access with requirements like MFA or compliant device; block access; require approved app). Conditional Access is the answer to almost any scenario asking how to enforce MFA for a specific group, block access from specific countries, or require compliant devices for access to sensitive apps.</p>
+
+        <h3>Azure RBAC</h3>
+
+        <p>Azure RBAC controls authorization to Azure resources (subscription, resource group, resource, and management group scopes). A role assignment is three components: security principal (who), role definition (what permissions), and scope (which resources). Built-in roles: Owner (full access including delegation), Contributor (full resource management, no delegation), Reader (read-only), and hundreds of service-specific roles. Custom roles allow precise least-privilege definitions. RBAC scope inherits downward: an assignment at the subscription level applies to all resource groups and resources within it.</p>
+
+        <p>The exam tests scope selection: if you want a user to manage VMs in a specific resource group but not create new resource groups, the correct scope is the resource group, not the subscription.</p>
+
+        <h3>Privileged Identity Management (PIM)</h3>
+
+        <p>PIM is the just-in-time privileged access management service in Entra ID. It is heavily tested. The core workflow: users are eligible for privileged roles rather than permanently assigned. When they need to exercise the privilege, they activate the role — this requires MFA, a justification, and optionally approval from an approver. The activation is time-limited (configurable, typically 1–8 hours). After the activation expires, the user returns to baseline permissions. PIM generates an audit log of every activation.</p>
+
+        <p>PIM also supports Azure resource roles (subscription/resource group RBAC) and group membership, not just Entra ID directory roles. Access reviews in PIM enable periodic certification: a reviewer is asked to confirm whether each user still needs a role — if not recertified, the assignment is removed automatically.</p>
+
+        <h3>Entra ID Protection</h3>
+
+        <p>Entra ID Protection applies machine learning to sign-in and user behavior to generate risk signals. Sign-in risk represents the probability that a specific authentication was not performed by the legitimate user (unfamiliar location, anonymous IP, malware-linked IP). User risk represents the probability that a user account is compromised (leaked credentials, anomalous activity). Conditional Access can use these risk levels as conditions — for example, require password reset when user risk is high, or block sign-in when sign-in risk is high. This is the risk-based access control model Microsoft recommends.</p>
+
+        <h3>External Identities</h3>
+
+        <p>B2B collaboration allows external users (partners, consultants) to authenticate with their own organization's credentials and be invited as guest users into your tenant. B2C (Azure AD B2C, now Entra External ID) is a separate identity platform for customer-facing applications — it manages consumer identities, supports social login, and scales to millions of users. The exam distinguishes B2B (partner/employee external access) from B2C (customer identity management).</p>
+
+        <h3>Managed Identity</h3>
+
+        <p>Managed Identity is the Azure mechanism for eliminating credentials from application code. System-assigned managed identity is tied to the lifecycle of an Azure resource — when the resource is deleted, the identity is deleted. User-assigned managed identity is created independently and can be shared across multiple resources. Both types receive an automatically managed service principal in Entra ID. The application code calls the Azure Instance Metadata Service to get a token — no credentials to store, rotate, or leak. The exam consistently selects managed identity over service principal with client secret when asking about secure credential management for Azure-hosted workloads.</p>
+
+        <h3>App Registrations and Service Principals</h3>
+
+        <p>An app registration in Entra ID is the configuration object for an application — it defines the application's identity, redirect URIs, API permissions, and certificates/secrets. A service principal is the instance of that registration in a specific tenant. API permissions are either delegated (the application acts on behalf of a user, constrained to what the user can do) or application permissions (the application acts as itself, requires admin consent, often used for background services). The exam tests the difference and when admin consent is required.</p>
+
+        <!-- ============================================================
+             DOMAIN 2 — SECURE NETWORKING
+             ============================================================ -->
+        <h2>Domain 2 — Secure Networking (20–25%)</h2>
+
+        <p>Azure networking security mirrors the defense-in-depth model but with Azure-specific service names and behaviors. The exam requires knowing the exact capabilities and limitations of each service.</p>
+
+        <h3>Azure Firewall</h3>
+
+        <p>Azure Firewall is a stateful, managed, cloud-native network firewall. It operates at Layer 3–7 and supports FQDN filtering (allow/deny traffic to specific domain names), network rules (IP + port), application rules (FQDN + HTTP/S), and threat intelligence-based filtering (block known malicious IPs and FQDNs from Microsoft Threat Intelligence). Azure Firewall Premium adds TLS inspection (decrypt, inspect, re-encrypt), IDPS (Intrusion Detection and Prevention), and URL categories. The exam tests Azure Firewall for hub-spoke network architectures where all traffic routes through a central firewall VNet.</p>
+
+        <h3>Azure WAF</h3>
+
+        <p>Azure WAF runs on two platforms: Application Gateway (for regional, single-region deployments) and Azure Front Door (for global, multi-region deployments). WAF enforces OWASP Core Rule Sets (3.0 and 3.2) against web request payloads — SQLi, XSS, LFI, RFI, HTTP protocol violations. Custom rules allow you to define your own match conditions. WAF modes: Detection (log only, no blocking — useful for initial tuning) and Prevention (block matching requests). The exam asks which platform is appropriate: Application Gateway WAF for regional; Front Door WAF for global CDN + WAF scenarios.</p>
+
+        <h3>Azure DDoS Protection</h3>
+
+        <p>DDoS Protection Basic is the free, default protection applied to all Azure resources — it handles infrastructure-level volumetric attacks. DDoS Protection Standard (now called DDoS Network Protection) is a paid tier that adds: adaptive tuning (baselines your traffic profile and detects anomalies), rapid response (Microsoft's DDoS Rapid Response team engaged during attacks), detailed attack metrics, SLA guarantees, and cost protection (credit for scale-out costs during DDoS attacks). Standard is linked to a VNet and protects all public IPs in that VNet.</p>
+
+        <h3>Network Security Groups</h3>
+
+        <p>NSGs are Azure's stateful packet filter, applied to either a subnet or a network interface. NSG rules have: priority (100–4096, lower wins), source/destination (IP, CIDR, service tag, application security group), source/destination port, protocol, and action (Allow or Deny). Default rules allow VNet-to-VNet traffic and block inbound internet (except Azure load balancer health probes). Service tags are managed groups of IP ranges for Azure services (AzureMonitor, Storage, Sql, AzureCloud) — use them instead of manually maintaining IP lists. Application Security Groups allow you to group VMs logically and use those groups as NSG rule sources/destinations, enabling role-based network policies (WebServers → AppServers → DatabaseServers).</p>
+
+        <h3>Azure Bastion</h3>
+
+        <p>Azure Bastion provides browser-based RDP and SSH to Azure VMs without requiring a public IP on the VM, without opening port 22 or 3389 to the internet, and without a jump server. It runs as a managed PaaS service deployed into a dedicated AzureBastionSubnet. The exam selects Azure Bastion over any scenario that involves SSH/RDP access to VMs — it is the Microsoft-preferred answer for secure management access, replacing public-IP VMs and third-party bastion solutions.</p>
+
+        <h3>Private Endpoints and Private Link</h3>
+
+        <p>Azure Private Link exposes Azure PaaS services (Storage, SQL, Key Vault, etc.) as private endpoints inside a VNet. A private endpoint is a NIC with a private IP in your VNet, connected to the service. Traffic to that service routes over the Azure backbone, never the internet. Private endpoints can also be used with your own services (via Private Link Service), enabling other organizations to connect to your service privately. The exam uses private endpoints for scenarios requiring that PaaS services not be accessible from the internet or from outside the VNet.</p>
+
+        <h3>Just-in-Time VM Access</h3>
+
+        <p>JIT VM Access (part of Defender for Cloud) locks down management ports (22, 3389, 5985, 5986) with an NSG deny rule by default. When an authorized user requests access, a time-limited allow rule is created for their IP on the requested port. The rule expires automatically. This eliminates persistent exposure of management ports while maintaining operational access. The exam selects JIT VM access for scenarios asking how to reduce attack surface on management ports.</p>
+
+        <h3>VPN Gateway and ExpressRoute</h3>
+
+        <p>VPN Gateway provides site-to-site IPsec/IKE VPN connections over the internet. ExpressRoute provides private, dedicated layer 3 connectivity from on-premises to Azure via a connectivity provider, bypassing the internet entirely. Security considerations: ExpressRoute is preferred for scenarios requiring guaranteed bandwidth, lower latency, and no internet exposure of traffic. Always use encryption in transit even over ExpressRoute (though the physical layer is private, defense in depth requires application-layer TLS).</p>
+
+        <!-- ============================================================
+             DOMAIN 3 — COMPUTE, STORAGE, DATABASES
+             ============================================================ -->
+        <h2>Domain 3 — Secure Compute, Storage, and Databases (20–25%)</h2>
+
+        <h3>Microsoft Defender for Cloud</h3>
+
+        <p>Defender for Cloud (formerly Azure Security Center + Azure Defender) is the central security posture management and workload protection platform for Azure. It serves two functions: Cloud Security Posture Management (CSPM), which assesses your configuration against security baselines and produces a Secure Score, and Cloud Workload Protection Platform (CWPP), which provides runtime threat detection for VMs, containers, databases, storage, Key Vault, and other services.</p>
+
+        <p>Secure Score is a percentage representing how many security recommendations you have resolved. Higher is better. The exam tests Secure Score as the mechanism for measuring and tracking security posture improvement. Recommendations are prioritized by impact and include remediation steps. Regulatory compliance dashboard maps your configuration to standards (NIST SP 800-53, CIS, PCI DSS, ISO 27001) and shows control coverage.</p>
+
+        <h3>Microsoft Defender for Servers</h3>
+
+        <p>The Defender for Servers plan (Plan 1 or Plan 2) adds endpoint detection and response (Microsoft Defender for Endpoint is integrated), vulnerability assessment (using Qualys or Microsoft's own scanner), adaptive application controls (allowlist-based application control), file integrity monitoring, and just-in-time VM access. Plan 2 includes 500MB/day of free Log Analytics ingestion per server. The exam tests when to enable Defender for Servers versus relying on NSGs alone — the answer is always that NSGs are network-layer controls; Defender for Servers provides host-level detection.</p>
+
+        <h3>Azure Key Vault</h3>
+
+        <p>Key Vault stores secrets (connection strings, API keys, passwords), keys (for encryption operations), and certificates (X.509 certificates with private keys). Two access models: legacy access policies (per-principal allow/deny on secret/key/certificate operations) and Azure RBAC (recommended — use built-in roles like Key Vault Secrets User, Key Vault Crypto Officer). Soft-delete prevents immediate deletion of vaults and objects — deleted items are retained for 7–90 days and can be recovered. Purge protection prevents permanent deletion during the soft-delete retention period, even by administrators. Always enable both for production Key Vaults. The exam tests purge protection as the control that prevents ransomware-style deletion of key material.</p>
+
+        <h3>Storage Security</h3>
+
+        <p>Azure Storage access control has three mechanisms. Storage account keys are 512-bit master keys that provide full access — avoid sharing them; rotate them regularly; prefer alternatives. Shared Access Signatures (SAS) are time-limited, scope-limited tokens generated from the account key or a user delegation SAS (generated from Entra ID credentials — preferred). Azure RBAC assigns roles to Entra ID principals for storage operations — this is the recommended model for application access. Encryption at rest: all Azure Storage is encrypted at rest by default using Microsoft-managed keys. Customer-managed keys (CMK) via Key Vault give you control over the encryption key — use CMK when regulatory requirements demand key custody. Azure Defender for Storage detects anomalous access patterns, suspicious uploads, and public access misconfiguration.</p>
+
+        <h3>Container Registry and AKS Security</h3>
+
+        <p>Azure Container Registry (ACR) hosts Docker container images. Security controls: private endpoint (no public registry access), content trust (digital signatures on images — consumers verify signature before pulling), image scanning via Microsoft Defender for container registries. AKS security is multi-layered: Workload Identity (replaces pod-level service account secrets with managed identities), network policies (Kubernetes-native pod-to-pod traffic controls — requires Azure CNI or Calico), Azure Policy for AKS (enforces pod security standards at the admission controller level, preventing privileged containers, host network access, etc.), and private cluster mode (API server not exposed to internet).</p>
+
+        <h3>SQL Database Security</h3>
+
+        <p>Azure SQL security controls: Always Encrypted encrypts specific columns at the client — the database engine never sees plaintext, protecting against privileged database users and compromised DBAs. Transparent Data Encryption (TDE) encrypts the database file at rest using a database encryption key (DEK) protected by a TDE protector key — either service-managed or customer-managed (Bring Your Own Key via Key Vault). Row-level security enforces per-user data filtering at the database layer using security predicates. Auditing writes database activity to Log Analytics, Storage, or Event Hubs. Microsoft Defender for SQL detects SQL injection attempts, anomalous access patterns, and brute-force attacks. Dynamic data masking obscures sensitive column data in query results for non-privileged users without changing stored data.</p>
+
+        <!-- ============================================================
+             DOMAIN 4 — SECURITY OPERATIONS
+             ============================================================ -->
+        <h2>Domain 4 — Manage Security Operations (25–30%)</h2>
+
+        <p>The Security Operations domain is the most current and rapidly evolving part of the AZ-500 exam. Microsoft has invested heavily in Sentinel and Defender for Cloud as the anchor products for SOC operations on Azure. This domain rewards practitioners who understand how the pieces connect — data collection through Log Analytics, detection through Sentinel analytics rules, response through playbooks.</p>
+
+        <h3>Microsoft Sentinel</h3>
+
+        <p>Sentinel is Microsoft's cloud-native SIEM and SOAR platform, built on top of Azure Log Analytics. It is the central answer for any exam question about threat detection, investigation, incident management, or automated response in Azure.</p>
+
+        <p>Data connectors ingest security data from first-party sources (Microsoft 365, Entra ID, Defender products, Azure Activity) and third-party sources (Cisco, Palo Alto, AWS, Google Workspace, Syslog/CEF) into Log Analytics workspaces. The exam tests which connector to use for which data source, and whether the connector is free or requires a separate license.</p>
+
+        <p>Analytics rules define detection logic. Scheduled rules run KQL queries on a cadence (every 5 minutes to every 24 hours) and create alerts when thresholds are met. Near real-time (NRT) rules run with minimal latency. Microsoft Security rules create Sentinel incidents from alerts generated by Defender products. Machine Learning Behavioral Analytics rules detect anomalous behavior without predefined signatures. Fusion rules correlate low-fidelity signals across multiple data sources into high-confidence multi-stage attack detections — these are built-in and cannot be modified.</p>
+
+        <p>Incidents are aggregated alerts that represent a potential security event. An incident contains related alerts, affected entities (users, hosts, IPs), and an investigation graph. Analysts triage incidents, investigate the graph (which shows lateral movement, resource access, and timeline), and close incidents with a classification (true positive, false positive, benign positive). The investigation graph is the Sentinel analog to Amazon Detective's graph analysis.</p>
+
+        <p>Playbooks are Logic App workflows triggered on alerts or incidents. They automate response actions: send Teams notifications, create ServiceNow tickets, block a user in Entra ID, quarantine a VM, add an IP to a watchlist, or invoke any REST API. The exam tests playbooks as the SOAR mechanism and asks which trigger type (alert vs. incident) to use for different scenarios.</p>
+
+        <h3>KQL — Kusto Query Language</h3>
+
+        <p>KQL is the query language for Log Analytics and Sentinel. The exam does not require deep KQL proficiency, but it tests conceptual familiarity: you should recognize that a KQL query follows the pipe pattern (Table | filter | aggregate | project), understand common table names (SigninLogs, SecurityEvent, AzureActivity, OfficeActivity, CommonSecurityLog), and know that KQL is how you write Sentinel detection rules and investigate logs in the workbooks. Expect one or two questions showing a KQL snippet and asking what it detects or queries.</p>
+
+        <h3>Microsoft Defender for Cloud — Operations Layer</h3>
+
+        <p>Beyond posture management, Defender for Cloud provides workflow automation for responding to recommendations and alerts. Workflow automation uses Logic Apps triggered by security alerts or Secure Score changes — the same playbook capability as Sentinel but scoped to Defender for Cloud findings. The regulatory compliance dashboard continuously assesses your environment against compliance standards and generates a compliance score per standard — this is the Azure native tool for demonstrating compliance posture to auditors.</p>
+
+        <h3>Azure Monitor and Log Analytics</h3>
+
+        <p>Azure Monitor is the unified monitoring platform. Diagnostic settings route resource logs (activity logs, resource-specific logs) to a Log Analytics workspace, Storage account, or Event Hub. The Log Analytics workspace is the data store for all security and operational logs ingested by Sentinel, Defender for Cloud, and Azure Monitor. Log Analytics queries use KQL. Alerts in Azure Monitor trigger on metric thresholds or log query results, and can invoke action groups (email, SMS, webhook, Logic App, Azure Function).</p>
+
+        <p>For the exam: understand the data flow. Resource → Diagnostic settings → Log Analytics workspace → Sentinel / Defender for Cloud / Azure Monitor alerts. Every security investigation starts by knowing where the logs are and how to query them.</p>
+
+        <h3>Threat Intelligence Integration</h3>
+
+        <p>Sentinel integrates threat intelligence in two ways: through the Threat Intelligence data connector (ingests STIX/TAXII feeds or Microsoft Threat Intelligence) and through TI-based analytics rules that match ingested IOCs against security event data (detecting when a known malicious IP appears in sign-in logs or network traffic). The exam tests TI as a Sentinel capability and asks how to operationalize external TI feeds.</p>
+
+        <h3>Incident Response in Azure</h3>
+
+        <p>The Azure IR flow: Sentinel generates an incident → analyst investigates the incident graph → playbook triggered for initial containment (block user, isolate VM, revoke tokens) → manual steps for deeper investigation using Log Analytics queries → remediate the root cause (patch, reconfigure, rotate credentials) → close incident with classification and documentation. The exam may present an IR scenario and ask which Sentinel feature or Azure service to use at each step. Know: incidents aggregate alerts, the investigation graph shows entity relationships, playbooks provide SOAR automation, and watchlists can be used to track threat actors or assets under investigation.</p>
+
+        <!-- ============================================================
+             EXAM STRATEGY
+             ============================================================ -->
+        <h2>Exam Strategy for AZ-500</h2>
+
+        <p>AZ-500 is scenario-heavy. Microsoft presents a business or technical requirement and asks which Azure service or configuration achieves it. The answer is almost always a Microsoft-native service, and the wrong answers are usually partially correct — correct service, wrong configuration, or right goal, wrong service.</p>
+
+        <table>
+          <tr><th>Confusion Pair</th><th>Correct Distinction</th></tr>
+          <tr><td>NSG vs. Azure Firewall</td><td>NSGs are stateful L3/L4 at subnet or NIC level. Azure Firewall is full Layer 7 with IDPS, FQDN filtering, centralized management.</td></tr>
+          <tr><td>Managed Identity vs. Service Principal</td><td>Managed Identity: no credentials, Azure manages lifecycle. Service Principal: application-managed credentials, rotation required.</td></tr>
+          <tr><td>Azure Bastion vs. JIT VM Access</td><td>Bastion: browser-based RDP/SSH, no public IP needed. JIT: time-limited port opening in NSG for traditional clients.</td></tr>
+          <tr><td>Key Vault access policy vs. RBAC</td><td>RBAC is the recommended new model with Entra ID role assignments. Access policies are the legacy model — still tested but less preferred.</td></tr>
+          <tr><td>Sentinel vs. Defender for Cloud</td><td>Sentinel is SIEM/SOAR — collect, detect, investigate, respond. Defender for Cloud is CSPM/CWPP — posture score, recommendations, workload protection.</td></tr>
+          <tr><td>PIM eligible vs. active</td><td>Eligible = has the right to activate the role. Active = currently exercising the role (time-limited). Permanent assignment bypasses PIM entirely.</td></tr>
+          <tr><td>Conditional Access vs. Entra ID Protection</td><td>ID Protection generates risk signals. Conditional Access uses those signals (and others) as conditions for access decisions.</td></tr>
+          <tr><td>Application Gateway WAF vs. Front Door WAF</td><td>Application Gateway WAF = regional. Front Door WAF = global CDN + WAF for multi-region deployments.</td></tr>
+        </table>
+
+        <div class="callout warning">
+          <div class="callout-title">Product Name Currency</div>
+          <p>Microsoft renamed Azure Active Directory to Microsoft Entra ID in 2023. Azure Defender became Microsoft Defender for Cloud. Azure Security Center was absorbed into Defender for Cloud. Azure AD Privileged Identity Management is now Entra ID PIM. Exam questions use the new names — verify your study material is current. The old names still appear in the Azure portal UI in some places, which adds confusion.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">Preparation Resources</div>
+          <p>Microsoft Learn AZ-500 learning path (free, authoritative), John Savill's Azure Master Class security modules (YouTube), MeasureUp practice exams (official Microsoft partner). Hands-on labs in the Azure free tier are essential — particularly Conditional Access, PIM, and Sentinel data connector configuration. Budget 50–70 hours for someone with CISM/CISSP background and general cloud familiarity.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <h4>Domains</h4>
+        <ul>
+          <li>1 — Identity &amp; Access (25–30%)</li>
+          <li>2 — Secure Networking (20–25%)</li>
+          <li>3 — Compute/Storage/DB (20–25%)</li>
+          <li>4 — Security Ops (25–30%)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Quick Reference</h4>
+        <ul>
+          <li>~45 questions</li>
+          <li>100 minutes</li>
+          <li>700/1000 to pass</li>
+          <li>Associate level</li>
+          <li>Annual renewal</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Core Services</h4>
+        <ul>
+          <li>Entra ID + PIM</li>
+          <li>Conditional Access</li>
+          <li>Microsoft Sentinel</li>
+          <li>Defender for Cloud</li>
+          <li>Azure Key Vault</li>
+          <li>Azure Firewall + WAF</li>
+          <li>Azure Bastion</li>
+          <li>Log Analytics / KQL</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Key Distinctions</h4>
+        <ul>
+          <li>PIM = JIT privileged access</li>
+          <li>Managed ID = no creds</li>
+          <li>Sentinel = SIEM/SOAR</li>
+          <li>Defender = CSPM/CWPP</li>
+          <li>Bastion = no public IP</li>
+          <li>NSG = subnet/NIC level</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="reading-intel"></div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; Personal Study System &nbsp;·&nbsp; Started March 28, 2026
+</footer>
+
+<script src="../assets/js/db.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

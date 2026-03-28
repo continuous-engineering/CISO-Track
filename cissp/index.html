@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISSP — CISO Cert Track</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script src="../assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="index.html" class="cissp-link active">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span style="color:var(--cissp);">CISSP</span> — Certified Information Systems Security Professional</h1>
+    <p>ISC² &nbsp;·&nbsp; Start Week 12 &nbsp;·&nbsp; 100–150 questions (CAT) &nbsp;·&nbsp; 3 hours &nbsp;·&nbsp; ~70% passing (scaled)</p>
+  </div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <!-- ============================================================
+             OVERVIEW
+             ============================================================ -->
+        <h2>What Is CISSP and Why Is It Last</h2>
+
+        <p>The Certified Information Systems Security Professional (CISSP) from ISC² is the most widely recognized broad-spectrum security certification in the industry. It is not the deepest certification in any single domain — CISM is deeper on governance, CCIE is deeper on networking, OSCP is deeper on offensive security — but no certification tests the breadth of security knowledge that CISSP demands.</p>
+
+        <p>You are studying CISSP last in the sequence, and that is the right order. CISM gives you the governance and management foundation. COBIT reinforces the governance vocabulary. CCSK gives you the cloud layer. By the time you reach CISSP, Domain 1 (Security and Risk Management) — which is 16% of the exam — will be largely review. Domains 3, 4, 5, and 8 will require genuine technical depth work.</p>
+
+        <p>CISSP requires five years of paid work experience in at least two of the eight domains. You have that. The exam is the gate.</p>
+
+        <table>
+          <tr><th>Element</th><th>Detail</th></tr>
+          <tr><td>Questions</td><td>100–150 (CAT adaptive for English); 250 for linear (non-English)</td></tr>
+          <tr><td>Time</td><td>3 hours (CAT)</td></tr>
+          <tr><td>Passing score</td><td>700 / 1000 (scaled; no raw percentage)</td></tr>
+          <tr><td>Delivery</td><td>Pearson VUE test centers</td></tr>
+          <tr><td>Price</td><td>$749 USD</td></tr>
+          <tr><td>Experience req</td><td>5 years paid work in at least 2 of 8 domains</td></tr>
+          <tr><td>Issued by</td><td>ISC² (International Information System Security Certification Consortium)</td></tr>
+        </table>
+
+        <!-- ============================================================
+             CAT SECTION
+             ============================================================ -->
+        <h2>CAT — Computerized Adaptive Testing</h2>
+
+        <p>CISSP's English-language exam uses Computerized Adaptive Testing (CAT). This is not how most exams work, and misunderstanding it causes anxiety. Understanding it reduces that anxiety.</p>
+
+        <div class="callout info">
+          <div class="callout-title">How CAT Actually Works</div>
+          <ul>
+            <li>The exam starts at a difficulty level calibrated around the passing threshold (700/1000 scaled).</li>
+            <li>If you answer correctly, the next question is harder. If you answer incorrectly, the next question is easier.</li>
+            <li>The algorithm continuously estimates whether your demonstrated ability is above or below passing threshold.</li>
+            <li>The exam <strong>stops</strong> when the algorithm reaches statistical confidence that you are above or below the pass line — or when you hit 150 questions, or when 3 hours expire.</li>
+            <li>You can pass with exactly 100 questions (algorithm is confident you're above threshold) or fail with exactly 100 questions (confident you're below). You can also pass with 150 questions.</li>
+          </ul>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">The CAT Mental Game</div>
+          <p>If the exam stops at 100 questions, you do NOT know if you passed or failed — many people assume "it stopped early, so I passed." That is not reliable. The algorithm stops when it has enough statistical confidence in either direction. Getting harder questions is a <em>possible</em> sign you're doing well, but the algorithm is more complex than a simple difficulty ramp. <strong>Focus on answering each question to the best of your ability and stop trying to infer your status from question difficulty.</strong></p>
+        </div>
+
+        <!-- ============================================================
+             THE 8 DOMAINS
+             ============================================================ -->
+        <h2>The 8 CISSP Domains</h2>
+
+        <table>
+          <tr><th>#</th><th>Domain</th><th>Weight</th><th>Approx Questions</th></tr>
+          <tr><td>1</td><td>Security and Risk Management</td><td>16%</td><td>16–24</td></tr>
+          <tr><td>2</td><td>Asset Security</td><td>10%</td><td>10–15</td></tr>
+          <tr><td>3</td><td>Security Architecture and Engineering</td><td>13%</td><td>13–20</td></tr>
+          <tr><td>4</td><td>Communication and Network Security</td><td>13%</td><td>13–20</td></tr>
+          <tr><td>5</td><td>Identity and Access Management (IAM)</td><td>13%</td><td>13–20</td></tr>
+          <tr><td>6</td><td>Security Assessment and Testing</td><td>12%</td><td>12–18</td></tr>
+          <tr><td>7</td><td>Security Operations</td><td>13%</td><td>13–20</td></tr>
+          <tr><td>8</td><td>Software Development Security</td><td>10%</td><td>10–15</td></tr>
+        </table>
+
+        <!-- ============================================================
+             DOMAIN 1
+             ============================================================ -->
+        <h3>Domain 1: Security and Risk Management (16%)</h3>
+
+        <p><strong>What CISM covers:</strong> The entirety of CISM is governance, risk, strategy, and program management. CISM Domains 1 and 2 map almost entirely onto CISSP Domain 1. If you have studied CISM Domains 1 and 2 thoroughly, you have covered roughly 70% of the CISSP Domain 1 content.</p>
+
+        <p><strong>What CISSP adds beyond CISM:</strong></p>
+        <ul>
+          <li><strong>ISC² Code of Ethics</strong> — four mandatory canons. Tested directly on CISSP; not in CISM. Know it cold (see below).</li>
+          <li><strong>Legal and regulatory frameworks:</strong> CISSP is more explicit about types of law (civil, criminal, administrative), computer crime statutes, intellectual property (copyright, trademark, patent, trade secret), and privacy laws (GDPR, CCPA, HIPAA) at a definitional level.</li>
+          <li><strong>Business Continuity and Disaster Recovery</strong> — CISSP covers BCP/DRP planning at a technical depth that CISM covers only at a management level. Know RTO, RPO, MTTR, MTBF, BIA methodology.</li>
+          <li><strong>Personnel security:</strong> Onboarding, offboarding, non-disclosure agreements, mandatory vacations, separation of duties, least privilege — CISSP is explicit where CISM is implicit.</li>
+        </ul>
+
+        <div class="callout exam">
+          <div class="callout-title">ISC² Code of Ethics — Know This Cold</div>
+          <p>Four mandatory canons, in priority order (highest to lowest). When canons conflict, the higher canon wins:</p>
+          <ul>
+            <li><strong>1. Protect society, the common good, necessary public trust and confidence, and the infrastructure.</strong></li>
+            <li><strong>2. Act honorably, honestly, justly, responsibly, and legally.</strong></li>
+            <li><strong>3. Provide diligent and competent service to principals.</strong></li>
+            <li><strong>4. Advance and protect the profession.</strong></li>
+          </ul>
+          <p>The exam tests: "Canon 1 (protect society) supersedes Canon 3 (serve your client) when they conflict." If a client asks you to do something that harms society, Canon 1 says no.</p>
+        </div>
+
+        <!-- ============================================================
+             DOMAIN 2
+             ============================================================ -->
+        <h3>Domain 2: Asset Security (10%)</h3>
+
+        <p><strong>CISM connection:</strong> CISM addresses data classification and information asset management at a governance level. CISSP Domain 2 adds technical specificity to the same concepts.</p>
+
+        <p><strong>Key concepts for Domain 2:</strong></p>
+        <ul>
+          <li><strong>Data classification:</strong> Government (Top Secret → Secret → Confidential → Unclassified) vs. commercial (Confidential/Proprietary → Private → Sensitive → Public). Know both schemes.</li>
+          <li><strong>Data ownership roles:</strong> Data owner (business accountable), data custodian (IT implements controls), data steward (quality and governance), data processor (processes on behalf of controller — GDPR concept), data controller (determines purpose — GDPR concept).</li>
+          <li><strong>Data lifecycle:</strong> Create → Store → Use → Share → Archive → Destroy. Security controls must apply throughout, not just at storage.</li>
+          <li><strong>Data handling:</strong> Marking, labeling, retention policies, secure disposal methods (clearing, purging, destruction), chain of custody for evidence.</li>
+          <li><strong>Privacy:</strong> GDPR principles (lawfulness, purpose limitation, data minimization, accuracy, storage limitation, integrity/confidentiality, accountability). Know the difference between data controller and data processor obligations.</li>
+        </ul>
+
+        <!-- ============================================================
+             DOMAIN 3
+             ============================================================ -->
+        <h3>Domain 3: Security Architecture and Engineering (13%)</h3>
+
+        <p><strong>CISM connection:</strong> Minimal. CISM does not go deep on security models, cryptography, or technical architecture. This domain requires fresh study if your background is governance-focused.</p>
+
+        <h4>Security Models — Must Know These</h4>
+
+        <table>
+          <tr><th>Model</th><th>Type</th><th>Core Rule</th><th>Designed to Protect</th></tr>
+          <tr>
+            <td><strong>Bell-LaPadula</strong></td>
+            <td>Confidentiality model</td>
+            <td>No read up (Simple Security Property), No write down (*-Property). "Write up, read down."</td>
+            <td>Classified information — prevents unauthorized disclosure</td>
+          </tr>
+          <tr>
+            <td><strong>Biba</strong></td>
+            <td>Integrity model</td>
+            <td>No write up (Simple Integrity), No read down (*-Integrity Property). Opposite of Bell-LaPadula.</td>
+            <td>Data integrity — prevents unauthorized modification</td>
+          </tr>
+          <tr>
+            <td><strong>Clark-Wilson</strong></td>
+            <td>Integrity model</td>
+            <td>Well-formed transactions, separation of duties, access triple (subject-program-object). Programs act as intermediaries.</td>
+            <td>Commercial data integrity through controlled change</td>
+          </tr>
+          <tr>
+            <td><strong>Brewer-Nash (Chinese Wall)</strong></td>
+            <td>Conflict of interest model</td>
+            <td>Subjects can only access data that doesn't conflict with data they previously accessed.</td>
+            <td>Conflict of interest prevention — consulting, finance</td>
+          </tr>
+          <tr>
+            <td><strong>Graham-Denning</strong></td>
+            <td>Access control model</td>
+            <td>Defines 8 basic protection rights for creating/deleting subjects and objects and managing access.</td>
+            <td>Formal specification of access control operations</td>
+          </tr>
+        </table>
+
+        <h4>Cryptography — Core Concepts</h4>
+
+        <table>
+          <tr><th>Type</th><th>Key Structure</th><th>Speed</th><th>Examples</th><th>Use Case</th></tr>
+          <tr>
+            <td><strong>Symmetric</strong></td>
+            <td>Same key to encrypt and decrypt</td>
+            <td>Fast</td>
+            <td>AES, 3DES, DES, Blowfish, RC4</td>
+            <td>Bulk data encryption</td>
+          </tr>
+          <tr>
+            <td><strong>Asymmetric</strong></td>
+            <td>Public key encrypts; private key decrypts</td>
+            <td>Slow</td>
+            <td>RSA, ECC, Diffie-Hellman, DSA</td>
+            <td>Key exchange, digital signatures, small data</td>
+          </tr>
+          <tr>
+            <td><strong>Hashing</strong></td>
+            <td>One-way; no key</td>
+            <td>Fast</td>
+            <td>MD5 (broken), SHA-1 (weak), SHA-256, SHA-3</td>
+            <td>Integrity verification, password storage</td>
+          </tr>
+        </table>
+
+        <p><strong>Digital signatures:</strong> Signed with sender's <em>private</em> key, verified with sender's <em>public</em> key. Provides authentication, non-repudiation, and integrity. Does NOT provide confidentiality by itself.</p>
+
+        <p><strong>PKI (Public Key Infrastructure):</strong> Certificate Authority (CA) issues digital certificates binding a public key to an identity. Certificate Revocation List (CRL) and OCSP (Online Certificate Status Protocol) handle revoked certificates. Trust hierarchies: Root CA → Intermediate CA → End-entity certificate.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">Crypto Exam Traps</div>
+          <ul>
+            <li>Diffie-Hellman is for key <em>exchange</em>, not encryption. Two parties agree on a shared secret over an insecure channel.</li>
+            <li>RSA can do both encryption and digital signatures. ECC does asymmetric crypto with shorter keys than RSA for equivalent strength.</li>
+            <li>MD5 is broken for security purposes but still appears in answer choices. Never pick MD5 for a new security design.</li>
+            <li>"Confidentiality using asymmetric crypto" = encrypt with recipient's PUBLIC key. The recipient decrypts with their PRIVATE key.</li>
+          </ul>
+        </div>
+
+        <h4>Physical Security</h4>
+        <p>Crime Prevention Through Environmental Design (CPTED): natural surveillance, natural access control, territorial reinforcement. Physical security layers: perimeter → facility → interior spaces → assets (defense in depth applied to physical). Mantrap (air lock) for high-security access. Know common physical security countermeasures: motion sensors, CCTV, bollards, fencing, guards.</p>
+
+        <!-- ============================================================
+             DOMAIN 4
+             ============================================================ -->
+        <h3>Domain 4: Communication and Network Security (13%)</h3>
+
+        <p><strong>CISM connection:</strong> Low. Network security is not a CISM focus. This domain requires fresh study for governance-focused practitioners.</p>
+
+        <h4>OSI Model — All 7 Layers</h4>
+
+        <table>
+          <tr><th>Layer</th><th>Name</th><th>Protocols / Examples</th><th>Security Relevance</th></tr>
+          <tr><td>7</td><td>Application</td><td>HTTP, HTTPS, SMTP, DNS, FTP</td><td>WAF operates here; injection attacks occur here</td></tr>
+          <tr><td>6</td><td>Presentation</td><td>SSL/TLS (conceptually), encryption formats</td><td>Encryption/decryption, data format translation</td></tr>
+          <tr><td>5</td><td>Session</td><td>NetBIOS, RPC, SQL sessions</td><td>Session management; session hijacking risk</td></tr>
+          <tr><td>4</td><td>Transport</td><td>TCP, UDP</td><td>Firewalls (packet filtering); SYN flood attacks</td></tr>
+          <tr><td>3</td><td>Network</td><td>IP, ICMP, OSPF, BGP, IPSec</td><td>Routing; IP spoofing; network-level firewalls</td></tr>
+          <tr><td>2</td><td>Data Link</td><td>Ethernet, MAC addresses, ARP, VLANs, WPA2</td><td>ARP poisoning, MAC flooding, VLAN hopping</td></tr>
+          <tr><td>1</td><td>Physical</td><td>Cables, hubs, repeaters, RF signals</td><td>Wiretapping, physical access attacks</td></tr>
+        </table>
+
+        <h4>Key Network Security Concepts</h4>
+        <ul>
+          <li><strong>Firewalls:</strong> Packet filtering (Layer 3/4) → Stateful inspection (tracks connections) → Application-layer (Layer 7, DPI) → Next-gen (NGFW, includes IPS, app awareness)</li>
+          <li><strong>VPN:</strong> IPSec (network layer, tunnel or transport mode) vs. SSL/TLS VPN (application layer, uses browser or client). Site-to-site vs. remote access VPN.</li>
+          <li><strong>Wireless:</strong> WEP (broken), WPA (deprecated), WPA2 (current minimum), WPA3 (strongest). Know the attack: WEP is vulnerable to IV attacks; WPA2-Personal is vulnerable to dictionary attacks against the PSK.</li>
+          <li><strong>DNS security:</strong> DNSSEC adds digital signatures to DNS responses to prevent cache poisoning. DNS over HTTPS (DoH) encrypts DNS queries.</li>
+          <li><strong>Network segmentation:</strong> DMZ separates public-facing servers from internal network. Zero trust eliminates the concept of a trusted internal network entirely.</li>
+        </ul>
+
+        <!-- ============================================================
+             DOMAIN 5
+             ============================================================ -->
+        <h3>Domain 5: Identity and Access Management (13%)</h3>
+
+        <p><strong>CISM connection:</strong> Moderate. CISM addresses access control at a governance level (least privilege, separation of duties). CISSP Domain 5 goes technically deeper into the models and protocols.</p>
+
+        <h4>Access Control Models</h4>
+
+        <table>
+          <tr><th>Model</th><th>Who Controls Access</th><th>How Decisions Are Made</th><th>Example</th></tr>
+          <tr>
+            <td><strong>DAC — Discretionary</strong></td>
+            <td>Resource owner</td>
+            <td>Owner sets ACLs at their discretion. Subject can grant access to others.</td>
+            <td>Windows file sharing permissions; most OS file systems</td>
+          </tr>
+          <tr>
+            <td><strong>MAC — Mandatory</strong></td>
+            <td>System policy (admin)</td>
+            <td>Labels on subjects and objects; system enforces rules. Owner cannot override.</td>
+            <td>SELinux, government classified systems, Bell-LaPadula implementations</td>
+          </tr>
+          <tr>
+            <td><strong>RBAC — Role-Based</strong></td>
+            <td>Admin via roles</td>
+            <td>Permissions assigned to roles; users assigned to roles. Manage at role level.</td>
+            <td>Enterprise systems (ERP, AD groups), cloud IAM roles</td>
+          </tr>
+          <tr>
+            <td><strong>ABAC — Attribute-Based</strong></td>
+            <td>Policy engine</td>
+            <td>Access based on attributes of subject, object, environment. Most flexible/complex.</td>
+            <td>Cloud IAM policies, zero-trust access decisions</td>
+          </tr>
+        </table>
+
+        <h4>Authentication Factors</h4>
+        <ul>
+          <li><strong>Type 1 — Something you know:</strong> Password, PIN, security question</li>
+          <li><strong>Type 2 — Something you have:</strong> Smart card, token, phone (TOTP)</li>
+          <li><strong>Type 3 — Something you are:</strong> Biometrics (fingerprint, retina, iris, voice, face)</li>
+          <li><strong>MFA</strong> = two or more different factor types. Two passwords = single factor (both Type 1). Password + OTP = MFA (Type 1 + Type 2).</li>
+        </ul>
+
+        <h4>Biometric Error Rates — Critical for the Exam</h4>
+        <ul>
+          <li><strong>FRR (False Rejection Rate / Type I Error):</strong> Legitimate user rejected. Higher FRR = more security, less convenience.</li>
+          <li><strong>FAR (False Acceptance Rate / Type II Error):</strong> Impostor accepted. Lower FAR = more security.</li>
+          <li><strong>CER / EER (Crossover Error Rate / Equal Error Rate):</strong> The point where FRR = FAR. Lower CER = better biometric system. CER is the standard comparison metric between biometric systems.</li>
+        </ul>
+
+        <h4>Key IAM Protocols</h4>
+        <ul>
+          <li><strong>Kerberos:</strong> Ticket-based authentication. Key Distribution Center (KDC) issues Ticket Granting Tickets (TGT) and service tickets. Prevents replay attacks via timestamps. Used in Active Directory.</li>
+          <li><strong>LDAP / Active Directory:</strong> Directory service protocol for user and resource management. LDAP over SSL = LDAPS (port 636).</li>
+          <li><strong>SAML:</strong> XML-based standard for SSO and federated identity. Assertion-based. IdP (Identity Provider) asserts identity to SP (Service Provider).</li>
+          <li><strong>OAuth 2.0:</strong> Authorization framework (not authentication). Grants third-party limited access to resources without exposing credentials. Tokens, not passwords.</li>
+          <li><strong>OpenID Connect:</strong> Identity layer on top of OAuth 2.0. Adds authentication. Returns ID tokens (JWT) along with access tokens.</li>
+        </ul>
+
+        <!-- ============================================================
+             DOMAIN 6
+             ============================================================ -->
+        <h3>Domain 6: Security Assessment and Testing (12%)</h3>
+
+        <p><strong>CISM connection:</strong> High. CISM Domain 2 (Risk Management) and Domain 3 (Security Program) include assessment methodologies. CISSP adds more technical specificity to testing techniques.</p>
+
+        <p><strong>Key concepts:</strong></p>
+        <ul>
+          <li><strong>Vulnerability assessment vs. penetration test:</strong> Vuln assessment identifies and ranks vulnerabilities. Pen test actively exploits them to confirm impact. Pen test is more invasive and requires explicit authorization.</li>
+          <li><strong>Testing types by knowledge:</strong> Black box (no prior knowledge, simulates external attacker), White box (full knowledge, simulates insider threat or detailed audit), Gray box (partial knowledge — most common).</li>
+          <li><strong>Code review:</strong> Static analysis (examining code without executing), dynamic analysis (testing running code), fuzz testing (malformed input to find crashes/vulnerabilities).</li>
+          <li><strong>Audit types:</strong> Internal audit (own staff), external audit (independent third party), certification audit (against a standard like ISO 27001), compliance audit (against regulations).</li>
+          <li><strong>SOC reports:</strong> SOC 1 (financial controls), SOC 2 (security/availability/confidentiality/privacy/processing integrity — the one you care about), SOC 3 (public version of SOC 2). Type 1 = point in time; Type 2 = over a period.</li>
+        </ul>
+
+        <div class="callout exam">
+          <div class="callout-title">SOC 2 Type II — Know This for Vendor Due Diligence</div>
+          <p>SOC 2 Type II tests controls over a period (typically 6–12 months). When assessing a cloud vendor's security posture, requesting their SOC 2 Type II report is the correct answer for demonstrating control effectiveness over time. Type I is a snapshot assessment. Type II is the gold standard for continuous compliance evidence.</p>
+        </div>
+
+        <!-- ============================================================
+             DOMAIN 7
+             ============================================================ -->
+        <h3>Domain 7: Security Operations (13%)</h3>
+
+        <p><strong>CISM connection:</strong> Very high for incident management. CISM Domain 4 covers the entirety of incident response from a management perspective. CISSP Domain 7 adds forensics, investigations, and technical operations depth.</p>
+
+        <p><strong>Where CISSP goes deeper than CISM:</strong></p>
+        <ul>
+          <li><strong>Digital forensics:</strong> Order of volatility (collect most volatile evidence first: CPU registers → RAM → network connections → running processes → disk → backup/archive). Chain of custody documentation. Forensic imaging vs. live acquisition. Write blockers to preserve evidence integrity.</li>
+          <li><strong>Legal holds:</strong> Preservation obligations when litigation is anticipated. All relevant evidence must be preserved — applies to emails, logs, backups. Destruction of data under legal hold = spoliation.</li>
+          <li><strong>e-Discovery:</strong> Electronic discovery in legal proceedings. Security team's role in identifying, preserving, collecting, and producing electronically stored information (ESI).</li>
+          <li><strong>Patch management:</strong> Emergency patching process, patch testing, rollback procedures.</li>
+          <li><strong>Configuration management:</strong> Baselining, change control, configuration drift detection.</li>
+          <li><strong>Disaster recovery:</strong> Hot site (fully operational, immediate failover), warm site (partial infrastructure, hours to activate), cold site (facility only, days to weeks), mobile site, cloud-based DR.</li>
+        </ul>
+
+        <div class="callout tip">
+          <div class="callout-title">Order of Volatility — Memorize This</div>
+          <p>Most volatile to least volatile (collect in this order during incident response / forensics):</p>
+          <p>CPU registers &amp; cache → RAM → Swap / page file → Network connections → Running processes → Disk storage → Remote logging → Physical configuration → Archival media</p>
+          <p>RAM contains decryption keys, running malware in memory, and open connections. Once power is lost, RAM data is gone. Disk evidence is relatively stable.</p>
+        </div>
+
+        <!-- ============================================================
+             DOMAIN 8
+             ============================================================ -->
+        <h3>Domain 8: Software Development Security (10%)</h3>
+
+        <p><strong>CISM connection:</strong> Low. CISM does not cover SDLC in depth. This domain requires fresh study.</p>
+
+        <h4>Secure SDLC — Security at Each Phase</h4>
+
+        <table>
+          <tr><th>Phase</th><th>Security Activities</th></tr>
+          <tr><td><strong>Requirements</strong></td><td>Define security requirements (functional and non-functional). Privacy impact assessment. Regulatory requirements identification. Abuse case development alongside use cases.</td></tr>
+          <tr><td><strong>Design</strong></td><td>Threat modeling (STRIDE: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege). Security architecture review. Attack surface analysis. Secure design principles application.</td></tr>
+          <tr><td><strong>Development</strong></td><td>Secure coding standards. Code reviews. Static Application Security Testing (SAST). Developer security training. Handling secrets (no hardcoded credentials).</td></tr>
+          <tr><td><strong>Testing</strong></td><td>Dynamic Application Security Testing (DAST). Penetration testing. Fuzz testing. Security regression testing. Dependency scanning (SCA — Software Composition Analysis).</td></tr>
+          <tr><td><strong>Deployment</strong></td><td>Secure configuration baselines. Secrets management. Infrastructure as Code security scanning. Change management controls.</td></tr>
+          <tr><td><strong>Maintenance</strong></td><td>Vulnerability management. Patch management. Security monitoring. End-of-life planning.</td></tr>
+        </table>
+
+        <h4>Key Application Security Concepts</h4>
+        <ul>
+          <li><strong>OWASP Top 10:</strong> Know the top vulnerabilities by category: injection (SQL, command), broken authentication, sensitive data exposure, XML external entities, broken access control, security misconfiguration, XSS, insecure deserialization, using components with known vulnerabilities, insufficient logging/monitoring.</li>
+          <li><strong>Input validation:</strong> Never trust input from any external source. Validate on the server side (client-side validation is a UX feature, not a security control). Whitelist validation (allow known good) over blacklist (block known bad).</li>
+          <li><strong>Database security:</strong> Parameterized queries / prepared statements to prevent SQL injection. Stored procedures can also mitigate injection. Principle of least privilege for database accounts.</li>
+          <li><strong>Software supply chain:</strong> Third-party libraries, open source dependencies, and build pipelines are attack surfaces. Software Bill of Materials (SBOM) for dependency tracking.</li>
+        </ul>
+
+        <!-- ============================================================
+             CISM vs CISSP COMPARISON
+             ============================================================ -->
+        <h2>CISM vs CISSP — Where You Stand Going In</h2>
+
+        <table>
+          <tr>
+            <th>Area</th>
+            <th>CISM Coverage</th>
+            <th>CISSP Requires</th>
+            <th>CISM Advantage?</th>
+          </tr>
+          <tr>
+            <td>Governance &amp; Risk Management</td>
+            <td>Deep — all of CISM D1 and D2</td>
+            <td>Domain 1 (16%)</td>
+            <td style="color:var(--accent2);">Very high — mostly review</td>
+          </tr>
+          <tr>
+            <td>Incident Management</td>
+            <td>Deep — all of CISM D4</td>
+            <td>Domain 7 (13%) — IR portion</td>
+            <td style="color:var(--accent2);">High — add forensics and DR technical detail</td>
+          </tr>
+          <tr>
+            <td>Security Program Management</td>
+            <td>Deep — CISM D3</td>
+            <td>Across multiple domains</td>
+            <td style="color:var(--accent2);">High — program concepts translate directly</td>
+          </tr>
+          <tr>
+            <td>Asset Security / Data Classification</td>
+            <td>Moderate (governance perspective)</td>
+            <td>Domain 2 (10%)</td>
+            <td style="color:var(--accent3);">Moderate — add technical data handling specifics</td>
+          </tr>
+          <tr>
+            <td>Security Assessment &amp; Testing</td>
+            <td>Governance-level awareness</td>
+            <td>Domain 6 (12%)</td>
+            <td style="color:var(--accent3);">Moderate — add testing technique specifics</td>
+          </tr>
+          <tr>
+            <td>Cryptography</td>
+            <td>Not covered</td>
+            <td>Domain 3 (part of 13%)</td>
+            <td style="color:var(--accent4);">None — new study required</td>
+          </tr>
+          <tr>
+            <td>Security Models (Bell-LaPadula, etc.)</td>
+            <td>Not covered</td>
+            <td>Domain 3 (part of 13%)</td>
+            <td style="color:var(--accent4);">None — new study required</td>
+          </tr>
+          <tr>
+            <td>Network Security / Protocols</td>
+            <td>Not covered</td>
+            <td>Domain 4 (13%)</td>
+            <td style="color:var(--accent4);">None — new study required</td>
+          </tr>
+          <tr>
+            <td>Identity and Access Management</td>
+            <td>Governance concepts only</td>
+            <td>Domain 5 (13%)</td>
+            <td style="color:var(--accent4);">Low — add models, protocols, biometrics</td>
+          </tr>
+          <tr>
+            <td>Software Development Security</td>
+            <td>Not covered</td>
+            <td>Domain 8 (10%)</td>
+            <td style="color:var(--accent4);">None — new study required</td>
+          </tr>
+        </table>
+
+        <div class="callout exam">
+          <div class="callout-title">CISSP Managerial Mindset — Still Applies, With a Twist</div>
+          <p>CISSP still rewards a "think like a manager" approach on governance, risk, and program questions — your CISM training shines here. But CISSP also rewards technical knowledge on cryptography, network protocols, access control models, and SDLC. You cannot answer a question about Bell-LaPadula or AES key sizes with governance instincts alone. The mix is roughly: 40% management mindset wins, 60% requires knowing specific technical content. That's the difference from CISM where management mindset wins ~85% of the time.</p>
+        </div>
+
+        <!-- ============================================================
+             FLASHCARDS
+             ============================================================ -->
+        <h2>Flashcards — CISSP</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Click a card to flip it. Use arrow keys or buttons to navigate. Shuffle to randomize.</p>
+
+        <div id="fc-deck-cissp">
+          <div class="flashcard-container">
+            <div class="flashcard" id="fc-main-cissp">
+              <div class="flashcard-face front">
+                <div class="flashcard-label">Term / Concept</div>
+                <div class="flashcard-text" id="fc-front-text-cissp">Loading...</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-top:1rem;">Click to reveal answer</div>
+              </div>
+              <div class="flashcard-face back">
+                <div class="flashcard-label">Answer</div>
+                <div class="flashcard-answer" id="fc-back-text-cissp">...</div>
+              </div>
+            </div>
+          </div>
+          <div class="flashcard-controls">
+            <button class="btn btn-sm" data-fc="prev">← Prev</button>
+            <span class="fc-counter" id="fc-counter-cissp">1 / 15</span>
+            <button class="btn btn-sm" data-fc="next">Next →</button>
+            <button class="btn btn-sm" data-fc="shuffle" style="margin-left:0.5rem;">Shuffle</button>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             QUIZ
+             ============================================================ -->
+        <h2>Practice Quiz — CISSP</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">10 questions covering CISSP-specific concepts across all 8 domains. Target 75%+.</p>
+
+        <div id="quiz-container-cissp"></div>
+
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card cissp">
+        <h4>Quick Reference</h4>
+        <ul>
+          <li>100–150 questions (CAT)</li>
+          <li>3 hours</li>
+          <li>Passing: 700/1000 (scaled)</li>
+          <li>8 domains</li>
+          <li>Pearson VUE</li>
+          <li>$749 USD</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>8 Domains</h4>
+        <ul>
+          <li>1. Risk Mgmt (16%)</li>
+          <li>2. Asset Security (10%)</li>
+          <li>3. Architecture (13%)</li>
+          <li>4. Network (13%)</li>
+          <li>5. IAM (13%)</li>
+          <li>6. Assessment (12%)</li>
+          <li>7. Operations (13%)</li>
+          <li>8. SW Dev Sec (10%)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Security Models</h4>
+        <ul>
+          <li>Bell-LaPadula — confidentiality</li>
+          <li>Biba — integrity</li>
+          <li>Clark-Wilson — integrity (commercial)</li>
+          <li>Brewer-Nash — conflict of interest</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Access Control Models</h4>
+        <ul>
+          <li>DAC — owner decides</li>
+          <li>MAC — system enforces labels</li>
+          <li>RBAC — roles carry permissions</li>
+          <li>ABAC — attribute-based policy</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>ISC² Ethics Canons</h4>
+        <ul>
+          <li>1. Protect society</li>
+          <li>2. Act honorably</li>
+          <li>3. Serve principals</li>
+          <li>4. Advance profession</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Study Priority</h4>
+        <ul>
+          <li style="color:var(--accent2);">D1 — mostly CISM review</li>
+          <li style="color:var(--accent2);">D7 — IR is CISM review</li>
+          <li style="color:var(--accent3);">D2, D6 — partial review</li>
+          <li style="color:var(--accent4);">D3, D4, D5, D8 — new study</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CISSP — ISC² &nbsp;·&nbsp; Started March 28, 2026
+</footer>
+
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/flashcards.js"></script>
+<script src="../assets/js/quiz.js"></script>
+<script>
+// ============================================================
+// CISSP FLASHCARDS
+// ============================================================
+const cisspCards = [
+  {
+    front: "What are the four ISC² Code of Ethics canons in priority order?",
+    back: "1. <strong>Protect society, the common good, necessary public trust and confidence, and the infrastructure.</strong><br>2. Act honorably, honestly, justly, responsibly, and legally.<br>3. Provide diligent and competent service to principals.<br>4. Advance and protect the profession.<br><br>When canons conflict, the higher canon wins. Society (Canon 1) always supersedes client service (Canon 3)."
+  },
+  {
+    front: "Bell-LaPadula vs Biba — what is the core rule of each and what does each protect?",
+    back: "<strong>Bell-LaPadula (Confidentiality):</strong> No read up, no write down. A Secret-cleared subject cannot read Top Secret data (no read up) and cannot write to Unclassified data (no write down — prevents downgrading). Protects against unauthorized disclosure.<br><br><strong>Biba (Integrity):</strong> No write up, no read down. The opposite. A low-integrity subject cannot write to high-integrity data and cannot read low-integrity data. Protects against unauthorized modification."
+  },
+  {
+    front: "What is the Crossover Error Rate (CER) in biometrics and why does it matter?",
+    back: "The <strong>CER (also called EER — Equal Error Rate)</strong> is the point where the False Rejection Rate (FRR) equals the False Acceptance Rate (FAR).<br><br>It is the standard metric for comparing biometric systems: <strong>lower CER = better system</strong>. A system with CER of 1% is more accurate than one with CER of 5%. Organizations choose the operating point (sensitivity) based on whether they prioritize security (low FAR) or convenience (low FRR)."
+  },
+  {
+    front: "What is the difference between symmetric and asymmetric encryption, and when is each used?",
+    back: "<strong>Symmetric:</strong> Same key encrypts and decrypts. Fast. Examples: AES, 3DES. Used for bulk data encryption.<br><br><strong>Asymmetric:</strong> Public key encrypts, private key decrypts (or private key signs, public key verifies). Slow. Examples: RSA, ECC. Used for key exchange and digital signatures — not bulk data.<br><br>In practice: asymmetric is used to exchange a symmetric key, then symmetric encrypts the bulk data. This is how TLS works."
+  },
+  {
+    front: "What is the order of volatility in digital forensics evidence collection?",
+    back: "Collect most volatile first:<br>1. CPU registers and cache<br>2. RAM (memory)<br>3. Swap / page file<br>4. Network connections (active sessions)<br>5. Running processes<br>6. Disk storage<br>7. Remote logging / monitoring data<br>8. Archival media / backups<br><br>RAM is priority because it contains decryption keys, live malware in memory, and open sessions — all lost when power is cut."
+  },
+  {
+    front: "What is the difference between DAC, MAC, RBAC, and ABAC?",
+    back: "<strong>DAC (Discretionary):</strong> Resource owner sets permissions. Most flexible, least secure. Owner can share access.<br><br><strong>MAC (Mandatory):</strong> System-enforced labels. Owner cannot override policy. Used in government/military classified systems.<br><br><strong>RBAC (Role-Based):</strong> Permissions attached to roles; users assigned to roles. Simplifies administration in large enterprises.<br><br><strong>ABAC (Attribute-Based):</strong> Access decisions based on subject, object, and environment attributes. Most flexible and complex. Used in zero-trust architectures."
+  },
+  {
+    front: "How does Computerized Adaptive Testing (CAT) work in the CISSP exam?",
+    back: "CAT starts at difficulty calibrated near the passing threshold. Correct answers → harder next question. Incorrect answers → easier next question. The algorithm continuously re-estimates whether your ability is above or below passing level.<br><br>The exam stops when: (a) statistical confidence is reached that you pass or fail, OR (b) 150 questions are reached, OR (c) 3 hours expire.<br><br>You can pass with 100 questions or fail with 100 questions. The early stop does NOT reliably indicate pass."
+  },
+  {
+    front: "What is a digital signature and what security properties does it provide?",
+    back: "A digital signature is created by hashing the message, then encrypting the hash with the sender's <strong>private key</strong>. The recipient verifies by decrypting with the sender's <strong>public key</strong> and comparing hashes.<br><br>Security properties provided:<br>• <strong>Authentication</strong> — confirms who signed it<br>• <strong>Non-repudiation</strong> — signer cannot deny signing<br>• <strong>Integrity</strong> — any change to the message invalidates the signature<br><br>Digital signatures do NOT provide confidentiality."
+  },
+  {
+    front: "What is STRIDE and which SDLC phase does threat modeling occur in?",
+    back: "<strong>STRIDE</strong> is a threat modeling mnemonic:<br>• <strong>S</strong>poofing — impersonating a user or system<br>• <strong>T</strong>ampering — modifying data or code<br>• <strong>R</strong>epudiation — denying an action was taken<br>• <strong>I</strong>nformation Disclosure — unauthorized data exposure<br>• <strong>D</strong>enial of Service — disrupting availability<br>• <strong>E</strong>levation of Privilege — gaining unauthorized access level<br><br>Threat modeling is performed during the <strong>Design</strong> phase of SDLC — before any code is written."
+  },
+  {
+    front: "What is the difference between a SOC 2 Type I and Type II report?",
+    back: "<strong>SOC 2 Type I:</strong> Point-in-time assessment. Auditor evaluates whether controls are suitably designed at a specific date. Snapshot only — does not validate that controls are operating effectively over time.<br><br><strong>SOC 2 Type II:</strong> Period assessment (typically 6–12 months). Auditor validates that controls are both suitably designed AND operating effectively throughout the period.<br><br>For vendor due diligence, <strong>Type II is the standard</strong> — it proves controls work continuously, not just on audit day."
+  },
+  {
+    front: "What is Kerberos and what problem does it solve?",
+    back: "Kerberos is a <strong>ticket-based network authentication protocol</strong> that allows clients to prove their identity to services without sending passwords over the network.<br><br>Components: KDC (Key Distribution Center), AS (Authentication Server), TGS (Ticket Granting Server).<br><br>Process: Client authenticates to AS → receives TGT → presents TGT to TGS → receives service ticket → presents service ticket to target service.<br><br>Prevents: password sniffing, replay attacks (timestamps), and eavesdropping. Used in Windows Active Directory."
+  },
+  {
+    front: "What are the three disaster recovery site types?",
+    back: "<strong>Hot site:</strong> Fully operational, mirrors production, real-time or near-real-time data replication. Near-immediate failover (minutes to hours). Most expensive.<br><br><strong>Warm site:</strong> Partial infrastructure in place (servers, network). Data restoration required. Hours to days to activate. Moderate cost.<br><br><strong>Cold site:</strong> Facility only — power, space, connectivity. No equipment. Equipment must be sourced and configured, data restored. Days to weeks to activate. Cheapest.<br><br>Recovery capability: Hot &gt; Warm &gt; Cold. Cost: Hot &gt; Warm &gt; Cold."
+  },
+  {
+    front: "What is the Clark-Wilson integrity model and how does it differ from Biba?",
+    back: "<strong>Clark-Wilson</strong> is designed for commercial environments. It enforces integrity through:<br>• <strong>Well-formed transactions</strong> — data can only be modified through controlled programs (not directly)<br>• <strong>Separation of duties</strong> — different people authorize, execute, and verify transactions<br>• Access triple: <strong>subject → transformation procedure → constrained data item</strong><br><br><strong>Biba</strong> is a simpler lattice model: no-write-up, no-read-down. Biba is formal and mathematical. Clark-Wilson is practical and process-oriented. Clark-Wilson better models commercial financial controls."
+  },
+  {
+    front: "What is the difference between vulnerability assessment and penetration testing?",
+    back: "<strong>Vulnerability assessment:</strong> Identifies, classifies, and prioritizes vulnerabilities. Uses automated scanning tools. Does not actively exploit vulnerabilities. Lower risk. Answers: 'What vulnerabilities exist and how severe are they?'<br><br><strong>Penetration test:</strong> Goes further — attempts to actively exploit vulnerabilities to confirm real-world impact. Requires explicit written authorization. Higher risk (could cause outages). Answers: 'Can an attacker actually get in and what can they do?'<br><br>Pen test produces more actionable proof of risk. Assessment produces broader coverage."
+  },
+  {
+    front: "What is the WPA2 security vulnerability and what is the mitigation?",
+    back: "<strong>WPA2-Personal vulnerability:</strong> Uses a Pre-Shared Key (PSK). Vulnerable to offline dictionary attacks — attacker captures the 4-way handshake, then brute-forces the password offline. A weak passphrase = compromised network.<br><br><strong>Mitigations:</strong><br>• Use a strong, random passphrase (20+ characters)<br>• Use WPA2-Enterprise with 802.1X/EAP — individual credentials per user, no shared key<br>• Upgrade to WPA3, which uses SAE (Simultaneous Authentication of Equals) instead of PSK, providing forward secrecy and resistance to offline attacks"
+  }
+];
+
+// ============================================================
+// CISSP QUIZ QUESTIONS
+// ============================================================
+const cisspQuestions = [
+  {
+    q: "A security practitioner discovers that their employer is conducting activities that are clearly illegal. Under the ISC² Code of Ethics, what should the practitioner do?",
+    options: [
+      "Report the activity to law enforcement, because Canon 1 (protect society) supersedes Canon 3 (serve principals)",
+      "Remain silent to protect the organization per Canon 3 (provide diligent service to principals)",
+      "Consult the organization's legal team before taking any action",
+      "Resign immediately and take no further action"
+    ],
+    answer: 0,
+    explanation: "Canon 1 (protect society and the public trust) takes highest priority and supersedes Canon 3 (serve your principals/employer). When the employer's actions conflict with society's interest and the law, Canon 1 requires action — which typically means reporting through appropriate channels including law enforcement. Remaining silent to protect the employer violates Canon 1."
+  },
+  {
+    q: "An organization is implementing a mandatory access control (MAC) system for a classified government environment. Which security model is most appropriate?",
+    options: [
+      "Clark-Wilson — to ensure well-formed transactions and separation of duties",
+      "Bell-LaPadula — to enforce confidentiality by preventing unauthorized disclosure of classified data",
+      "Biba — to ensure high-integrity data cannot be modified by low-integrity subjects",
+      "Brewer-Nash — to prevent conflicts of interest among analysts"
+    ],
+    answer: 1,
+    explanation: "Bell-LaPadula is designed specifically for classified government environments. Its no-read-up and no-write-down rules enforce confidentiality labels — preventing lower-cleared subjects from accessing higher-classified data, and preventing classified data from being written down to lower classification levels. MAC with Bell-LaPadula is the textbook answer for government classified system security."
+  },
+  {
+    q: "A CISSP candidate answers the first 40 questions of the CAT exam and the test stops. What can the candidate conclude?",
+    options: [
+      "They passed, because the algorithm determined competency was demonstrated",
+      "They failed, because the minimum passing threshold was not reached",
+      "Nothing definitive — the exam stops when statistical confidence is reached in either direction, not only on a pass",
+      "The exam experienced a technical failure"
+    ],
+    answer: 2,
+    explanation: "CAT stops when the algorithm reaches statistical confidence that the candidate is either above or below the passing threshold — or at max questions/time. An early stop at 100 questions (the minimum) does not indicate pass or fail. Candidates have both passed and failed with exactly 100 questions. Assuming early stop = pass is a common and incorrect assumption."
+  },
+  {
+    q: "During a wireless network security audit, a tester captures a WPA2-Personal 4-way handshake and uses a dictionary attack to recover the passphrase. Which control would MOST effectively prevent this attack?",
+    options: [
+      "Implementing WPA2-Enterprise with 802.1X authentication",
+      "Increasing the minimum passphrase length to 10 characters",
+      "Changing the SSID to a non-default value",
+      "Enabling MAC address filtering on the access point"
+    ],
+    answer: 0,
+    explanation: "WPA2-Enterprise with 802.1X eliminates the shared passphrase entirely — each user authenticates with individual credentials via EAP. There is no PSK to capture or brute-force. Longer passphrases slow dictionary attacks but don't prevent them. SSID changes and MAC filtering provide no protection against a captured handshake attack."
+  },
+  {
+    q: "An organization needs to ensure that software can only be modified through authorized transaction programs, and that different people must initiate, execute, and verify financial transactions. Which security model best supports these requirements?",
+    options: [
+      "Bell-LaPadula — confidentiality enforcement via access labels",
+      "Biba — no-write-up, no-read-down integrity rules",
+      "Clark-Wilson — well-formed transactions and separation of duties",
+      "Brewer-Nash — conflict of interest prevention"
+    ],
+    answer: 2,
+    explanation: "Clark-Wilson is specifically designed for commercial environments requiring controlled changes to data through authorized programs (transformation procedures) and separation of duties in transaction processing. The subject-program-object (access triple) structure enforces that data is only modified through approved procedures. Biba is a simpler integrity model that doesn't address transaction controls or separation of duties."
+  },
+  {
+    q: "A developer receives a certificate and wants to verify the certificate was signed by a trusted Certificate Authority (CA). Which component of the PKI is the developer checking against?",
+    options: [
+      "The Certificate Revocation List (CRL) to ensure the certificate has not been revoked",
+      "The Certificate Authority's public key to verify the digital signature on the certificate",
+      "The Key Distribution Center (KDC) to validate the certificate's authenticity",
+      "The LDAP directory to retrieve the CA's private key for comparison"
+    ],
+    answer: 1,
+    explanation: "The CA signs issued certificates with its private key. To verify a certificate was issued by a trusted CA, the developer uses the CA's public key (from the trusted CA store) to verify the digital signature on the certificate. CRL/OCSP is consulted for revocation status — a separate check. The KDC is a Kerberos component, not PKI. CA private keys are never shared."
+  },
+  {
+    q: "During an incident response, a forensic analyst is called to investigate a compromised server. What evidence should be collected FIRST?",
+    options: [
+      "Hard drive image — to preserve a forensically sound copy of stored files",
+      "System logs from the SIEM — to establish the attack timeline",
+      "RAM contents — because volatile memory contains live process data, network connections, and encryption keys",
+      "Network packet captures — to identify the attacker's IP address"
+    ],
+    answer: 2,
+    explanation: "The order of volatility requires collecting the most volatile evidence first. RAM (volatile memory) is lost the moment the system is powered down. It may contain running malware, decryption keys, open network connections, and live process data that exist nowhere else. Hard drive and logs are relatively stable and can be collected after volatile evidence is captured."
+  },
+  {
+    q: "A financial services company wants to assess the ongoing security effectiveness of its cloud accounting vendor. Which document should the company request to best demonstrate that security controls have operated effectively over time?",
+    options: [
+      "SOC 1 Type I report — to validate financial reporting controls at a specific point in time",
+      "SOC 2 Type I report — to validate security controls are suitably designed",
+      "SOC 2 Type II report — to validate security controls operated effectively over a defined period",
+      "ISO 27001 certification — to confirm the vendor has established an ISMS"
+    ],
+    answer: 2,
+    explanation: "SOC 2 Type II is the industry standard for demonstrating that security controls (and optionally availability, confidentiality, processing integrity, privacy) have operated effectively over a defined period — typically 6–12 months. Type I is a point-in-time design assessment, which doesn't prove continuous effectiveness. ISO 27001 certifies process establishment but doesn't provide the detailed control testing evidence of SOC 2 Type II."
+  },
+  {
+    q: "A developer uses user-supplied input directly in a SQL query without sanitization: 'SELECT * FROM users WHERE id = ' + userInput. Which vulnerability does this create and what is the correct remediation?",
+    options: [
+      "Cross-site scripting (XSS); remediate with output encoding",
+      "SQL injection; remediate with parameterized queries (prepared statements)",
+      "Buffer overflow; remediate with input length validation",
+      "Insecure deserialization; remediate with safe deserialization libraries"
+    ],
+    answer: 1,
+    explanation: "Concatenating user input directly into SQL queries creates SQL injection vulnerability — an attacker can insert SQL syntax into the input to manipulate the query. The correct remediation is parameterized queries (prepared statements), where the SQL structure is defined first and user input is passed as a separate parameter — never interpreted as SQL syntax. This is OWASP Top 10 #1 (Injection)."
+  },
+  {
+    q: "Which access control model is MOST appropriate for a zero-trust architecture where access decisions are made based on user identity, device health, location, and the sensitivity of the requested resource?",
+    options: [
+      "Mandatory Access Control (MAC) — because it enforces system-defined policies that users cannot override",
+      "Discretionary Access Control (DAC) — because resource owners control who can access their resources",
+      "Role-Based Access Control (RBAC) — because access is granted based on job roles",
+      "Attribute-Based Access Control (ABAC) — because decisions are based on multiple attributes of the subject, object, and environment"
+    ],
+    answer: 3,
+    explanation: "ABAC evaluates multiple attributes simultaneously — user identity (subject attribute), device health (environment attribute), location (environment attribute), and resource sensitivity (object attribute) — making it ideal for zero-trust access decisions. RBAC only considers role membership. MAC uses labels. DAC delegates to owners. ABAC's policy engine can enforce the complex, context-aware rules zero trust requires."
+  }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  new FlashcardDeck(cisspCards, 'fc-deck-cissp');
+  new Quiz(cisspQuestions, 'quiz-container-cissp', 'cissp_overview');
+});
+</script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

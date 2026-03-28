@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risk Management — Core Concepts</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body data-expected-mins="35" data-topic-id="/shared/risk-management.html">
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>Risk Management <span style="color:var(--text-muted);font-weight:400;">— Core Concepts</span></h1>
+    <p>Shared reference · CISM D2 · CISSP D1 · CCSK D2+D3 · COBIT EDM03</p>
+  </div>
+
+  <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+    <span class="badge badge-cism">CISM D1+D2</span>
+    <span class="badge badge-ccsk">CCSK D2+D3</span>
+    <span class="badge badge-cobit">COBIT core</span>
+    <span class="badge badge-cissp">CISSP D1</span>
+  </div>
+
+  <div id="read-badge"></div>
+  <div id="reading-intel"></div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <!-- ======================================================
+             SECTION 1 — THE UNIVERSAL RISK EQUATION
+             ====================================================== -->
+        <h2 id="risk-equation">The Universal Risk Equation</h2>
+
+        <p>Every certification in this track returns to a single foundational statement: <strong>Risk = Likelihood × Impact</strong>. The formula itself is trivially simple, which is exactly why exam writers can test it so many ways. What they're actually testing is whether you understand how each certification's community frames the two variables — and what that framing implies about who makes risk decisions, how they make them, and what documentation is required.</p>
+
+        <p><strong>CISM frames risk as a business decision.</strong> When ISACA presents a risk scenario, the expected reasoning always traces back to business impact first. The question is never "what is the technical severity of this vulnerability?" but rather "what does this risk mean for the organization's objectives, and is it within the board-approved risk appetite?" Likelihood and impact are both evaluated in business terms — financial loss, reputational damage, regulatory penalty, operational disruption. The information security manager's job is to translate technical risk into business language so that the board and executive management can make informed decisions. Risk that cannot be articulated in business terms cannot be governed.</p>
+
+        <p><strong>CISSP frames risk more formally and quantitatively.</strong> The CISSP Body of Knowledge expects you to be fluent in the full quantitative vocabulary: Asset Value, Exposure Factor, Single Loss Expectancy, Annualized Rate of Occurrence, Annualized Loss Expectancy. Where CISM might say "this risk has high business impact and moderate likelihood," CISSP says "ALE = $340,000 per year." The exam will give you numbers and expect you to compute or interpret them. That said, CISSP also covers qualitative methods extensively — the framework is broader, not purely quantitative.</p>
+
+        <p><strong>CCSK frames risk through shared responsibility.</strong> In the cloud context, the risk equation gains a third dimension: the question of who is responsible for assessing and managing each component of risk. For IaaS, the customer owns application and data risk; the CSP owns physical and hypervisor risk. For SaaS, the CSP owns almost everything below the application data layer. The exam tests whether you understand that shared responsibility doesn't eliminate risk — it divides ownership of it. A SaaS customer who assumes the vendor handles all security risk is failing to manage their portion of residual risk.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">Cross-Cert Exam Trap</div>
+          <p>All three exams use "Risk = Likelihood × Impact" but they phrase it differently. CISSP calls likelihood "probability" and uses ALE math. CISM calls it "likelihood" and expects business framing. CCSK frames likelihood in terms of cloud-specific threat vectors (misconfiguration, API exposure, insider at the CSP). Don't let terminology shifts confuse you into thinking these are different concepts — they're the same equation with different vocabularies layered on top.</p>
+        </div>
+
+        <p>Impact, in particular, deserves careful treatment. CISM distinguishes between direct impact (immediate financial loss, recovery costs, regulatory fines) and indirect impact (reputational damage, customer churn, competitive disadvantage). CISSP uses Exposure Factor (EF) to quantify impact as a percentage of asset value lost in a given incident. CCSK adds cloud-specific impact considerations: data sovereignty violations, multi-tenant blast radius, provider lock-in as a risk amplifier during an incident.</p>
+
+        <p>The practical implication for exam questions: when a scenario asks you to prioritize risks or justify a treatment decision, always check whether the question is asking for a business-aligned answer (CISM), a formula-derived answer (CISSP), or a cloud-context answer (CCSK). The framing of the question will tell you which lens to apply.</p>
+
+
+        <!-- ======================================================
+             SECTION 2 — TERMINOLOGY ROSETTA STONE
+             ====================================================== -->
+        <h2 id="terminology">Risk Terminology — Cross-Cert Rosetta Stone</h2>
+
+        <p>One of the most reliable sources of exam confusion is encountering a term you know well but defined slightly differently than your previous certification experience. These definitions are not interchangeable across frameworks, and exams will test the precise definition as used in that certification's body of knowledge.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Core Definition</th>
+              <th>CISM Emphasis</th>
+              <th>CISSP Emphasis</th>
+              <th>CCSK / COBIT Emphasis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Risk Appetite</strong></td>
+              <td>The broad amount of risk an organization is willing to accept in pursuit of its objectives — a strategic posture statement</td>
+              <td>Set by the board; expressed in policy; CISO operates within it</td>
+              <td>Informs control selection decisions; links to organizational mission</td>
+              <td>COBIT: EDM03 objective. CCSK: CSP vs. customer appetite differs</td>
+            </tr>
+            <tr>
+              <td><strong>Risk Tolerance</strong></td>
+              <td>The acceptable variation around risk appetite — the operational boundary within which teams can act without escalation</td>
+              <td>More specific than appetite; quantifiable; escalation triggers when exceeded</td>
+              <td>Defines thresholds for acceptable residual risk after controls applied</td>
+              <td>COBIT: KRI thresholds. CCSK: contractual SLAs define tolerance for cloud risk</td>
+            </tr>
+            <tr>
+              <td><strong>Risk Capacity</strong></td>
+              <td>The maximum risk an organization can absorb without threatening its ability to operate — the hard ceiling above tolerance</td>
+              <td>Rarely tested explicitly but underlies risk acceptance decisions</td>
+              <td>Tied to organizational resilience; recovery time objectives imply capacity limits</td>
+              <td>COBIT: capacity links to governance objective of sustainable IT</td>
+            </tr>
+            <tr>
+              <td><strong>Inherent Risk</strong></td>
+              <td>Risk that exists before any controls are applied — the raw exposure to a threat</td>
+              <td>Starting point for risk assessment; documented in risk register</td>
+              <td>Used in risk analysis to justify why controls are needed at all</td>
+              <td>COBIT: APO12 measures inherent risk during risk assessment process</td>
+            </tr>
+            <tr>
+              <td><strong>Residual Risk</strong></td>
+              <td>Risk remaining after controls have been applied — inherent risk minus the control's risk reduction effect</td>
+              <td>Must be within tolerance; requires documented acceptance if above threshold</td>
+              <td>Formally accepted by the Authorizing Official under NIST RMF; key metric</td>
+              <td>CCSK: residual cloud risk includes risks CSP doesn't cover in shared model</td>
+            </tr>
+            <tr>
+              <td><strong>Risk Treatment</strong></td>
+              <td>The process of selecting and implementing measures to modify risk — the umbrella term for all four response options</td>
+              <td>CISM uses this as the overarching term; treatment plan requires approval</td>
+              <td>CISSP uses "risk response" interchangeably; treatment options are the four standard ones</td>
+              <td>ISO 31000 vocabulary; CCSK applies to cloud-specific treatment decisions</td>
+            </tr>
+            <tr>
+              <td><strong>Risk Acceptance</strong></td>
+              <td>Conscious decision to retain a risk without applying additional controls, because the cost of treatment exceeds the benefit</td>
+              <td>Must be documented and approved by appropriate level of management; CISM tests this constantly</td>
+              <td>Known as "retain" in some CISSP framings; must be informed and documented</td>
+              <td>COBIT: documented in risk register; board-level for risks above tolerance</td>
+            </tr>
+            <tr>
+              <td><strong>Risk Transfer</strong></td>
+              <td>Shifting financial consequence of a risk to a third party — typically via insurance or contractual obligation</td>
+              <td>CISM critical point: liability cannot be fully transferred; organization retains accountability</td>
+              <td>Insurance, contracts, SLAs; doesn't eliminate probability of incident occurring</td>
+              <td>CCSK: cloud contracts transfer some risk but CSP liability caps are real constraints</td>
+            </tr>
+            <tr>
+              <td><strong>Risk Avoidance</strong></td>
+              <td>Deciding not to perform the activity that creates the risk — eliminating the risk by eliminating its source</td>
+              <td>Valid when risk exceeds appetite and no cost-effective mitigation exists; requires business case</td>
+              <td>May mean not deploying a system, not entering a market, not collecting certain data</td>
+              <td>CCSK: not adopting a particular cloud service model if risk is unacceptable</td>
+            </tr>
+            <tr>
+              <td><strong>Risk Reduction</strong></td>
+              <td>Applying controls to reduce likelihood, impact, or both — bringing risk toward or within tolerance</td>
+              <td>Most common treatment; requires control selection based on cost-benefit analysis</td>
+              <td>CISSP ties this to the control selection process in NIST RMF Step 2 (Select)</td>
+              <td>COBIT: BAI domain implements controls; effectiveness measured in MEA domain</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout warning">
+          <div class="callout-title">Critical Distinction — Appetite vs. Tolerance vs. Capacity</div>
+          <p>These three terms form a hierarchy that CISM tests carefully. <strong>Appetite</strong> is strategic posture — "we are a risk-averse organization." <strong>Tolerance</strong> is operational boundary — "we will not accept more than $500K annual expected loss in category X." <strong>Capacity</strong> is the hard physical/financial limit — "a loss exceeding $5M threatens our solvency." Exam questions will distinguish between which level of management sets each, and what happens when each threshold is crossed.</p>
+        </div>
+
+        <p>The appetite-tolerance-capacity hierarchy matters for escalation. When a risk sits within tolerance, the information security manager can handle it. When a risk exceeds tolerance but stays within capacity, it requires executive decision-making. When a risk approaches capacity, it requires board involvement and may require business decisions about the organization's continued operation in a given area.</p>
+
+
+        <!-- ======================================================
+             SECTION 3 — ERM INTEGRATION
+             ====================================================== -->
+        <h2 id="erm">Enterprise Risk Management (ERM) Integration</h2>
+
+        <p>Security risk managed in a silo produces distorted decisions. If the security team applies its own risk framework, uses its own risk taxonomy, and reports risk independently from the business's enterprise risk management program, the organization ends up with two parallel risk views that cannot be compared. The board cannot weigh "our ALE for ransomware is $2M" against "our credit risk exposure is $50M" unless both are expressed in the same language, using the same methodology, and reported through the same governance channel.</p>
+
+        <p>Enterprise Risk Management (ERM) is the enterprise-wide framework for identifying, assessing, treating, and monitoring all categories of risk — financial, operational, strategic, regulatory, and information security. The critical principle is that security risk is one category within ERM, not a separate discipline. The CISO feeds into the ERM process; they do not run a parallel one.</p>
+
+        <h3>CISM Framing — Security Risk as a Governance Function</h3>
+
+        <p>ISACA's CISM body of knowledge treats ERM integration as a governance requirement, not an option. An information security program that cannot demonstrate alignment to the enterprise's risk management framework is not properly governed, regardless of how technically sophisticated its controls are. The CISM exam tests this by presenting scenarios where the "correct" answer is to escalate or integrate risk information into the broader business context rather than resolve it within the security team.</p>
+
+        <p>Practical implications that the exam tests: the security risk register should use the same risk rating scales as the enterprise risk register. Security risk appetite should be derived from, not separate from, the organizational risk appetite. Security risk reports to the board should appear in the board's ERM report alongside other enterprise risks, not as a standalone security briefing.</p>
+
+        <h3>COBIT Framing — EDM03: Ensure Risk Optimisation</h3>
+
+        <p>COBIT 2019's governance domain (EDM) contains five objectives, and EDM03 is specifically about risk optimization. The governance objective is to ensure that IT-related enterprise risk does not exceed the enterprise's risk appetite and tolerance. COBIT views this as a governance responsibility: the board and senior management set the risk tolerance, the governance function monitors whether IT risk stays within it, and management processes (APO12 — Managed Risk) execute the operational risk management activities.</p>
+
+        <p>The key COBIT insight for integration: COBIT separates the governance decision (EDM03 — is our risk posture acceptable?) from the management activity (APO12 — are we identifying, assessing, and treating risks correctly?). This governance/management split mirrors the CISM governance/management distinction and makes COBIT and CISM highly complementary frameworks.</p>
+
+        <h3>CISSP Framing — Due Care and Due Diligence</h3>
+
+        <p>CISSP connects ERM integration to the legal and ethical concepts of due care and due diligence. <strong>Due diligence</strong> is the process of understanding the risks you face — conducting assessments, gathering information, identifying threats and vulnerabilities. <strong>Due care</strong> is the process of acting reasonably to mitigate those risks — implementing controls proportionate to the risk identified. Together, they establish that an organization has met its reasonable standard of risk management behavior.</p>
+
+        <p>The ERM integration angle in CISSP appears in the context of senior management liability. When security risk is managed in a silo and the organization suffers a breach, executives who cannot demonstrate that security risk was being managed within the ERM framework face personal liability exposure for failing to exercise due diligence. When security risk is integrated into ERM and reported to the board, the governance documentation provides evidence of due care and due diligence.</p>
+
+        <div class="callout tip">
+          <div class="callout-title">ERM Integration — What the Exam Wants to See</div>
+          <p>For CISM: security risk in the enterprise risk register, security risk appetite derived from business risk appetite, CISO reporting to enterprise risk committee. For CISSP: security risk management as a component of senior management responsibility, due care/diligence documented through formal process. For COBIT: EDM03 governance objective setting risk tolerance, APO12 management process executing risk assessment, MEA02 monitoring effectiveness.</p>
+        </div>
+
+
+        <!-- ======================================================
+             SECTION 4 — QUANTITATIVE RISK ANALYSIS
+             ====================================================== -->
+        <h2 id="quantitative">Quantitative Risk Analysis — Full Coverage</h2>
+
+        <p>Quantitative risk analysis assigns numerical values to risk components — asset values, loss estimates, probability of occurrence. The goal is to produce dollar figures that justify security investment and allow risk comparison on a common scale. CISSP tests quantitative calculations more frequently than CISM, but both exams expect you to understand the methodology.</p>
+
+        <h3>The Core Formulas</h3>
+
+        <p><strong>Asset Value (AV)</strong> — The monetary value of the asset being protected. For tangible assets, this may be replacement cost or market value. For data, this typically involves business impact modeling: what would it cost the organization if this data were destroyed, stolen, or disclosed? AV must account for the asset's full value to the organization, including dependent revenue streams and regulatory replacement requirements.</p>
+
+        <p><strong>Exposure Factor (EF)</strong> — The percentage of asset value lost if a specific threat event occurs. Expressed as a decimal between 0 and 1. An EF of 0.30 means a given incident would destroy 30% of the asset's value. EF is specific to both the asset and the threat — a fire might have EF 0.90 for a data center (almost complete destruction) but EF 0.05 for cloud-hosted data (the physical facility burns, but the data persists).</p>
+
+        <p><strong>Single Loss Expectancy (SLE) = AV × EF</strong> — The expected dollar loss from a single occurrence of a threat event. This is the key calculation that converts asset value and exposure into a concrete loss figure per incident.</p>
+
+        <p><strong>Annualized Rate of Occurrence (ARO)</strong> — How many times per year this threat event is expected to occur. An ARO of 1.0 means once per year. An ARO of 0.1 means once every ten years. An ARO of 10 means ten times per year. ARO is typically derived from historical data, threat intelligence feeds, industry statistics, or expert judgment.</p>
+
+        <p><strong>Annualized Loss Expectancy (ALE) = SLE × ARO</strong> — The expected annual dollar loss from a threat. ALE is the primary metric for security investment justification: if a control costs $X per year and reduces ALE by more than $X, the control has positive ROI.</p>
+
+        <h3>Worked Example 1 — Database Server Ransomware</h3>
+
+        <p>Asset: customer database server. AV = $500,000 (replacement cost plus data recovery cost plus revenue impact during downtime). Threat: ransomware encryption. EF = 0.60 (backups exist, but restoration takes 72 hours at $300K/day cost, totaling about 60% of AV in recovery cost and lost revenue). ARO = 0.5 (industry data suggests this org's profile faces ransomware roughly every two years).</p>
+
+        <p>SLE = $500,000 × 0.60 = $300,000<br>
+        ALE = $300,000 × 0.5 = $150,000 per year</p>
+
+        <p>A security control that reduces EF to 0.10 (immutable backups, rapid recovery) and costs $40,000/year has a net benefit of: old ALE ($150,000) minus new ALE ($500,000 × 0.10 × 0.5 = $25,000) minus control cost ($40,000) = $85,000 net benefit per year. The control is justified.</p>
+
+        <h3>Worked Example 2 — Web Application DDoS</h3>
+
+        <p>Asset: e-commerce platform. AV = $2,000,000 (annualized revenue at risk during outage, not replacement cost). Threat: volumetric DDoS attack. EF = 0.15 (attacks average 4 hours; platform generates ~$85K/hour; 4-hour outage = 1.7% of annualized revenue, rounded to 15% for multi-incident secondary effects). ARO = 3.0 (threat intel indicates three significant attacks per year for the org's profile).</p>
+
+        <p>SLE = $2,000,000 × 0.15 = $300,000<br>
+        ALE = $300,000 × 3.0 = $900,000 per year</p>
+
+        <p>A DDoS mitigation service at $120,000/year that reduces ARO to 0.5 (one minor incident per two years): new ALE = $300,000 × 0.5 = $150,000. Net benefit = $900,000 − $150,000 − $120,000 = $630,000. Strong ROI — justified.</p>
+
+        <h3>Worked Example 3 — Laptop Theft</h3>
+
+        <p>Asset: executive laptop with sensitive M&amp;A data. AV = $250,000 (data value: $200,000 based on deal risk; hardware: $3,000; combined valuation modeled at $250,000 including regulatory notification cost if data is exposed). Threat: theft. EF = 0.40 (full-disk encryption reduces exposure factor significantly — not all data is exposed even if stolen; encryption brings EF from 1.0 to 0.40). ARO = 0.2 (one theft per five years based on fleet size and loss history).</p>
+
+        <p>SLE = $250,000 × 0.40 = $100,000<br>
+        ALE = $100,000 × 0.2 = $20,000 per year</p>
+
+        <p>Full-disk encryption across the fleet costs $15,000/year. It reduces EF from 1.0 to 0.40, dropping ALE from $50,000 to $20,000 (using AV × 1.0 × 0.2 = $50,000 without encryption). Benefit = $30,000 per year savings minus $15,000 cost = $15,000 net. Justified.</p>
+
+        <div class="callout tip">
+          <div class="callout-title">ALE for Security Investment Justification</div>
+          <p>The business case formula: <strong>Value of control = (ALE before) − (ALE after) − (Annual cost of control)</strong>. A positive result means the control has ROI. A negative result means the risk might be cheaper to accept or transfer than to mitigate. This is the quantitative argument for any security budget request. CISSP exam questions will give you two or three controls with different cost/effectiveness profiles and ask which one provides the best ROI — compute all three ALE-based net values and pick the best.</p>
+        </div>
+
+
+        <!-- ======================================================
+             SECTION 5 — QUALITATIVE RISK ASSESSMENT
+             ====================================================== -->
+        <h2 id="qualitative">Qualitative Risk Assessment</h2>
+
+        <p>Qualitative risk assessment uses descriptive ratings — High, Medium, Low; or 1–5 scales — rather than precise dollar figures. It's faster, cheaper, and often more practical than quantitative analysis when data is scarce, when the organization lacks actuarial history, or when a broad sweep across many risk areas is needed before deciding which ones warrant quantitative deep-dives.</p>
+
+        <h3>Risk Heat Maps and 5×5 Matrices</h3>
+
+        <p>The risk heat map plots risks on a two-axis grid: likelihood on one axis, impact on the other. Each cell in the grid corresponds to a risk rating. A 5×5 matrix has 25 cells, typically color-coded: red for high-risk (high likelihood × high impact), green for low-risk, yellow for medium. The position of a risk in the matrix drives treatment priority.</p>
+
+        <p>Reading heat maps on exams: pay attention to the positioning. A risk in the upper-right quadrant (high likelihood, high impact) should be treated immediately regardless of cost. A risk in the lower-left (low likelihood, low impact) is a candidate for acceptance. The upper-left (high likelihood, low impact) is managed through operational controls and may be accepted with minor mitigations. The lower-right (low likelihood, high impact) is the insurance and contingency planning quadrant — low probability but catastrophic if it occurs.</p>
+
+        <h3>When Qualitative Is Appropriate</h3>
+
+        <p>Qualitative is appropriate when: you are conducting an initial risk identification sweep across a broad set of risk areas; historical data does not exist to support quantitative estimates; the assessment audience needs a quick, intuitive view rather than actuarial precision; or when comparing risks across very different categories (security risk vs. operational risk) where a common qualitative scale is more useful than disparate dollar figures.</p>
+
+        <p>Qualitative is <em>not</em> appropriate when: you need to justify a specific dollar amount of security investment to the board; you are comparing multiple control options and need ROI calculations; regulatory requirements mandate quantitative analysis; or when the risk in question is large enough that precision matters for treatment decisions.</p>
+
+        <h3>Running a Qualitative Risk Workshop</h3>
+
+        <p>The structured process: identify participants who understand both the business context and the technical risk landscape. Prepare a risk taxonomy — categories of risk to assess. For each risk, facilitator presents the scenario, the group reaches consensus on likelihood rating and impact rating, and the risk is placed on the matrix. Disagreements are productive — they surface differing assumptions about likelihood or impact that need to be resolved. Document the rationale for each rating, not just the rating itself. Workshop output is a prioritized risk list that feeds the risk register.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">CISM Qualitative Workshop — Exam Framing</div>
+          <p>CISM questions about qualitative assessment often test who should participate. The right answer is a cross-functional group — business unit owners, IT, legal, compliance — not just the security team. Risk ratings made exclusively by the security team reflect security's perspective, not the business's. A rating from the business owner carries more governance weight because it reflects actual business impact judgment, not technical severity judgment.</p>
+        </div>
+
+
+        <!-- ======================================================
+             SECTION 6 — RISK TREATMENT
+             ====================================================== -->
+        <h2 id="risk-treatment">Risk Treatment — The Four Options in Depth</h2>
+
+        <p>Every risk assessment ends with a treatment decision. Four options exist, and exam questions will test not just which option is named but when each is appropriate, what its limitations are, and what documentation is required.</p>
+
+        <h3>Avoid / Terminate</h3>
+
+        <p><strong>Definition (CISM):</strong> Risk avoidance means eliminating the risk entirely by not performing the activity that creates it. The organization decides that the risk exceeds the acceptable level and that no cost-effective mitigation exists, so the underlying activity is simply not done.</p>
+
+        <p><strong>Definition (CISSP):</strong> Also called risk termination. The decision not to engage in an activity, not to collect certain data, not to deploy a system, or not to enter a market. Eliminates the risk source entirely.</p>
+
+        <p><strong>When to use it:</strong> When the inherent risk of an activity is so high that no combination of controls can bring residual risk within tolerance at acceptable cost, and when the business value of the activity does not justify the risk exposure. Classic example: an organization decides not to store credit card data at all, eliminating PCI DSS scope by removing the risk source.</p>
+
+        <p><strong>What cannot be avoided:</strong> Regulatory risk that comes from operating in a regulated industry cannot be avoided by choosing not to operate — the choice then is to exit the industry. Reputational risk from existing data holdings cannot be avoided retroactively.</p>
+
+        <h3>Transfer / Share</h3>
+
+        <p><strong>Definition (CISM):</strong> Risk transfer shifts the financial consequence of a risk to a third party, typically through insurance or contractual arrangements. The organization retains the likelihood of the risk event occurring — transfer does not reduce probability — but the financial impact is borne by another party.</p>
+
+        <p><strong>The critical point both CISM and CISSP test:</strong> <strong>Liability cannot be fully transferred.</strong> An organization that transfers risk through a contract or insurance policy still retains reputational damage, regulatory accountability, and responsibility to affected parties. If a breach occurs at a vendor who holds your customer data, your customers don't care about your contract with the vendor — they hold you accountable. The organization transfers financial risk, not legal accountability or ethical responsibility.</p>
+
+        <p><strong>When to use it:</strong> When risk exceeds tolerance but the activity must continue. Insurance for cyber risk, contracts with liability clauses, SLAs with financial penalties for CSPs all represent risk transfer. Often used in combination with risk reduction — you reduce the risk as much as cost-effectively possible, then transfer the residual tail risk through insurance.</p>
+
+        <p><strong>Cloud-specific (CCSK):</strong> Cloud service agreements transfer certain risk categories to the CSP, but the transfer is limited by the contract's liability cap. A CSP that caps liability at $1M cannot absorb a $50M regulatory fine on your behalf. Know what your transfer actually covers.</p>
+
+        <h3>Mitigate / Reduce</h3>
+
+        <p><strong>Definition:</strong> Applying controls to reduce the likelihood of a risk event, the impact if it occurs, or both. This is the most common risk treatment option and the one that generates most security program activity: patching reduces likelihood of exploitation, encryption reduces impact of data theft, backups reduce impact of ransomware, segmentation reduces blast radius of intrusion.</p>
+
+        <p><strong>Compensating controls:</strong> When the primary control cannot be implemented (legacy system cannot be patched, change freeze prohibits configuration changes), a compensating control achieves an equivalent risk reduction through a different mechanism. PCI DSS formalizes this concept: if you cannot implement a required control, you can substitute a compensating control that provides equivalent protection. Exam questions ask what a compensating control is and when it's appropriate — the answer is always: when the primary control is not technically feasible or would cause unacceptable business disruption, and when an alternative achieves equivalent risk reduction.</p>
+
+        <p><strong>Control types:</strong> Controls reduce risk by different mechanisms. Preventive controls reduce likelihood. Detective controls increase likelihood of discovering incidents early, reducing impact duration. Corrective controls reduce impact after an event. Administrative controls reduce likelihood through policy and procedure. Physical controls reduce both likelihood (access restriction) and impact (environmental monitoring). Technical controls reduce likelihood through automated enforcement. Exam questions test which control type best addresses a given risk scenario.</p>
+
+        <h3>Accept / Tolerate</h3>
+
+        <p><strong>Definition:</strong> A conscious, documented decision to retain a risk without applying additional controls, because the cost of treatment exceeds the benefit, or because the risk is within tolerance and the cost of further reduction is not justified.</p>
+
+        <p><strong>Risk acceptance documentation requirements (CISM critical):</strong> Risk acceptance is never an informal decision. It requires: documentation of the specific risk being accepted, the current risk rating (likelihood, impact, residual risk level), the rationale for acceptance (cost of mitigation vs. risk exposure), the name and authority level of the person accepting the risk, and a review date. The CISM exam tests this repeatedly — the correct answer when a risk exceeds tolerance is always to escalate for documented management acceptance, not to quietly ignore it.</p>
+
+        <p><strong>Authority level matters:</strong> The authority required to formally accept a risk scales with the risk level. Low risks within tolerance may be accepted by the security team or information security manager. Medium risks approaching tolerance require management acceptance. Risks above tolerance require senior executive or board acceptance. A risk that exceeds the organization's risk capacity cannot be formally accepted by any individual — it requires a board-level business decision about whether to continue the activity at all.</p>
+
+        <div class="callout warning">
+          <div class="callout-title">Risk Acceptance vs. Risk Ignorance</div>
+          <p>The exam distinguishes between <strong>risk acceptance</strong> (documented, informed, approved by appropriate authority) and what might be called "risk ignorance" (failing to assess or document a risk, or the security team unilaterally deciding not to escalate a risk that exceeds tolerance). Risk ignorance is never a correct exam answer. If a scenario presents a risk that exceeds tolerance and asks what the CISO should do, the answer is always to escalate for formal risk acceptance — not to quietly implement a partial control and move on.</p>
+        </div>
+
+
+        <!-- ======================================================
+             SECTION 7 — RISK REGISTER
+             ====================================================== -->
+        <h2 id="risk-register">Risk Register</h2>
+
+        <p>The risk register is the authoritative repository for all identified, assessed, and treated risks within scope. It is a living document — continuously updated as new risks are identified, existing risks are reassessed, and treatment plans are implemented and verified. Understanding what belongs in a risk register and how it operates is a guaranteed exam topic across all four certifications.</p>
+
+        <h3>What a Risk Register Contains</h3>
+
+        <p>A complete risk register entry includes: a unique risk identifier; a clear risk description (threat, vulnerability, asset, and potential impact); the risk category (operational, strategic, compliance, etc.); the inherent risk rating (likelihood × impact before controls); the existing controls currently applied; the residual risk rating (likelihood × impact after controls); the treatment decision (accept, mitigate, transfer, avoid); the treatment plan and timeline if mitigating; the risk owner (the business or IT manager accountable for the risk, not the security team); the review date; and the acceptance documentation if the risk is being accepted above tolerance.</p>
+
+        <p><strong>Risk owner vs. control owner:</strong> The risk owner is the business executive or manager who bears accountability for the business impact if the risk materializes. The control owner is the person responsible for implementing and maintaining the specific control. These are often different people. A business unit director may own a risk that IT operations manages the control for. CISM tests this distinction — the security team is rarely the risk owner; they are the advisors and control implementers for risks that business units own.</p>
+
+        <h3>Governance of the Risk Register</h3>
+
+        <p>The risk register is reviewed on a defined schedule — typically quarterly for high risks, semi-annually for medium risks, annually for low risks — and ad hoc when significant changes occur (new systems, new regulations, incidents, major business changes). Review process: reassess likelihood and impact given current control environment, verify that treatment plans are progressing, update residual risk ratings, escalate risks that have moved above tolerance since last review.</p>
+
+        <p>When a risk exceeds tolerance: the information security manager does not have authority to simply accept it. The escalation path is defined in the risk management policy: risks exceeding tolerance escalate to the Risk Committee or equivalent governance body for a formal treatment decision. The risk stays in the register as escalated/pending decision until a documented treatment decision is made.</p>
+
+        <h3>Risk Register vs. Risk Report to the Board</h3>
+
+        <p>This distinction matters for CISM specifically. The risk register is an operational document — detailed, technical, lengthy, intended for the security and risk management team. The risk report to the board is a governance document — concise, business-language, focused on risk posture trends, risks approaching or exceeding tolerance, investment required, and key treatment decisions requiring board input.</p>
+
+        <p>The board does not read the full risk register. They receive a distilled view that answers: Are we within our risk appetite? What changed since last quarter? Are there risks requiring board-level decisions or additional investment? The CISO's job is to translate the risk register into this governance view. Exam questions that ask "what should the CISO report to the board" are testing this translation skill — the answer is always the business-impact summary, not the technical detail.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">CISM — Risk Register Exam Points</div>
+          <p>Three things CISM tests about risk registers: (1) Risk owners must be business managers, not the security team. (2) Risks exceeding tolerance must be escalated — never silently accepted by the CISO. (3) The risk register drives the risk report to the board, but the board receives a summarized, business-language view — not the register itself.</p>
+        </div>
+
+
+        <!-- ======================================================
+             SECTION 8 — THREAT MODELING
+             ====================================================== -->
+        <h2 id="threat-modeling">Threat Modeling (CISSP Emphasis)</h2>
+
+        <p>Threat modeling is a proactive, design-phase activity that identifies how a system could be attacked before it is built or deployed. It differs fundamentally from risk assessment, which evaluates existing systems and environments. Risk assessment asks "what risks does our current state expose us to?" Threat modeling asks "how could an adversary attack this system we're designing, and what should we build in to prevent it?"</p>
+
+        <h3>STRIDE</h3>
+
+        <p>STRIDE is the most widely known threat classification model and the one CISSP tests explicitly. Developed at Microsoft, it provides a checklist of threat categories to evaluate against any system component:</p>
+
+        <ul>
+          <li><strong>Spoofing</strong> — Pretending to be something or someone you are not. Violates authentication. Examples: IP spoofing, session hijacking, fake certificates. Mitigations: strong authentication, PKI, token binding.</li>
+          <li><strong>Tampering</strong> — Unauthorized modification of data in transit or at rest. Violates integrity. Examples: man-in-the-middle data modification, database record manipulation, binary patching. Mitigations: integrity checks, digital signatures, write protections, audit logs.</li>
+          <li><strong>Repudiation</strong> — Denying having performed an action, with no way to prove otherwise. Violates non-repudiation. Examples: user denies placing an order, administrator denies making a configuration change. Mitigations: tamper-evident audit logging, digital signatures, secure timestamps.</li>
+          <li><strong>Information Disclosure</strong> — Unauthorized exposure of information to parties who should not see it. Violates confidentiality. Examples: overly verbose error messages, unencrypted data in transit, poorly configured storage. Mitigations: encryption, access control, data classification, minimal disclosure.</li>
+          <li><strong>Denial of Service</strong> — Degrading or eliminating availability of a system or service. Violates availability. Examples: volumetric DDoS, resource exhaustion attacks, application-layer flooding. Mitigations: rate limiting, capacity planning, CDN, anti-DDoS services.</li>
+          <li><strong>Elevation of Privilege</strong> — Gaining capabilities beyond what was authorized. Violates authorization. Examples: exploiting privilege escalation vulnerabilities, token manipulation, path traversal leading to admin access. Mitigations: least privilege, input validation, secure coding, privileged access management.</li>
+        </ul>
+
+        <p>STRIDE maps neatly to the CIA triad plus non-repudiation and authorization. For exam questions: if a threat scenario is described in CISSP, classify it using STRIDE before choosing a control — the control category follows directly from the threat category.</p>
+
+        <h3>PASTA</h3>
+
+        <p>PASTA (Process for Attack Simulation and Threat Analysis) is a risk-centric threat modeling methodology with seven stages: define business objectives, define the technical scope, decompose the application, perform threat analysis, perform vulnerability analysis, attack modeling and simulation, and risk/impact analysis. PASTA produces a risk-prioritized list of threats tied to business impact — more complex than STRIDE but more business-aligned for enterprise use. CISSP may reference it as an alternative to STRIDE; know the name and that it's risk-centric and business-aligned.</p>
+
+        <h3>Threat Modeling vs. Risk Assessment</h3>
+
+        <p>Threat modeling is proactive and design-time. It happens before a system is deployed. It produces design requirements and security architecture decisions. Risk assessment is retrospective and operational. It happens against existing environments. It produces treatment decisions for current exposures. For exam questions: if a scenario describes a new system being designed or developed, threat modeling is the appropriate activity. If it describes evaluating an existing environment, risk assessment is correct.</p>
+
+
+        <!-- ======================================================
+             SECTION 9 — FRAMEWORK COMPARISON
+             ====================================================== -->
+        <h2 id="frameworks">Risk Management Frameworks Comparison</h2>
+
+        <p>Each certification references different risk management frameworks. The exam tests framework recognition — knowing what each framework covers, its structure, and which certification references it in what context.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Framework</th>
+              <th>Publisher</th>
+              <th>Structure</th>
+              <th>Primary Use</th>
+              <th>Cert Emphasis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>NIST RMF</strong></td>
+              <td>NIST (SP 800-37)</td>
+              <td>6 steps: Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor (7 in Rev 2 with Prepare)</td>
+              <td>Federal information systems; increasingly used in commercial; links risk management to system authorization</td>
+              <td>CISSP heavily; CISM references for control selection</td>
+            </tr>
+            <tr>
+              <td><strong>ISO 31000</strong></td>
+              <td>ISO</td>
+              <td>Principles, Framework, Process (identify, analyze, evaluate, treat, monitor, communicate)</td>
+              <td>Enterprise-wide risk management across all risk categories; not IS-specific; generic and adaptable</td>
+              <td>CISM (governance framing); COBIT references it; CISSP acknowledges it</td>
+            </tr>
+            <tr>
+              <td><strong>ISO 27005</strong></td>
+              <td>ISO</td>
+              <td>IS-specific risk management process that implements ISO 27001 risk requirements; aligns to ISO 31000 terminology</td>
+              <td>Information security risk assessment and treatment within an ISMS; the "how" for ISO 27001 risk requirements</td>
+              <td>CISM; CISSP; organizations implementing ISO 27001</td>
+            </tr>
+            <tr>
+              <td><strong>OCTAVE</strong></td>
+              <td>CERT/SEI (Carnegie Mellon)</td>
+              <td>Three phases: Build asset-based threat profiles, Identify infrastructure vulnerabilities, Develop security strategy</td>
+              <td>Operationally Critical Threat, Asset, and Vulnerability Evaluation — organization-driven, workshop-based, business-context focused</td>
+              <td>CISSP (risk assessment methodologies); occasionally CISM</td>
+            </tr>
+            <tr>
+              <td><strong>FAIR</strong></td>
+              <td>FAIR Institute / Open Group</td>
+              <td>Ontology for decomposing risk into: Threat Event Frequency, Vulnerability, Loss Magnitude</td>
+              <td>Factor Analysis of Information Risk — the quantitative risk analysis framework; produces probability distributions, not point estimates; supports ALE-style analysis with statistical rigor</td>
+              <td>CISSP (quantitative methods); increasingly referenced by CISM for board reporting</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout tip">
+          <div class="callout-title">NIST RMF Steps — Know These Cold for CISSP</div>
+          <p>The full sequence: <strong>Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor</strong>. Prepare (added in Rev 2) is organizational risk management preparation. Categorize determines system impact level. Select chooses controls from SP 800-53 baseline. Implement puts controls in place. Assess verifies controls work. Authorize is the formal ATO (Authorization to Operate) decision by the Authorizing Official. Monitor is continuous ongoing monitoring. CISSP questions frequently test which step addresses a specific activity.</p>
+        </div>
+
+        <p>The key differentiator between these frameworks: NIST RMF is system-lifecycle oriented — it ties risk management to the authorization of specific information systems. ISO 31000 is enterprise-wide and not IS-specific — it's the risk governance framework an organization uses across all risk categories. ISO 27005 is IS-specific but focuses on the risk assessment process within an ISMS. OCTAVE is self-directed and workshop-based — organizations run it themselves without external consultants. FAIR is the only framework in this group that produces statistically rigorous quantitative output.</p>
+
+
+        <!-- ======================================================
+             SECTION 10 — EXAM-SPECIFIC DISTINCTIONS
+             ====================================================== -->
+        <h2 id="exam-distinctions">Exam-Specific Distinctions</h2>
+
+        <h3>CISM — Risk Management</h3>
+
+        <p>CISM's defining characteristic: every answer traces back to the business. When presented with a risk scenario, the CISM-correct answer is the one that aligns risk decisions with business objectives and ensures appropriate governance of the decision. Specific points the exam tests repeatedly:</p>
+
+        <ul>
+          <li><strong>Risk acceptance requires documented approval.</strong> A risk that exceeds tolerance is never silently accepted by the security team. It escalates to the appropriate authority level and receives documented sign-off.</li>
+          <li><strong>Risk report to the board uses business language.</strong> Not technical severity ratings, CVE scores, or control implementation status — business impact, cost, regulatory exposure, and risk posture trends.</li>
+          <li><strong>The CISO advises on risk; the board decides on risk appetite.</strong> When questions ask who sets risk appetite, the answer is senior management or the board — not the CISO.</li>
+          <li><strong>Business unit owners own risks.</strong> The security team advises and implements controls. Business unit managers are accountable for the risks in their domains.</li>
+          <li><strong>Risk treatment decisions require cost-benefit analysis.</strong> Spending more on controls than the risk is worth is not good security — it's poor resource management. CISM expects proportionate response.</li>
+        </ul>
+
+        <h3>CISSP — Risk Management</h3>
+
+        <ul>
+          <li><strong>Know the quantitative formulas cold.</strong> AV, EF, SLE, ARO, ALE. Expect to calculate ALE and compare security investment ROI.</li>
+          <li><strong>Know STRIDE.</strong> Be able to classify a given threat scenario into the correct STRIDE category and identify the appropriate control type.</li>
+          <li><strong>Third-party and supply chain risk.</strong> CISSP Domain 1 includes vendor risk management. Third parties are a risk vector; contracts and assessments are the primary controls.</li>
+          <li><strong>NIST RMF steps in sequence.</strong> Know what happens at each step and what the outputs are.</li>
+          <li><strong>Due care vs. due diligence.</strong> Due diligence = investigate and understand risk. Due care = act appropriately to address risk. Senior management liability flows from failure of either.</li>
+        </ul>
+
+        <div class="callout exam">
+          <div class="callout-title">CISSP — Supply Chain Risk</div>
+          <p>Third-party risk receives significant attention in CISSP Domain 1. Key controls: vendor risk assessments before onboarding, right-to-audit clauses in contracts, SLA requirements, and ongoing monitoring. The exam tests the principle that your organization is accountable for data and systems managed by vendors — you cannot outsource accountability, only the operational function.</p>
+        </div>
+
+        <h3>CCSK — Risk in the Cloud Context</h3>
+
+        <ul>
+          <li><strong>Shared responsibility determines who assesses which risks.</strong> For IaaS, the customer assesses OS, application, and data risk; CSP assesses physical, network, and hypervisor risk. For SaaS, the customer assesses data classification, access management, and usage risk; CSP assesses almost everything else. Knowing where the shared responsibility boundary sits for each service model is a CCSK core competency.</li>
+          <li><strong>The CSP's risk posture affects your residual risk.</strong> A CSP with weak security controls elevates your residual risk even if your own controls are strong. Vendor due diligence (SOC 2 Type II, ISO 27001 certification, CSA STAR) is your mechanism for assessing CSP risk posture.</li>
+          <li><strong>Cloud-specific threat vectors.</strong> Misconfiguration (the leading cause of cloud breaches), insecure APIs, insider threat at the CSP, data residency violations, and multi-tenant data bleed. Risk assessments in cloud contexts must account for these vectors in addition to traditional threats.</li>
+        </ul>
+
+        <h3>COBIT — Risk as a Governance Objective</h3>
+
+        <ul>
+          <li><strong>EDM03 is the governance objective for risk.</strong> "Ensure Risk Optimisation" — the board ensures IT risk stays within enterprise risk appetite.</li>
+          <li><strong>APO12 is the management process.</strong> "Managed Risk" — operational risk identification, assessment, treatment, and monitoring.</li>
+          <li><strong>Risk optimization is a governance goal.</strong> COBIT doesn't ask "how do you eliminate risk?" It asks "how do you ensure risk is optimized relative to appetite and capacity?"</li>
+          <li><strong>KRIs (Key Risk Indicators) in MEA domain.</strong> The MEA domain measures whether the risk management objectives are being achieved. KRIs are the metrics that indicate when risk thresholds are being approached or exceeded.</li>
+        </ul>
+
+        <div class="callout tip">
+          <div class="callout-title">Final Cross-Cert Summary</div>
+          <p><strong>CISM:</strong> Risk is a business decision; governance requires documented acceptance above tolerance. <strong>CISSP:</strong> Risk analysis uses ALE math; STRIDE classifies threats; NIST RMF structures the process. <strong>CCSK:</strong> Shared responsibility divides risk ownership; cloud-specific vectors (misconfiguration, insecure APIs) dominate. <strong>COBIT:</strong> EDM03 governs risk; APO12 manages it; MEA measures it.</p>
+        </div>
+
+      </div><!-- .study-content -->
+    </div><!-- .main-content -->
+
+    <div class="sidebar">
+      <div class="sidebar-toggle">On This Page</div>
+      <div class="sidebar-content">
+        <div class="card">
+          <h4>Sections</h4>
+          <ul>
+            <li><a href="#risk-equation">The Universal Risk Equation</a></li>
+            <li><a href="#terminology">Terminology Rosetta Stone</a></li>
+            <li><a href="#erm">ERM Integration</a></li>
+            <li><a href="#quantitative">Quantitative Analysis</a></li>
+            <li><a href="#qualitative">Qualitative Assessment</a></li>
+            <li><a href="#risk-treatment">Risk Treatment (4 options)</a></li>
+            <li><a href="#risk-register">Risk Register</a></li>
+            <li><a href="#threat-modeling">Threat Modeling / STRIDE</a></li>
+            <li><a href="#frameworks">Frameworks Comparison</a></li>
+            <li><a href="#exam-distinctions">Exam Distinctions</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Key Formulas</h4>
+          <ul>
+            <li>SLE = AV × EF</li>
+            <li>ALE = SLE × ARO</li>
+            <li>Control ROI = ALE<sub>before</sub> − ALE<sub>after</sub> − Cost</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>STRIDE</h4>
+          <ul>
+            <li>Spoofing → Auth</li>
+            <li>Tampering → Integrity</li>
+            <li>Repudiation → Non-repudiation</li>
+            <li>Info Disclosure → Confidentiality</li>
+            <li>Denial of Service → Availability</li>
+            <li>Elevation of Privilege → Authz</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Treatment Options</h4>
+          <ul>
+            <li>Avoid — eliminate activity</li>
+            <li>Transfer — insurance / contract</li>
+            <li>Mitigate — apply controls</li>
+            <li>Accept — document &amp; approve</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Links In</h4>
+          <ul>
+            <li><a href="../cism/domain2/index.html">CISM Domain 2</a></li>
+            <li><a href="../cissp/domain1/index.html">CISSP Domain 1</a></li>
+            <li><a href="../ccsk/index.html">CCSK</a></li>
+            <li><a href="../cobit/index.html">COBIT</a></li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- .sidebar -->
+
+  </div><!-- .layout-sidebar -->
+
+</div><!-- .container -->
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; Shared Reference &nbsp;·&nbsp; Risk Management Core Concepts
+</footer>
+
+<script src="../assets/js/db.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

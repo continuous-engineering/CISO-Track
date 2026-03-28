@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Security Specialty — SCS-C02</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body data-topic-id="aws-security/overview" data-expected-mins="35">
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+    <li><a href="../aws-security/index.html" class="active">AWS Sec</a></li>
+    <li><a href="../azure-security/index.html">AZ-500</a></li>
+    <li><a href="../gcp-security/index.html">GCP Sec</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span style="color:var(--accent3);">AWS</span> Certified Security — Specialty (SCS-C02)</h1>
+    <p>Amazon Web Services &nbsp;·&nbsp; 65 questions &nbsp;·&nbsp; 170 minutes &nbsp;·&nbsp; ~75% passing</p>
+  </div>
+
+  <div id="read-badge"></div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <!-- ============================================================
+             OVERVIEW
+             ============================================================ -->
+        <h2>What Is the AWS Security Specialty</h2>
+
+        <p>The AWS Certified Security — Specialty (SCS-C02) is Amazon's highest-level security certification. Unlike the AWS Solutions Architect or Developer associate exams, this is a specialty credential — meaning it assumes you already understand AWS fundamentals and tests security-specific services, configurations, and architectures at significant depth. AWS does not require you to hold any other certification first, but in practice it is a brutal exam if you approach it without solid AWS foundations.</p>
+
+        <p>For a CISM or CISSP holder, the strategic framing of this exam will feel familiar: it is heavily scenario-based, asks you to select the most secure and operationally appropriate solution, and frequently tests your ability to distinguish between services that overlap in purpose. The technical depth required is specific to the AWS service catalog — not cloud security theory in general, but what GuardDuty does versus what Inspector does versus what Security Hub does, and in which scenario you reach for which tool.</p>
+
+        <p>This is the right cloud security specialty to hold if your clients run predominantly on AWS. It signals not just that you understand cloud security concepts but that you can design and evaluate AWS-native security architectures.</p>
+
+        <table>
+          <tr><th>Element</th><th>Detail</th></tr>
+          <tr><td>Questions</td><td>65 (scenario-based multiple choice and multiple-response)</td></tr>
+          <tr><td>Time</td><td>170 minutes</td></tr>
+          <tr><td>Passing score</td><td>~75% (scaled score, AWS does not publish exact threshold)</td></tr>
+          <tr><td>Delivery</td><td>Pearson VUE or PSI test centers; remote proctored available</td></tr>
+          <tr><td>Price</td><td>$300 USD</td></tr>
+          <tr><td>Prerequisites</td><td>Recommended: 5+ years IT security, 2+ years hands-on AWS</td></tr>
+          <tr><td>Renewal</td><td>Every 3 years (recertification exam or continuing education)</td></tr>
+        </table>
+
+        <h2>Domain Breakdown</h2>
+
+        <table>
+          <tr><th>Domain</th><th>Topic</th><th>Weight</th><th>Questions (approx)</th></tr>
+          <tr><td>1</td><td>Threat Detection and Incident Response</td><td>14%</td><td>~9</td></tr>
+          <tr><td>2</td><td>Security Logging and Monitoring</td><td>18%</td><td>~12</td></tr>
+          <tr><td>3</td><td>Infrastructure Security</td><td>20%</td><td>~13</td></tr>
+          <tr><td>4</td><td>Identity and Access Management</td><td>16%</td><td>~10</td></tr>
+          <tr><td>5</td><td>Data Protection</td><td>18%</td><td>~12</td></tr>
+          <tr><td>6</td><td>Management and Security Governance</td><td>14%</td><td>~9</td></tr>
+        </table>
+
+        <div class="callout exam">
+          <div class="callout-title">Weight Distribution Strategy</div>
+          <p>Domains 2, 3, and 5 together represent 56% of the exam. Infrastructure Security (20%) is the largest single domain. Master the logging stack (CloudTrail, VPC Flow Logs, CloudWatch) and data protection services (KMS, Macie, S3 security) before drilling the others. Domain 1 and Domain 6 are smaller but test high-level thinking that CISM/CISSP holders will find intuitive.</p>
+        </div>
+
+        <!-- ============================================================
+             DOMAIN 1 — THREAT DETECTION
+             ============================================================ -->
+        <h2>Domain 1 — Threat Detection and Incident Response (14%)</h2>
+
+        <p>This domain tests your ability to detect security threats in an AWS environment and respond to them programmatically. The exam does not ask how to run an IR playbook generically — it asks which AWS services you use and how you configure them to automate detection and response.</p>
+
+        <h3>AWS GuardDuty</h3>
+
+        <p>GuardDuty is AWS's managed threat detection service. It ingests VPC Flow Logs, DNS logs, CloudTrail management events, and CloudTrail S3 data events, then applies machine learning and threat intelligence to produce findings. You do not need to configure log routing yourself — GuardDuty handles ingestion internally.</p>
+
+        <p>Findings are organized into three categories. Recon findings indicate reconnaissance activity such as port scanning or credential enumeration. Instance compromise findings cover things like cryptocurrency mining, malware activity, or communication with known command-and-control infrastructure. Account compromise findings cover unusual API calls, root credential use, or activity from a known malicious IP address range.</p>
+
+        <p>The exam will ask how to respond to GuardDuty findings. The correct pattern is EventBridge (formerly CloudWatch Events) → Lambda: GuardDuty publishes findings to EventBridge, you create a rule that triggers a Lambda function to take automated remediation action — isolate an instance, revoke credentials, block an IP in a NACL, or create a security hub finding. Know this pattern cold.</p>
+
+        <h3>AWS Security Hub</h3>
+
+        <p>Security Hub is an aggregation and normalization layer. It receives findings from GuardDuty, Amazon Inspector, Amazon Macie, AWS Config, IAM Access Analyzer, and third-party tools, normalizes them into the AWS Security Finding Format (ASFF), and provides a single pane of glass for your security posture. Security Hub also runs compliance standard checks — AWS Foundational Security Best Practices, CIS AWS Foundations Benchmark, and PCI DSS — and produces a compliance score.</p>
+
+        <p>The exam distinction: GuardDuty detects threats in activity. Security Hub aggregates findings from multiple sources and evaluates compliance standards. They are complementary, not alternatives.</p>
+
+        <h3>Amazon Detective</h3>
+
+        <p>Detective is the investigation service. When GuardDuty raises a finding, Detective provides the graph-based analysis to investigate it — visualizing resource relationships, activity timelines, and behavioral baselines. It ingests VPC Flow Logs, CloudTrail, and GuardDuty findings to build a multi-week behavioral baseline. The exam tests when to use Detective (post-detection investigation) versus GuardDuty (detection) versus Security Hub (aggregation).</p>
+
+        <h3>Incident Response in AWS</h3>
+
+        <p>AWS-native IR follows the pattern: detect → enrich → contain → eradicate → recover. Detection comes from GuardDuty or CloudTrail alerts. Enrichment uses Detective. Containment uses Lambda-triggered automation: quarantine security groups (remove all inbound/outbound rules or apply a deny-all group), revoke IAM role sessions, or stop an instance. The key AWS mechanism is EventBridge rules triggering Lambda — this is the automated playbook model AWS expects you to know.</p>
+
+        <h3>AWS Config and Automated Remediation</h3>
+
+        <p>AWS Config continuously records the configuration state of AWS resources and evaluates them against Config Rules. Rules can be AWS managed (pre-built: s3-bucket-public-read-prohibited, restricted-ssh, mfa-enabled-for-iam-console-access) or custom Lambda-based. When a resource is non-compliant, Config can trigger automatic remediation via SSM Automation documents. Config is not a threat detection service — it detects configuration drift and compliance violations. The exam frequently tests Config for compliance posture scenarios.</p>
+
+        <h3>Forensic Acquisition in AWS</h3>
+
+        <p>When you need to perform forensic analysis on a compromised EC2 instance, the AWS procedure is: isolate the instance (modify security group, remove from load balancer), take an EBS snapshot of all attached volumes, preserve VPC Flow Logs for the relevant time window, optionally capture memory using the SSM agent or a pre-installed tool. The snapshot is then attached to a forensic analysis instance in an isolated VPC. Do not terminate the original instance until analysis is complete. This sequence is tested as a scenario question.</p>
+
+        <!-- ============================================================
+             DOMAIN 2 — LOGGING AND MONITORING
+             ============================================================ -->
+        <h2>Domain 2 — Security Logging and Monitoring (18%)</h2>
+
+        <p>The logging domain is one of the most heavily tested areas because AWS provides multiple overlapping logging services and the exam wants you to know exactly what each captures, where it goes, and how to query it.</p>
+
+        <h3>AWS CloudTrail</h3>
+
+        <p>CloudTrail logs every AWS API call — who called it, from where, when, with what parameters, and what the response was. This is your primary audit and investigation tool. Key facts: CloudTrail logs management events by default; data events (S3 object-level, Lambda invocation) are opt-in and incur additional cost. CloudTrail delivers logs to S3 and optionally to CloudWatch Logs.</p>
+
+        <p>Trail types matter for the exam. A single-region trail covers one region. A multi-region trail (the recommended configuration) covers all regions and puts all logs in one S3 bucket. An organization trail, created in the management account, captures CloudTrail events from all member accounts in an AWS Organization — this is the recommended multi-account pattern.</p>
+
+        <p>Log file integrity validation uses SHA-256 to create a hash chain of log files, so you can detect if any log was tampered with after delivery. This is the answer to "how do you ensure CloudTrail logs haven't been modified." CloudTrail Lake is the newer managed analytics capability — it ingests events into an event data store, allows SQL querying without sending logs to S3 first, and is tested as an alternative to the S3+Athena pattern.</p>
+
+        <h3>Amazon CloudWatch</h3>
+
+        <p>CloudWatch is the operational metrics and log aggregation platform. CloudWatch Logs receives log streams from EC2 (via the CloudWatch agent), Lambda, VPC Flow Logs, CloudTrail (when configured), and application logs. CloudWatch Logs Insights provides a query language for log analysis. CloudWatch Alarms trigger on metric thresholds — including custom metrics published by applications. For security purposes: create metric filters on CloudTrail logs to alarm on root login, unauthorized API calls, MFA deletion, and security group changes.</p>
+
+        <h3>VPC Flow Logs</h3>
+
+        <p>VPC Flow Logs capture network flow information at the VPC, subnet, or ENI level. They record: source IP, destination IP, source port, destination port, protocol, packets, bytes, action (ACCEPT or REJECT), and status. They do not capture the actual packet payload. Flow logs go to CloudWatch Logs or S3. For analysis at scale, the pattern is S3 + Athena — partition the flow log bucket by date and query with SQL. The exam tests the difference between flow logs (network metadata) and CloudTrail (API calls), and asks you to use Athena to analyze flow logs when the question involves network traffic investigation at scale.</p>
+
+        <h3>S3 Server Access Logging vs. CloudTrail Data Events</h3>
+
+        <p>This is a classic exam distinction. S3 server access logs capture HTTP-level access requests in an S3-native format, delivered to another S3 bucket, with best-effort delivery. CloudTrail S3 data events capture the same object-level operations but as API calls in CloudTrail format, delivered reliably to S3 or CloudWatch Logs. For compliance and forensics, use CloudTrail data events. For HTTP-level analysis (user agent, referrer), server access logs may provide additional context.</p>
+
+        <h3>AWS WAF Logging</h3>
+
+        <p>AWS WAF can log all web requests to S3, CloudWatch Logs, or Kinesis Data Firehose. Logging captures the full request — IP, URI, headers, body (truncated), which rules matched, and whether the request was allowed or blocked. WAF logs are critical for tuning rules and investigating attack patterns.</p>
+
+        <h3>Log Centralization and Tamper Prevention</h3>
+
+        <p>The multi-account logging architecture uses a dedicated log archive account. Each account's CloudTrail (and optionally VPC Flow Logs, Config) ships to an S3 bucket in the log archive account. The bucket policy in the log archive account allows the source accounts to write but not read or delete. S3 Object Lock in Compliance mode prevents any user — including root — from deleting logs before the retention period expires. This architecture ensures logs survive even a full account compromise in a workload account.</p>
+
+        <!-- ============================================================
+             DOMAIN 3 — INFRASTRUCTURE SECURITY
+             ============================================================ -->
+        <h2>Domain 3 — Infrastructure Security (20%)</h2>
+
+        <p>The largest domain covers how you secure the AWS network perimeter, compute resources, and the interconnections between them. This is where the most common exam traps live.</p>
+
+        <h3>Security Groups vs. NACLs</h3>
+
+        <p>This distinction is tested on almost every AWS security exam. Security groups are stateful firewalls that operate at the instance (ENI) level. Stateful means return traffic is automatically allowed — you only write inbound rules. NACLs are stateless firewalls that operate at the subnet level. Stateless means you must explicitly write both inbound and outbound rules, including ephemeral port ranges for return traffic (1024–65535). Security groups default deny with explicit allows. NACLs default allow with numbered rules evaluated in order, and a final explicit deny-all rule that you add. For blocking a specific IP address, use a NACL (security groups cannot explicitly deny).</p>
+
+        <h3>AWS WAF</h3>
+
+        <p>WAF is a Layer 7 web application firewall deployed in front of CloudFront, Application Load Balancers, API Gateway, or AppSync. WAF rules evaluate HTTP request components (URI, headers, body, query string, IP origin). Rule types: IP match rules, geo-match rules, regex pattern rules, managed rule groups (AWS Managed Rules, AWS Marketplace rules), and rate-based rules for throttling. WAF protects against OWASP Top 10 attacks including SQLi, XSS, and path traversal via the AWS Managed Rules — Core Rule Set. The exam asks which attacks WAF prevents and distinguishes WAF (web request filtering) from Shield (DDoS volume mitigation) and GuardDuty (threat detection in account activity).</p>
+
+        <h3>AWS Shield</h3>
+
+        <p>Shield Standard is free and automatically applied to all AWS accounts. It protects against common layer 3/4 DDoS attacks (SYN floods, UDP reflection) with no configuration required. Shield Advanced is a paid service ($3,000/month minimum) that adds sophisticated layer 7 DDoS mitigation, 24/7 access to the AWS DDoS Response Team (DRT), real-time attack visibility via CloudWatch metrics, and financial protection — AWS will credit you for scaling costs incurred due to a DDoS attack. Shield Advanced integrates with WAF to automate layer 7 attack response. Know when to recommend Advanced versus Standard: any internet-facing application with an SLA requirement needs Advanced.</p>
+
+        <h3>AWS Firewall Manager</h3>
+
+        <p>Firewall Manager provides centralized management of WAF rules, Shield Advanced protections, VPC security groups, and Network Firewall policies across accounts in an AWS Organization. It enforces security baselines — if you add a new account to the org, Firewall Manager automatically applies the baseline WAF rules to its ALBs. This is the governance-layer answer for WAF/security group management at scale.</p>
+
+        <h3>Amazon Inspector</h3>
+
+        <p>Inspector performs automated vulnerability assessment of EC2 instances and container images in ECR. For EC2, Inspector uses the SSM agent to collect software inventory and check against CVE databases. For containers, Inspector scans images at push. Findings are prioritized by CVSS score, contextualized by network reachability (a critical CVE on an instance that's not internet-accessible is lower priority than the same CVE on an internet-facing instance). Inspector findings feed into Security Hub. The exam distinguishes Inspector (vulnerability scanning) from GuardDuty (behavioral threat detection).</p>
+
+        <h3>AWS Systems Manager</h3>
+
+        <p>SSM is the operational management service with major security implications. Session Manager provides browser-based SSH/RDP access to EC2 instances without opening port 22 or 3389, without requiring a bastion host, and with full session logging to S3 and CloudWatch Logs. Patch Manager automates OS patching across your fleet with configurable patch baselines and maintenance windows. Parameter Store stores configuration data and secrets (Standard tier: free, no encryption required; Advanced tier: supports parameter policies like expiration). The exam frequently tests Session Manager as the preferred alternative to bastion hosts — it eliminates the attack surface of an internet-facing jump box.</p>
+
+        <h3>Network Segmentation and VPC Architecture</h3>
+
+        <p>Standard AWS security architecture: public subnets hold load balancers and NAT gateways; private subnets hold application and database tiers. Internet-facing resources in public subnets have public IPs or Elastic IPs; private resources route outbound through NAT gateway, never inbound. VPC endpoints (gateway type for S3 and DynamoDB, interface type for all other services) keep traffic to AWS services on the AWS network backbone rather than traversing the internet, and enable bucket policies that restrict access to traffic from specific VPC endpoints.</p>
+
+        <h3>Transit Gateway</h3>
+
+        <p>Transit Gateway is a regional network hub that connects VPCs and on-premises networks through a single managed gateway. Security considerations: use route table segmentation on the Transit Gateway to prevent direct routing between VPCs that should not communicate (e.g., a development VPC should not have a route to the production database VPC). The exam tests Transit Gateway as the scalable alternative to full-mesh VPC peering.</p>
+
+        <h3>AWS PrivateLink</h3>
+
+        <p>PrivateLink provides private connectivity to AWS services, AWS Marketplace services, and your own services exposed as VPC endpoint services. Traffic never traverses the public internet. It is the preferred connectivity model for any service-to-service communication that can be exposed as a VPC endpoint, and it replaces the need for VPC peering or NAT gateway for AWS service access in high-security environments.</p>
+
+        <!-- ============================================================
+             DOMAIN 4 — IAM
+             ============================================================ -->
+        <h2>Domain 4 — Identity and Access Management (16%)</h2>
+
+        <p>IAM is the access control backbone of AWS. The exam tests both the mechanics (how policies work) and the architecture (how to design multi-account access control correctly).</p>
+
+        <h3>IAM Policy Types and Evaluation Logic</h3>
+
+        <p>Identity-based policies attach to IAM users, groups, or roles. Resource-based policies attach to resources (S3 bucket policies, KMS key policies, SQS queue policies, Lambda resource policies). The policy evaluation logic: an explicit Deny anywhere overrides any Allow. If there is no explicit Allow, the default is Deny. For cross-account access, both the identity-based policy on the calling entity and the resource-based policy on the target resource must allow the action. Know this evaluation order: explicit deny → org SCPs → resource-based policies → identity-based policies → session policies → permission boundaries.</p>
+
+        <h3>IAM Roles</h3>
+
+        <p>Roles are the correct way to grant permissions to AWS services and cross-account access. EC2 instance roles eliminate the need to store access keys on instances — the metadata service provides temporary credentials via the instance profile. Lambda execution roles define what the Lambda function can do. Cross-account roles: account A trusts account B to assume a role, account B's users/roles assume that role using STS AssumeRole. Service-linked roles are predefined roles that AWS services manage — you cannot edit their trust policy.</p>
+
+        <h3>AWS Organizations and SCPs</h3>
+
+        <p>Service Control Policies are policy guardrails applied at the organization, OU, or account level. Critical exam concept: SCPs do not grant permissions — they restrict what IAM policies in the member account can allow. Even an account's root user is subject to SCPs. A common SCP pattern: deny all actions except those in a specific list of approved services (whitelist model), or deny specific dangerous actions (deny root user activity, deny disabling CloudTrail, deny leaving the organization, deny creating IAM users — force use of SSO). SCPs work alongside IAM policies — both must allow an action for it to succeed.</p>
+
+        <h3>AWS IAM Identity Center</h3>
+
+        <p>IAM Identity Center (formerly AWS SSO) provides centralized access management for all accounts in an AWS Organization. Users authenticate through a configured identity source (built-in directory, Active Directory, or external IdP), then get just-in-time access to accounts through permission sets. A permission set is a bundle of IAM policies applied when a user accesses an account. This is the recommended model for human access to AWS accounts — not IAM users with long-term credentials.</p>
+
+        <h3>AWS STS and Temporary Credentials</h3>
+
+        <p>STS generates temporary security credentials (access key ID, secret access key, session token) with a configurable duration. AssumeRole is the primary STS action for cross-account access and for applications that need to operate with different permissions. AssumeRoleWithWebIdentity enables federation with OIDC-compatible IdPs (useful for web applications and Kubernetes workloads). AssumeRoleWithSAML enables federation with SAML 2.0 IdPs. Temporary credentials expire automatically — no manual rotation needed.</p>
+
+        <h3>Attribute-Based Access Control (ABAC)</h3>
+
+        <p>ABAC in AWS uses IAM tags on both resources and principals (users, roles) as policy conditions. Example: a policy that allows an action only if the principal's Team tag matches the resource's Team tag. This scales better than traditional RBAC because you do not need to create a new policy for each new resource — you just tag both the principal and the resource correctly.</p>
+
+        <h3>Secrets Manager vs. Parameter Store</h3>
+
+        <p>Both store secrets. AWS Secrets Manager supports automatic secret rotation (built-in Lambda functions for RDS, Redshift, DocumentDB, and custom rotation functions for anything else), costs $0.40/secret/month. Parameter Store SecureString stores secrets encrypted with KMS at lower cost, but automatic rotation requires custom implementation. The exam answer: use Secrets Manager when you need automatic rotation; use Parameter Store for application configuration and non-sensitive parameters or when cost optimization matters.</p>
+
+        <h3>IAM Access Analyzer and Least Privilege</h3>
+
+        <p>IAM Access Analyzer identifies resource-based policies that grant access to external principals (outside your account or org) — S3 buckets, KMS keys, Lambda functions, SQS queues, etc. It is the automated tool for finding unintended public or cross-account exposure. IAM Access Advisor (separate from Analyzer) shows when services were last accessed by an IAM entity, enabling you to prune permissions. Permission boundaries set the maximum permissions an IAM entity can have, regardless of what is attached — useful for delegating IAM administration without allowing privilege escalation.</p>
+
+        <!-- ============================================================
+             DOMAIN 5 — DATA PROTECTION
+             ============================================================ -->
+        <h2>Domain 5 — Data Protection (18%)</h2>
+
+        <p>This domain covers encryption — at rest and in transit — across the major AWS storage and database services. KMS is the center of gravity for this domain.</p>
+
+        <h3>AWS KMS</h3>
+
+        <p>KMS manages cryptographic keys for encryption of AWS service data. Key types: AWS managed keys (created and managed by AWS, one per service per region, no cost for key storage, cannot customize key policy), customer managed keys (you create and manage, $1/month/key, fully customizable key policies, support key rotation configuration), and customer provided keys (you import key material — useful for regulatory requirements to control key origin). Envelope encryption is the core pattern: KMS generates a data encryption key (DEK) that encrypts your data; the DEK itself is encrypted by the KMS key (key encryption key). The encrypted DEK travels with the data; you call KMS to decrypt the DEK when you need to decrypt data.</p>
+
+        <p>Key rotation: AWS managed keys rotate automatically every year. Customer managed keys: you can enable automatic annual rotation. Key policies define who can use and administer the key — this is separate from IAM policies. Both the key policy and the IAM policy must allow an action for it to succeed (unless the key policy explicitly gives IAM full authority, which is the default for new CMKs).</p>
+
+        <h3>AWS CloudHSM</h3>
+
+        <p>CloudHSM provides dedicated hardware security modules inside AWS, running in your VPC. FIPS 140-2 Level 3 validated (KMS is Level 2 for most operations). You manage the keys — AWS has no access to the key material. Use CloudHSM when: regulations require FIPS 140-2 Level 3 (certain US government requirements), you need to use asymmetric keys with custom cryptographic applications, or you need custom key management workflows that KMS doesn't support. The exam makes this distinction explicit — most workloads use KMS; CloudHSM is for specific compliance requirements or dedicated HSM needs.</p>
+
+        <h3>S3 Security</h3>
+
+        <p>Layers of S3 access control: IAM policies govern what your principals can do. Bucket policies are resource-based policies on the bucket, usable for cross-account grants and public access (though public access should be blocked). ACLs are a legacy mechanism — AWS now recommends disabling them and using bucket policies for all access control. Block Public Access is a four-setting configuration that overrides bucket policies and ACLs to prevent public access — enable it at the account level to enforce across all buckets.</p>
+
+        <p>S3 encryption options: SSE-S3 uses AES-256 with keys managed entirely by S3 (no KMS cost, no additional latency). SSE-KMS uses CMKs for per-object encryption with key policy control and CloudTrail audit trail of key usage. SSE-C uses customer-provided keys that you send with every request (you manage key storage outside AWS). Client-side encryption encrypts before sending to S3. Presigned URLs grant time-limited access to specific objects without requiring AWS credentials — the generating principal's permissions are checked at generation time.</p>
+
+        <p>S3 Object Lock enforces WORM (write once, read many) retention. Governance mode allows root or users with bypass permissions to delete; Compliance mode prevents any deletion including by root before the retention period expires. MFA Delete requires MFA authentication to delete object versions or disable versioning — requires root credentials to enable.</p>
+
+        <h3>Amazon Macie</h3>
+
+        <p>Macie is a managed sensitive data discovery service for S3. It uses machine learning to identify PII (names, SSNs, credit card numbers, passport numbers), financial data, credentials, and other sensitive content. Macie produces findings with severity levels and integrates with Security Hub. Use Macie when you need to know what sensitive data exists in your S3 buckets — essential for GDPR, HIPAA, and PCI scope assessments. The exam asks when to use Macie versus KMS (Macie discovers what sensitive data exists; KMS protects data you already know about).</p>
+
+        <h3>AWS Certificate Manager</h3>
+
+        <p>ACM manages SSL/TLS certificates for AWS services. Public certificates issued by ACM are free. ACM auto-renews certificates it has issued. Certificates can be deployed on CloudFront distributions, ALBs, API Gateway, and other AWS services — but cannot be exported for use on EC2 or on-premises (use ACM Private CA or an external CA for that). ACM Private CA issues private certificates for internal services. The exam tests ACM integration with CloudFront (certificate must be in us-east-1) and the auto-renewal behavior.</p>
+
+        <h3>RDS Encryption</h3>
+
+        <p>RDS encryption at rest: enabled at instance creation using KMS (cannot be enabled after creation on an existing unencrypted instance — you must create a snapshot, encrypt the snapshot, restore to a new encrypted instance). Encryption covers the DB instance, automated backups, read replicas, and snapshots. Encryption in transit: use the SSL/TLS endpoint with certificate verification. Read replicas of encrypted instances are automatically encrypted. Cross-region read replicas use the KMS key of the destination region.</p>
+
+        <!-- ============================================================
+             DOMAIN 6 — GOVERNANCE
+             ============================================================ -->
+        <h2>Domain 6 — Management and Security Governance (14%)</h2>
+
+        <p>This domain maps most directly to your CISM background. It covers multi-account strategy, governance guardrails, compliance frameworks, and the shared responsibility model.</p>
+
+        <h3>Multi-Account Strategy</h3>
+
+        <p>The AWS recommended multi-account architecture separates workloads by account for blast-radius containment and policy boundaries. Core accounts in the recommended structure: management account (only for org management, no workloads), security tooling account (GuardDuty delegated admin, Security Hub delegated admin, security tooling), log archive account (central S3 bucket for all CloudTrail and Config logs), and workload accounts (dev, staging, prod — one or more per workload). This architecture ensures that compromising a workload account does not expose logs or security tools.</p>
+
+        <h3>SCPs as Guardrails</h3>
+
+        <p>Common SCP patterns tested on the exam: deny the ability to disable CloudTrail (prevent IR data destruction), deny root user API activity (enforce use of IAM users/roles), require MFA for all console access, restrict deployments to approved AWS regions (data residency), deny creating internet gateways in specific OUs (prevent internet exposure in isolated environments), and deny leaving the organization (prevent account hijacking).</p>
+
+        <h3>AWS Control Tower</h3>
+
+        <p>Control Tower is the landing zone automation service. It provisions a multi-account structure with the management account, log archive account, and audit account, sets up GuardDuty, Security Hub, and Config across all accounts, and enforces baseline guardrails. Preventive guardrails are implemented as SCPs. Detective guardrails are implemented as Config Rules. Control Tower Account Factory creates new accounts with the baseline already applied. The exam tests Control Tower as the recommended mechanism for setting up a new AWS organization, not manual SCP creation.</p>
+
+        <h3>Security Hub Standards and Compliance Scores</h3>
+
+        <p>Security Hub implements automated compliance checks against three standards: AWS Foundational Security Best Practices (FSBP), CIS AWS Foundations Benchmark, and PCI DSS. Each check produces a pass/fail finding that contributes to the overall compliance score. Security Hub aggregates findings from all enabled accounts in the organization (when delegated admin is configured) into a single view. The compliance score is a percentage of passed controls — useful for board-level security posture reporting.</p>
+
+        <h3>AWS Artifact</h3>
+
+        <p>AWS Artifact is the compliance document portal. It provides on-demand access to AWS compliance reports including SOC 1, SOC 2, SOC 3, ISO 27001, ISO 27017, ISO 27018, PCI DSS Attestation of Compliance, FedRAMP, HIPAA, and others. As a CISO, you will use Artifact to obtain AWS's compliance documentation for your own audit responses and third-party risk assessments. The exam tests that customers can access these reports through Artifact and that they document AWS's responsibilities under the shared responsibility model.</p>
+
+        <h3>Shared Responsibility Model</h3>
+
+        <p>The shared responsibility model is explicitly tested in Domain 6 at the service level, not just generically. AWS is responsible for: physical infrastructure, hypervisor, managed service software, global network. Customer is responsible for: IAM configuration, data encryption, OS patching (for EC2/self-managed), application security, network configuration. The per-service breakdown matters: for RDS, AWS manages the database engine patching; customer manages the data, access controls, and TLS configuration. For Lambda, AWS manages the underlying compute and OS; customer manages the function code and execution role permissions. The exam will give you a specific scenario and ask who is responsible for which aspect.</p>
+
+        <!-- ============================================================
+             EXAM STRATEGY
+             ============================================================ -->
+        <h2>Exam Strategy for SCS-C02</h2>
+
+        <p>This is a specialty exam — it assumes fluency with AWS and tests security-specific depth. Every question will present a scenario with a security requirement, and you must select the most appropriate AWS service or configuration. The traps are in services that overlap in purpose.</p>
+
+        <table>
+          <tr><th>Confusion Pair</th><th>Correct Distinction</th></tr>
+          <tr><td>GuardDuty vs. Inspector</td><td>GuardDuty detects threats in runtime behavior and API activity. Inspector scans for vulnerabilities in software inventory.</td></tr>
+          <tr><td>GuardDuty vs. WAF vs. Shield</td><td>GuardDuty detects; WAF filters web requests at Layer 7; Shield mitigates volumetric DDoS.</td></tr>
+          <tr><td>Security groups vs. NACLs</td><td>SGs are stateful, instance-level. NACLs are stateless, subnet-level. Use NACLs to explicitly block IPs.</td></tr>
+          <tr><td>KMS vs. CloudHSM</td><td>KMS for most cases; CloudHSM when you need dedicated hardware or FIPS 140-2 Level 3.</td></tr>
+          <tr><td>Secrets Manager vs. Parameter Store</td><td>Secrets Manager has built-in rotation; Parameter Store is lower cost for non-rotated config data.</td></tr>
+          <tr><td>SCPs vs. IAM policies</td><td>SCPs restrict maximum permissions — they do not grant. Both SCP and IAM must allow for access to succeed.</td></tr>
+          <tr><td>CloudTrail vs. VPC Flow Logs</td><td>CloudTrail = API call audit trail. VPC Flow Logs = network flow metadata (IP, port, accept/reject).</td></tr>
+          <tr><td>Macie vs. KMS</td><td>Macie discovers sensitive data in S3. KMS protects data you've already decided to encrypt.</td></tr>
+        </table>
+
+        <div class="callout warning">
+          <div class="callout-title">CISM/CISSP Advantage and Blind Spots</div>
+          <p>Your governance background helps on Domain 6 and any question framed around "which approach best aligns with the principle of least privilege" or "which control supports audit requirements." Your blind spot will be the AWS-specific service mechanics — the difference between CloudTrail management events vs. data events, how KMS envelope encryption works, or the specific VPC Flow Log field order. Those require deliberate study of AWS documentation, not just security theory.</p>
+        </div>
+
+        <div class="callout tip">
+          <div class="callout-title">Preparation Resources</div>
+          <p>AWS Skill Builder (official practice exams), Stephane Maarek's Udemy SCS-C02 course, Jon Bonso practice exams (TutorialsDojo). Read the AWS Security Blog for real-world application of services. Run through the AWS Well-Architected Security Pillar whitepaper once. Budget 60–80 hours of study for someone with strong CISM/CISSP background but limited hands-on AWS.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <h4>Domains</h4>
+        <ul>
+          <li>1 — Threat Detection (14%)</li>
+          <li>2 — Logging &amp; Monitoring (18%)</li>
+          <li>3 — Infrastructure Security (20%)</li>
+          <li>4 — IAM (16%)</li>
+          <li>5 — Data Protection (18%)</li>
+          <li>6 — Governance (14%)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Quick Reference</h4>
+        <ul>
+          <li>65 questions</li>
+          <li>170 minutes</li>
+          <li>~75% to pass</li>
+          <li>Specialty level</li>
+          <li>3-year renewal</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Core Services</h4>
+        <ul>
+          <li>GuardDuty</li>
+          <li>Security Hub</li>
+          <li>CloudTrail</li>
+          <li>KMS + CloudHSM</li>
+          <li>IAM + Organizations</li>
+          <li>WAF + Shield</li>
+          <li>Config + Inspector</li>
+          <li>Macie</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Key Distinctions</h4>
+        <ul>
+          <li>SGs = stateful, ENI-level</li>
+          <li>NACLs = stateless, subnet</li>
+          <li>SCPs restrict, not grant</li>
+          <li>GuardDuty = detect</li>
+          <li>Inspector = vuln scan</li>
+          <li>Macie = data discovery</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="reading-intel"></div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; Personal Study System &nbsp;·&nbsp; Started March 28, 2026
+</footer>
+
+<script src="../assets/js/db.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>

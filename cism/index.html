@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CISM Overview — CISO Cert Track</title>
 <link rel="stylesheet" href="../assets/css/style.css">
+<script src="../assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
 </head>
 <body>
 
@@ -29,10 +37,10 @@
 
   <div class="domain-nav">
     <a href="index.html" class="active">Overview</a>
-    <a href="domain1/index.html">Domain 1: Governance</a>
-    <a href="domain2/index.html">Domain 2: Risk Management</a>
-    <a href="domain3/index.html">Domain 3: Security Program</a>
-    <a href="domain4/index.html">Domain 4: Incident Management</a>
+    <a href="domain1/index.html">Information Security Governance</a>
+    <a href="domain2/index.html">Information Risk Management</a>
+    <a href="domain3/index.html">Security Program Development</a>
+    <a href="domain4/index.html">Incident Management</a>
   </div>
 
   <div class="layout-sidebar">
@@ -176,10 +184,10 @@
       <div class="card">
         <h4>Domains</h4>
         <ul>
-          <li><a href="domain1/index.html">Domain 1 — Governance (17%)</a></li>
-          <li><a href="domain2/index.html">Domain 2 — Risk Mgmt (20%)</a></li>
-          <li><a href="domain3/index.html">Domain 3 — Program (33%)</a></li>
-          <li><a href="domain4/index.html">Domain 4 — Incidents (30%)</a></li>
+          <li><a href="domain1/index.html">Governance (17%)</a></li>
+          <li><a href="domain2/index.html">Risk Management (20%)</a></li>
+          <li><a href="domain3/index.html">Security Program (33%)</a></li>
+          <li><a href="domain4/index.html">Incident Management (30%)</a></li>
         </ul>
       </div>
       <div class="card">
@@ -212,5 +220,7 @@
 </footer>
 
 <script src="../assets/js/app.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
 </body>
 </html>

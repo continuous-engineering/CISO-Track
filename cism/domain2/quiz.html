@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain 2 Quiz — CISM</title>
+<link rel="stylesheet" href="../../assets/css/style.css">
+<script src="../../assets/js/db.js"></script>
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../../login.html'); }
+})();
+</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Dashboard</a></li>
+    <li><a href="../../schedule.html">Schedule</a></li>
+    <li><a href="../index.html" class="cism-link active">CISM</a></li>
+    <li><a href="../../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container-narrow">
+
+  <div class="hero">
+    <h1><span style="color:var(--cism);">Risk Mgmt</span> — Practice Quiz</h1>
+    <p>Information Security Risk Management · 30 questions · Target: 80%+</p>
+  </div>
+
+  <div class="domain-nav" style="margin-bottom:1.5rem;">
+    <a href="index.html">Study Guide</a>
+    <a href="flashcards.html">Flashcards</a>
+    <a href="quiz.html" class="active">Quiz</a>
+  </div>
+
+  <div class="callout info" style="margin-bottom:1.5rem;">
+    <div class="callout-title">Quiz Rules</div>
+    <p>30 CISM-style scenario questions. Select your answer, then click Submit when done. Read every explanation — even for questions you got right. Scoring below 80%? Re-read the relevant study guide sections before retrying.</p>
+  </div>
+
+  <div id="quiz-container"></div>
+
+  <div style="margin-top:2rem;display:flex;gap:1rem;">
+    <a href="flashcards.html" class="btn">← Flashcards</a>
+    <a href="../domain3/index.html" class="btn">Next: Domain 3 →</a>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CISM Domain 2 Quiz
+</footer>
+
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+<script>
+const questions = [
+  {
+    q: "A financial services company has an asset valued at $2,000,000. A ransomware attack would destroy 25% of that value. Ransomware has struck similar firms twice in the past five years. What is the Annualized Loss Expectancy (ALE)?",
+    options: [
+      "$100,000",
+      "$200,000",
+      "$500,000",
+      "$1,000,000"
+    ],
+    answer: 1,
+    explanation: "ALE = SLE × ARO. SLE = AV × EF = $2,000,000 × 0.25 = $500,000. ARO = 2 events / 5 years = 0.4. ALE = $500,000 × 0.4 = $200,000. A control costing less than $200,000 per year would be financially justified against this threat."
+  },
+  {
+    q: "An information security manager is evaluating a $75,000/year endpoint detection solution. The ALE for the endpoint threat it addresses is currently $300,000. Implementation would reduce the ALE to $50,000. What is the BEST conclusion about this investment?",
+    options: [
+      "The investment is not justified because controls should cost less than the asset value",
+      "The investment is justified because the annual control cost is less than the ALE reduction",
+      "The investment is not justified because the residual ALE still exceeds the control cost",
+      "The investment is justified only if the control eliminates the ALE entirely"
+    ],
+    answer: 1,
+    explanation: "The ALE reduction = $300,000 - $50,000 = $250,000 per year. The control costs $75,000 per year. Net benefit = $175,000 per year. The control is financially justified because the cost is less than the ALE it eliminates. Controls do not need to eliminate risk entirely to be justified — they need to deliver more value than they cost."
+  },
+  {
+    q: "A manufacturing company has identified a risk that its operational technology network could be compromised. The risk exceeds the organization's appetite, but shutting down the OT network would halt production. Which risk treatment is MOST appropriate?",
+    options: [
+      "Risk avoidance — discontinue the OT network",
+      "Risk transfer — purchase cyber insurance for OT events",
+      "Risk mitigation — implement network segmentation and monitoring controls",
+      "Risk acceptance — document the risk and take no further action"
+    ],
+    answer: 2,
+    explanation: "Since the OT network is essential to business operations, avoidance is not viable. The risk exceeds appetite, so acceptance alone is inappropriate. Insurance (transfer) shifts financial impact but doesn't reduce the likelihood of production disruption. Mitigation through segmentation and monitoring reduces both likelihood and impact while preserving operational capability."
+  },
+  {
+    q: "An information security manager discovers a legacy system cannot be patched against a known vulnerability due to vendor support constraints. The system processes critical business data. What is the MOST appropriate risk treatment?",
+    options: [
+      "Accept the risk because the vendor no longer supports patches",
+      "Transfer the risk by purchasing insurance for the affected system",
+      "Implement compensating controls such as network isolation and enhanced monitoring",
+      "Avoid the risk by decommissioning the system immediately"
+    ],
+    answer: 2,
+    explanation: "When the primary control (patching) cannot be applied, compensating controls are the correct response. Isolation limits the attack surface; enhanced monitoring detects exploitation attempts. Compensating controls must be documented and approved as a formal treatment decision. Acceptance without compensating controls would be inappropriate for a high-risk, critical system."
+  },
+  {
+    q: "The board has approved an information security risk appetite statement that reads: 'We accept low risk of data breaches involving customer PII.' The CISO now needs to operationalize this. What should the CISO define next?",
+    options: [
+      "Risk capacity — the maximum breach cost the company can absorb",
+      "Risk tolerance — specific thresholds and metrics that indicate when appetite is exceeded",
+      "Risk treatment options for every identified data breach scenario",
+      "A revised risk appetite that includes quantitative ALE targets"
+    ],
+    answer: 1,
+    explanation: "Risk appetite is the high-level philosophy (board-level). Risk tolerance operationalizes it — defining specific, measurable thresholds (e.g., zero critical breaches per year; fewer than 5 minor incidents per quarter) that tell the security team when appetite is being approached or exceeded. Without tolerance thresholds, the appetite statement cannot be operationally monitored."
+  },
+  {
+    q: "Before any security controls are applied, a business process has a risk rating of 'Critical.' After implementing a suite of preventive and detective controls, the risk is reduced to 'Medium.' Which terms BEST describe these two risk states?",
+    options: [
+      "Gross risk and net risk",
+      "Inherent risk and residual risk",
+      "Untreated risk and accepted risk",
+      "Strategic risk and operational risk"
+    ],
+    answer: 1,
+    explanation: "Inherent risk is the risk level before controls — the raw, unmitigated exposure (Critical). Residual risk is what remains after controls are applied (Medium). CISM uses inherent and residual risk to frame risk treatment discussions and to demonstrate control value. Gross/net is financial accounting terminology, not CISM risk terminology."
+  },
+  {
+    q: "An information security manager is formally accepting a medium-rated risk on behalf of the organization. What is required to make this acceptance valid under sound risk management principles?",
+    options: [
+      "The CISO verbally agrees to accept the risk at a management meeting",
+      "The risk is documented and accepted by an authority commensurate with the risk level",
+      "The risk is added to the risk register without further review",
+      "The department manager acknowledges the risk in an email"
+    ],
+    answer: 1,
+    explanation: "Risk acceptance must be documented, approved by an authority commensurate with the risk level, time-bound, and communicated to relevant stakeholders. A verbal acknowledgment or informal email does not constitute formal risk acceptance. For medium risk, CISO-level or above approval is typically required. The risk register entry must reflect the decision."
+  },
+  {
+    q: "A CISO is preparing a risk report for senior management. The report includes SLE and ARO calculations for the top 10 risks. Which type of risk assessment is this?",
+    options: [
+      "Qualitative risk assessment",
+      "Semi-quantitative risk assessment",
+      "Quantitative risk assessment",
+      "Residual risk assessment"
+    ],
+    answer: 2,
+    explanation: "Quantitative risk assessment uses financial formulas — AV, EF, SLE, ARO, ALE — to express risk in dollar terms. When a report includes calculated SLE and ARO figures, it is quantitative. Qualitative uses descriptive ratings (High/Medium/Low). Semi-quantitative assigns numbers to qualitative scales without underlying financial data."
+  },
+  {
+    q: "A healthcare organization wants to rapidly assess security risks across 15 newly acquired clinics before the next board meeting in three weeks. Which assessment approach is MOST practical?",
+    options: [
+      "Quantitative assessment — calculate ALE for each risk across all 15 clinics",
+      "Qualitative assessment — use structured interviews and risk heat maps",
+      "Vulnerability scanning — run automated scans on all clinic networks",
+      "Penetration testing — simulate attacks on each clinic's environment"
+    ],
+    answer: 1,
+    explanation: "Qualitative assessment is faster, requires less data, and produces actionable risk rankings without needing actuarial financial data. Given the three-week timeline across 15 locations, quantitative assessment is impractical. Vulnerability scanning and pen testing identify technical issues but don't produce the risk management output (prioritized risk picture) the board needs."
+  },
+  {
+    q: "An access log review reveals that a privileged user has been exporting large volumes of sensitive data to an external drive each Friday for six months. Which control type failed to PREVENT this, and which type eventually DETECTED it?",
+    options: [
+      "Detective failed; preventive detected",
+      "Preventive failed; detective detected",
+      "Corrective failed; deterrent detected",
+      "Administrative failed; technical detected"
+    ],
+    answer: 1,
+    explanation: "The data exfiltration was not stopped — the preventive control (e.g., DLP blocking, USB restrictions) was absent or failed. The log review is a detective control — it identified the activity after the fact. These are functional control categories. The scenario also uses administrative (log review process) and technical (logging system) implementation types, but the functional question asks preventive vs. detective."
+  },
+  {
+    q: "After a risk assessment, the security team recommends encrypting all laptops to address the risk of data loss from theft. Encryption is BEST classified as which control type?",
+    options: [
+      "Preventive-administrative",
+      "Detective-technical",
+      "Preventive-technical",
+      "Corrective-physical"
+    ],
+    answer: 2,
+    explanation: "Encryption prevents unauthorized access to data if the laptop is stolen — it is preventive in function (stops the harm from occurring). It is implemented through software/hardware — technical in implementation type. Preventive-technical is the correct combination. It does not detect an incident or correct one after the fact."
+  },
+  {
+    q: "An organization's firewall blocks an external attacker's port scan. A week later, the attacker tries a different entry vector through a compromised vendor VPN and succeeds. Which security principle does this scenario illustrate the ABSENCE of?",
+    options: [
+      "Defense in depth",
+      "Least privilege",
+      "Separation of duties",
+      "Need to know"
+    ],
+    answer: 0,
+    explanation: "Defense in depth means multiple independent control layers exist so that one failure does not result in a breach. The firewall (perimeter) blocked the scan but vendor VPN access was not controlled — indicating a single-layer approach. With proper defense in depth, the vendor VPN would have additional controls: MFA, network segmentation, access monitoring, least-privilege scope."
+  },
+  {
+    q: "A CISO receives a report that a critical vendor has failed its annual security assessment. The vendor handles processing of the organization's customer payment data. What is the MOST appropriate FIRST step?",
+    options: [
+      "Immediately terminate the vendor contract",
+      "Transfer the risk by purchasing additional cyber liability insurance",
+      "Assess the specific gaps, their risk to the organization, and engage the vendor on remediation timelines",
+      "Accept the risk since changing vendors would be operationally disruptive"
+    ],
+    answer: 2,
+    explanation: "Third-party risk management requires a structured response. First, understand the nature and severity of the gaps and what they mean for your organization's risk posture. Then engage the vendor with specific remediation requirements and timelines. Immediate termination without investigation is disproportionate. Insurance doesn't address the control gaps. Acceptance is inappropriate for a critical payment processor with identified security failures."
+  },
+  {
+    q: "Which phase of the third-party risk management lifecycle is MOST often neglected and creates the greatest residual risk?",
+    options: [
+      "Due diligence before contract signing",
+      "Contractual security requirements",
+      "Ongoing monitoring after onboarding",
+      "Security questionnaire completion"
+    ],
+    answer: 2,
+    explanation: "Organizations typically invest heavily in pre-contract due diligence but fail to maintain continuous or periodic reassessment after onboarding. Vendor security postures change — staff turnover, new systems, lapsed certifications. A vendor that passed assessment two years ago may have significantly degraded. Ongoing monitoring closes this gap and is the most commonly neglected phase."
+  },
+  {
+    q: "The CISO receives a threat intelligence report indicating a nation-state actor is conducting spear-phishing campaigns targeting CFOs at financial institutions. How should this intelligence MOST appropriately be applied?",
+    options: [
+      "Share it with the SOC team as tactical indicators for SIEM rules",
+      "Use it as operational intelligence to brief the CFO and harden executive email controls",
+      "Present it to the board as strategic intelligence about geopolitical risk trends",
+      "Archive it as reference material for future threat assessments"
+    ],
+    answer: 1,
+    explanation: "This is operational intelligence — a specific, ongoing campaign with defined targets and methods. The appropriate response is operational: notify the affected individual (CFO), brief security leadership, and implement targeted countermeasures (enhanced email filtering, phishing simulation, MFA verification). Tactical indicators would come from the campaign's IOCs. Strategic intelligence is for board-level trend discussions, not specific campaign response."
+  },
+  {
+    q: "An information security manager needs to report on threat intelligence to three different audiences: the board of directors, the security operations center, and the security leadership team. Which type of intelligence is MOST appropriate for each?",
+    options: [
+      "Board: tactical; SOC: strategic; leadership: operational",
+      "Board: strategic; SOC: tactical; leadership: operational",
+      "Board: operational; SOC: tactical; leadership: strategic",
+      "Board: strategic; SOC: operational; leadership: tactical"
+    ],
+    answer: 1,
+    explanation: "Strategic intelligence (trends, geopolitical risk, threat actor motivations) is for the board — they make investment and risk appetite decisions. Tactical intelligence (IOCs, malware signatures, IPs) is for the SOC — they use it in detection rules and blocking. Operational intelligence (TTPs, campaign details) is for security leadership — they adjust program priorities and controls."
+  },
+  {
+    q: "During vulnerability management, a scan reveals 847 vulnerabilities across the enterprise. The security team has capacity to remediate 50 vulnerabilities per week. How should the team prioritize?",
+    options: [
+      "Remediate in order of discovery date — oldest vulnerabilities first",
+      "Remediate all critical-severity vulnerabilities on the highest-value assets first",
+      "Remediate all vulnerabilities on internet-facing systems regardless of severity",
+      "Remediate in alphabetical order by system name to ensure consistency"
+    ],
+    answer: 1,
+    explanation: "Vulnerability management prioritization must account for both vulnerability severity and asset criticality. Critical vulnerabilities on high-value assets represent the greatest risk and must be addressed first. CVSS score alone is insufficient — a critical vulnerability on a test system poses less risk than a medium vulnerability on a production payment system. Risk-based prioritization combines exploitability, severity, and asset value."
+  },
+  {
+    q: "An information security manager is building the organization's risk register for the first time. Which element is MOST important to include for each risk entry?",
+    options: [
+      "The specific CVE numbers associated with technical vulnerabilities",
+      "The vendor responsible for addressing the underlying weakness",
+      "A named risk owner accountable for the treatment decision",
+      "The estimated number of records at risk if the threat materializes"
+    ],
+    answer: 2,
+    explanation: "A named risk owner is essential — without accountability, risks in the register are academic exercises. The owner makes treatment decisions, funds controls, and accepts residual risk. CVE numbers are tactical details for vulnerability tracking (not all risks are technical). Vendor attribution and record counts are useful supplementary data but not the most important element for governance purposes."
+  },
+  {
+    q: "A business unit manager argues that a security control is unnecessary because 'we've never been breached.' How should the information security manager BEST respond?",
+    options: [
+      "Agree — if there have been no breaches, the current state is acceptable",
+      "Escalate to the CISO to override the manager's objection",
+      "Present the risk in terms of inherent risk, threat likelihood, and potential business impact regardless of historical incidents",
+      "Require the manager to sign a waiver accepting personal liability"
+    ],
+    answer: 2,
+    explanation: "Absence of past incidents does not indicate low risk — it may indicate that threats haven't materialized yet, not that they cannot. The correct approach is to present the business case: inherent risk level, threat likelihood, potential impact if a breach occurs, and what the control costs versus what the ALE justifies. Risk management is forward-looking. The goal is to change the business decision through evidence, not override or embarrass the manager."
+  },
+  {
+    q: "An organization's ERM committee is reviewing risk reports from all business units. The information security manager presents cybersecurity risk alongside financial, operational, and compliance risks. What governance principle does this BEST demonstrate?",
+    options: [
+      "Defense in depth — multiple risk categories are monitored simultaneously",
+      "Risk transfer — cybersecurity risk is shared with financial and operational stakeholders",
+      "Integration of security risk into enterprise risk management (ERM)",
+      "Separation of duties — each risk type is independently reviewed"
+    ],
+    answer: 2,
+    explanation: "Presenting cybersecurity risk through ERM governance processes — alongside all other enterprise risks — is the CISM model of risk integration. It ensures security risk is prioritized relative to business context, receives appropriate executive attention, and is managed with consistent methodology. This avoids the silo problem where security is treated as an IT concern rather than a business risk."
+  },
+  {
+    q: "An information security manager is asked to choose between a qualitative and quantitative risk assessment for a new cloud migration project. Which factor would MOST strongly support choosing a quantitative approach?",
+    options: [
+      "The assessment must be completed within two weeks",
+      "The organization has reliable historical data on breach costs and incident frequency",
+      "Stakeholders prefer a simple heat map output",
+      "The cloud environment is complex and multi-vendor"
+    ],
+    answer: 1,
+    explanation: "Quantitative assessment requires reliable input data — asset values, historical incident rates, actuarial loss data — to produce meaningful ALE calculations. When that data exists, quantitative analysis provides defensible financial justification for control investments. Without reliable data, calculated ALE figures give false precision. Speed favors qualitative; stakeholder preference and complexity are not determinants of methodology selection."
+  },
+  {
+    q: "The board asks the CISO: 'What is our current risk posture relative to our risk appetite?' What information should be in the CISO's response?",
+    options: [
+      "A list of all open vulnerabilities by CVSS score",
+      "The number of security incidents in the past quarter",
+      "A comparison of current residual risk levels against the board-approved risk appetite thresholds",
+      "The budget required to achieve zero residual risk"
+    ],
+    answer: 2,
+    explanation: "The board's question is a governance question — are we within our risk appetite? The answer requires comparing current residual risk (after controls) to the approved risk appetite. This is the core of risk reporting at the governance level. CVSS scores and incident counts are operational detail. 'Zero residual risk' is unachievable and not a useful governance response."
+  },
+  {
+    q: "A risk assessment identifies that the organization's primary data center has a single point of failure in its power infrastructure. The risk owner agrees this is a problem but says budget for a redundant power system won't be available for 18 months. What should happen?",
+    options: [
+      "The risk owner can verbally accept the risk until funding is available",
+      "The CISO should implement the redundant power system using the security budget",
+      "The risk should be formally documented, accepted by appropriate authority, with a review date and interim mitigating measures",
+      "The risk should be transferred to the facilities department since it's a physical infrastructure issue"
+    ],
+    answer: 2,
+    explanation: "When treatment is deferred, the interim period is a formal risk acceptance period — not an oversight gap. It must be documented, approved by an authority appropriate to the risk level, time-bound (the 18-month window), and should include interim compensating measures (e.g., generator testing, enhanced monitoring). Verbal acceptance, budget raids, and category reassignment are all inappropriate."
+  },
+  {
+    q: "Which of the following BEST describes the difference between risk avoidance and risk acceptance?",
+    options: [
+      "Avoidance is for high risks; acceptance is for any risk level",
+      "Avoidance eliminates the activity creating risk; acceptance acknowledges risk without eliminating the activity",
+      "Avoidance requires board approval; acceptance only requires CISO approval",
+      "Avoidance applies to external threats; acceptance applies to internal risks"
+    ],
+    answer: 1,
+    explanation: "Risk avoidance means stopping the activity that generates the risk — the risk no longer exists because the activity no longer exists. Risk acceptance means continuing the activity but consciously deciding not to implement additional controls, typically because the risk is within appetite or control cost exceeds ALE. Both require documentation and appropriate approval; the distinction is whether the underlying activity continues."
+  },
+  {
+    q: "A security manager is analyzing whether to purchase cyber liability insurance. The organization's ALE for a major breach is $5M. Annual premium is $200,000 with a $500,000 deductible. From a risk management perspective, purchasing the insurance represents:",
+    options: [
+      "Risk avoidance — the organization is avoiding financial loss from breaches",
+      "Risk mitigation — the insurance reduces the likelihood of a breach occurring",
+      "Risk transfer — the financial impact above the deductible is shifted to the insurer",
+      "Risk acceptance — the organization is accepting the breach risk"
+    ],
+    answer: 2,
+    explanation: "Insurance is risk transfer — the financial consequences above the deductible shift to the insurer. Note that risk transfer does NOT reduce likelihood of the event occurring, does NOT transfer regulatory or legal liability, and does NOT eliminate the organization's responsibility to manage security. The $500K deductible remains with the organization — that portion is effectively accepted."
+  },
+  {
+    q: "An information security manager reviews the organization's top 5 KRIs and notices that the number of third-party vendors overdue for annual security assessment has tripled in three months. What should this trigger?",
+    options: [
+      "Update the risk register to reflect the increased count",
+      "Escalate to management as an indicator that third-party risk is increasing and initiate a remediation plan",
+      "Remove vendors from the vendor list who have not completed assessments",
+      "Transfer the risk to the procurement department responsible for vendor management"
+    ],
+    answer: 1,
+    explanation: "KRIs are leading indicators — a tripling of overdue vendor assessments signals that third-party risk exposure is growing. This requires escalation and action: management notification, root cause analysis (capacity? process failure?), and a remediation plan to clear the backlog. Simply updating the risk register without escalation fails the purpose of KRI monitoring. KRIs exist precisely to trigger early intervention."
+  },
+  {
+    q: "Which risk treatment option requires the HIGHEST level of organizational authority to approve, and why?",
+    options: [
+      "Risk mitigation — because implementing controls requires IT budget approval",
+      "Risk acceptance — because accepting risk on behalf of the organization is a governance decision",
+      "Risk transfer — because insurance contracts require legal review",
+      "Risk avoidance — because stopping a business activity requires operational leadership"
+    ],
+    answer: 1,
+    explanation: "Risk acceptance — especially for high or critical risks — requires the highest approval authority because the organization is consciously deciding to carry the risk. For significant risks, this is a board or C-suite decision, not a security team decision. The approval authority must be commensurate with the magnitude of the risk being accepted. This is a governance principle: those accountable for outcomes must approve accepting the risk."
+  },
+  {
+    q: "A newly appointed information security manager discovers that several risks accepted two years ago have no review dates and no current risk owners. What is the GREATEST concern with this situation?",
+    options: [
+      "The risks may not be tracked in the risk register",
+      "The risk acceptance may have effectively become permanent without governance oversight",
+      "The previous CISO failed to document the risks properly",
+      "The risks may now exceed the current ALE thresholds"
+    ],
+    answer: 1,
+    explanation: "Risk acceptance without a review date becomes implicit permanent acceptance — a governance failure. Business context, threat landscape, and control effectiveness all change over time. A risk acceptable two years ago may now exceed appetite due to new threats, regulatory changes, or asset value growth. Every accepted risk requires periodic review. The absence of review dates means the organization may be carrying undisclosed, unreviewed risk."
+  },
+  {
+    q: "An information security manager is selecting controls to address the risk of insider data theft. Which combination of control types provides the MOST complete coverage?",
+    options: [
+      "Preventive-physical only — lock down server rooms",
+      "Detective-technical only — deploy user behavior analytics",
+      "Preventive-administrative, preventive-technical, and detective-technical controls",
+      "Corrective-technical only — implement data recovery procedures"
+    ],
+    answer: 2,
+    explanation: "Defense in depth against insider threats requires multiple control types. Administrative controls: background checks, acceptable use policy, least privilege policy. Technical preventive: access controls, DLP, USB restrictions. Technical detective: user behavior analytics, audit logs, SIEM alerts. Single-layer approaches (physical only, detective only, corrective only) leave significant gaps. The exam expects multi-layered control selection for complete risk coverage."
+  },
+  {
+    q: "A risk assessment reveals that the organization's customer database has an inherent risk rating of 'High.' After implementing encryption, access controls, and audit logging, the residual risk is 'Low.' The risk owner wants to accept the residual risk. What is the CORRECT next step?",
+    options: [
+      "The risk is within appetite — no further action is needed since residual risk is Low",
+      "Formally document the residual risk acceptance with the risk owner's approval and a scheduled review date",
+      "Continue adding controls until residual risk reaches 'Negligible'",
+      "Transfer the residual risk to cyber insurance since Low risk is insurable"
+    ],
+    answer: 1,
+    explanation: "Even when residual risk falls within appetite, formal acceptance must be documented — not assumed. Documentation records the risk, its current state, the treatment applied, who accepted it, and when it will be reviewed. This creates governance accountability and ensures the accepted state is reassessed periodically. Undocumented acceptance leaves no audit trail and no mechanism for future review."
+  },
+  {
+    q: "Which of the following BEST explains why information security risk management should be an ongoing process rather than a periodic assessment?",
+    options: [
+      "Regulators require continuous risk assessments for all industries",
+      "Threats, vulnerabilities, assets, and business context change continuously — static assessments become stale",
+      "Ongoing risk management is more cost-effective than annual assessments",
+      "CISM certification requires documented evidence of continuous risk monitoring"
+    ],
+    answer: 1,
+    explanation: "Risk is dynamic. New threats emerge, vulnerabilities are discovered, assets change value, controls degrade, and business processes evolve. A point-in-time assessment accurately reflects risk at that moment only. Without ongoing monitoring — continuous vulnerability scanning, KRI tracking, threat intelligence, control testing — the risk profile becomes outdated and risk decisions are made on stale data. Risk management is a continuous cycle, not an annual event."
+  }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  new Quiz(questions, 'quiz-container', 'cism_d2_quiz');
+});
+</script>
+<script src="../../assets/js/celebrate.js"></script>
+<script src="../../assets/js/mobile-nav.js"></script>
+</body>
+</html>

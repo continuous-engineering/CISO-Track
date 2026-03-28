@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Computing Concepts &amp; Architecture — CCSK Domain 1</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(async function() {
+  if (typeof CertDB === 'undefined') return;
+  const s = await CertDB.getSetting('session');
+  if (!s?.authenticated) { window.location.replace('../login.html'); }
+})();
+</script>
+</head>
+<body data-topic-id="/ccsk/01-cloud-concepts.html" data-expected-mins="30">
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Dashboard</a></li>
+    <li><a href="../schedule.html">Schedule</a></li>
+    <li><a href="../cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="index.html" class="ccsk-link active">CCSK</a></li>
+    <li><a href="../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span style="color:var(--ccsk);">CCSK Domain 1</span> — Cloud Computing Concepts &amp; Architecture</h1>
+    <p>CSA Guidance v4 · Foundation for all other domains · ~30 min</p>
+  </div>
+
+  <div id="read-badge"></div>
+
+  <div class="domain-nav">
+    <a href="index.html">CCSK Overview</a>
+    <a href="01-cloud-concepts.html" class="active">D1: Concepts</a>
+    <a href="05-iam.html">D5: IAM</a>
+    <a href="09-data-security.html">D9: Data</a>
+  </div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1rem;">
+          <a href="index.html">CCSK</a> → Domain 1: Cloud Computing Concepts &amp; Architecture
+        </div>
+
+        <!-- ===================== NIST DEFINITION ===================== -->
+        <h2 id="nist-definition">The NIST Definition of Cloud Computing</h2>
+
+        <p>Before you engage with any cloud security framework — CSA's, NIST's, or anyone else's — you have to start where every serious conversation about cloud starts: NIST Special Publication 800-145, "The NIST Definition of Cloud Computing." Published in 2011, this definition has become the universally accepted baseline for what "cloud" actually means. The CCSK exam assumes you know it cold. Not in spirit — verbatim.</p>
+
+        <p>NIST defines cloud computing as: <em>"a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction."</em></p>
+
+        <p>That definition packs a lot in. Unpacking it correctly reveals all five essential characteristics:</p>
+
+        <h3 id="five-characteristics">The Five Essential Characteristics</h3>
+
+        <p><strong>1. On-Demand Self-Service.</strong> A consumer can provision computing capabilities — server time, storage, networking — unilaterally, without requiring human interaction with the service provider. You log into the AWS console, click a few buttons, and a fleet of servers exists in minutes. No purchase order, no provisioning ticket, no conversation with a sales team. This characteristic is foundational to cloud's value proposition and to its security risk profile: anyone with a credit card and credentials can stand up infrastructure instantly, with no approval gate unless you build one explicitly.</p>
+
+        <p>The security implication is immediate: shadow IT becomes trivially easy. A developer frustrated with IT's slow provisioning process can spin up their own production environment in 20 minutes. Without governance controls — guardrails on who can create resources, detection of new accounts and new regions, mandatory tagging for cost tracking — organizations lose visibility into their own attack surface.</p>
+
+        <p><strong>2. Broad Network Access.</strong> Capabilities are available over the network and accessed through standard mechanisms that promote use by heterogeneous thin or thick client platforms. In practice: your cloud workloads are accessible from anywhere on the internet, using standard protocols (HTTPS, SSH, APIs). This is both the feature and the threat model. Traditional perimeter security assumed that attackers were outside and users were inside. Cloud dissolves that boundary entirely. Every management console, every API endpoint, every storage bucket is network-accessible by design.</p>
+
+        <p><strong>3. Resource Pooling.</strong> The provider's computing resources are pooled to serve multiple consumers using a multi-tenant model, with different physical and virtual resources dynamically assigned and reassigned according to consumer demand. You do not own a server — you share infrastructure with thousands of other customers, separated by virtualization. The consumer generally has no control over or knowledge of the exact location of the provided resources, but may specify location at a higher level of abstraction (e.g., country, region, data center).</p>
+
+        <p>Resource pooling is the economic engine of cloud, and it introduces the multi-tenancy security consideration that the entire rest of this domain is partially about. Your data and your neighbor's data coexist on the same physical hardware, separated by hypervisor isolation. If that isolation fails — VM escape, side-channel attack, hypervisor vulnerability — the consequences affect multiple tenants simultaneously.</p>
+
+        <p><strong>4. Rapid Elasticity.</strong> Capabilities can be elastically provisioned and released, in some cases automatically, to scale rapidly outward and inward commensurate with demand. To the consumer, the capabilities available for provisioning often appear to be unlimited and can be appropriated in any quantity at any time. Your Auto Scaling group responds to a traffic spike at 2 AM by launching 50 new instances. An hour later, when traffic subsides, it terminates 48 of them. This happens without human intervention.</p>
+
+        <p>From a security standpoint, elasticity creates a dynamic attack surface. The inventory of running systems changes constantly. Log aggregation pipelines that assume static endpoints will miss logs from ephemeral instances that spin up, run for 20 minutes, and terminate — leaving their logs in an instance store that evaporates with them unless you have real-time log shipping. Vulnerability scanning assumes your asset inventory is stable. In elastic environments, it isn't.</p>
+
+        <p><strong>5. Measured Service.</strong> Cloud systems automatically control and optimize resource use by leveraging a metering capability at some level of abstraction appropriate to the type of service (e.g., storage, processing, bandwidth, active user accounts). Resource usage can be monitored, controlled, and reported — providing transparency for both the provider and consumer of the utilized service. You pay for what you use, and usage is tracked in fine detail.</p>
+
+        <p>The security dimension: billing anomalies are often the first indicator of compromise in cloud environments. A sudden spike in compute hours, data egress, or API calls that does not correspond to a known deployment event is a meaningful signal. Organizations that treat cloud billing data purely as a finance concern miss an important threat detection input.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">CCSK Exam Point — NIST's Five Characteristics</div>
+          <p>CCSK questions will test these characteristics by name. Know the five: on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service. Questions often describe a scenario and ask which characteristic is being illustrated. The most commonly confused are rapid elasticity (dynamic scaling) and on-demand self-service (user-initiated provisioning without human interaction). They are related but distinct: elasticity is about automatic scaling; self-service is about user control without provider interaction.</p>
+        </div>
+
+        <!-- ===================== SERVICE MODELS ===================== -->
+        <h2 id="service-models">Service Models: IaaS, PaaS, SaaS</h2>
+
+        <p>The three service models — Infrastructure as a Service, Platform as a Service, and Software as a Service — represent fundamentally different divisions of responsibility between the cloud provider and the customer. Understanding where that line falls in each model is not abstract; it directly determines which security controls the customer is responsible for implementing. The CCSK exam is built around this.</p>
+
+        <h3>Infrastructure as a Service (IaaS)</h3>
+
+        <p>In IaaS, the provider delivers virtualized computing infrastructure: compute (virtual machines), storage (block and object), and networking (virtual networks, load balancers, firewalls). The customer receives raw compute capability and is responsible for everything above the hypervisor layer.</p>
+
+        <p><strong>What the provider controls:</strong> Physical hardware, data center facilities, network infrastructure, virtualization layer (hypervisor), physical security. The provider is accountable for the availability and integrity of the physical and virtual infrastructure. If the hypervisor has a vulnerability, that is the provider's problem to patch.</p>
+
+        <p><strong>What the customer controls:</strong> Operating system (patching, hardening, configuration), middleware, runtime environments, applications, data, and identity/access management. If you run an unpatched Apache web server on an EC2 instance and it gets exploited, that is your responsibility — the provider handed you a virtual machine; what you put on it and how you secure it is entirely your concern.</p>
+
+        <p><strong>Examples:</strong> AWS EC2, Azure Virtual Machines, Google Compute Engine, DigitalOcean Droplets.</p>
+
+        <p><strong>Security implications:</strong> Maximum control means maximum responsibility. IaaS customers must operate a full IT security program at the operating system level and above: patch management, endpoint hardening, configuration management, log management, application security, network security group configuration. The attack surface is the largest of the three models because the customer manages the most components. The benefit is that security controls can be implemented exactly as in traditional on-premises environments — you own the OS, you own the tooling choices.</p>
+
+        <h3>Platform as a Service (PaaS)</h3>
+
+        <p>In PaaS, the provider delivers a platform for application development and deployment. The customer writes and deploys applications; the provider manages the underlying infrastructure including the operating system, middleware, and runtime. The customer does not manage virtual machines — they interact with the platform through APIs and developer tools.</p>
+
+        <p><strong>What the provider controls:</strong> Everything in IaaS plus the operating system, middleware, runtime environments. The provider is responsible for patching the OS, securing the runtime, and maintaining the platform. If a vulnerability is discovered in the Java runtime the provider manages, the provider patches it.</p>
+
+        <p><strong>What the customer controls:</strong> Applications deployed to the platform, data stored within the platform, and — critically — configuration of the platform itself (access controls, network settings, runtime parameters). The customer also retains responsibility for the security of the application code they deploy.</p>
+
+        <p><strong>Examples:</strong> AWS Elastic Beanstalk, Google App Engine, Azure App Service, Heroku, AWS Lambda (serverless function platforms).</p>
+
+        <p><strong>Security implications:</strong> PaaS reduces operational security burden (no OS patching) while introducing new concerns. The application layer remains fully the customer's responsibility — a SQL injection vulnerability in your PaaS-deployed application is your problem, not the provider's. Platform configuration — who can deploy to the platform, what secrets are injected into the runtime, what network boundaries exist — is a frequent source of misconfiguration incidents. The customer also loses visibility into the underlying infrastructure, which complicates forensic investigation and compliance reporting.</p>
+
+        <h3>Software as a Service (SaaS)</h3>
+
+        <p>In SaaS, the provider delivers a complete application running on provider-managed infrastructure. The customer uses the application but controls almost nothing about the underlying technical implementation. The customer's primary controls are at the user and data layer.</p>
+
+        <p><strong>What the provider controls:</strong> Everything — physical infrastructure, virtualization, operating system, middleware, runtime, application code. The provider owns the security of the entire stack below the user interface.</p>
+
+        <p><strong>What the customer controls:</strong> User accounts and access (who can log in, what they can do), data entered into the system, application configuration settings exposed to customers (which may be limited), and decisions about what data to put into the SaaS application in the first place.</p>
+
+        <p><strong>Examples:</strong> Salesforce, Microsoft 365, Google Workspace, ServiceNow, Workday.</p>
+
+        <p><strong>Security implications:</strong> SaaS minimizes operational security work but maximizes dependency on provider trustworthiness. The customer must perform due diligence on the provider's security posture — SOC 2 Type II reports, ISO 27001 certification, penetration testing disclosures, breach notification commitments. Data governance becomes the primary customer concern: what data is permissible to put in a SaaS application, how it is classified, what data residency requirements apply, and whether the provider's data retention and deletion commitments are contractually enforceable.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">CCSK Exam Point — The Shared Responsibility Stack</div>
+          <p>The CCSK exam tests shared responsibility with precision. The customer always retains responsibility for data and identity management across all three models. In IaaS, the customer also owns OS through application. In PaaS, the customer owns application and data. In SaaS, the customer owns data governance and user access. The phrase "the customer is always responsible for identity" is essentially exam-guaranteed content. Even in SaaS, even though you did not build the IAM system, you are responsible for who has access and what they can do with your data.</p>
+        </div>
+
+        <!-- ===================== DEPLOYMENT MODELS ===================== -->
+        <h2 id="deployment-models">Deployment Models</h2>
+
+        <p>The four deployment models — public, private, hybrid, and community — describe who operates the cloud infrastructure and who has access to it. Each carries a distinct security trade-off profile.</p>
+
+        <p><strong>Public Cloud.</strong> Cloud infrastructure is provisioned for open use by the general public. It may be owned, managed, and operated by a business, academic, or government organization. Multi-tenant by design. Security trade-off: maximum operational efficiency and scale, but the customer shares infrastructure with unknown neighbors, has no visibility into the physical layer, and is entirely dependent on the provider's security controls for the infrastructure layers they manage. The public cloud is not inherently less secure — but "secure" in the public cloud requires understanding exactly what you control versus what the provider controls, and implementing your controls rigorously.</p>
+
+        <p><strong>Private Cloud.</strong> Cloud infrastructure is provisioned for exclusive use by a single organization comprising multiple consumers (business units). It may be owned, managed, and operated by the organization, a third party, or some combination, and it may exist on or off premises. Private cloud retains cloud characteristics (self-service, elasticity, measured) while eliminating multi-tenancy with external parties. Security trade-off: greater control and isolation, but the organization absorbs more operational responsibility (if self-operated) and does not benefit from the economies of scale that drive public cloud providers to invest heavily in security infrastructure.</p>
+
+        <p><strong>Hybrid Cloud.</strong> Composition of two or more distinct cloud infrastructures (private, community, or public) that remain unique entities but are bound together by standardized or proprietary technology that enables data and application portability. The classic enterprise hybrid: sensitive workloads and regulated data in private cloud; development, testing, and burst capacity in public cloud. Security trade-off: hybrid architectures inherit the security complexity of both environments plus the additional complexity of the connection between them. Identity federation, data classification enforcement across environments, and consistent policy application become critical hard problems. The connection between private and public cloud — often a VPN or Direct Connect link — is a high-value attack target.</p>
+
+        <p><strong>Community Cloud.</strong> Cloud infrastructure is provisioned for exclusive use by a specific community of consumers from organizations that have shared concerns (e.g., mission, security requirements, policy, compliance considerations). Example: FedRAMP-authorized cloud environments for US federal agencies, health information exchanges for healthcare organizations. Security trade-off: sharing infrastructure with organizations that have comparable security requirements and regulatory contexts reduces some of the "unknown neighbor" risk of public cloud, while providing more scale than private cloud. Still requires careful tenant isolation and shared governance.</p>
+
+        <!-- ===================== CSA ARCHITECTURE ===================== -->
+        <h2 id="csa-architecture">CSA Enterprise Architecture &amp; Cloud Reference Architecture</h2>
+
+        <p>The Cloud Security Alliance Enterprise Architecture (formerly the CSA Cloud Reference Architecture) is the CSA's framework for how cloud security controls should be organized and applied. It provides a logical model for thinking about cloud security that is independent of any specific provider's implementation.</p>
+
+        <p>The CSA architecture organizes cloud security across multiple layers: physical, network, compute, storage, application, and data — with identity and access management as a horizontal control that cuts across all layers. This multi-layer framing is important for the CCSK exam because it establishes that cloud security is not a single control or a single team's responsibility; it requires controls at each layer, with clarity about which layer the customer owns versus which the provider owns in each service model.</p>
+
+        <p>The architecture also introduces the concept of the trusted cloud initiative reference architecture — a prescriptive set of controls that CSA recommends cloud providers implement to give customers assurance. When you see a CSA STAR certification (Security Trust Assurance and Risk), it means the provider has demonstrated alignment with these reference controls.</p>
+
+        <!-- ===================== MULTI-TENANCY ===================== -->
+        <h2 id="multi-tenancy">Multi-Tenancy: Isolation Challenges</h2>
+
+        <p>Multi-tenancy is the defining characteristic of public cloud economics and the defining source of cloud-specific security risk. When multiple customers — potentially including your competitors — share the same physical hardware, the security of each tenant depends on the integrity of the isolation mechanisms between them.</p>
+
+        <p>The isolation mechanisms in modern cloud are robust and have an excellent track record, but they are not theoretically unbreakable. Three categories of risk deserve understanding:</p>
+
+        <p><strong>Hypervisor isolation failure (VM escape).</strong> In a Type 1 hypervisor environment, VMs are isolated from each other at the hardware virtualization layer. A VM escape vulnerability would allow code running in one VM to break out of its isolation boundary and interact with the hypervisor or other VMs. This is a serious vulnerability class. Major public cloud providers invest enormous resources in hypervisor hardening, and documented VM escape attacks against production cloud hypervisors are rare — but not zero. The risk is real enough that organizations with highly sensitive workloads (intelligence agencies, defense contractors) may still prefer private cloud or dedicated bare-metal for those specific workloads.</p>
+
+        <p><strong>Noisy neighbor.</strong> A less dramatic but far more common multi-tenancy problem. Resource pooling means that a computationally intensive tenant — one running a cryptocurrency mining operation, a video transcoding pipeline, or a large machine learning training job — shares network bandwidth, storage I/O, and CPU cycles with neighboring tenants. If the provider's resource isolation and throttling mechanisms are insufficient, one tenant's heavy usage degrades the performance of neighboring tenants. This is primarily an availability concern, not a confidentiality concern, but it matters for SLA compliance and business continuity.</p>
+
+        <p><strong>Side-channel attacks.</strong> Advanced research has demonstrated that tenants sharing the same physical processor can potentially extract information about each other's operations through timing analysis and cache state observation — most famously the Spectre and Meltdown vulnerabilities published in 2018, which affected virtually every modern processor. These attacks are difficult to execute in practice and require careful configuration, but they represent a category of risk that does not exist in single-tenant environments.</p>
+
+        <!-- ===================== VIRTUALIZATION ===================== -->
+        <h2 id="virtualization">The Virtualization Layer</h2>
+
+        <p>Cloud computing is built on virtualization. Understanding the virtualization stack is prerequisite knowledge for understanding cloud security at any meaningful depth.</p>
+
+        <p><strong>The hypervisor</strong> is the software layer that creates and manages virtual machines. It presents each VM with an abstracted view of physical hardware, translating VM instructions into physical hardware operations. The hypervisor is the critical trust boundary in multi-tenant cloud: it is the only thing standing between your VM and your neighbor's VM at the hardware layer.</p>
+
+        <p><strong>Type 1 hypervisors</strong> (bare-metal hypervisors) run directly on physical hardware, with no host operating system between them and the hardware. Examples: VMware ESXi, Microsoft Hyper-V, KVM (Linux Kernel-based Virtual Machine — used by AWS and many other public cloud providers), Xen (used historically by AWS and still by some providers). Type 1 hypervisors offer better performance and a smaller attack surface than Type 2, because they eliminate the host OS as an additional layer of code that could be compromised.</p>
+
+        <p><strong>Type 2 hypervisors</strong> run on top of a conventional operating system. Examples: VMware Workstation, Oracle VirtualBox. Type 2 hypervisors add the host OS as an additional attack surface: compromising the host OS gives an attacker control over all VMs running on it. Type 2 hypervisors are appropriate for development and testing environments; they are not appropriate for production cloud infrastructure.</p>
+
+        <p>Public cloud providers universally use Type 1 hypervisors. When you rent an EC2 instance from AWS, you are running a VM on a Type 1 hypervisor (KVM, in AWS's case after their move from Xen). The hypervisor is managed entirely by the provider — it is outside the customer's security scope but within the customer's trust boundary. This is why the provider's security posture, third-party audits, and transparency commitments matter: you are trusting the provider's hypervisor with your security boundary.</p>
+
+        <div class="callout info">
+          <div class="callout-title">VM Escape — The Theoretical Maximum Risk</div>
+          <p>A VM escape attack allows code executing within a VM to break the hypervisor isolation boundary and execute at the hypervisor level or interact with adjacent VMs. The consequence is catastrophic: an attacker in a public cloud tenant's VM who achieves VM escape could potentially access the memory of any VM on the same physical host. This is why cloud providers invest heavily in hypervisor hardening, why they run bug bounty programs specifically targeting hypervisor vulnerabilities, and why any disclosed hypervisor vulnerability triggers emergency patching cycles. For the CCSK exam: VM escape is the attack, the hypervisor is the isolation mechanism, and this is the reason multi-tenancy carries residual risk.</p>
+        </div>
+
+        <!-- ===================== CLOUD-NATIVE VS LIFT AND SHIFT ===================== -->
+        <h2 id="cloud-native">Cloud-Native vs. Lift-and-Shift</h2>
+
+        <p>Organizations moving to cloud face a fundamental architectural decision: rebuild applications for cloud (cloud-native) or take existing applications and run them on cloud infrastructure as-is (lift-and-shift). The security implications of this choice are significant and underappreciated.</p>
+
+        <p><strong>Lift-and-shift</strong> takes an on-premises application — a three-tier web application, a monolithic ERP system, a file server — and runs it on cloud VMs. The application architecture does not change. The security model largely does not change either: you still have OS-level patching, application-level controls, and network perimeter security (now implemented as security groups and firewall rules rather than physical appliances). Lift-and-shift is operationally straightforward but fails to leverage cloud-native security capabilities. It also tends to replicate the weaknesses of the original on-premises architecture into the cloud environment. An application designed to run in a static data center may assume fixed IP addresses, rely on network-based authentication, and have no mechanism for handling the ephemeral nature of cloud instances — all of which create problems in cloud.</p>
+
+        <p><strong>Cloud-native</strong> architecture is built from the ground up for cloud deployment, embracing elasticity, API-driven management, immutable infrastructure, microservices, and managed services. Security in cloud-native architecture looks different: secrets are injected via secrets management services (AWS Secrets Manager, Azure Key Vault) rather than hardcoded in config files; authentication uses short-lived credentials and service accounts rather than long-lived passwords; infrastructure is defined in code (Terraform, CloudFormation) and is auditable; logging is centralized in cloud-native log management services from day one. Cloud-native security is more complex to design correctly but produces a more defensible architecture because it eliminates many categories of configuration debt that lift-and-shift carries.</p>
+
+        <!-- ===================== ELASTICITY SECURITY ===================== -->
+        <h2 id="elasticity-security">Elasticity and Its Security Implications</h2>
+
+        <p>The ability to scale infrastructure up and down automatically in response to demand is one of cloud's most powerful capabilities. It is also one of the most underappreciated sources of security complexity.</p>
+
+        <p><strong>Dynamic attack surface.</strong> In a traditional data center, your asset inventory changes slowly — new servers are provisioned through a process that takes days or weeks and generates paper trails. In elastic cloud environments, hundreds of instances can be launched and terminated within minutes, entirely automatically, with no human involvement. Your attack surface is not a fixed set of assets; it is a dynamic, constantly changing population of compute resources. Vulnerability management programs that assume static inventory simply do not work.</p>
+
+        <p><strong>Log management for ephemeral instances.</strong> Auto Scaling launches an instance, the instance processes requests for 30 minutes, and then Auto Scaling terminates it. If application and system logs are stored locally on the instance, they are gone when the instance terminates. Effective cloud security requires real-time log shipping to a centralized, persistent log store. CloudWatch Logs, Splunk, ELK — the specific tool is less important than the architectural discipline of treating logs as something that must be shipped off the instance continuously rather than collected from it periodically.</p>
+
+        <p><strong>Identity for auto-scaled instances.</strong> When your Auto Scaling group launches a new instance, what credentials does that instance use to interact with other AWS services? Hardcoding credentials in AMIs or user data scripts is a critical security failure pattern that appears regularly in breach reports. The correct approach is instance roles (IAM roles attached to instances via instance profiles in AWS), which provide temporary, automatically-rotated credentials scoped to the permissions the instance actually needs. Auto-scaling makes this discipline mandatory rather than merely desirable.</p>
+
+        <!-- ===================== API-DRIVEN CLOUD ===================== -->
+        <h2 id="api-driven">The API-Driven Nature of Cloud</h2>
+
+        <p>Everything in cloud is an API call. Launching a VM, creating a database, configuring a firewall rule, granting an IAM permission — each of these operations is an API call to the cloud provider's management plane. This is both the architectural foundation of cloud's self-service nature and the central fact about cloud security that distinguishes it from traditional IT.</p>
+
+        <p><strong>The management plane</strong> is the set of APIs and interfaces through which cloud infrastructure is configured and managed. The AWS console, the Azure portal, the gcloud CLI, Terraform, CloudFormation — all of these interact with the management plane. Compromise of management plane credentials is the most high-value attack in cloud because a single set of credentials with broad permissions can enumerate, modify, and destroy entire environments in minutes. The management plane is the control surface for your entire cloud infrastructure. It deserves the strongest authentication and authorization controls you can apply: MFA on all console access, least-privilege IAM policies, CloudTrail logging of all API calls, and alerting on any management plane activity outside normal patterns.</p>
+
+        <p><strong>The data plane</strong> is the operational path through which the workload's actual traffic flows — the HTTP requests to your web server, the database queries from your application. Compromise of the data plane affects the workload; compromise of the management plane affects the infrastructure that runs the workload. Separating these concepts helps with threat modeling: an attacker who gains access to your application through a web vulnerability is operating in the data plane. An attacker who compromises developer credentials and gains access to the AWS API is operating in the management plane. The blast radius of management plane compromise is orders of magnitude larger.</p>
+
+        <p><strong>The control plane</strong> is sometimes used to describe the routing and networking infrastructure — the mechanisms by which traffic is directed between components. In cloud networking, the control plane determines how traffic flows: routing tables, load balancer rules, DNS resolution, VPN configurations. Misconfiguration of the control plane can route sensitive traffic through unexpected paths or expose services that should be internal-only.</p>
+
+        <div class="callout exam">
+          <div class="callout-title">CCSK Exam Point — Cloud Is a Model, Not a Technology</div>
+          <p>This framing appears explicitly in CSA's Guidance and the CCSK exam uses it. Cloud is a delivery model defined by the five NIST characteristics — not a specific technology. You can build a private cloud using VMware or OpenStack on your own hardware that satisfies all five characteristics. A vendor's marketing material calling their product "cloud" does not make it cloud unless it has on-demand self-service, broad network access, resource pooling, rapid elasticity, and measured service. Conversely, the specific technologies used to implement cloud (hypervisors, containers, SDN) are secondary to the model. The security implications follow from the model and the deployment type, not from which hypervisor the provider happens to use. An examiner who asks "which security consideration is most affected by IaaS vs. SaaS?" is asking about the model implications, not about any specific product.</p>
+        </div>
+
+        <!-- ===================== PREV/NEXT ===================== -->
+        <div style="display:flex;justify-content:space-between;margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);">
+          <div>
+            <a href="index.html" style="color:var(--ccsk);">← CCSK Overview</a>
+          </div>
+          <div>
+            <a href="05-iam.html" style="color:var(--ccsk);">Domain 5: IAM →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <h4>Topics</h4>
+        <ul>
+          <li><a href="#nist-definition">NIST Definition</a></li>
+          <li><a href="#five-characteristics">Five Characteristics</a></li>
+          <li><a href="#service-models">IaaS / PaaS / SaaS</a></li>
+          <li><a href="#deployment-models">Deployment Models</a></li>
+          <li><a href="#csa-architecture">CSA Architecture</a></li>
+          <li><a href="#multi-tenancy">Multi-Tenancy</a></li>
+          <li><a href="#virtualization">Virtualization Layer</a></li>
+          <li><a href="#cloud-native">Cloud-Native vs. Lift-and-Shift</a></li>
+          <li><a href="#elasticity-security">Elasticity &amp; Security</a></li>
+          <li><a href="#api-driven">API-Driven Cloud</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Key Terms</h4>
+        <ul>
+          <li>NIST SP 800-145</li>
+          <li>5 Essential Characteristics</li>
+          <li>IaaS / PaaS / SaaS</li>
+          <li>Shared Responsibility</li>
+          <li>Multi-tenancy</li>
+          <li>VM escape</li>
+          <li>Type 1 / Type 2 hypervisor</li>
+          <li>Management plane</li>
+          <li>Control plane / Data plane</li>
+          <li>Noisy neighbor</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Exam Traps</h4>
+        <ul>
+          <li>Elasticity ≠ self-service</li>
+          <li>Customer always owns identity</li>
+          <li>SaaS: customer owns data governance</li>
+          <li>Cloud = model, not technology</li>
+          <li>Management plane = highest-risk surface</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="reading-intel"></div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CCSK Domain 1 &nbsp;·&nbsp; Cloud Computing Concepts &amp; Architecture
+</footer>
+
+<script src="../assets/js/db.js"></script>
+<script src="../assets/js/celebrate.js"></script>
+<script src="../assets/js/app.js"></script>
+<script src="../assets/js/mobile-nav.js"></script>
+</body>
+</html>
