@@ -322,22 +322,15 @@ document.getElementById('codename-input').addEventListener('keydown', e => {
 async function doLogin() {
   const codename = document.getElementById('codename-input').value.trim();
   const err = document.getElementById('login-error');
+  err.style.display = 'none';
 
   if (!codename) {
     document.getElementById('codename-input').focus();
     return;
   }
 
-  // Check saved codename matches, or accept any non-empty for new-device sign-in
-  // (KV verification will happen post-migration; for now accept any codename + implicit passphrase)
-  const saved = await CertDB.getSetting('codename');
-
-  if (saved && saved.toLowerCase() !== codename.toLowerCase()) {
-    err.style.display = 'block';
-    return;
-  }
-
-  err.style.display = 'none';
+  // Accept any non-empty codename — no server-side verification yet.
+  // Whatever is entered becomes the identity on this device.
   await signIn(codename);
 }
 
