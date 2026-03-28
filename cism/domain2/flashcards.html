@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain 2 Flashcards — CISM</title>
+<link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Dashboard</a></li>
+    <li><a href="../../schedule.html">Schedule</a></li>
+    <li><a href="../index.html" class="cism-link active">CISM</a></li>
+    <li><a href="../../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container-narrow">
+
+  <div class="hero">
+    <h1><span style="color:var(--cism);">Domain 2</span> — Flashcards</h1>
+    <p>Information Security Risk Management · 38 cards · Click card to flip · Arrow keys to navigate</p>
+  </div>
+
+  <div class="domain-nav" style="margin-bottom:1.5rem;">
+    <a href="index.html">Study Guide</a>
+    <a href="flashcards.html" class="active">Flashcards</a>
+    <a href="quiz.html">Quiz</a>
+  </div>
+
+  <!-- FLASHCARD COMPONENT -->
+  <div id="fc-deck">
+    <div class="flashcard-container">
+      <div class="flashcard" id="fc-main">
+        <div class="flashcard-face front">
+          <div class="flashcard-label">Term / Concept</div>
+          <div class="flashcard-text" id="fc-front-text">Loading...</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-top:1rem;">Click to reveal answer</div>
+        </div>
+        <div class="flashcard-face back">
+          <div class="flashcard-label">Answer</div>
+          <div class="flashcard-answer" id="fc-back-text">...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard-controls">
+      <button class="btn btn-sm" data-fc="prev">← Prev</button>
+      <span class="fc-counter" id="fc-counter">1 / 38</span>
+      <button class="btn btn-sm" data-fc="next">Next →</button>
+      <button class="btn btn-sm" data-fc="shuffle" style="margin-left:0.5rem;">Shuffle</button>
+    </div>
+  </div>
+
+  <div class="callout tip" style="margin-top:2rem;">
+    <div class="callout-title">Study Tip</div>
+    <p>Go through once front-to-back. Then shuffle and go again. On any card you hesitate on — mark it mentally and come back. Three clean passes through all 38 without hesitation = ready for the quiz.</p>
+  </div>
+
+  <div style="margin-top:1.5rem;display:flex;gap:1rem;">
+    <a href="index.html" class="btn">← Study Guide</a>
+    <a href="quiz.html" class="btn btn-primary">Take Quiz →</a>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CISM Domain 2 Flashcards
+</footer>
+
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/flashcards.js"></script>
+<script>
+const cards = [
+  {
+    front: "What are the three core components of the risk formula?",
+    back: "<strong>Risk = Threat × Vulnerability × Asset Value</strong><br><br><strong>Threat:</strong> A potential event that could cause harm (natural, human, environmental)<br><strong>Vulnerability:</strong> A weakness that a threat can exploit<br><strong>Asset:</strong> What we're trying to protect — if no asset, there's no risk"
+  },
+  {
+    front: "What is the difference between likelihood and impact in risk assessment?",
+    back: "<strong>Likelihood</strong> (also called probability): How likely is it that a threat will materialize and exploit a vulnerability? Expressed as a frequency, probability, or qualitative rating (High/Med/Low).<br><br><strong>Impact:</strong> What is the consequence if the risk event occurs? Measured in financial loss, operational disruption, reputational damage, or regulatory penalty."
+  },
+  {
+    front: "What is Asset Value (AV) in quantitative risk?",
+    back: "<strong>Asset Value (AV)</strong> is the dollar value of the asset being protected. It should reflect the full business value — not just replacement cost — including data value, revenue dependency, regulatory exposure, and reputational impact if compromised."
+  },
+  {
+    front: "What is Exposure Factor (EF)?",
+    back: "<strong>Exposure Factor (EF)</strong> is the percentage of an asset's value that would be lost if a specific threat event occurred. Expressed as a decimal between 0 and 1.<br><br>Example: If a fire would destroy 40% of the data center's value, EF = 0.40."
+  },
+  {
+    front: "What is the formula for Single Loss Expectancy (SLE)?",
+    back: "<strong>SLE = Asset Value (AV) × Exposure Factor (EF)</strong><br><br>SLE is the expected dollar loss from a single occurrence of a threat event.<br><br>Example: AV = $1,000,000 and EF = 0.30 → SLE = $300,000"
+  },
+  {
+    front: "What is Annualized Rate of Occurrence (ARO)?",
+    back: "<strong>ARO</strong> is the expected frequency of a threat occurring within a one-year period.<br><br>Examples:<br>- Once every 10 years → ARO = 0.1<br>- Once per year → ARO = 1<br>- Three times per year → ARO = 3<br><br>ARO is derived from historical data, threat intelligence, or expert judgment."
+  },
+  {
+    front: "What is the formula for Annualized Loss Expectancy (ALE)?",
+    back: "<strong>ALE = SLE × ARO</strong><br><br>ALE is the expected annual dollar loss from a specific threat. It combines the loss per occurrence (SLE) with how often the event is expected to occur per year (ARO).<br><br>Example: SLE = $300,000 and ARO = 0.1 → ALE = $30,000/year<br><br>ALE is used to justify control costs: spend no more on a control than the ALE it reduces."
+  },
+  {
+    front: "What is risk appetite?",
+    back: "The amount and type of risk an organization is <strong>willing to accept</strong> in pursuit of its objectives. Set by the <strong>board of directors</strong> — it is a governance-level decision.<br><br>Risk appetite is broad and philosophical: 'We are a low-risk organization in financial matters but accept higher risk to enable innovation.'"
+  },
+  {
+    front: "What is risk tolerance?",
+    back: "The <strong>acceptable variation</strong> from risk appetite — how far from the stated appetite the organization will allow actual risk to deviate before action is required.<br><br>More operational than appetite. Example: 'Our appetite is low data-breach risk. Our tolerance is fewer than 2 minor incidents per quarter before escalating.'<br><br>Tolerance defines thresholds; appetite defines philosophy."
+  },
+  {
+    front: "What is risk capacity?",
+    back: "The <strong>maximum amount of risk</strong> an organization can absorb before its existence or core objectives are threatened — regardless of what it's willing to accept.<br><br>Risk capacity is an objective ceiling set by financial position, regulatory constraints, and operational resilience — not by preference.<br><br>Hierarchy: Appetite ≤ Tolerance ≤ Capacity"
+  },
+  {
+    front: "What are the four risk treatment options?",
+    back: "1. <strong>Avoid</strong> — Eliminate the activity that creates the risk<br>2. <strong>Transfer</strong> — Shift financial impact to a third party (insurance, contract)<br>3. <strong>Mitigate</strong> — Implement controls to reduce likelihood or impact<br>4. <strong>Accept</strong> — Consciously acknowledge and accept the residual risk with no further action<br><br>CISM mnemonic: <strong>ATMA</strong>"
+  },
+  {
+    front: "When should risk avoidance be chosen as a treatment option?",
+    back: "When the risk is <strong>too high to mitigate cost-effectively</strong> and the activity creating the risk is not essential to business objectives.<br><br>Examples: Deciding not to enter a high-risk market; discontinuing a product line whose liability exceeds its value; not collecting certain data to avoid breach exposure.<br><br>Avoidance eliminates the risk by eliminating the activity — not always possible or practical."
+  },
+  {
+    front: "When should risk transfer be chosen as a treatment option?",
+    back: "When the <strong>financial impact is insurable</strong> or contractually shiftable and the organization wants to reduce financial exposure without eliminating the activity.<br><br>Examples: Cyber liability insurance; SLA indemnification clauses with vendors; outsourcing to a managed security provider with contractual liability.<br><br>Note: Transfer shifts financial consequences — it does <em>not</em> transfer legal liability or regulatory accountability."
+  },
+  {
+    front: "When should risk mitigation be chosen as a treatment option?",
+    back: "When the risk exceeds appetite but the activity is <strong>necessary for business objectives</strong> and controls can cost-effectively reduce it to an acceptable level.<br><br>This is the most common treatment option. Controls (preventive, detective, corrective) reduce either the likelihood of the threat occurring or the impact if it does.<br><br>Cost of control should be less than ALE reduction achieved."
+  },
+  {
+    front: "When should risk acceptance be chosen as a treatment option?",
+    back: "When the risk is <strong>within the organization's risk appetite</strong> or the cost of treating it exceeds the expected loss. Also used when residual risk after mitigation is low enough to accept.<br><br>Requirements for formal risk acceptance:<br>1. Must be <strong>documented</strong><br>2. Must be <strong>approved by appropriate authority</strong> (not the CISO alone)<br>3. Must have a <strong>review date</strong><br><br>Informal or undocumented acceptance is not acceptable in CISM."
+  },
+  {
+    front: "What is inherent risk?",
+    back: "<strong>Inherent risk</strong> is the level of risk that exists <strong>before any controls are applied</strong>. It is the raw, unmitigated risk exposure based on threat landscape, vulnerabilities, and asset value.<br><br>Inherent risk establishes the baseline for risk assessment. Comparing inherent to residual risk shows the value controls provide."
+  },
+  {
+    front: "What is residual risk?",
+    back: "<strong>Residual risk</strong> is the risk that <strong>remains after controls have been applied</strong>. Even well-controlled environments have residual risk — no control eliminates risk to zero.<br><br>Formula: Residual Risk = Inherent Risk − Risk Reduction from Controls<br><br>Residual risk must be within risk appetite. If it exceeds appetite, additional treatment is required."
+  },
+  {
+    front: "What is a risk register?",
+    back: "A <strong>documented repository of identified risks</strong>. Each entry typically includes:<br>- Risk description<br>- Threat and vulnerability involved<br>- Affected asset(s)<br>- Likelihood and impact ratings<br>- Inherent and residual risk ratings<br>- Current controls in place<br>- Risk treatment decision<br>- Risk owner<br>- Review/expiry date<br><br>The risk register is the primary tool for tracking and managing the organization's risk portfolio."
+  },
+  {
+    front: "What is quantitative risk assessment?",
+    back: "Uses <strong>numerical values and formulas</strong> (AV, EF, SLE, ARO, ALE) to express risk in dollar terms.<br><br><strong>Pros:</strong> Objective, enables cost-benefit analysis of controls, credible with finance/executive audiences, supports insurance decisions.<br><br><strong>Cons:</strong> Data-intensive, assumptions may be unreliable, time-consuming, may give false precision on uncertain inputs."
+  },
+  {
+    front: "What is qualitative risk assessment?",
+    back: "Uses <strong>descriptive scales</strong> (High/Medium/Low; 1-5 ratings; heat maps) rather than financial calculations.<br><br><strong>Pros:</strong> Faster, requires less data, accessible to non-financial audiences, useful when hard data is unavailable.<br><br><strong>Cons:</strong> Subjective, difficult to compare risks precisely, harder to justify control investments in dollar terms, consensus-dependent.<br><br>Most organizations use a <strong>semi-quantitative</strong> hybrid approach."
+  },
+  {
+    front: "What are the six functional categories of security controls?",
+    back: "1. <strong>Preventive</strong> — Stop incidents before they occur (firewalls, access control)<br>2. <strong>Detective</strong> — Identify incidents when they occur (IDS, audit logs, SIEM)<br>3. <strong>Corrective</strong> — Restore systems after an incident (backups, patch management)<br>4. <strong>Deterrent</strong> — Discourage would-be attackers (warning banners, visible cameras)<br>5. <strong>Compensating</strong> — Substitute for a primary control that cannot be implemented<br>6. <strong>Recovery</strong> — Restore operations after disruption (DR plans, failover systems)"
+  },
+  {
+    front: "What are the three implementation types of security controls?",
+    back: "1. <strong>Administrative (Managerial)</strong> — Policies, procedures, training, background checks, risk assessments — people and process controls<br>2. <strong>Technical (Logical)</strong> — Software and hardware-enforced controls: encryption, access control systems, firewalls, IDS<br>3. <strong>Physical</strong> — Tangible barriers: locks, fences, guards, cameras, access badges, secure facilities<br><br>CISM often asks which type addresses which risk — know all three for every scenario."
+  },
+  {
+    front: "What is a compensating control?",
+    back: "A control used when the <strong>primary control cannot be implemented</strong> — it provides an alternative way to reduce the same risk.<br><br>Example: A legacy system cannot be patched. Compensating control: network segmentation to isolate it and enhanced monitoring to detect exploitation.<br><br>Compensating controls must be documented, approved, and reviewed regularly. They are a risk acceptance mechanism — not a permanent solution."
+  },
+  {
+    front: "What is Enterprise Risk Management (ERM) and how does information security risk relate to it?",
+    back: "<strong>ERM</strong> is an organization-wide framework for identifying, assessing, and managing all categories of risk (strategic, financial, operational, compliance, security).<br><br>Information security risk is a <strong>subset of ERM</strong>. The CISM approach: integrate security risk into ERM rather than managing it as a silo. The board sees security risk alongside all other enterprise risks — enabling resource allocation decisions based on comparative risk exposure."
+  },
+  {
+    front: "What are the key stages of third-party risk management?",
+    back: "1. <strong>Identification</strong> — Inventory all third parties with access to systems/data<br>2. <strong>Classification</strong> — Tier by risk level (critical, high, medium, low)<br>3. <strong>Due diligence</strong> — Pre-contract assessment (security questionnaire, SOC 2, certifications)<br>4. <strong>Contractual controls</strong> — Security requirements, right-to-audit, data handling, breach notification<br>5. <strong>Ongoing monitoring</strong> — Periodic reassessment, continuous monitoring<br>6. <strong>Offboarding</strong> — Data return/destruction, access revocation on termination"
+  },
+  {
+    front: "What are the three types of threat intelligence and when is each used?",
+    back: "1. <strong>Strategic</strong> — High-level, non-technical. Trends, threat actor motivations, geopolitical risk. Audience: executives and board. Used for: risk appetite decisions, security investments.<br><br>2. <strong>Operational</strong> — Campaign-level intelligence. Threat actor TTPs (tactics, techniques, procedures), ongoing campaigns. Audience: security management. Used for: program adjustments, priority setting.<br><br>3. <strong>Tactical</strong> — Technical indicators: IPs, domains, file hashes, malware signatures. Audience: security analysts and SOC. Used for: detection rules, blocking, incident response."
+  },
+  {
+    front: "What are the steps in vulnerability management?",
+    back: "1. <strong>Asset inventory</strong> — Know what you're protecting<br>2. <strong>Vulnerability scanning</strong> — Identify weaknesses (authenticated scans preferred)<br>3. <strong>Prioritization</strong> — Risk-rank by CVSS score, exploitability, asset criticality<br>4. <strong>Remediation</strong> — Patch, reconfigure, or mitigate based on priority<br>5. <strong>Verification</strong> — Confirm the vulnerability is remediated (rescan)<br>6. <strong>Reporting</strong> — Track metrics (mean time to remediate by severity)<br><br>Prioritize: critical assets + exploitable + high impact = fix first."
+  },
+  {
+    front: "What is defense in depth?",
+    back: "A layered security strategy where <strong>multiple independent controls</strong> are applied so that the failure of any single control does not result in a complete breach.<br><br>Layers typically include: perimeter (firewall), network (segmentation), host (endpoint protection), application (WAF, code review), data (encryption, DLP), and administrative (policies, training).<br><br>From a risk perspective: defense in depth reduces inherent risk by increasing the number of controls an attacker must defeat."
+  },
+  {
+    front: "What are the formal requirements for risk acceptance?",
+    back: "Risk acceptance must be:<br>1. <strong>Documented</strong> — Written record of the risk accepted, its nature, and the rationale<br>2. <strong>Approved by appropriate authority</strong> — Not the risk owner or CISO alone; level of approval scales with risk magnitude<br>3. <strong>Time-bound</strong> — Includes a review/expiry date to prevent permanent implicit acceptance<br>4. <strong>Communicated</strong> — Relevant stakeholders notified<br><br>Verbal or informal acceptance is not acceptable under CISM risk management principles."
+  },
+  {
+    front: "What is the difference between KRI and KPI in a risk management context?",
+    back: "<strong>KRI (Key Risk Indicator)</strong> — Leading indicator. Signals that risk is changing before an event occurs. Monitors the risk environment. Examples: unpatched critical vulnerability count trending up; third-party assessment backlog growing; failed access attempts rising.<br><br><strong>KPI (Key Performance Indicator)</strong> — Lagging/concurrent indicator. Measures whether the risk program is performing as designed. Examples: patch rate, training completion, mean time to remediate.<br><br>KRIs tell you risk is increasing; KPIs tell you the program is working."
+  },
+  {
+    front: "Who should approve risk treatment decisions, and does it vary by risk level?",
+    back: "Yes — approval authority scales with risk magnitude:<br><br>- <strong>Low risk</strong>: Risk owner or department head may accept<br>- <strong>Moderate risk</strong>: CISO or equivalent senior security leader<br>- <strong>High risk</strong>: C-suite executive or senior management<br>- <strong>Critical/strategic risk</strong>: Board of directors or risk committee<br><br>CISM principle: the level of authority approving risk acceptance must be commensurate with the magnitude of the risk being accepted."
+  },
+  {
+    front: "What is the risk owner's role versus the risk manager's role?",
+    back: "<strong>Risk owner:</strong> The business leader accountable for the asset or process at risk. Responsible for making treatment decisions, funding controls, and accepting residual risk. Typically not a security person — it's the business unit head.<br><br><strong>Risk manager (information security manager):</strong> Identifies and assesses risk, presents options, implements controls, monitors effectiveness, and reports status. Advises the risk owner but does not own the risk."
+  },
+  {
+    front: "What makes a risk assessment qualitative vs. semi-quantitative?",
+    back: "<strong>Qualitative</strong>: Descriptive only — High/Medium/Low for likelihood and impact. No numerical calculations. Risk matrix (heat map) output.<br><br><strong>Semi-quantitative</strong>: Assigns numerical scores to qualitative ratings (e.g., High=3, Medium=2, Low=1) and multiplies them. Produces a risk score (e.g., 1-9) but is not based on actual financial data.<br><br>Semi-quantitative gives ranking capability without requiring actuarial data — common in practice."
+  },
+  {
+    front: "What is a threat in risk management?",
+    back: "A <strong>potential event or agent</strong> that could exploit a vulnerability to cause harm to an asset. Threats can be:<br><br>- <strong>Natural</strong>: floods, earthquakes, power outages<br>- <strong>Human — deliberate</strong>: hackers, insiders, nation-states<br>- <strong>Human — accidental</strong>: employee errors, misconfigurations<br>- <strong>Environmental</strong>: equipment failure, HVAC failure<br><br>A threat alone does not create risk — it requires both a vulnerability to exploit and a valuable asset to affect."
+  },
+  {
+    front: "What is a vulnerability in risk management?",
+    back: "A <strong>weakness or gap</strong> in an asset, system, process, or control that a threat could exploit.<br><br>Examples: unpatched software, weak passwords, missing physical controls, lack of security awareness training, poor code quality, absent backup procedures.<br><br>A vulnerability alone does not create risk — it requires a viable threat to exploit it. No threat = no risk from the vulnerability (though good practice is to remediate regardless)."
+  },
+  {
+    front: "What is the primary purpose of a risk register from a governance perspective?",
+    back: "The risk register provides <strong>organizational memory and accountability</strong> for risk management decisions. It ensures:<br>- All identified risks are tracked and owned<br>- Treatment decisions are documented and approved<br>- Progress toward risk reduction is measurable<br>- Residual risks are formally accepted and reviewed<br>- Auditors and executives can verify risk management is systematic<br><br>It is the primary artifact demonstrating that risk management is not ad hoc."
+  },
+  {
+    front: "What is the difference between risk avoidance and risk mitigation?",
+    back: "<strong>Risk avoidance</strong>: Eliminate the risk by eliminating the activity that creates it. You no longer have the risk — but you also forego whatever business value the activity provided.<br><br><strong>Risk mitigation</strong>: Keep the activity but implement controls to reduce likelihood or impact. Risk is reduced but not eliminated — residual risk remains.<br><br>Key distinction: avoidance = stop doing it; mitigation = do it but with safeguards."
+  },
+  {
+    front: "What is the ALE-based decision rule for control investment?",
+    back: "A control is financially justified if its <strong>annual cost is less than the ALE reduction it achieves</strong>.<br><br>Formula check: Control Cost vs. (ALE Before − ALE After)<br><br>Example: ALE = $500,000. A $200,000/year control reduces ALE to $100,000. Net benefit = $400,000 - $200,000 = $200,000 net savings → justified.<br><br>This is the primary quantitative argument for security investment decisions."
+  },
+  {
+    front: "What is the purpose of risk reporting to senior management?",
+    back: "Risk reporting enables <strong>governance-level decision making</strong>. The audience (executives, board) needs:<br>- Current risk posture vs. risk appetite<br>- Top risks by financial exposure or strategic impact<br>- Treatment status and progress<br>- Risks requiring management decisions or escalation<br>- Emerging risks from the threat landscape<br><br>Reports should be in business language — no technical detail unless needed to explain a decision. Risk exposure in dollar terms is most compelling."
+  },
+  {
+    front: "What does it mean to integrate security risk with ERM?",
+    back: "Integration means security risk is <strong>not managed in isolation</strong> — it is:<br>- Reported through the same processes as operational, financial, and strategic risk<br>- Prioritized against all other organizational risks<br>- Measured using consistent methodologies<br>- Reviewed at the same governance forums (risk committee, board)<br><br>Integration prevents security from being seen as a separate IT concern. It positions security risk as a business risk requiring business-level decisions and resources."
+  },
+  {
+    front: "What is the difference between a threat assessment and a vulnerability assessment?",
+    back: "<strong>Threat assessment</strong>: Identifies and evaluates the threats relevant to the organization — who might attack, what methods they use, what they're after. Informed by threat intelligence. Output: threat profile.<br><br><strong>Vulnerability assessment</strong>: Identifies weaknesses in systems, processes, or controls that threats could exploit. Uses scanning tools, interviews, code review. Output: vulnerability inventory with severity ratings.<br><br>Both feed the risk assessment. Together they determine which threats can actually exploit which vulnerabilities."
+  }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  new FlashcardDeck(cards, 'fc-deck');
+});
+</script>
+</body>
+</html>

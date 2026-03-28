@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain 2: Information Security Risk Management — CISM</title>
+<link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Dashboard</a></li>
+    <li><a href="../../schedule.html">Schedule</a></li>
+    <li><a href="../index.html" class="cism-link active">CISM</a></li>
+    <li><a href="../../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1><span style="color:var(--cism);">Domain 2</span> — Information Security Risk Management</h1>
+    <p>20% of exam · ~30 questions · Days 10–16 · Week 2–3</p>
+  </div>
+
+  <div class="domain-nav">
+    <a href="../index.html">CISM Overview</a>
+    <a href="../domain1/index.html">Domain 1</a>
+    <a href="index.html" class="active">Domain 2</a>
+    <a href="../domain3/index.html">Domain 3</a>
+    <a href="../domain4/index.html">Domain 4</a>
+    <a href="flashcards.html">Flashcards</a>
+    <a href="quiz.html">Quiz</a>
+  </div>
+
+  <div class="layout-sidebar">
+    <div class="main-content">
+      <div class="study-content">
+
+        <!-- SESSION 1 -->
+        <h2 id="session1">Session 1 — Risk Fundamentals &amp; Enterprise Risk Management (Day 10, Mon Apr 6)</h2>
+
+        <div class="session-box">
+          <div><strong>Objective:</strong> Understand how CISM defines risk, the components of risk, and how information security risk fits into Enterprise Risk Management.</div>
+          <div class="session-meta">1.5 hours</div>
+        </div>
+
+        <h3>How CISM Defines Risk</h3>
+
+        <p>Risk is the combination of the likelihood that a threat will exploit a vulnerability and the business impact if it does. CISM's fundamental risk equation:</p>
+
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;font-size:1.1rem;margin:1.5rem 0;">
+          <strong style="color:var(--accent);">Risk = Likelihood × Impact</strong><br>
+          <span style="font-size:0.85rem;color:var(--text-muted);">Or: Risk = Threat × Vulnerability × Asset Value</span>
+        </div>
+
+        <p>Each component matters:</p>
+        <ul>
+          <li><strong>Threat:</strong> A potential cause of an unwanted incident. Threats are external (hackers, natural disasters) or internal (employees, system failures). You cannot eliminate threats — they exist in the environment.</li>
+          <li><strong>Vulnerability:</strong> A weakness that could be exploited by a threat. Vulnerabilities can be reduced through controls. This is where security programs have the most leverage.</li>
+          <li><strong>Asset:</strong> Anything of value to the organization that could be impacted. Information assets, systems, processes, reputation, financial resources.</li>
+          <li><strong>Likelihood:</strong> How probable is it that this threat exploits this vulnerability? Influenced by threat frequency, attacker capability and motivation, existing controls.</li>
+          <li><strong>Impact:</strong> What is the business consequence if the risk materializes? Financial loss, operational disruption, regulatory penalty, reputational damage.</li>
+        </ul>
+
+        <h3>Enterprise Risk Management (ERM) and Security Risk</h3>
+
+        <p>ERM is the organization-wide framework for identifying, assessing, and managing all categories of risk: strategic, operational, financial, legal, and technology/security. CISM expects the information security manager to integrate security risk into the ERM framework — not manage it in isolation.</p>
+
+        <p>When security risk is integrated into ERM:</p>
+        <ul>
+          <li>Security risks are visible to the same risk committee that sees financial and operational risks</li>
+          <li>Security risk is expressed in the same language as other business risks (financial exposure, probability, business impact)</li>
+          <li>Security investment decisions compete on an equal footing with other business risk investments</li>
+          <li>The board sees security risk as a business risk, not a technical issue</li>
+        </ul>
+
+        <div class="callout exam">
+          <div class="callout-title">Key CISM Framing</div>
+          <p>CISM always frames security risk as a business risk. When asked what the information security manager should do with identified risks — the answer almost always involves communicating them to business leadership or integrating them into the enterprise risk framework. Security risk doesn't live in the security team's spreadsheet; it lives in the business's risk register.</p>
+        </div>
+
+        <h3>Risk Appetite vs. Risk Tolerance vs. Risk Capacity</h3>
+
+        <table>
+          <tr><th>Term</th><th>Definition</th><th>Who Sets It</th></tr>
+          <tr><td><strong>Risk Appetite</strong></td><td>The amount and type of risk an organization is willing to pursue or accept overall. A strategic, qualitative stance (e.g., "low risk tolerance for data breach, moderate for operational disruption").</td><td>Board of Directors</td></tr>
+          <tr><td><strong>Risk Tolerance</strong></td><td>The acceptable variation in outcomes relative to risk appetite. More operational — the specific bounds within which risk must be kept (e.g., "no more than 3 major incidents per year").</td><td>Executive management</td></tr>
+          <tr><td><strong>Risk Capacity</strong></td><td>The maximum amount of risk the organization could absorb before its existence or business model is threatened. The absolute ceiling.</td><td>Board (informed by finance)</td></tr>
+        </table>
+
+        <p>The information security manager ensures that identified security risks are evaluated against the organization's risk appetite. Risks within tolerance may be accepted. Risks approaching the tolerance boundary require attention. Risks exceeding capacity require immediate escalation.</p>
+
+        <!-- SESSION 2 -->
+        <h2 id="session2">Session 2 — Risk Assessment Methodology (Day 11, Tue Apr 7)</h2>
+
+        <div class="session-box">
+          <div><strong>Objective:</strong> Master the risk assessment process — qualitative vs. quantitative, the steps, and what comes out of it.</div>
+          <div class="session-meta">1.5 hours</div>
+        </div>
+
+        <h3>Risk Assessment — The Process</h3>
+
+        <p>A risk assessment is a structured process for identifying, analyzing, and evaluating risks. CISM describes it as having clear sequential steps. Know these steps cold:</p>
+
+        <ol>
+          <li><strong>Asset identification:</strong> What needs to be protected? Critical information assets, systems, processes. Prioritize by business value.</li>
+          <li><strong>Threat identification:</strong> What could harm these assets? Internal threats (employee error, insider threat), external threats (external attackers, natural disasters, third-party failures).</li>
+          <li><strong>Vulnerability identification:</strong> Where are the weaknesses that threats could exploit? Technical vulnerabilities (unpatched systems), process vulnerabilities (weak change management), human vulnerabilities (lack of awareness).</li>
+          <li><strong>Risk analysis:</strong> For each threat/vulnerability combination: how likely is it? What would the impact be? This produces a risk score or rating.</li>
+          <li><strong>Risk evaluation:</strong> Compare risk scores to risk appetite and tolerance. Which risks are acceptable? Which require treatment?</li>
+          <li><strong>Risk treatment:</strong> For unacceptable risks, select and implement a treatment option (next session).</li>
+          <li><strong>Documentation:</strong> Record all findings in the risk register.</li>
+        </ol>
+
+        <h3>Qualitative vs. Quantitative Risk Assessment</h3>
+
+        <table>
+          <tr><th>Approach</th><th>How It Works</th><th>Pros</th><th>Cons</th></tr>
+          <tr><td><strong>Qualitative</strong></td><td>Rates likelihood and impact on descriptive scales (High/Med/Low or 1-5). Produces heat maps.</td><td>Fast, accessible, good for initial assessment. No data required.</td><td>Subjective. Hard to compare across risks. Difficult to calculate ROI.</td></tr>
+          <tr><td><strong>Quantitative</strong></td><td>Assigns financial values. Uses ALE = SLE × ARO. Produces dollar figures.</td><td>Objective, financial language. Enables ROI calculations. Board-friendly.</td><td>Data-intensive. Requires accurate loss estimates. Time-consuming.</td></tr>
+          <tr><td><strong>Semi-quantitative</strong></td><td>Qualitative ratings converted to numerical scores. Hybrid.</td><td>Balance of speed and comparability.</td><td>May give false precision.</td></tr>
+        </table>
+
+        <h3>Quantitative Risk Formulas — Memorize These</h3>
+
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:1.5rem 0;">
+          <p><strong style="color:var(--accent);">Asset Value (AV):</strong> The dollar value of the asset being protected.</p>
+          <p><strong style="color:var(--accent);">Exposure Factor (EF):</strong> Percentage of asset value lost if the risk materializes (0 to 100%). A fire that destroys a server room = 100% EF. A breach that exposes 30% of records = 30% EF.</p>
+          <p><strong style="color:var(--accent);">Single Loss Expectancy (SLE) = AV × EF</strong><br>The expected financial loss from a single occurrence of a risk event.</p>
+          <p><strong style="color:var(--accent);">Annualized Rate of Occurrence (ARO):</strong> How many times per year this risk is expected to occur. Once in 10 years = 0.1. Three times per year = 3.</p>
+          <p><strong style="color:var(--accent);">Annualized Loss Expectancy (ALE) = SLE × ARO</strong><br>The expected annual financial loss from this risk. This is what you compare to control costs.</p>
+          <p><strong style="color:var(--accent);">Control Cost Justification:</strong> A control is justified if its cost is less than the ALE it prevents. If ALE = $100K and control costs $30K/year, the control delivers $70K net benefit.</p>
+        </div>
+
+        <div class="callout exam">
+          <div class="callout-title">Exam Calculation Example</div>
+          <p>A server worth $500,000 (AV) has a 40% exposure factor (EF) for a ransomware scenario. The organization estimates this scenario could occur once every 5 years (ARO = 0.2).<br><br>
+          SLE = $500,000 × 0.40 = <strong>$200,000</strong><br>
+          ALE = $200,000 × 0.2 = <strong>$40,000/year</strong><br><br>
+          A backup solution costing $15,000/year that reduces EF to 10% would produce:<br>
+          New SLE = $500,000 × 0.10 = $50,000<br>
+          New ALE = $50,000 × 0.2 = $10,000/year<br>
+          Risk reduction = $40,000 - $10,000 = $30,000/year<br>
+          Net benefit = $30,000 - $15,000 = <strong>$15,000/year net positive</strong></p>
+        </div>
+
+        <!-- SESSION 3 -->
+        <h2 id="session3">Session 3 — Risk Treatment Options &amp; Controls (Day 12, Wed Apr 8)</h2>
+
+        <div class="session-box">
+          <div><strong>Objective:</strong> Know the four risk treatment options, when to apply each, and how controls are classified.</div>
+          <div class="session-meta">1.5 hours</div>
+        </div>
+
+        <h3>The Four Risk Treatment Options</h3>
+
+        <p>Once a risk is assessed and found to exceed acceptable levels, the information security manager selects a treatment option. CISM defines four:</p>
+
+        <table>
+          <tr><th>Option</th><th>Also Called</th><th>What It Means</th><th>When To Use</th></tr>
+          <tr><td><strong>Avoid</strong></td><td>Terminate</td><td>Eliminate the activity that causes the risk. Stop doing the thing.</td><td>When risk exceeds any acceptable threshold and the activity isn't essential.</td></tr>
+          <tr><td><strong>Transfer</strong></td><td>Share</td><td>Shift financial consequence to a third party (insurance, contracts). Risk still exists — financial impact is shared.</td><td>When risk can't be reduced to acceptable levels cost-effectively, but consequences can be insured.</td></tr>
+          <tr><td><strong>Mitigate</strong></td><td>Reduce</td><td>Implement controls to reduce likelihood or impact. Most common treatment.</td><td>When risk is above tolerance but can be reduced to acceptable levels with cost-effective controls.</td></tr>
+          <tr><td><strong>Accept</strong></td><td>Tolerate</td><td>Acknowledge the risk and consciously choose not to treat it further. Must be documented and approved by appropriate authority.</td><td>When residual risk is within tolerance, or treatment cost exceeds benefit.</td></tr>
+        </table>
+
+        <div class="callout warning">
+          <div class="callout-title">Risk Acceptance — CISM's Rules</div>
+          <p>Risk acceptance is a legitimate treatment option — but it must be <strong>explicit, documented, and approved by appropriate authority</strong>. You cannot just ignore a risk and call it "accepted." The information security manager must document: what risk is being accepted, why, what the residual exposure is, and who approved acceptance. This is due care and due diligence in action.</p>
+        </div>
+
+        <h3>Control Categories — Functional</h3>
+
+        <table>
+          <tr><th>Category</th><th>Purpose</th><th>Examples</th></tr>
+          <tr><td><strong>Preventive</strong></td><td>Stop the risk event from occurring</td><td>Firewalls, access controls, encryption, training</td></tr>
+          <tr><td><strong>Detective</strong></td><td>Identify that a risk event has occurred</td><td>SIEM, audit logs, intrusion detection, monitoring</td></tr>
+          <tr><td><strong>Corrective</strong></td><td>Restore normal operations after an incident</td><td>Backup restoration, incident response, patches</td></tr>
+          <tr><td><strong>Deterrent</strong></td><td>Discourage potential attackers or violators</td><td>Warning banners, visible cameras, legal notices</td></tr>
+          <tr><td><strong>Compensating</strong></td><td>Alternative controls when primary controls can't be implemented</td><td>Manual reviews when automated controls aren't possible</td></tr>
+          <tr><td><strong>Recovery</strong></td><td>Restore operations after significant disruption</td><td>Disaster recovery, BCP</td></tr>
+        </table>
+
+        <h3>Control Categories — Implementation Type</h3>
+
+        <table>
+          <tr><th>Type</th><th>Description</th><th>Examples</th></tr>
+          <tr><td><strong>Administrative</strong></td><td>Policies, procedures, training, background checks</td><td>Security policy, awareness training, hiring procedures</td></tr>
+          <tr><td><strong>Technical (Logical)</strong></td><td>Technology-based controls</td><td>Firewalls, encryption, MFA, IDS/IPS</td></tr>
+          <tr><td><strong>Physical</strong></td><td>Physical environment controls</td><td>Locks, guards, cameras, biometrics, environmental controls</td></tr>
+        </table>
+
+        <div class="callout exam">
+          <div class="callout-title">Defense in Depth</div>
+          <p>CISM expects you to know that controls should be layered — administrative + technical + physical, preventive + detective + corrective. No single control is sufficient. Defense in depth means that the failure of one control does not result in a successful attack. The exam may ask what is "missing" from a control environment — look for the missing layer.</p>
+        </div>
+
+        <h3>The Risk Register</h3>
+
+        <p>The risk register is the central documentation tool for the risk management program. It records:</p>
+        <ul>
+          <li>Risk identifier and description</li>
+          <li>Asset at risk</li>
+          <li>Threat and vulnerability involved</li>
+          <li>Likelihood and impact ratings</li>
+          <li>Current risk score (inherent risk)</li>
+          <li>Existing controls</li>
+          <li>Residual risk (after existing controls)</li>
+          <li>Treatment option selected</li>
+          <li>Treatment owner and timeline</li>
+          <li>Risk acceptance signature (if accepted)</li>
+        </ul>
+
+        <p>The risk register is a living document. It must be reviewed regularly (at minimum annually, and whenever significant changes occur) and updated as risks change, controls are implemented, and the business environment evolves.</p>
+
+        <!-- SESSION 4 -->
+        <h2 id="session4">Session 4 — Risk Monitoring &amp; Reporting (Day 13, Thu Apr 9)</h2>
+
+        <div class="session-box">
+          <div><strong>Objective:</strong> Understand how to monitor risks over time and report on risk posture to management.</div>
+          <div class="session-meta">1.5 hours</div>
+        </div>
+
+        <h3>Continuous Risk Monitoring</h3>
+
+        <p>Risk assessment is not a once-a-year exercise. Risks change: new threats emerge, vulnerabilities are discovered, business processes change, controls fail. Effective risk management includes continuous monitoring to detect these changes and respond before they become incidents.</p>
+
+        <p>Key monitoring activities:</p>
+        <ul>
+          <li><strong>Vulnerability scanning:</strong> Regular automated scans to detect new vulnerabilities in systems and applications.</li>
+          <li><strong>Threat intelligence:</strong> Monitoring of threat landscape changes — new attack techniques, active campaigns targeting the industry, zero-days.</li>
+          <li><strong>Control effectiveness testing:</strong> Periodic testing to verify controls are working as designed (configuration reviews, penetration tests, log reviews).</li>
+          <li><strong>KRI monitoring:</strong> Tracking key risk indicators for early warning signals that risk is increasing.</li>
+          <li><strong>Third-party risk monitoring:</strong> Ongoing oversight of vendor security posture.</li>
+        </ul>
+
+        <h3>Risk Reporting</h3>
+
+        <p>Risk reporting translates the risk register into actionable information for different audiences:</p>
+
+        <table>
+          <tr><th>Audience</th><th>What They Need</th><th>Frequency</th></tr>
+          <tr><td>Board/Audit Committee</td><td>Top risks, business exposure, governance-level decisions needed</td><td>Quarterly</td></tr>
+          <tr><td>Executive/C-suite</td><td>Risk posture summary, significant risk changes, investment decisions</td><td>Monthly</td></tr>
+          <tr><td>Business unit leaders</td><td>Risks specific to their area, control gaps, treatment progress</td><td>Quarterly</td></tr>
+          <tr><td>Risk committee</td><td>Full risk register review, treatment plan status, escalations</td><td>Monthly</td></tr>
+          <tr><td>Security team</td><td>Operational risk details, control failures, remediation priorities</td><td>Continuous</td></tr>
+        </table>
+
+        <!-- SESSION 5 -->
+        <h2 id="session5">Session 5 — Threat &amp; Vulnerability Management (Day 14, Fri Apr 10)</h2>
+
+        <div class="session-box">
+          <div><strong>Objective:</strong> Understand the threat landscape, vulnerability management programs, and third-party risk.</div>
+          <div class="session-meta">1.5 hours</div>
+        </div>
+
+        <h3>Threat Intelligence</h3>
+
+        <p>Threat intelligence is the process of gathering, analyzing, and using information about threats to inform risk management decisions. For a CISO, threat intelligence answers: who is targeting organizations like ours, with what techniques, and what do we need to do about it?</p>
+
+        <p>Threat intelligence categories:</p>
+        <ul>
+          <li><strong>Strategic:</strong> High-level trends for executives — industry threat landscape, geopolitical factors, regulatory environment.</li>
+          <li><strong>Operational:</strong> Details about specific campaigns and attack patterns for security managers.</li>
+          <li><strong>Tactical:</strong> Specific IoCs (indicators of compromise), attack techniques (TTPs) for security operations.</li>
+        </ul>
+
+        <p>CISM won't test you on specific IoCs — but it will test whether you know that threat intelligence should inform risk assessments and control priorities.</p>
+
+        <h3>Vulnerability Management</h3>
+
+        <p>A vulnerability management program systematically identifies, assesses, and remediates vulnerabilities in the organization's systems. Core components:</p>
+
+        <ol>
+          <li><strong>Discovery:</strong> Asset inventory. You can't secure what you don't know you have.</li>
+          <li><strong>Scanning:</strong> Automated vulnerability scanning on all in-scope assets. Frequency based on criticality (critical systems more frequently).</li>
+          <li><strong>Assessment:</strong> Prioritize vulnerabilities based on criticality (CVSS score), exploitability, asset value, and exposure.</li>
+          <li><strong>Remediation:</strong> Patch, configure, or apply compensating controls. Track to closure within defined SLAs.</li>
+          <li><strong>Verification:</strong> Confirm the vulnerability is remediated. Re-scan.</li>
+          <li><strong>Reporting:</strong> Track metrics (patch compliance rate, mean time to remediate, open critical vulns).</li>
+        </ol>
+
+        <h3>Third-Party Risk Management</h3>
+
+        <p>Third parties — vendors, suppliers, service providers, contractors — often have access to organizational systems and data. A supply chain attack or vendor breach can directly impact the organization. CISM expects the information security manager to manage third-party risk as part of the overall risk management program.</p>
+
+        <p>Third-party risk management lifecycle:</p>
+        <ul>
+          <li><strong>Due diligence at onboarding:</strong> Assess security posture before awarding a contract. Security questionnaires, SOC 2 reports, certifications.</li>
+          <li><strong>Contractual requirements:</strong> Security requirements must be in the contract. Data protection clauses, breach notification obligations, right to audit.</li>
+          <li><strong>Ongoing monitoring:</strong> Annual reassessments, continuous monitoring where possible. Adjust risk posture as vendors change.</li>
+          <li><strong>Offboarding:</strong> Revoke access, ensure data return/destruction, close accounts.</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="callout-title">Domain 2 Self-Check</div>
+          <p>Before moving to flashcards, verify you can answer:</p>
+          <ul>
+            <li>What is the CISM risk formula?</li>
+            <li>Calculate ALE given AV, EF, and ARO</li>
+            <li>What are the four risk treatment options?</li>
+            <li>When is risk acceptance appropriate?</li>
+            <li>What is the difference between inherent risk and residual risk?</li>
+            <li>What are the three control types by implementation (administrative, technical, physical)?</li>
+            <li>What does a risk register contain?</li>
+          </ul>
+        </div>
+
+        <div style="display:flex;gap:1rem;margin-top:2rem;">
+          <a href="flashcards.html" class="btn btn-primary">Domain 2 Flashcards</a>
+          <a href="quiz.html" class="btn">Domain 2 Quiz</a>
+          <a href="../domain3/index.html" class="btn">Next: Domain 3 →</a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <h4>Sessions</h4>
+        <ul>
+          <li><a href="#session1">Session 1 — Risk fundamentals</a></li>
+          <li><a href="#session2">Session 2 — Risk assessment</a></li>
+          <li><a href="#session3">Session 3 — Treatment &amp; controls</a></li>
+          <li><a href="#session4">Session 4 — Monitoring &amp; reporting</a></li>
+          <li><a href="#session5">Session 5 — Threats &amp; vulns</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Key Formulas</h4>
+        <ul>
+          <li>SLE = AV × EF</li>
+          <li>ALE = SLE × ARO</li>
+          <li>Risk = Likelihood × Impact</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Risk Treatment</h4>
+        <ul>
+          <li>Avoid (terminate)</li>
+          <li>Transfer (share)</li>
+          <li>Mitigate (reduce)</li>
+          <li>Accept (tolerate)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Practice</h4>
+        <ul>
+          <li><a href="flashcards.html">→ Flashcards (35+)</a></li>
+          <li><a href="quiz.html">→ Quiz (30 questions)</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CISM Domain 2 &nbsp;·&nbsp; Information Security Risk Management
+</footer>
+
+<script src="../../assets/js/app.js"></script>
+</body>
+</html>

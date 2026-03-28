@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain 1 Flashcards — CISM</title>
+<link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Dashboard</a></li>
+    <li><a href="../../schedule.html">Schedule</a></li>
+    <li><a href="../index.html" class="cism-link active">CISM</a></li>
+    <li><a href="../../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container-narrow">
+
+  <div class="hero">
+    <h1><span style="color:var(--cism);">Domain 1</span> — Flashcards</h1>
+    <p>Information Security Governance · 42 cards · Click card to flip · Arrow keys to navigate</p>
+  </div>
+
+  <div class="domain-nav" style="margin-bottom:1.5rem;">
+    <a href="index.html">Study Guide</a>
+    <a href="flashcards.html" class="active">Flashcards</a>
+    <a href="quiz.html">Quiz</a>
+  </div>
+
+  <!-- FLASHCARD COMPONENT -->
+  <div id="fc-deck">
+    <div class="flashcard-container">
+      <div class="flashcard" id="fc-main">
+        <div class="flashcard-face front">
+          <div class="flashcard-label">Term / Concept</div>
+          <div class="flashcard-text" id="fc-front-text">Loading...</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-top:1rem;">Click to reveal answer</div>
+        </div>
+        <div class="flashcard-face back">
+          <div class="flashcard-label">Answer</div>
+          <div class="flashcard-answer" id="fc-back-text">...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard-controls">
+      <button class="btn btn-sm" data-fc="prev">← Prev</button>
+      <span class="fc-counter" id="fc-counter">1 / 42</span>
+      <button class="btn btn-sm" data-fc="next">Next →</button>
+      <button class="btn btn-sm" data-fc="shuffle" style="margin-left:0.5rem;">Shuffle</button>
+    </div>
+  </div>
+
+  <div class="callout tip" style="margin-top:2rem;">
+    <div class="callout-title">Study Tip</div>
+    <p>Go through once front-to-back. Then shuffle and go again. On any card you hesitate on — mark it mentally and come back. Three clean passes through all 42 without hesitation = ready for the quiz.</p>
+  </div>
+
+  <div style="margin-top:1.5rem;display:flex;gap:1rem;">
+    <a href="index.html" class="btn">← Study Guide</a>
+    <a href="quiz.html" class="btn btn-primary">Take Quiz →</a>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CISM Domain 1 Flashcards
+</footer>
+
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/flashcards.js"></script>
+<script>
+const cards = [
+  {
+    front: "What is the difference between governance and management in the context of information security?",
+    back: "<strong>Governance</strong> sets direction: what should be achieved, what risks are acceptable, who is accountable. Performed by the board and senior executives.<br><br><strong>Management</strong> executes: plans, builds, runs, monitors activities to achieve governance direction. Performed by the CISO and operational leaders."
+  },
+  {
+    front: "Who has ultimate accountability for information security governance?",
+    back: "The <strong>board of directors</strong> (or equivalent senior governing body). They approve risk appetite, receive security status briefings, and hold executives accountable for security outcomes."
+  },
+  {
+    front: "What are the five outcomes of effective information security governance? (SRVRP)",
+    back: "1. <strong>Strategic alignment</strong> — security aligned with business\n2. <strong>Risk management</strong> — risk managed within appetite\n3. <strong>Value delivery</strong> — maximum value from security investments\n4. <strong>Resource management</strong> — efficient use of security resources\n5. <strong>Performance management</strong> — measured and reported outcomes"
+  },
+  {
+    front: "What is an information security strategy?",
+    back: "A long-term plan that defines how the security program will achieve its objectives. It translates governance direction into actionable program direction, including current state, target state, gap analysis, roadmap, and required investment."
+  },
+  {
+    front: "What must happen before an information security strategy is finalized?",
+    back: "<strong>Senior management must approve it.</strong> Without executive sponsorship and approval, a strategy is a wish list, not an endorsed organizational direction. This is mandatory in CISM."
+  },
+  {
+    front: "What is the hierarchy of security documentation from highest to lowest authority?",
+    back: "1. <strong>Policy</strong> — mandatory; what must be done; approved by senior management\n2. <strong>Standard</strong> — mandatory; specific requirements to meet policy\n3. <strong>Procedure</strong> — mandatory; step-by-step how-to instructions\n4. <strong>Guideline</strong> — advisory; recommended approaches, not mandatory"
+  },
+  {
+    front: "Who approves the information security policy?",
+    back: "<strong>Senior management</strong> — typically the CEO, board, or executive committee. The policy requires executive endorsement to carry organizational authority. A policy without senior management approval lacks the authority to be enforced."
+  },
+  {
+    front: "What is the difference between a standard and a guideline?",
+    back: "<strong>Standard:</strong> Mandatory. Specifies exact requirements for meeting a policy (e.g., 'passwords must be 12+ characters'). Must be followed.<br><br><strong>Guideline:</strong> Advisory. Recommended approach. Provides flexibility where standards provide rigidity. Not mandatory."
+  },
+  {
+    front: "A data owner vs. a data custodian — what's the difference?",
+    back: "<strong>Data owner:</strong> Business person accountable for the data. Determines classification, access, and permitted use. Makes decisions about who can use the data and how.<br><br><strong>Data custodian:</strong> IT/operations. Stores and protects the data per the owner's direction. Implements controls. Does not make data use decisions."
+  },
+  {
+    front: "What is the primary purpose of an information security policy?",
+    back: "To state the organization's commitment to information security, define scope, assign accountability, and establish the framework within which all other security documents operate. It is a governance document — high-level principles, not technical instructions."
+  },
+  {
+    front: "What is a KPI in information security?",
+    back: "<strong>Key Performance Indicator.</strong> Measures whether the security program is performing as intended. Examples: patch rate, training completion %, mean time to detect/respond. KPIs answer: 'Is the program doing what it should?'"
+  },
+  {
+    front: "What is a KRI in information security?",
+    back: "<strong>Key Risk Indicator.</strong> Measures changes in the risk environment that could signal increasing risk. Examples: attack volume trending up, number of third parties with overdue assessments. KRIs answer: 'Is the risk changing?' They are leading indicators."
+  },
+  {
+    front: "What is a KGI?",
+    back: "<strong>Key Goal Indicator.</strong> Measures achievement of governance objectives. Examples: % of business units with current risk assessments, board briefing frequency. KGIs answer: 'Are governance goals being met?'"
+  },
+  {
+    front: "What are the six steps in developing an information security strategy?",
+    back: "1. Understand the business\n2. Assess current state (gap analysis)\n3. Define desired state\n4. Identify gap and prioritize\n5. Develop roadmap\n6. Obtain senior management approval"
+  },
+  {
+    front: "What governance maturity level has documented, standardized, communicated processes?",
+    back: "<strong>Level 3 — Defined.</strong> At this level, processes are documented, standardized, and communicated across the organization. A formal security program exists. Compare: Level 2 (Repeatable) has processes that work but aren't formally documented; Level 4 (Managed) adds measurement and control."
+  },
+  {
+    front: "What is the CMM scale for security governance maturity?",
+    back: "0 — Nonexistent\n1 — Initial (ad hoc, reactive)\n2 — Repeatable (consistent but undocumented)\n3 — Defined (documented, standardized, communicated)\n4 — Managed (measured and controlled)\n5 — Optimized (continuous improvement, embedded)"
+  },
+  {
+    front: "Is compliance the same as effective security governance?",
+    back: "<strong>No.</strong> Compliance means meeting minimum regulatory/legal requirements. Governance means managing security to achieve business objectives within risk tolerance. An organization can be fully compliant and still have poor governance. Compliance is a floor, not a ceiling."
+  },
+  {
+    front: "Why is it a problem for the CISO to report directly to the CIO?",
+    back: "Potential <strong>conflict of interest.</strong> The CIO is responsible for IT operations and delivery — objectives that may conflict with security requirements. A CISO reporting to the CIO may have security concerns filtered or deprioritized. CISM prefers CISO reporting to CEO or direct board access for independence."
+  },
+  {
+    front: "What is risk appetite?",
+    back: "The amount and type of risk an organization is willing to accept in pursuit of its objectives. Set by the board. It is a governance-level decision. Risk appetite is broader than risk tolerance — it's the philosophy. Tolerance is the acceptable variation around appetite."
+  },
+  {
+    front: "What is risk tolerance?",
+    back: "The acceptable level of variation in performance relative to risk appetite. If appetite says 'low risk of data breach,' tolerance defines specifically what counts as acceptable (e.g., fewer than X incidents per year, less than $Y in expected losses). Risk tolerance is more operational than appetite."
+  },
+  {
+    front: "What is strategic alignment in information security governance?",
+    back: "Security strategy and investments are aligned with business strategy and objectives. Every security control, policy, and investment can be traced back to a business goal or risk reduction that supports the business. Security is an enabler, not just a cost center."
+  },
+  {
+    front: "What should a CISO report to the board?",
+    back: "Business-language summary of: risk posture, top risks needing board awareness, program status, incident summary and business impact, compliance status, and investment effectiveness. Focus: what decisions does the board need to make? Not technical details."
+  },
+  {
+    front: "What is an information security governance framework?",
+    back: "The structure of policies, processes, roles, responsibilities, and metrics that define how information security is governed within an organization. It provides the foundation for making security decisions, assigning accountability, and measuring outcomes."
+  },
+  {
+    front: "What are the three components of NIST Cybersecurity Framework (CSF) structure?",
+    back: "<strong>Functions:</strong> Identify, Protect, Detect, Respond, Recover (the five core functions)<br><strong>Categories:</strong> Specific outcomes within each function<br><strong>Subcategories:</strong> More granular activities<br><br>Plus Implementation Tiers (1-4) and Profiles (current vs. target state)"
+  },
+  {
+    front: "What is ISO/IEC 27001?",
+    back: "International standard specifying requirements for an Information Security Management System (ISMS). It defines the 'what' — what you must do to establish, implement, maintain, and improve an ISMS. Certification is available. ISO 27002 provides the controls catalogue (the 'how')."
+  },
+  {
+    front: "What does COBIT stand for and who publishes it?",
+    back: "<strong>Control Objectives for Information and Related Technology.</strong> Published by <strong>ISACA</strong> (same body that issues CISM). COBIT is a governance and management framework for enterprise IT, focused on aligning IT with business objectives and managing IT risk."
+  },
+  {
+    front: "What is value delivery in the context of security governance?",
+    back: "Ensuring security investments deliver maximum value to the enterprise — optimal risk reduction and business enablement for the cost incurred. Not spending more than necessary, not under-investing in high-risk areas. Security spending is optimized to business value."
+  },
+  {
+    front: "What triggers a review of the information security strategy?",
+    back: "Any significant change in the business environment: new acquisitions, new products, regulatory changes, significant threat landscape changes, major incidents. At minimum, review annually. The strategy must stay aligned with current business context."
+  },
+  {
+    front: "A newly hired CISO discovers there is no security program. What should they do first?",
+    back: "Develop an <strong>information security strategy</strong> — understand the business, assess current state, define target state. Then get senior management approval for the strategy. Only after that do you write policies, implement controls, or build teams. Strategy before execution."
+  },
+  {
+    front: "What is the role of senior management in information security governance?",
+    back: "Set risk appetite, sponsor the security program, allocate resources, review security status, make governance-level risk decisions, hold the CISO accountable. They don't manage day-to-day security — they govern the security function and own the business risk."
+  },
+  {
+    front: "What is a security charter?",
+    back: "A document (sometimes part of the security policy) that formally establishes the authority, scope, and accountability of the information security function. It defines what the security team has authority to do, who they report to, and what their mandate is. Signed by senior management."
+  },
+  {
+    front: "What is the purpose of breach notification laws?",
+    back: "Require organizations to notify affected individuals and/or regulators within defined timeframes when personal data is breached. The CISO must know the applicable notification obligations (GDPR: 72 hours to regulator; various US states have own timelines) and ensure incident response plans include notification workflows."
+  },
+  {
+    front: "What is the difference between a policy and a procedure?",
+    back: "<strong>Policy:</strong> States WHAT must be done. High-level, mandatory, technology-neutral. Approved by senior management.<br><br><strong>Procedure:</strong> States HOW to do a specific task. Detailed, step-by-step, operational. Written by those who perform the task. Supports policy but doesn't set it."
+  },
+  {
+    front: "What is performance management in information security governance?",
+    back: "Tracking and measuring security activities against goals, then reporting results to stakeholders for informed decision-making. It closes the governance loop: governance sets direction, the program executes, performance management verifies execution is achieving desired outcomes."
+  },
+  {
+    front: "What is resource management in information security governance?",
+    back: "Ensuring security knowledge and infrastructure are used efficiently and effectively. This includes: right-sizing security teams, managing security budgets, ensuring security tools deliver value, and avoiding duplication. Getting optimal security output from available investment."
+  },
+  {
+    front: "Why must security policies be technology-neutral?",
+    back: "Because technology changes faster than policy. A policy that says 'use Windows encryption' becomes invalid when the OS changes. A policy that says 'all sensitive data must be encrypted at rest using approved encryption standards' remains valid regardless of platform. Technology-neutral policies are durable."
+  },
+  {
+    front: "What is the purpose of a security awareness program from a governance perspective?",
+    back: "To create a security culture where all employees understand their role in protecting organizational assets. From governance: it reduces human-factor risk, supports policy compliance, and fulfills the organization's due care obligation. All employees are part of the last line of defense."
+  },
+  {
+    front: "What does 'due care' mean in information security?",
+    back: "Taking reasonable and prudent steps to protect assets and manage risk — doing what a reasonable organization in similar circumstances would do. Due care is the baseline expected of every organization. Failure to exercise due care creates legal liability."
+  },
+  {
+    front: "What does 'due diligence' mean in information security?",
+    back: "Investigating and verifying that security measures are appropriate and actually working. Where due care is about doing the right things, due diligence is about verifying they work. Third-party assessments, audits, and penetration tests are expressions of due diligence."
+  },
+  {
+    front: "What is an audit committee and what role does it play in security governance?",
+    back: "A committee of the board (often composed of independent directors) that oversees internal audit, financial reporting, and compliance. In security governance, the audit committee receives security audit findings, compliance status, and may receive risk briefings. They provide independent oversight of the security program."
+  },
+  {
+    front: "What is the difference between a risk committee and an audit committee?",
+    back: "<strong>Risk committee:</strong> Focuses on identifying, assessing, and managing enterprise risk. Reviews significant risk decisions. Approves risk treatment options.<br><br><strong>Audit committee:</strong> Focuses on oversight of internal audit, financial controls, and compliance. Reviews audit findings and corrective actions."
+  },
+  {
+    front: "What is integrated risk management?",
+    back: "An approach that treats all organizational risks (strategic, operational, financial, security) in a unified framework rather than in silos. Security risk is managed as part of enterprise risk management (ERM), not separately. The board sees security risk alongside all other business risks."
+  }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  new FlashcardDeck(cards, 'fc-deck');
+});
+</script>
+</body>
+</html>

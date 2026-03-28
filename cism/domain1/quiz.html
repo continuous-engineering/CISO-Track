@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain 1 Quiz — CISM</title>
+<link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="../../index.html">Dashboard</a></li>
+    <li><a href="../../schedule.html">Schedule</a></li>
+    <li><a href="../index.html" class="cism-link active">CISM</a></li>
+    <li><a href="../../ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="../../cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="../../cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container-narrow">
+
+  <div class="hero">
+    <h1><span style="color:var(--cism);">Domain 1</span> — Practice Quiz</h1>
+    <p>Information Security Governance · 30 questions · Target: 80%+</p>
+  </div>
+
+  <div class="domain-nav" style="margin-bottom:1.5rem;">
+    <a href="index.html">Study Guide</a>
+    <a href="flashcards.html">Flashcards</a>
+    <a href="quiz.html" class="active">Quiz</a>
+  </div>
+
+  <div class="callout info" style="margin-bottom:1.5rem;">
+    <div class="callout-title">Quiz Rules</div>
+    <p>30 CISM-style scenario questions. Select your answer, then click Submit when done. Read every explanation — even for questions you got right. Scoring below 80%? Re-read the relevant study guide sections before retrying.</p>
+  </div>
+
+  <div id="quiz-container"></div>
+
+  <div style="margin-top:2rem;display:flex;gap:1rem;">
+    <a href="flashcards.html" class="btn">← Flashcards</a>
+    <a href="../domain2/index.html" class="btn">Next: Domain 2 →</a>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; CISM Domain 1 Quiz
+</footer>
+
+<script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/quiz.js"></script>
+<script>
+const questions = [
+  {
+    q: "The board of directors of a large financial institution has asked the newly appointed CISO to establish an information security governance program. What should the CISO do FIRST?",
+    options: [
+      "Deploy a security information and event management (SIEM) system",
+      "Develop an information security strategy aligned with business objectives",
+      "Create a comprehensive information security policy",
+      "Hire additional security personnel to address current gaps"
+    ],
+    answer: 1,
+    explanation: "Strategy comes first. Before writing policies or deploying tools, the CISO must understand the business, assess current state, define the target state, and develop a roadmap. Only an approved strategy gives subsequent actions (policies, tools, hires) their proper direction and justification."
+  },
+  {
+    q: "Who is PRIMARILY responsible for information security governance in an enterprise?",
+    options: [
+      "The Chief Information Security Officer (CISO)",
+      "The IT department",
+      "Senior management and the board of directors",
+      "The internal audit team"
+    ],
+    answer: 2,
+    explanation: "Governance responsibility rests with senior management and the board. The CISO manages and implements — but governance (setting direction, approving risk appetite, holding accountable) is a board/executive function. The CISO serves the governance function but does not own it."
+  },
+  {
+    q: "Which of the following BEST describes the relationship between information security governance and information security management?",
+    options: [
+      "Governance and management are the same function performed by different people",
+      "Governance sets direction and oversight; management executes within that direction",
+      "Management sets direction and governance provides oversight of execution",
+      "Governance is performed by the CISO and management by the board"
+    ],
+    answer: 1,
+    explanation: "Governance = direction, oversight, accountability (board/executives). Management = planning, executing, monitoring (CISO, operational leadership). These are distinct functions. The board governs; the CISO manages."
+  },
+  {
+    q: "An organization's information security program has processes that are consistently performed but not formally documented. Which governance maturity level does this represent?",
+    options: [
+      "Level 1 — Initial",
+      "Level 2 — Repeatable",
+      "Level 3 — Defined",
+      "Level 4 — Managed"
+    ],
+    answer: 1,
+    explanation: "Level 2 (Repeatable) means processes are consistent and repeated but not formally documented or standardized. Level 3 (Defined) adds documentation, standardization, and communication. Level 4 (Managed) adds measurement and control."
+  },
+  {
+    q: "Which of the following is the PRIMARY reason an information security strategy should be aligned with business objectives?",
+    options: [
+      "To ensure security investments can be justified to auditors",
+      "To make security the top business priority",
+      "To ensure security enables rather than impedes business goals",
+      "To comply with regulatory requirements"
+    ],
+    answer: 2,
+    explanation: "Strategic alignment means security supports the business — enabling goals while managing risk. Security that conflicts with business objectives will be ignored, defunded, or worked around. Compliance and audit justification are secondary benefits of alignment."
+  },
+  {
+    q: "An information security manager is developing security documentation for a new cloud platform. The document specifies that 'all customer data must be encrypted at rest using FIPS 140-2 approved algorithms.' What type of document is this?",
+    options: [
+      "Policy",
+      "Standard",
+      "Procedure",
+      "Guideline"
+    ],
+    answer: 1,
+    explanation: "A standard specifies exact, mandatory requirements for meeting a policy. 'FIPS 140-2 approved algorithms' is a specific, measurable requirement — that's a standard. The policy would say 'all sensitive data must be encrypted at rest.' The procedure would say how to configure encryption on the specific platform."
+  },
+  {
+    q: "Which of the following documents provides RECOMMENDED but non-mandatory approaches to security?",
+    options: [
+      "Policies",
+      "Standards",
+      "Procedures",
+      "Guidelines"
+    ],
+    answer: 3,
+    explanation: "Guidelines are advisory — they recommend approaches but allow for judgment and flexibility. Policies, standards, and procedures are all mandatory. Guidelines are used where flexibility is appropriate or where requirements are context-dependent."
+  },
+  {
+    q: "The marketing department head wants to use a third-party cloud app to store customer survey data. Under a proper governance framework, who is responsible for approving the data classification and access rights for this data?",
+    options: [
+      "The CISO",
+      "The IT security team",
+      "The marketing department head as data owner",
+      "The cloud provider as data custodian"
+    ],
+    answer: 2,
+    explanation: "The data owner (the business leader who owns the data — in this case the marketing head) makes decisions about data classification, permitted use, and access rights. The data custodian (IT/security) implements those decisions. The CISO advises on security requirements but doesn't own the business data."
+  },
+  {
+    q: "An information security manager is preparing a quarterly report for the board. Which metric would be MOST useful for board-level decision making?",
+    options: [
+      "Number of SIEM alerts processed in the quarter",
+      "Average time to patch non-critical vulnerabilities",
+      "Financial exposure from the top three unmitigated risks",
+      "Percentage of endpoints with updated antivirus signatures"
+    ],
+    answer: 2,
+    explanation: "Boards make governance decisions. They need risk exposure in business terms (financial impact, business disruption potential). SIEM alert counts and patch times are operational metrics for the security team. Boards don't make decisions based on them — they need 'here's the risk to the business and what it costs.'"
+  },
+  {
+    q: "A security manager notices that the number of phishing attempts targeting the organization has increased 40% over the past month. This metric is BEST classified as a:",
+    options: [
+      "Key Performance Indicator (KPI)",
+      "Key Risk Indicator (KRI)",
+      "Key Goal Indicator (KGI)",
+      "Operational security metric"
+    ],
+    answer: 1,
+    explanation: "A KRI measures changes in the risk environment — leading indicators that risk is increasing. Rising phishing attempts signal an increasing threat landscape. This doesn't measure program performance (KPI) or goal achievement (KGI) — it signals that risk is changing."
+  },
+  {
+    q: "Which of the following BEST represents the 'value delivery' outcome of information security governance?",
+    options: [
+      "Implementing the most comprehensive security controls available",
+      "Achieving 100% policy compliance across the organization",
+      "Optimizing security investments to deliver maximum risk reduction per dollar spent",
+      "Meeting all regulatory requirements on schedule"
+    ],
+    answer: 2,
+    explanation: "Value delivery means getting maximum business value (risk reduction, business enablement) from security investment. It's about optimization and efficiency — not maximum controls (which could be wasteful), not 100% compliance (a floor, not a target), not regulatory compliance (a requirement, not a governance outcome)."
+  },
+  {
+    q: "An organization has recently experienced a significant data breach. Senior management is concerned that similar incidents may recur. What should the information security manager present to address this governance concern?",
+    options: [
+      "A technical report on the vulnerabilities exploited in the breach",
+      "A list of new security tools that would prevent similar attacks",
+      "An updated risk assessment with current risk posture and proposed mitigations",
+      "The results of a forensic investigation with attribution findings"
+    ],
+    answer: 2,
+    explanation: "Governance is served by risk information — what's the current exposure, what's being done about it, what decisions need to be made. Technical details (vulnerabilities, tools, forensics) are operational. Senior management needs a risk-based view to make governance decisions about resources and priorities."
+  },
+  {
+    q: "Which of the following is the MOST important characteristic of an effective information security policy?",
+    options: [
+      "It specifies detailed technical controls for each system",
+      "It is endorsed and supported by senior management",
+      "It is reviewed annually by the IT security team",
+      "It references the specific regulations the organization must comply with"
+    ],
+    answer: 1,
+    explanation: "Without senior management endorsement, a security policy lacks organizational authority. It won't be enforced, won't receive resources, and won't be taken seriously. Technical specifics belong in standards. Annual review is good practice but not the most important characteristic. Regulatory references are useful but secondary."
+  },
+  {
+    q: "A CISO is concerned that the information security strategy may be misaligned with current business direction after the company acquired a new division. What is the MOST appropriate action?",
+    options: [
+      "Wait for the annual security strategy review cycle",
+      "Update the security strategy immediately without waiting for the annual cycle",
+      "Apply existing security controls to the acquired division immediately",
+      "Request an external audit to assess the acquired division's security posture"
+    ],
+    answer: 1,
+    explanation: "Significant business changes (mergers, acquisitions) trigger out-of-cycle strategy reviews. Waiting for the annual cycle leaves misalignment in place — a governance risk. The strategy must be updated when the business context changes materially. Apply existing controls in interim, but update strategy promptly."
+  },
+  {
+    q: "Why is it often recommended that the CISO NOT report directly to the CIO?",
+    options: [
+      "The CIO lacks the authority to support security initiatives",
+      "Security concerns may be deprioritized when they conflict with IT operational objectives",
+      "The CISO requires direct access to the board at all times",
+      "CIOs typically do not understand information security"
+    ],
+    answer: 1,
+    explanation: "When security reports to IT, there's an inherent conflict of interest: IT's mission is to deliver services, and security controls that slow down IT projects may get deprioritized by IT leadership. Independence allows the CISO to escalate security concerns without them being filtered by competing priorities."
+  },
+  {
+    q: "An information security manager is building an executive dashboard. Which of the following is the MOST appropriate metric to include?",
+    options: [
+      "Number of failed login attempts in the past 30 days",
+      "Current patch compliance rate by criticality tier",
+      "Risk-adjusted exposure from the organization's top security threats",
+      "Mean time to acknowledge security alerts"
+    ],
+    answer: 2,
+    explanation: "Executives need risk-adjusted business exposure — what could this cost us? Operational metrics (failed logins, patch rates, alert response times) are tools for the security team. Executive dashboards translate operational data into business risk language that supports governance decisions."
+  },
+  {
+    q: "Which of the following MOST accurately describes the relationship between compliance and governance?",
+    options: [
+      "Compliance and governance are the same — both require meeting regulatory requirements",
+      "Governance drives strategy and risk management; compliance satisfies minimum legal/regulatory obligations",
+      "Compliance provides governance direction; governance executes compliance programs",
+      "Governance only applies to public companies; compliance applies to all organizations"
+    ],
+    answer: 1,
+    explanation: "Compliance is a floor — meet the minimum required by law/regulation. Governance is about achieving business objectives within appropriate risk tolerance, which typically exceeds compliance minimums. An organization can be fully compliant and still have poor security governance."
+  },
+  {
+    q: "What is the PRIMARY role of the board of directors in information security governance?",
+    options: [
+      "Managing day-to-day security operations",
+      "Approving technical security architectures",
+      "Setting risk appetite and providing strategic oversight",
+      "Conducting annual security assessments"
+    ],
+    answer: 2,
+    explanation: "The board sets risk appetite (how much risk is acceptable), provides strategic direction, and holds the executive team accountable for security outcomes. They don't manage operations, approve technical architectures (that's management), or conduct assessments (that's audit/security teams)."
+  },
+  {
+    q: "An organization's security policy states that 'all employees must report suspicious activity immediately.' A procedure to support this policy would MOST likely include:",
+    options: [
+      "The definition of what constitutes information security risk",
+      "Step-by-step instructions for submitting a security incident report",
+      "The consequences for employees who fail to report incidents",
+      "The criteria for determining if activity is suspicious"
+    ],
+    answer: 1,
+    explanation: "Procedures provide step-by-step operational instructions — the 'how.' How do I submit an incident report? What form do I use? Where do I send it? Who do I call? That's a procedure. Definitions and criteria might appear in standards. Consequences are in the policy itself or enforcement standards."
+  },
+  {
+    q: "What is the MOST effective way to demonstrate the value of an information security program to senior management?",
+    options: [
+      "Show that no security incidents occurred during the reporting period",
+      "Present the technical sophistication of security tools deployed",
+      "Demonstrate risk reduction achieved relative to security investment",
+      "Show 100% compliance with the organization's security policies"
+    ],
+    answer: 2,
+    explanation: "Value delivery means showing ROI in business terms — risk reduced per dollar invested. 'No incidents' doesn't prove program value (could be luck or no threats). Technical sophistication doesn't translate to business value. 100% compliance is a process metric, not a value metric. Risk reduction relative to cost is the language of executives."
+  },
+  {
+    q: "The five governance outcomes of information security include all of the following EXCEPT:",
+    options: [
+      "Strategic alignment",
+      "Resource management",
+      "Technical compliance",
+      "Risk management"
+    ],
+    answer: 2,
+    explanation: "The five governance outcomes are: Strategic alignment, Risk management, Value delivery, Resource management, and Performance management. 'Technical compliance' is not one of them — CISM governance is about business outcomes, not technical compliance checkboxes."
+  },
+  {
+    q: "A CISO who was recently hired discovers that the security team is implementing security controls based on what's technically available rather than identified business risk. This is an example of:",
+    options: [
+      "Effective security governance in action",
+      "Lack of alignment between security and business objectives",
+      "Proper use of the defense-in-depth principle",
+      "Appropriate application of security best practices"
+    ],
+    answer: 1,
+    explanation: "Controls driven by technical availability rather than business risk is the classic misalignment problem. Security should protect what the business cares about, in proportion to the risk. Buying the latest technology because it exists, not because it addresses a risk, wastes resources and doesn't improve governance outcomes."
+  },
+  {
+    q: "Which document establishes the formal authority, scope, and mandate of the information security function?",
+    options: [
+      "The information security policy",
+      "The security operations runbook",
+      "The security charter",
+      "The risk register"
+    ],
+    answer: 2,
+    explanation: "The security charter formally establishes what the security function has authority to do, its scope, reporting structure, and mandate. It's the foundational governance document for the security organization itself, signed by senior management. The ISP covers organizational security requirements broadly."
+  },
+  {
+    q: "Which of the following is the BEST example of 'performance management' as a governance outcome?",
+    options: [
+      "Implementing a new SIEM to improve threat detection",
+      "Reporting security metrics to the board quarterly",
+      "Conducting annual penetration testing",
+      "Encrypting all databases containing sensitive data"
+    ],
+    answer: 1,
+    explanation: "Performance management = measuring security activities and reporting results to stakeholders for informed decision-making. Quarterly board reporting on security metrics closes the governance loop. The SIEM, pen tests, and encryption are security controls (execution), not governance performance management."
+  },
+  {
+    q: "An information security manager is preparing a business case for additional security staff. Which argument would be MOST compelling to senior management?",
+    options: [
+      "Industry benchmarks show similar organizations employ more security staff per employee",
+      "Adding staff will help achieve full compliance with ISO 27001",
+      "Additional staff would reduce expected annual loss from incidents by an estimated $2M, exceeding the $500K cost",
+      "Security staff are understaffed and at risk of burnout"
+    ],
+    answer: 2,
+    explanation: "Business cases are won with ROI — risk reduction in financial terms that executives can evaluate. '$500K cost, $2M risk reduction' is a compelling governance argument. Industry benchmarks and compliance are weaker arguments. Staff burnout is an HR concern, not a security governance argument to senior management."
+  },
+  {
+    q: "What is the MOST important reason for security awareness training from an information security governance perspective?",
+    options: [
+      "To satisfy regulatory requirements for training programs",
+      "To reduce human error as a factor in security incidents",
+      "To embed security culture and ensure all employees support governance objectives",
+      "To demonstrate due diligence in case of litigation"
+    ],
+    answer: 2,
+    explanation: "From a governance perspective, awareness training creates a security-aware culture where everyone understands their role in achieving governance objectives. Regulatory compliance and due diligence are secondary benefits. CISM views training as a governance tool for human-factor risk reduction and culture-building."
+  },
+  {
+    q: "A security policy states 'all sensitive data must be encrypted.' What determines whether this policy is achievable?",
+    options: [
+      "The technical encryption capabilities available",
+      "Whether the policy has been approved by senior management",
+      "Whether the organization can define and enforce what 'sensitive' means",
+      "The compliance requirements the organization must meet"
+    ],
+    answer: 2,
+    explanation: "An unenforceable policy creates false assurance. 'Sensitive data' must be clearly defined (through a data classification standard) and enforcement mechanisms must exist. Without a clear definition of 'sensitive' and a way to enforce compliance, the policy is aspirational, not operational."
+  },
+  {
+    q: "Under the CISM framework, which of the following BEST describes 'due diligence' in information security?",
+    options: [
+      "Implementing all available security controls regardless of cost",
+      "Verifying through assessment and audit that security measures are appropriate and effective",
+      "Meeting the minimum security requirements of applicable regulations",
+      "Documenting all security decisions for potential litigation defense"
+    ],
+    answer: 1,
+    explanation: "Due diligence = verifying that appropriate security measures exist and work. Audits, assessments, pen tests, vendor reviews — these are due diligence activities. Due care = implementing reasonable security measures. Due diligence = verifying they're working. Both are required; diligence without care is impossible."
+  },
+  {
+    q: "An organization operates in three regulatory jurisdictions with different breach notification timelines. Which governance document should define how the organization meets all notification requirements?",
+    options: [
+      "The information security strategy",
+      "The incident response policy and associated procedures",
+      "The data classification standard",
+      "The business continuity plan"
+    ],
+    answer: 1,
+    explanation: "Breach notification obligations are addressed in the incident response policy (which states the organizational commitment to timely notification) and supporting procedures (which specify the exact steps, timelines, and workflows for notification under each jurisdiction). The strategy is long-term direction; classification defines data; BCP covers continuity."
+  },
+  {
+    q: "Which of the following BEST represents an integrated approach to security governance?",
+    options: [
+      "Running separate compliance programs for each applicable regulation",
+      "Building a unified control framework that satisfies multiple requirements simultaneously",
+      "Delegating each regulatory requirement to a different business unit",
+      "Focusing exclusively on the most stringent regulatory requirement"
+    ],
+    answer: 1,
+    explanation: "Integrated governance means one control framework that maps to multiple requirements — PCI, SOX, HIPAA, ISO — rather than running parallel programs. This reduces duplication, audit fatigue, and inconsistency. It's more efficient and produces a more coherent security program. CISM favors integration."
+  }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  new Quiz(questions, 'quiz-container', 'cism_d1_quiz');
+});
+</script>
+</body>
+</html>

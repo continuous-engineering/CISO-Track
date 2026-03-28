@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISO Certification Track</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Dashboard</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="cism/index.html" class="cism-link">CISM</a></li>
+    <li><a href="ccsk/index.html" class="ccsk-link">CCSK</a></li>
+    <li><a href="cobit/index.html" class="cobit-link">COBIT</a></li>
+    <li><a href="cissp/index.html" class="cissp-link">CISSP</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>CISO Certification Track</h1>
+    <p>CISM → CCSK → COBIT → CISSP &nbsp;·&nbsp; 2 hrs/day &nbsp;·&nbsp; ~22 weeks &nbsp;·&nbsp; Started March 28, 2026</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-value" id="stat-days">1</div>
+      <div class="stat-label">Days In</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-tasks">0</div>
+      <div class="stat-label">Tasks Done</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-quizzes">0</div>
+      <div class="stat-label">Quizzes Taken</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-avg">—</div>
+      <div class="stat-label">Avg Score</div>
+    </div>
+  </div>
+
+  <!-- TODAY'S FOCUS -->
+  <div class="card" style="margin-bottom:2rem;border-color:var(--accent);">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.5rem;">Today's Focus</div>
+        <h2 style="font-size:1.25rem;margin-bottom:0.4rem;">Day 1 — Orientation &amp; CISM Domain 1 Intro</h2>
+        <p style="font-size:0.875rem;">1 hr &nbsp;·&nbsp; Saturday, March 28, 2026 &nbsp;·&nbsp; <span class="badge badge-cism">CISM</span></p>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <a href="cism/index.html" class="btn btn-primary">Start Study</a>
+        <a href="schedule.html" class="btn">Full Schedule</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATION PROGRESS -->
+  <h2 style="font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:1rem;">Certifications</h2>
+  <div class="grid-2" style="margin-bottom:2rem;">
+
+    <div class="card cism">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
+        <div>
+          <span class="badge badge-cism">CISM</span>
+          <h2 style="margin-top:0.5rem;">Information Security Manager</h2>
+          <p>ISACA · 150 questions · 4 hours · ~76% passing</p>
+        </div>
+        <span class="badge badge-wip">In Progress</span>
+      </div>
+      <div data-progress-bar="cism" data-total="20">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.25rem;">
+          <span>Progress</span><span class="progress-label">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill cism" style="width:0%"></div></div>
+      </div>
+      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+        <a href="cism/index.html" class="btn btn-sm">Overview</a>
+        <a href="cism/domain1/index.html" class="btn btn-sm">Domain 1</a>
+        <a href="cism/domain2/index.html" class="btn btn-sm">Domain 2</a>
+      </div>
+    </div>
+
+    <div class="card ccsk">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
+        <div>
+          <span class="badge badge-ccsk">CCSK</span>
+          <h2 style="margin-top:0.5rem;">Cloud Security Knowledge</h2>
+          <p>CSA · 60 questions · 90 min · ~80% passing</p>
+        </div>
+        <span style="font-size:0.75rem;color:var(--text-muted);">Starts Week 2</span>
+      </div>
+      <div data-progress-bar="ccsk" data-total="8">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.25rem;">
+          <span>Progress</span><span class="progress-label">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill ccsk" style="width:0%"></div></div>
+      </div>
+      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+        <a href="ccsk/index.html" class="btn btn-sm">Overview</a>
+      </div>
+    </div>
+
+    <div class="card cobit">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
+        <div>
+          <span class="badge badge-cobit">COBIT</span>
+          <h2 style="margin-top:0.5rem;">COBIT 2019 Foundation</h2>
+          <p>ISACA · 75 questions · 2 hours · ~65% passing</p>
+        </div>
+        <span style="font-size:0.75rem;color:var(--text-muted);">Starts Week 5</span>
+      </div>
+      <div data-progress-bar="cobit" data-total="8">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.25rem;">
+          <span>Progress</span><span class="progress-label">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill cobit" style="width:0%"></div></div>
+      </div>
+      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+        <a href="cobit/index.html" class="btn btn-sm">Overview</a>
+      </div>
+    </div>
+
+    <div class="card cissp">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
+        <div>
+          <span class="badge badge-cissp">CISSP</span>
+          <h2 style="margin-top:0.5rem;">Certified Information Systems Security</h2>
+          <p>ISC² · 100-150 questions · 3 hours · 70% passing</p>
+        </div>
+        <span style="font-size:0.75rem;color:var(--text-muted);">Starts Week 12</span>
+      </div>
+      <div data-progress-bar="cissp" data-total="16">
+        <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted);margin-bottom:0.25rem;">
+          <span>Progress</span><span class="progress-label">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill cissp" style="width:0%"></div></div>
+      </div>
+      <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+        <a href="cissp/index.html" class="btn btn-sm">Overview</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KANBAN BOARD -->
+  <h2 style="font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:1rem;">CISM Kanban — Phase 1</h2>
+  <div class="kanban" style="margin-bottom:3rem;">
+
+    <div class="kanban-col">
+      <h3>Backlog</h3>
+      <div class="kanban-task" data-task="cism_register">Register for exam</div>
+      <div class="kanban-task" data-task="cism_buy_materials">Buy CISM Review Manual + QBank</div>
+      <div class="kanban-task" data-task="isaca_join">Join ISACA</div>
+      <div class="kanban-task" data-task="cism_d3_read">Domain 3: Program Dev (read + notes)</div>
+      <div class="kanban-task" data-task="cism_d4_read">Domain 4: Incident Mgmt (read + notes)</div>
+      <div class="kanban-task" data-task="cism_cases">Case studies — frameworks in practice</div>
+    </div>
+
+    <div class="kanban-col">
+      <h3>In Progress</h3>
+      <div class="kanban-task" data-task="cism_d1_read" style="border-color:var(--cism);">Domain 1: Governance (read + notes)</div>
+      <div class="kanban-task" data-task="cism_d2_read">Domain 2: Risk Management (read + notes)</div>
+    </div>
+
+    <div class="kanban-col">
+      <h3>In Review</h3>
+      <div class="kanban-task" data-task="cism_d1_q">Domain 1 practice questions (80%+)</div>
+      <div class="kanban-task" data-task="cism_d2_q">Domain 2 practice questions (80%+)</div>
+      <div class="kanban-task" data-task="cism_d3_q">Domain 3 practice questions (80%+)</div>
+      <div class="kanban-task" data-task="cism_d4_q">Domain 4 practice questions (80%+)</div>
+      <div class="kanban-task" data-task="cism_mock1">Mixed domain mock exam 1</div>
+      <div class="kanban-task" data-task="cism_mock2">Mixed domain mock exam 2</div>
+    </div>
+
+    <div class="kanban-col">
+      <h3>Done</h3>
+      <div id="kanban-done-list"></div>
+      <div style="font-size:0.75rem;color:var(--text-muted);text-align:center;margin-top:0.5rem;">Click any task to mark done</div>
+    </div>
+
+  </div>
+
+  <!-- STUDY PHILOSOPHY -->
+  <div class="card" style="margin-bottom:2rem;">
+    <h2 style="font-size:1rem;margin-bottom:1rem;">CISM Exam Mindset — Read This First</h2>
+    <div class="study-content">
+      <p>You have 25 years of security and infrastructure experience plus 2 years of active CISO work. <strong>You already know how to do this job.</strong> The CISM exam tests whether you know how ISACA frames it.</p>
+      <p>The single most important thing to internalize: <mark>CISM always picks the business-aligned answer over the purely technical one.</mark> When you see a question where one answer protects the business and another protects the systems, ISACA picks the business.</p>
+      <p>The second most important rule: <mark>Senior management sponsorship is required for everything.</mark> Any security initiative needs executive buy-in. Full stop.</p>
+      <p>The third rule: <mark>Risk-based decisions over compliance checkboxes.</mark> CISM wants you thinking about risk, not ticking boxes.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  CISO Certification Track &nbsp;·&nbsp; Personal Study System &nbsp;·&nbsp; Started March 28, 2026
+</footer>
+
+<script src="assets/js/app.js"></script>
+<script>
+// Move done kanban tasks to Done column
+document.addEventListener('DOMContentLoaded', () => {
+  const doneList = document.getElementById('kanban-done-list');
+  document.querySelectorAll('.kanban-task').forEach(el => {
+    if (isDone(el.dataset.task) && doneList) {
+      el.classList.add('done');
+      doneList.appendChild(el.cloneNode(true));
+    }
+  });
+});
+</script>
+</body>
+</html>
