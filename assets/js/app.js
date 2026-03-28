@@ -1,5 +1,5 @@
 /* =============================================
-   APP.JS — CISO CERT TRACK
+   APP.JS — CERT STUDY GUIDES
    Time tracking, scroll analytics, nav, stats
    ============================================= */
 

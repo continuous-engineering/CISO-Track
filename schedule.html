@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Study Schedule — CISO Cert Track</title>
+<title>Study Schedule — Cert Study Guides</title>
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/db.js"></script>
 <script>
@@ -163,7 +163,7 @@
 <body>
 
 <nav>
-  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <div class="nav-brand"><span>Cert</span> Study Guides</div>
   <ul class="nav-links">
     <li><a href="index.html">Dashboard</a></li>
     <li><a href="schedule.html" class="active">Schedule</a></li>
@@ -207,8 +207,8 @@
 </div>
 
 <footer>
-  CISO Certification Track &nbsp;&middot;&nbsp; Personal Study System
-  <div class="footer-powered">Powered by <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a> &nbsp;&middot;&nbsp; <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a></div>
+  Certification Study Guides &middot; Personal Study System
+  <div class="footer-powered">Powered by <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a> &middot; <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a></div>
 </footer>
 
 <script src="assets/js/config.js"></script>
@@ -353,7 +353,7 @@ async function buildSchedule() {
           <span style="color:${cert.colorHex}">${cert.name}</span>
           <span style="color:var(--text-muted);font-weight:400;">— ${cert.fullName}</span>
         </div>
-        <div class="phase-meta">${fmtDate(phaseStart)} — ${fmtDate(phaseEnd)} &nbsp;&middot;&nbsp; ${phase.days.length} days</div>
+        <div class="phase-meta">${fmtDate(phaseStart)} — ${fmtDate(phaseEnd)} &middot; ${phase.days.length} days</div>
       </div>
       <div class="schedule-table">
         <div class="sched-row header">

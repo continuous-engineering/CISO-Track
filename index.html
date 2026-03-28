@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CISO Certification Track</title>
+<title>Certification Study Guides</title>
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/db.js"></script>
 <script>
@@ -17,7 +17,7 @@
 <body>
 
 <nav>
-  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <div class="nav-brand"><span>Cert</span> Study Guides</div>
   <ul class="nav-links">
     <li><a href="index.html" class="active">Dashboard</a></li>
     <li><a href="schedule.html">Schedule</a></li>
@@ -43,7 +43,7 @@
 <div class="container">
 
   <div class="hero">
-    <h1>CISO Certification Track</h1>
+    <h1>Certification Study Guides</h1>
     <p id="hero-subtitle">Loading your plan...</p>
   </div>
 
@@ -222,9 +222,9 @@
 </div>
 
 <footer>
-  CISO Certification Track &nbsp;·&nbsp; Personal Study System &nbsp;·&nbsp; Started March 28, 2026
+  Certification Study Guides · Personal Study System · Started March 28, 2026
 
-  <div class="footer-powered">Powered by <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a> &nbsp;&middot;&nbsp; <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a></div>
+  <div class="footer-powered">Powered by <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a> &middot; <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a></div>
 </footer>
 
 <script src="assets/js/config.js"></script>
@@ -272,8 +272,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('focus-title').textContent = 'Day ' + todayEntry.day + ' — ' + items;
     document.getElementById('focus-meta').innerHTML =
-      Math.round(todayEntry.items.reduce((a,b)=>a+b.mins,0)/60*10)/10 + ' hrs &nbsp;&middot;&nbsp; ' + dateStr +
-      (cert ? ' &nbsp;&middot;&nbsp; <span class="badge badge-' + cert.id + '">' + cert.name + '</span>' : '');
+      Math.round(todayEntry.items.reduce((a,b)=>a+b.mins,0)/60*10)/10 + ' hrs &middot; ' + dateStr +
+      (cert ? ' &middot; <span class="badge badge-' + cert.id + '">' + cert.name + '</span>' : '');
     if (primaryItem?.domain?.path) {
       document.getElementById('focus-link').href = primaryItem.domain.path;
       document.getElementById('focus-link').textContent = 'Start Today';

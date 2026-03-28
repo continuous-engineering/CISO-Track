@@ -1,6 +1,6 @@
 {
-  "name": "CISO Certification Track",
-  "short_name": "Cert Track",
+  "name": "Certification Study Guides",
+  "short_name": "Study Guides",
   "description": "Personal study system for CISM, CCSK, COBIT, CISSP",
   "start_url": "/index.html",
   "display": "standalone",

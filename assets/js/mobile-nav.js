@@ -1,5 +1,5 @@
 /* =============================================
-   MOBILE BOTTOM NAV — CISO CERT TRACK
+   MOBILE BOTTOM NAV — CERT STUDY GUIDES
    Self-contained module. No dependencies.
    Injects bottom nav on mobile (≤768px) only.
    ============================================= */

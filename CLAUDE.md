@@ -1,4 +1,4 @@
-# CISO Cert Track — Project Rules
+# Cert Study Guides — Project Rules
 
 ## Build Commands
 - Check: none (static HTML, no build step)
@@ -125,7 +125,7 @@ Every page footer must include:
 ```html
 <div class="footer-powered">
   Powered by <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a>
-  &nbsp;&middot;&nbsp;
+  &middot;
   <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a>
 </div>
 ```

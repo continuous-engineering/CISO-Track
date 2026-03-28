@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Settings — CISO Cert Track</title>
+<title>Settings — Cert Study Guides</title>
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/db.js"></script>
 <script>
@@ -257,7 +257,7 @@
 <body>
 
 <nav>
-  <div class="nav-brand"><span>CISO</span> Cert Track</div>
+  <div class="nav-brand"><span>Cert</span> Study Guides</div>
   <ul class="nav-links">
     <li><a href="index.html">Dashboard</a></li>
     <li><a href="schedule.html">Schedule</a></li>
@@ -280,7 +280,7 @@
   </ul>
 </nav>
 
-<div class="container" style="max-width:760px;">
+<div class="container">
 
   <div class="hero">
     <h1>Your Study Configuration</h1>
@@ -351,6 +351,22 @@
     <div id="schedule-summary">Select at least one certification above.</div>
   </div>
 
+  <!-- CREDENTIAL CARD -->
+  <div class="settings-section">
+    <h2>Your study credential</h2>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.25rem;">
+      Your codename card — download to keep, share on LinkedIn to show you are actively studying.
+    </p>
+    <div id="settings-cred-card" style="margin-bottom:1.25rem;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px rgba(88,166,255,0.2),0 12px 32px rgba(0,0,0,0.4);">
+      <!-- rendered by JS -->
+    </div>
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <button class="btn btn-primary" id="settings-download-btn">Download card (PNG)</button>
+      <button class="btn" id="settings-copy-codename-btn">Copy codename</button>
+    </div>
+    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:0.75rem;" id="copy-confirm" style="display:none;"></p>
+  </div>
+
 </div>
 
 <div class="save-bar">
@@ -359,8 +375,8 @@
 </div>
 
 <footer>
-  CISO Certification Track &nbsp;&middot;&nbsp; Settings
-  <div class="footer-powered">Powered by <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a> &nbsp;&middot;&nbsp; <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a></div>
+  Certification Study Guides &middot; Settings
+  <div class="footer-powered">Powered by <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a> &middot; <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a></div>
 </footer>
 
 <script src="assets/js/config.js"></script>
@@ -393,7 +409,7 @@ function renderCertGrid() {
       <div class="cert-card-body">
         <div class="cert-card-name" style="color:${cert.colorHex}">${cert.name}</div>
         <div class="cert-card-full">${cert.fullName}</div>
-        <div class="cert-card-meta">${cert.issuer} &nbsp;&middot;&nbsp; ~${cert.estimateWeeks} weeks</div>
+        <div class="cert-card-meta">${cert.issuer} &middot; ~${cert.estimateWeeks} weeks</div>
       </div>
     </label>`;
   }).join('');
@@ -513,7 +529,7 @@ function renderPreview() {
     return `<div class="summary-cert-row">
       <span class="seq-badge" style="background:${cert.colorHex}22;color:${cert.colorHex};font-size:0.7rem;font-weight:700;padding:2px 7px;border-radius:4px;">${cert.name}</span>
       <span style="flex:1;">${cert.fullName}</span>
-      <span style="color:var(--text-muted);font-size:0.8rem;">${domains} section${domains !== 1 ? 's' : ''} &nbsp;&middot;&nbsp; ~${days} days</span>
+      <span style="color:var(--text-muted);font-size:0.8rem;">${domains} section${domains !== 1 ? 's' : ''} &middot; ~${days} days</span>
     </div>`;
   }).join('');
 
@@ -544,9 +560,32 @@ async function saveConfig() {
 document.getElementById('daily-hours').addEventListener('change', renderPreview);
 document.getElementById('start-date').addEventListener('change', renderPreview);
 
-/* ── START ─── */
-document.addEventListener('DOMContentLoaded', init);
-</script>
+/* ── CREDENTIAL CARD ─── */
+async function initCredCard() {
+  if (typeof renderCredCardInto === 'undefined') return;
+  const codename = await CertDB.getSetting('codename') || await CertDB.getSetting('userName') || 'YourCodename';
+  const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const site = window.location.hostname || 'continuous.engineering';
+  const container = document.getElementById('settings-cred-card');
+  if (container) renderCredCardInto(container, codename, dateStr, site);
 
+  document.getElementById('settings-download-btn').addEventListener('click', () => {
+    downloadCredCard(codename, dateStr, site);
+  });
+
+  document.getElementById('settings-copy-codename-btn').addEventListener('click', () => {
+    navigator.clipboard.writeText(codename).then(() => {
+      const el = document.getElementById('copy-confirm');
+      el.textContent = 'Codename copied: ' + codename;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 3000);
+    });
+  });
+}
+
+/* ── START ─── */
+document.addEventListener('DOMContentLoaded', () => { init(); initCredCard(); });
+</script>
+<script src="assets/js/credcard.js"></script>
 </body>
 </html>

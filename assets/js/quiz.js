@@ -106,7 +106,7 @@ class Quiz {
       scoreEl.innerHTML = `
         <div class="score-number ${passed ? 'pass' : 'fail'}">${pct}%</div>
         <p style="margin-top:0.5rem;color:var(--text-muted);">
-          ${correct} / ${this.questions.length} correct &nbsp;·&nbsp; ${timeStr}
+          ${correct} / ${this.questions.length} correct · ${timeStr}
         </p>
         <p style="font-size:0.875rem;margin-top:0.25rem;color:${passed ? 'var(--accent2)' : 'var(--accent4)'}">
           ${passed ? '✓ Passed (80%+ gate)' : '✗ Below 80% — review weak areas and retry'}
