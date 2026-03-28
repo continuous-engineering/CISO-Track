@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Open Graph / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://certs.continuous.engineering/share.html">
+<meta property="og:title" content="I'm studying for my security certifications — Cert Study Guides">
+<meta property="og:description" content="CISM · CCSK · COBIT · CISSP · AWS Security · AZ-500 · GCP Cloud Security. Free study guides powered by continuous.engineering">
+<meta property="og:image" content="https://certs.continuous.engineering/assets/img/og-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Cert Study Guides">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="I'm studying for my security certifications — Cert Study Guides">
+<meta name="twitter:description" content="CISM · CCSK · COBIT · CISSP · AWS Security · AZ-500 · GCP Cloud Security. Free study guides powered by continuous.engineering">
+<meta name="twitter:image" content="https://certs.continuous.engineering/assets/img/og-share.png">
+
+<title>Cert Study Guides — continuous.engineering</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/db.js"></script>
+<!-- NO auth guard — this page must be crawlable by LinkedIn / social scrapers -->
+<style>
+.share-hero {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+}
+.share-hero h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin-bottom: 0.75rem;
+}
+.share-hero p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.share-card-wrap {
+  max-width: 680px;
+  margin: 0 auto 2.5rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(88,166,255,0.2), 0 16px 48px rgba(0,0,0,0.5);
+}
+.share-card-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.share-cta {
+  text-align: center;
+  padding: 0 1rem 3rem;
+}
+.share-cta p {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+.cert-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.cert-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid currentColor;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>Cert</span> Study Guides</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="settings.html">Settings</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="share-hero">
+    <h1 id="share-heading">I'm actively studying for my certifications</h1>
+    <p>Free cert study guides for security professionals — CISM, CCSK, COBIT, CISSP, AWS, Azure, and GCP.</p>
+    <div class="cert-pills">
+      <span class="cert-pill" style="color:#58a6ff;">CISM</span>
+      <span class="cert-pill" style="color:#3fb950;">CCSK</span>
+      <span class="cert-pill" style="color:#bc8cff;">COBIT</span>
+      <span class="cert-pill" style="color:#f78166;">CISSP</span>
+      <span class="cert-pill" style="color:#ff9900;">AWS</span>
+      <span class="cert-pill" style="color:#0078d4;">AZ-500</span>
+      <span class="cert-pill" style="color:#4285f4;">GCP</span>
+    </div>
+  </div>
+
+  <div class="share-card-wrap" id="share-card-wrap">
+    <!-- JS renders credential card if ?c= param present, otherwise shows static OG image -->
+    <img src="assets/img/og-share.png" alt="Cert Study Guides — continuous.engineering" id="share-static-img">
+  </div>
+
+  <div class="share-cta">
+    <a href="login.html" class="btn btn-primary" style="font-size:1rem;padding:0.75rem 2rem;">
+      Start studying — it's free
+    </a>
+    <p>Powered by <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a> &middot; <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a></p>
+  </div>
+
+</div>
+
+<footer>
+  Certification Study Guides &middot; continuous.engineering
+  <div class="footer-powered">Powered by <a href="https://continuia.ai" target="_blank" rel="noopener">continuia.ai</a> &middot; <a href="https://continuous.engineering" target="_blank" rel="noopener">continuous.engineering</a></div>
+</footer>
+
+<script src="assets/js/credcard.js"></script>
+<script src="assets/js/mobile-nav.js"></script>
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const codename = params.get('c');
+  if (!codename) return;
+
+  // Personalise heading
+  const heading = document.getElementById('share-heading');
+  if (heading) heading.textContent = codename + ' is actively studying';
+
+  // Replace static image with live-rendered credential card
+  const wrap = document.getElementById('share-card-wrap');
+  const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  if (wrap && typeof renderCredCardInto === 'function') {
+    renderCredCardInto(wrap, codename, dateStr, 'certs.continuous.engineering');
+  }
+})();
+</script>
+
+</body>
+</html>

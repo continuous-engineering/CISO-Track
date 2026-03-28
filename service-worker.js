@@ -3,13 +3,14 @@
    Offline-first: cache all pages on install.
    ============================================= */
 
-const CACHE = 'ciso-cert-v1';
+const CACHE = 'cert-study-guides-v2';
 
 // All pages to pre-cache on install
 const PRECACHE = [
   '/',
   '/index.html',
   '/schedule.html',
+  '/share.html',
   '/assets/css/style.css',
   '/assets/js/app.js',
   '/assets/js/db.js',

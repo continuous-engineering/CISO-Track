@@ -1,0 +1,7 @@
+{
+  // Cloudflare Pages — static site config
+  // Deploy with: npx wrangler pages deploy .
+  "name": "cert-study-guides",
+  "pages_build_output_dir": ".",
+  "compatibility_date": "2025-01-01"
+}
