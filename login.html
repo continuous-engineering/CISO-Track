@@ -6,126 +6,171 @@
 <title>CISO Cert Track</title>
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
-  body { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1.5rem; }
-
-  .login-wrap {
-    width: 100%; max-width: 400px;
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+    background: var(--bg);
   }
 
-  .login-brand {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
+  .login-wrap { width: 100%; max-width: 420px; }
 
+  /* Brand */
+  .login-brand { text-align: center; margin-bottom: 2.5rem; }
   .login-brand .wordmark {
-    font-size: 1.75rem;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--text);
+    font-size: 1.75rem; font-weight: 800;
+    letter-spacing: -0.04em; color: var(--text);
   }
-
   .login-brand .wordmark span { color: var(--accent); }
+  .login-brand .tagline { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; }
 
-  .login-brand .tagline {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 0.35rem;
-  }
-
+  /* Card */
   .login-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2rem;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 2rem;
   }
+  .login-card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--text-muted); }
 
-  .login-card h2 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    color: var(--text-muted);
-  }
-
+  /* Fields */
   .field { margin-bottom: 1.25rem; }
-
   .field label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
+    display: block; font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--text-muted); margin-bottom: 0.45rem;
   }
-
   .field input {
-    width: 100%;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    color: var(--text);
-    font-family: var(--font-sans);
-    transition: border-color 0.15s;
-    -webkit-appearance: none;
+    width: 100%; background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.75rem 1rem; font-size: 1rem;
+    color: var(--text); font-family: var(--font-sans);
+    transition: border-color 0.15s; -webkit-appearance: none; box-sizing: border-box;
   }
-
-  .field input:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
-
+  .field input:focus { outline: none; border-color: var(--accent); }
   .field input::placeholder { color: var(--text-muted); }
+  .field .field-hint { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.35rem; }
 
-  #login-btn {
-    width: 100%;
-    padding: 0.875rem;
-    background: var(--accent);
-    color: #000;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: -0.01em;
-    transition: background 0.15s;
+  /* Passphrase display (pre-filled, read-only style) */
+  .passphrase-display {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+    padding: 0.75rem 1rem; font-size: 0.95rem; color: var(--accent);
+    font-weight: 600; letter-spacing: 0.01em; font-family: var(--font-mono, monospace);
+  }
+
+  /* Buttons */
+  .btn-primary-login {
+    width: 100%; padding: 0.875rem; background: var(--accent); color: #000;
+    border: none; border-radius: 6px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: background 0.15s; margin-top: 0.5rem;
+    font-family: var(--font-sans); letter-spacing: -0.01em;
+  }
+  .btn-primary-login:hover { background: #79b8ff; }
+
+  .btn-ghost {
+    width: 100%; padding: 0.75rem; background: none;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-size: 0.875rem; color: var(--text-muted); cursor: pointer;
+    transition: all 0.15s; margin-top: 0.75rem; font-family: var(--font-sans);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+
+  .divider {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin: 1.25rem 0; color: var(--text-muted); font-size: 0.75rem;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  #login-error {
+    display: none; font-size: 0.85rem; color: var(--accent4);
+    margin-top: 1rem; text-align: center;
+  }
+
+  /* ── CREDENTIAL CARD ─────────────────────── */
+  #card-screen { display: none; }
+
+  .cred-card {
+    background: #0d1117;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(88,166,255,0.3), 0 24px 48px rgba(0,0,0,0.6);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .cred-card-top {
+    height: 6px;
+    background: linear-gradient(90deg, #58a6ff 0%, #3fb950 50%, #bc8cff 100%);
+  }
+
+  .cred-card-body { padding: 1.75rem 2rem 1.5rem; }
+
+  .cred-issuer {
+    display: flex; align-items: center; gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .cred-issuer-mark {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: linear-gradient(135deg, #58a6ff, #bc8cff);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 900; color: #000; letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+  .cred-issuer-name {
+    font-size: 0.8rem; font-weight: 700; color: #58a6ff;
+    letter-spacing: 0.01em;
+  }
+  .cred-issuer-sub { font-size: 0.68rem; color: #8b949e; }
+
+  .cred-label {
+    font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: #8b949e; margin-bottom: 0.3rem;
+  }
+  .cred-codename {
+    font-size: 2rem; font-weight: 800; color: #e6edf3;
+    letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1.5rem;
+  }
+  .cred-codename span { color: #58a6ff; }
+
+  .cred-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    padding-top: 1rem; border-top: 1px solid #21262d;
     margin-top: 0.5rem;
   }
 
-  #login-btn:hover { background: #79b8ff; }
-
-  #login-error {
-    display: none;
-    font-size: 0.85rem;
-    color: var(--accent4);
-    margin-top: 1rem;
-    text-align: center;
+  .cred-field {}
+  .cred-field-val {
+    font-size: 0.8rem; font-weight: 600; color: #e6edf3;
+    font-family: ui-monospace, monospace;
   }
 
-  .login-footer {
-    text-align: center;
-    margin-top: 2rem;
-    font-size: 0.75rem;
-    color: var(--text-muted);
+  .cred-card-footer {
+    padding: 0.75rem 2rem; background: #161b22;
+    border-top: 1px solid #21262d;
+    display: flex; align-items: center; justify-content: space-between;
   }
-
-  .login-footer a {
-    color: var(--text-muted);
-    text-decoration: none;
+  .cred-card-footer-brand {
+    font-size: 0.68rem; color: #8b949e; letter-spacing: 0.02em;
   }
+  .cred-card-footer-brand strong { color: #58a6ff; }
+  .cred-card-footer-date { font-size: 0.65rem; color: #8b949e; }
 
-  .login-footer a:hover { color: var(--text); }
+  .cred-warning {
+    font-size: 0.75rem; color: var(--text-muted); text-align: center;
+    margin-bottom: 1.25rem; line-height: 1.5;
+  }
+  .cred-warning strong { color: var(--accent3); }
 
+  .card-actions { display: flex; gap: 0.75rem; }
+  .card-actions button { flex: 1; }
+
+  /* Footer powered */
   .powered {
-    text-align: center;
-    margin-top: 3rem;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
+    text-align: center; margin-top: 3rem; font-size: 0.7rem;
+    color: var(--text-muted); letter-spacing: 0.04em;
   }
-
-  .powered a { color: var(--text-muted); }
+  .powered a { color: var(--text-muted); text-decoration: none; }
   .powered a:hover { color: var(--accent); }
 </style>
 </head>
@@ -135,25 +180,83 @@
 
   <div class="login-brand">
     <div class="wordmark"><span>CISO</span> Cert Track</div>
-    <div class="tagline">CISM - CCSK - COBIT - CISSP - AWS - Azure - GCP</div>
+    <div class="tagline">CISM · CCSK · COBIT · CISSP · AWS · Azure · GCP</div>
   </div>
 
-  <div class="login-card">
-    <h2>Your personal study system</h2>
+  <!-- ── SIGN IN SCREEN ── -->
+  <div id="signin-screen">
+    <div class="login-card">
+      <h2>Your personal study system</h2>
 
-    <div class="field">
-      <label for="name-input">Your name</label>
-      <input type="text" id="name-input" placeholder="How should I address you?" autocomplete="name" autocapitalize="words">
+      <div class="field">
+        <label for="codename-input">Your codename</label>
+        <input type="text" id="codename-input" placeholder="e.g. CrimsonFalcon"
+          autocomplete="username" autocapitalize="words" spellcheck="false">
+      </div>
+
+      <div class="field">
+        <label>Passphrase</label>
+        <div class="passphrase-display">continuous.engineering</div>
+        <div class="field-hint">This is always the passphrase. Everyone uses the same one.</div>
+      </div>
+
+      <button class="btn-primary-login" id="login-btn">Enter</button>
+      <div id="login-error">Codename not recognised. Check your spelling or generate a new one below.</div>
+
+      <div class="divider">new here?</div>
+
+      <button class="btn-ghost" id="generate-btn">Generate my codename</button>
+    </div>
+  </div>
+
+  <!-- ── CREDENTIAL CARD SCREEN ── -->
+  <div id="card-screen">
+
+    <div class="cred-card" id="cred-card-el">
+      <div class="cred-card-top"></div>
+      <div class="cred-card-body">
+
+        <div class="cred-issuer">
+          <div class="cred-issuer-mark">CE</div>
+          <div>
+            <div class="cred-issuer-name">continuous.engineering</div>
+            <div class="cred-issuer-sub">CISO Cert Track · Study Credential</div>
+          </div>
+        </div>
+
+        <div class="cred-label">Your Codename</div>
+        <div class="cred-codename" id="card-codename">CrimsonFalcon</div>
+
+        <div class="cred-row">
+          <div class="cred-field">
+            <div class="cred-label">Passphrase</div>
+            <div class="cred-field-val">continuous.engineering</div>
+          </div>
+          <div class="cred-field">
+            <div class="cred-label">Site</div>
+            <div class="cred-field-val" id="card-site">ciso.continuous.engineering</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="cred-card-footer">
+        <div class="cred-card-footer-brand">
+          Powered by <strong>continuous.engineering</strong>
+        </div>
+        <div class="cred-card-footer-date" id="card-date"></div>
+      </div>
     </div>
 
-    <div class="field">
-      <label for="pw-input">Access password</label>
-      <input type="password" id="pw-input" placeholder="Password" autocomplete="current-password">
+    <p class="cred-warning">
+      <strong>Save this now.</strong> Screenshot or download the card below.<br>
+      There is no recovery option without your codename.
+    </p>
+
+    <div class="card-actions">
+      <button class="btn-ghost" id="download-btn">Download card</button>
+      <button class="btn-primary-login" id="enter-btn">Enter the site</button>
     </div>
 
-    <button id="login-btn">Enter</button>
-
-    <div id="login-error">Incorrect password. Try again.</div>
   </div>
 
   <div class="powered">
@@ -166,50 +269,280 @@
 
 <script src="assets/js/db.js"></script>
 <script>
-const PASSWORD = 'CISO';
+/* ── PASSPHRASE ──────────────────────────── */
+const PASSPHRASE = 'continuous.engineering';
 
-async function checkAlreadyIn() {
+/* ── CHECK EXISTING SESSION ─────────────── */
+(async () => {
   const session = await CertDB.getSetting('session');
-  if (session?.authenticated) {
-    window.location.replace('index.html');
-  }
+  if (session?.authenticated) { window.location.replace('index.html'); return; }
+
+  // If codename already saved on this device, pre-fill it
+  const saved = await CertDB.getSetting('codename');
+  if (saved) document.getElementById('codename-input').value = saved;
+})();
+
+/* ── CODENAME WORDLIST ───────────────────── */
+const ADJECTIVES = [
+  'Amber','Arctic','Azure','Binary','Blazing','Cobalt','Copper','Coral','Crimson','Crystal',
+  'Cyber','Dark','Dawn','Deep','Delta','Digital','Dual','Dusk','Eclipse','Electric',
+  'Ember','Emerald','Falcon','Feral','Fierce','Flame','Frost','Ghost','Golden','Granite',
+  'Helix','Hidden','Hyper','Ice','Indigo','Infinite','Infrared','Iron','Jade','Kinetic',
+  'Laser','Latent','Lunar','Magnetic','Midnight','Mystic','Neon','Neural','Nexus','Noble',
+  'Null','Obsidian','Ocean','Omega','Onyx','Open','Orbital','Phantom','Pilot','Plasma',
+  'Prime','Prismatic','Quantum','Radiant','Rapid','Raven','Red','Rigid','Royal','Ruby',
+  'Sapphire','Shadow','Signal','Silent','Silver','Solar','Sonic','Steel','Storm','Swift',
+  'Tactical','Thunder','Tidal','Titan','Turbo','Ultra','Vertex','Viral','Void','Volatile',
+  'Wave','Wild','Zero','Zen','Zenith','Zephyr','Binary','Cipher','Delta','Echo',
+];
+const ANIMALS = [
+  'Badger','Bear','Bison','Bobcat','Caracal','Cheetah','Cobra','Condor','Cougar','Crane',
+  'Crow','Dingo','Dragon','Eagle','Falcon','Ferret','Fox','Gecko','Griffin','Hawk',
+  'Heron','Hornet','Hyena','Ibis','Jackal','Jaguar','Kestrel','Kite','Kodiak','Lemur',
+  'Leopard','Lynx','Mamba','Mantis','Mink','Mongoose','Moose','Osprey','Otter','Owl',
+  'Panther','Parrot','Pelican','Phoenix','Piranha','Puma','Raven','Rhino','Rook','Salamander',
+  'Scorpion','Seraph','Serpent','Shark','Sphinx','Stallion','Stingray','Stoat','Storm','Swift',
+  'Talon','Tarantula','Tiger','Timber','Titan','Toad','Toucan','Viper','Vulture','Walrus',
+  'Warden','Wasp','Weasel','Wolf','Wolverine','Wombat','Wren','Yak','Zebra','Zephyr',
+  'Albatross','Barracuda','Centipede','Drifter','Eel','Finch','Goshawk','Harrier','Ibex','Jacamar',
+];
+
+function generateCodename() {
+  const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
+  const ani = ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
+  return adj + ani;
 }
 
-checkAlreadyIn();
-
+/* ── SIGN IN ─────────────────────────────── */
 document.getElementById('login-btn').addEventListener('click', doLogin);
-document.getElementById('pw-input').addEventListener('keydown', e => {
+document.getElementById('codename-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') doLogin();
-});
-document.getElementById('name-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') document.getElementById('pw-input').focus();
 });
 
 async function doLogin() {
-  const name = document.getElementById('name-input').value.trim();
-  const pw   = document.getElementById('pw-input').value;
-  const err  = document.getElementById('login-error');
+  const codename = document.getElementById('codename-input').value.trim();
+  const err = document.getElementById('login-error');
 
-  if (!name) {
-    document.getElementById('name-input').focus();
+  if (!codename) {
+    document.getElementById('codename-input').focus();
     return;
   }
 
-  if (pw !== PASSWORD) {
+  // Check saved codename matches, or accept any non-empty for new-device sign-in
+  // (KV verification will happen post-migration; for now accept any codename + implicit passphrase)
+  const saved = await CertDB.getSetting('codename');
+
+  if (saved && saved.toLowerCase() !== codename.toLowerCase()) {
     err.style.display = 'block';
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-input').focus();
     return;
   }
 
   err.style.display = 'none';
+  await signIn(codename);
+}
 
+async function signIn(codename) {
   await Promise.all([
     CertDB.setSetting('session', { authenticated: true, date: new Date().toISOString() }),
-    CertDB.setSetting('userName', name),
+    CertDB.setSetting('codename', codename),
+    CertDB.setSetting('userName', codename), // backwards compat
   ]);
-
   window.location.replace('index.html');
+}
+
+/* ── GENERATE CODENAME ───────────────────── */
+document.getElementById('generate-btn').addEventListener('click', () => {
+  const codename = generateCodename();
+  showCard(codename);
+});
+
+function showCard(codename) {
+  document.getElementById('signin-screen').style.display = 'none';
+  document.getElementById('card-screen').style.display = 'block';
+  document.getElementById('card-codename').textContent = codename;
+  document.getElementById('card-date').textContent =
+    new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  document.getElementById('card-site').textContent = window.location.hostname || 'ciso.continuous.engineering';
+
+  // Store the generated codename immediately
+  CertDB.setSetting('codename', codename);
+}
+
+/* ── ENTER SITE (after card shown) ──────── */
+document.getElementById('enter-btn').addEventListener('click', async () => {
+  const codename = document.getElementById('card-codename').textContent;
+  await signIn(codename);
+});
+
+/* ── DOWNLOAD CARD AS PNG ────────────────── */
+document.getElementById('download-btn').addEventListener('click', () => {
+  const codename = document.getElementById('card-codename').textContent;
+  const dateStr  = document.getElementById('card-date').textContent;
+  const site     = document.getElementById('card-site').textContent;
+  drawAndDownload(codename, dateStr, site);
+});
+
+function drawAndDownload(codename, dateStr, site) {
+  const W = 900, H = 480;
+  const canvas = document.createElement('canvas');
+  canvas.width = W * 2; canvas.height = H * 2; // retina
+  const ctx = canvas.getContext('2d');
+  ctx.scale(2, 2);
+
+  const C = {
+    bg:      '#0d1117',
+    bg2:     '#161b22',
+    border:  '#21262d',
+    text:    '#e6edf3',
+    muted:   '#8b949e',
+    accent:  '#58a6ff',
+    green:   '#3fb950',
+    purple:  '#bc8cff',
+    amber:   '#d29922',
+  };
+
+  // Background
+  ctx.fillStyle = C.bg;
+  roundRect(ctx, 0, 0, W, H, 16);
+  ctx.fill();
+
+  // Subtle dot grid
+  ctx.fillStyle = 'rgba(255,255,255,0.025)';
+  for (let x = 20; x < W; x += 24) {
+    for (let y = 20; y < H; y += 24) {
+      ctx.beginPath();
+      ctx.arc(x, y, 1, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // Top gradient bar
+  const grad = ctx.createLinearGradient(0, 0, W, 0);
+  grad.addColorStop(0,    C.accent);
+  grad.addColorStop(0.5,  C.green);
+  grad.addColorStop(1,    C.purple);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, 5);
+
+  // Outer border glow
+  ctx.strokeStyle = 'rgba(88,166,255,0.25)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, 0.5, 0.5, W - 1, H - 1, 16);
+  ctx.stroke();
+
+  // Issuer mark (CE badge)
+  const markGrad = ctx.createLinearGradient(40, 36, 68, 64);
+  markGrad.addColorStop(0, C.accent);
+  markGrad.addColorStop(1, C.purple);
+  ctx.fillStyle = markGrad;
+  roundRect(ctx, 40, 36, 32, 32, 8);
+  ctx.fill();
+
+  ctx.fillStyle = '#000';
+  ctx.font = 'bold 11px system-ui, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('CE', 56, 57);
+
+  // Issuer name
+  ctx.textAlign = 'left';
+  ctx.fillStyle = C.accent;
+  ctx.font = 'bold 14px system-ui, sans-serif';
+  ctx.fillText('continuous.engineering', 82, 52);
+  ctx.fillStyle = C.muted;
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.fillText('CISO Cert Track  ·  Study Credential', 82, 66);
+
+  // Separator
+  ctx.strokeStyle = C.border;
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(40, 90); ctx.lineTo(W - 40, 90); ctx.stroke();
+
+  // Codename label
+  ctx.fillStyle = C.muted;
+  ctx.font = '700 10px system-ui, sans-serif';
+  ctx.letterSpacing = '2px';
+  ctx.fillText('YOUR CODENAME', 40, 120);
+
+  // Codename value — split at first capital after first char for colour split
+  const split = codename.search(/[A-Z]/, 1);
+  const part1 = split > 0 ? codename.slice(0, split) : codename;
+  const part2 = split > 0 ? codename.slice(split) : '';
+
+  ctx.font = 'bold 58px system-ui, sans-serif';
+  ctx.fillStyle = C.text;
+  const p1w = ctx.measureText(part1).width;
+  ctx.fillText(part1, 40, 185);
+  ctx.fillStyle = C.accent;
+  ctx.fillText(part2, 40 + p1w, 185);
+
+  // Separator
+  ctx.strokeStyle = C.border;
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(40, 215); ctx.lineTo(W - 40, 215); ctx.stroke();
+
+  // Passphrase
+  ctx.fillStyle = C.muted;
+  ctx.font = '700 10px system-ui, sans-serif';
+  ctx.fillText('PASSPHRASE', 40, 245);
+  ctx.fillStyle = C.accent;
+  ctx.font = '600 18px ui-monospace, monospace';
+  ctx.fillText('continuous.engineering', 40, 270);
+
+  // Site
+  ctx.fillStyle = C.muted;
+  ctx.font = '700 10px system-ui, sans-serif';
+  ctx.fillText('SITE', 440, 245);
+  ctx.fillStyle = C.text;
+  ctx.font = '600 16px ui-monospace, monospace';
+  ctx.fillText(site, 440, 270);
+
+  // Warning
+  ctx.fillStyle = '#d29922';
+  ctx.font = '600 12px system-ui, sans-serif';
+  ctx.fillText('Save this. There is no recovery without your codename.', 40, 315);
+
+  // Footer bar
+  ctx.fillStyle = C.bg2;
+  ctx.fillRect(0, H - 52, W, 52);
+  ctx.strokeStyle = C.border;
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, H - 52); ctx.lineTo(W, H - 52); ctx.stroke();
+
+  ctx.fillStyle = C.muted;
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.fillText('Powered by continuous.engineering  ·  continuia.ai', 40, H - 22);
+
+  ctx.textAlign = 'right';
+  ctx.fillStyle = C.muted;
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.fillText('Issued ' + dateStr, W - 40, H - 22);
+
+  // Round clip
+  ctx.globalCompositeOperation = 'destination-in';
+  ctx.fillStyle = '#fff';
+  roundRect(ctx, 0, 0, W, H, 16);
+  ctx.fill();
+  ctx.globalCompositeOperation = 'source-over';
+
+  // Download
+  const link = document.createElement('a');
+  link.download = 'CISO-Track-' + codename + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
 }
 </script>
 </body>
