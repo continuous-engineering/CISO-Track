@@ -915,7 +915,25 @@ tr:hover td { background: var(--bg2); color: var(--text); }
 }
 
 .kanban-task:hover { border-color: var(--accent); color: var(--text); }
-.kanban-task.done  { opacity: 0.5; }
+
+.kanban-task.done {
+  opacity: 0.55;
+  text-decoration: line-through;
+  text-decoration-color: var(--accent2);
+}
+
+#kanban-done-list .kanban-task.done:hover {
+  opacity: 0.75;
+  text-decoration: none;
+  border-color: var(--accent3);
+}
+
+#kanban-done-list .kanban-task.done::after {
+  content: ' ↩';
+  font-size: 0.7em;
+  color: var(--text-muted);
+  margin-left: 0.3rem;
+}
 
 /* =============================================
    STAT CARDS — 2-col on mobile

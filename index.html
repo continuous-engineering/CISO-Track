@@ -44,7 +44,7 @@
 
   <div class="hero">
     <h1>CISO Certification Track</h1>
-    <p>CISM → CCSK → COBIT → CISSP &nbsp;·&nbsp; 2 hrs/day &nbsp;·&nbsp; ~22 weeks &nbsp;·&nbsp; Started March 28, 2026</p>
+    <p id="hero-subtitle">Loading your plan...</p>
   </div>
 
   <!-- STATS -->
@@ -68,15 +68,15 @@
   </div>
 
   <!-- TODAY'S FOCUS -->
-  <div class="card" style="margin-bottom:2rem;border-color:var(--accent);">
+  <div id="todays-focus" class="card" style="margin-bottom:2rem;border-color:var(--accent);">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;">
       <div>
         <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.5rem;">Today's Focus</div>
-        <h2 style="font-size:1.25rem;margin-bottom:0.4rem;">Day 1 — Orientation &amp; CISM Domain 1 Intro</h2>
-        <p style="font-size:0.875rem;">1 hr &nbsp;·&nbsp; Saturday, March 28, 2026 &nbsp;·&nbsp; <span class="badge badge-cism">CISM</span></p>
+        <h2 style="font-size:1.25rem;margin-bottom:0.4rem;" id="focus-title">Loading...</h2>
+        <p style="font-size:0.875rem;" id="focus-meta"></p>
       </div>
       <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-        <a href="cism/index.html" class="btn btn-primary">Start Study</a>
+        <a href="schedule.html" class="btn btn-primary" id="focus-link">View Schedule</a>
         <a href="schedule.html" class="btn">Full Schedule</a>
       </div>
     </div>
@@ -229,21 +229,121 @@
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/celebrate.js"></script>
+<script src="assets/js/lock.js"></script>
+<script src="assets/js/mobile-nav.js"></script>
 <script>
-// Move done kanban tasks to Done column
-document.addEventListener('DOMContentLoaded', () => {
+/* ── DASHBOARD INIT ────────────────────────── */
+document.addEventListener('DOMContentLoaded', async () => {
+  const [cfg, summaries] = await Promise.all([
+    CertConfig.load(),
+    CertDB.getAllSummaries(),
+  ]);
+
+  /* ── HERO SUBTITLE ── */
+  const names = (cfg.certOrder || cfg.selectedCerts)
+    .filter(id => cfg.selectedCerts.includes(id))
+    .map(id => CERT_CATALOG[id]?.name || id);
+  const totalWeeks = (cfg.certOrder || cfg.selectedCerts)
+    .filter(id => cfg.selectedCerts.includes(id))
+    .reduce((a, id) => a + (CERT_CATALOG[id]?.estimateWeeks || 0), 0);
+  const hrs = (cfg.dailyMinutes || 120) / 60;
+  const startFmt = new Date(cfg.startDate || '2026-03-28')
+    .toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  document.getElementById('hero-subtitle').textContent =
+    names.join(' → ') + ' · ' + hrs + ' hrs/day · ~' + totalWeeks + ' weeks · Started ' + startFmt;
+
+  /* ── TODAY'S FOCUS ── */
+  const schedule = CertConfig.generateSchedule(cfg);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayEntry = schedule.find(d => {
+    const dd = new Date(d.date); dd.setHours(0,0,0,0);
+    return dd.getTime() === today.getTime();
+  }) || schedule.find(d => new Date(d.date) >= today) || schedule[0];
+
+  if (todayEntry) {
+    const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const d = new Date(todayEntry.date);
+    const dateStr = DAYS[d.getDay()] + ' ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    const primaryItem = todayEntry.items[0];
+    const cert = primaryItem?.cert;
+    const items = todayEntry.items.map(it => it.domain.shortName || it.domain.name).join(' + ');
+
+    document.getElementById('focus-title').textContent = 'Day ' + todayEntry.day + ' — ' + items;
+    document.getElementById('focus-meta').innerHTML =
+      Math.round(todayEntry.items.reduce((a,b)=>a+b.mins,0)/60*10)/10 + ' hrs &nbsp;&middot;&nbsp; ' + dateStr +
+      (cert ? ' &nbsp;&middot;&nbsp; <span class="badge badge-' + cert.id + '">' + cert.name + '</span>' : '');
+    if (primaryItem?.domain?.path) {
+      document.getElementById('focus-link').href = primaryItem.domain.path;
+      document.getElementById('focus-link').textContent = 'Start Today';
+    }
+    if (cert) {
+      document.getElementById('todays-focus').style.borderColor = cert.colorHex || 'var(--accent)';
+    }
+  }
+
+  /* ── PROGRESS BARS ── */
+  const readSet = new Set(summaries.filter(s => s.fullyRead).map(s => s.pageId));
+  document.querySelectorAll('[data-progress-bar]').forEach(el => {
+    const certId = el.dataset.progressBar;
+    const cert = CERT_CATALOG[certId];
+    if (!cert) return;
+    const total = cert.domains.length;
+    const done = cert.domains.filter(d => readSet.has('/' + d.path) || readSet.has(d.path)).length;
+    const pct = total > 0 ? Math.round(done / total * 100) : 0;
+    const fill = el.querySelector('.progress-fill');
+    const label = el.querySelector('.progress-label');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+  });
+
+  /* ── KANBAN ── */
+  const doneTasks = await CertDB.getKanbanDone();
   const doneList = document.getElementById('kanban-done-list');
+
   document.querySelectorAll('.kanban-task').forEach(el => {
-    if (isDone(el.dataset.task) && doneList) {
+    const taskId = el.dataset.task;
+    if (doneTasks.has(taskId)) {
       el.classList.add('done');
-      doneList.appendChild(el.cloneNode(true));
+      if (doneList) {
+        const clone = el.cloneNode(true);
+        clone.onclick = async () => {
+          await CertDB.unmarkKanbanDone(taskId);
+          clone.remove();
+          el.classList.remove('done');
+        };
+        doneList.appendChild(clone);
+      }
+    }
+
+    el.addEventListener('click', async () => {
+      if (el.classList.contains('done')) return;
+      await CertDB.markKanbanDone(taskId);
+      el.classList.add('done');
+      if (doneList) {
+        const clone = el.cloneNode(true);
+        clone.title = 'Click to undo';
+        clone.onclick = async () => {
+          await CertDB.unmarkKanbanDone(taskId);
+          clone.remove();
+          el.classList.remove('done');
+        };
+        doneList.appendChild(clone);
+      }
+    });
+  });
+
+  /* ── CERT CARDS — show only selected ── */
+  document.querySelectorAll('[data-progress-bar]').forEach(el => {
+    const certId = el.dataset.progressBar;
+    const card = el.closest('.card');
+    if (!card) return;
+    if (!cfg.selectedCerts.includes(certId)) {
+      card.style.display = 'none';
     }
   });
 });
 </script>
-<script src="assets/js/celebrate.js"></script>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/lock.js"></script>
-<script src="assets/js/mobile-nav.js"></script>
 </body>
 </html>

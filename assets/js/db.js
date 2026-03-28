@@ -168,6 +168,22 @@ const CertDB = {
   setSetting(key, value) { return txPut('settings', { key, value }); },
   getSetting(key)        { return txGet('settings', key).then(r => r?.value ?? null); },
 
+  /* KANBAN TASKS */
+  async getKanbanDone() {
+    const val = await txGet('settings', 'kanbanDone');
+    return new Set(val?.value || []);
+  },
+  async markKanbanDone(taskId) {
+    const done = await this.getKanbanDone();
+    done.add(taskId);
+    return txPut('settings', { key: 'kanbanDone', value: Array.from(done) });
+  },
+  async unmarkKanbanDone(taskId) {
+    const done = await this.getKanbanDone();
+    done.delete(taskId);
+    return txPut('settings', { key: 'kanbanDone', value: Array.from(done) });
+  },
+
   /* DASHBOARD STATS */
   async getStats() {
     const [summaries, scores, badges] = await Promise.all([
@@ -180,8 +196,10 @@ const CertDB = {
     const avgScore = scores.length
       ? Math.round(scores.reduce((a, b) => a + b.best, 0) / scores.length)
       : null;
+    const cfgVal = await txGet('settings', 'userConfig');
+    const startDate = cfgVal?.value?.startDate || '2026-03-28';
     const daysSince = Math.max(1, Math.ceil(
-      (Date.now() - new Date('2026-03-28').getTime()) / 86400000
+      (Date.now() - new Date(startDate).getTime()) / 86400000
     ));
     return {
       pagesRead, totalSeconds,
