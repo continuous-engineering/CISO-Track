@@ -610,6 +610,9 @@ tr:hover td { background: var(--bg2); color: var(--text); }
   transform: rotateY(180deg);
   background: var(--bg3);
   border-color: var(--accent);
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding-top: 1rem;
 }
 
 .flashcard-label {
