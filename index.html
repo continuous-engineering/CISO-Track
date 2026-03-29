@@ -10,7 +10,7 @@
 (async function() {
   if (typeof CertDB === 'undefined') return;
   const s = await CertDB.getSetting('session');
-  if (!s?.authenticated) { window.location.replace('login.html'); }
+  if (!s?.authenticated) { window.location.replace('login'); }
 })();
 </script>
 </head>
@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="progress-bar"><div class="progress-fill ${certId}" style="width:${pct}%"></div></div>
           </div>
           <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
-            <a href="${cert.indexPath || certId + '/index.html'}" class="btn btn-sm">Overview</a>
+            <a href="${cert.indexPath || certId + "/"}" class="btn btn-sm">Overview</a>
             ${quicklinks}
           </div>
         </div>`;

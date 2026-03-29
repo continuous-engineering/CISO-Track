@@ -9,11 +9,11 @@
 (async function() {
   if (typeof CertDB === 'undefined') return;
   const s = await CertDB.getSetting('session');
-  if (!s?.authenticated) { window.location.replace('../login.html'); }
+  if (!s?.authenticated) { window.location.replace('../login'); }
 })();
 </script>
 </head>
-<body data-expected-mins="35" data-topic-id="/shared/risk-management.html">
+<body data-expected-mins="35" data-topic-id="/shared/risk-management">
 
 <nav>
   <div class="nav-brand"><span>Cert</span> Study Guides</div>

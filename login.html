@@ -275,7 +275,7 @@ const PASSPHRASE = 'continuous.engineering';
 /* ── CHECK EXISTING SESSION ─────────────── */
 (async () => {
   const session = await CertDB.getSetting('session');
-  if (session?.authenticated) { window.location.replace('index.html'); return; }
+  if (session?.authenticated) { window.location.replace('index'); return; }
 
   // If codename already saved on this device, pre-fill it
   const saved = await CertDB.getSetting('codename');
@@ -340,7 +340,7 @@ async function signIn(codename) {
     CertDB.setSetting('codename', codename),
     CertDB.setSetting('userName', codename), // backwards compat
   ]);
-  window.location.replace('index.html');
+  window.location.replace('index');
 }
 
 /* ── GENERATE CODENAME ───────────────────── */

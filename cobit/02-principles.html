@@ -9,11 +9,11 @@
 (async function() {
   if (typeof CertDB === 'undefined') return;
   const s = await CertDB.getSetting('session');
-  if (!s?.authenticated) { window.location.replace('../login.html'); }
+  if (!s?.authenticated) { window.location.replace('../login'); }
 })();
 </script>
 </head>
-<body data-topic-id="/cobit/02-principles.html" data-expected-mins="20">
+<body data-topic-id="/cobit/02-principles" data-expected-mins="20">
 
 <nav>
   <div class="nav-brand"><span>Cert</span> Study Guides</div>

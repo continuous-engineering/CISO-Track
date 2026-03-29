@@ -10,7 +10,7 @@
 (async function() {
   if (typeof CertDB === 'undefined') return;
   const s = await CertDB.getSetting('session');
-  if (!s?.authenticated) { window.location.replace('../login.html'); }
+  if (!s?.authenticated) { window.location.replace('../login'); }
 })();
 </script>
 </head>

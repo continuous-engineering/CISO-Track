@@ -10,7 +10,7 @@
 (async function() {
   if (typeof CertDB === 'undefined') return;
   const s = await CertDB.getSetting('session');
-  if (!s?.authenticated) { window.location.replace('login.html'); }
+  if (!s?.authenticated) { window.location.replace('login'); }
 })();
 </script>
 <style>
@@ -558,7 +558,7 @@ async function saveConfig() {
   setTimeout(() => msg.classList.remove('show'), 2500);
 
   // Navigate to schedule after short delay
-  setTimeout(() => { window.location.href = 'schedule.html'; }, 800);
+  setTimeout(() => { window.location.href = 'schedule'; }, 800);
 }
 
 /* ── OPTIONS CHANGE ─── */
@@ -587,7 +587,7 @@ async function initCredCard() {
     });
   });
 
-  const shareUrl = 'https://certs.continuous.engineering/share.html?c=' + encodeURIComponent(codename);
+  const shareUrl = 'https://certs.continuous.engineering/share?c=' + encodeURIComponent(codename);
   const liBtn = document.getElementById('settings-linkedin-btn');
   liBtn.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(shareUrl);
 }
