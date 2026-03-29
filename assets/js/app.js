@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!footer) return;
   const line = document.createElement('div');
   line.style.cssText = 'font-size:0.7rem;color:var(--text-muted);margin-top:0.6rem;line-height:1.5;opacity:0.7';
-  line.innerHTML = 'AI-generated from public domain knowledge &middot; Not affiliated with ISACA, (ISC)&sup2;, CSA, AWS, Microsoft, or Google &middot; For exam prep only &mdash; verify against official materials &middot; <a href="/index.html#site-disclaimer" style="color:inherit;text-decoration:underline">full disclaimer</a>';
+  line.innerHTML = 'AI-generated from publicly available information &middot; Not affiliated with any certification body or vendor &middot; For exam prep only &mdash; verify against official materials &middot; <a href="/index.html#site-disclaimer" style="color:inherit;text-decoration:underline">full disclaimer</a>';
   footer.appendChild(line);
 });
 
