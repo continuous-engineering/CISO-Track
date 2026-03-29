@@ -54,6 +54,10 @@ export async function onRequest(context) {
     return badRequest(`Invalid store. Valid stores: ${[...VALID_STORES].join(', ')}`);
   }
 
+  if (!env.DATA_BUCKET) {
+    return corsResponse(JSON.stringify({ error: 'DATA_BUCKET binding not configured' }), 503);
+  }
+
   const r2Key = `data/${store}.json`;
 
   if (request.method === 'GET') {
