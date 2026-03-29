@@ -1,10 +1,15 @@
 {
   // Cloudflare Pages — static site config
   // Deploy with: npx wrangler pages deploy .
-  // R2 binding (DATA_BUCKET → cert-study-data) is configured in the CF Pages
-  // dashboard: Settings → Functions → R2 bucket bindings. Do not add r2_buckets
-  // here — Pages does not support that key and it will break deployment.
+  // Bindings are managed here (CF Pages detected wrangler.jsonc and locks
+  // out the dashboard binding UI when this file is present).
   "name": "cert-study-guides",
   "pages_build_output_dir": ".",
-  "compatibility_date": "2025-01-01"
+  "compatibility_date": "2025-01-01",
+  "r2_buckets": [
+    {
+      "binding": "DATA_BUCKET",
+      "bucket_name": "cert-study-data"
+    }
+  ]
 }
