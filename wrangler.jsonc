@@ -3,5 +3,11 @@
   // Deploy with: npx wrangler pages deploy .
   "name": "cert-study-guides",
   "pages_build_output_dir": ".",
-  "compatibility_date": "2025-01-01"
+  "compatibility_date": "2025-01-01",
+  "r2_buckets": [
+    {
+      "binding": "DATA_BUCKET",
+      "bucket_name": "cert-study-data"
+    }
+  ]
 }

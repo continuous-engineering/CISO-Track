@@ -1,21 +1,37 @@
 /* =============================================
    SERVICE WORKER — Cert Study Guides
-   Cache-first. Only pre-cache files that exist.
-   All other pages are cached lazily on first visit.
+   Cache-first. Normalizes CF Pretty URL paths
+   (strips .html so cache keys match redirected URLs).
+   API calls (/api/*) are never cached.
    ============================================= */
 
-const CACHE = 'cert-study-guides-v4';
+const CACHE = 'cert-study-guides-v5';
 
-// ONLY files that actually exist right now.
-// Pages not yet authored are cached lazily on first visit.
+/**
+ * Normalize a URL to its Cloudflare Pretty URL form.
+ * CF redirects /foo.html → /foo, so we strip .html from pathnames
+ * to ensure cache keys match the final URL after redirect.
+ * .js, .css, .json, and root paths are returned as-is.
+ */
+function cacheKey(url) {
+  const u = new URL(url);
+  u.search = '';
+  u.hash = '';
+  if (u.pathname.endsWith('.html')) {
+    u.pathname = u.pathname.slice(0, -5);
+  }
+  return u.toString();
+}
+
+// Extensionless paths for HTML pages (matches CF Pretty URL redirect targets).
+// .js, .css, .json keep their extensions — CF does not redirect those.
 const PRECACHE = [
   '/',
-  '/index.html',
-  '/login.html',
-  '/schedule.html',
-  '/settings.html',
-  '/share.html',
-  '/exam-dates.html',
+  '/login',
+  '/schedule',
+  '/settings',
+  '/share',
+  '/exam-dates',
   '/assets/css/style.css',
   '/assets/js/app.js',
   '/assets/js/db.js',
@@ -29,43 +45,43 @@ const PRECACHE = [
   '/manifest.json',
 
   // CISM
-  '/cism/index.html',
-  '/cism/domain1/index.html',
-  '/cism/domain1/flashcards.html',
-  '/cism/domain1/quiz.html',
-  '/cism/domain2/index.html',
-  '/cism/domain2/quiz.html',
-  '/cism/domain3/index.html',
-  '/cism/domain3/flashcards.html',
-  '/cism/domain3/quiz.html',
-  '/cism/domain4/index.html',
-  '/cism/domain4/flashcards.html',
-  '/cism/domain4/quiz.html',
+  '/cism',
+  '/cism/domain1',
+  '/cism/domain1/flashcards',
+  '/cism/domain1/quiz',
+  '/cism/domain2',
+  '/cism/domain2/quiz',
+  '/cism/domain3',
+  '/cism/domain3/flashcards',
+  '/cism/domain3/quiz',
+  '/cism/domain4',
+  '/cism/domain4/flashcards',
+  '/cism/domain4/quiz',
 
-  // Shared concepts (only those that exist)
-  '/shared/risk-management.html',
-  '/shared/governance-frameworks.html',
-  '/shared/incident-response.html',
-  '/shared/bcp-dr.html',
+  // Shared concepts
+  '/shared/risk-management',
+  '/shared/governance-frameworks',
+  '/shared/incident-response',
+  '/shared/bcp-dr',
 
   // CCSK
-  '/ccsk/index.html',
-  '/ccsk/01-cloud-concepts.html',
-  '/ccsk/05-iam.html',
-  '/ccsk/09-data-security.html',
+  '/ccsk',
+  '/ccsk/01-cloud-concepts',
+  '/ccsk/05-iam',
+  '/ccsk/09-data-security',
 
   // COBIT
-  '/cobit/index.html',
-  '/cobit/01-framework-intro.html',
-  '/cobit/02-principles.html',
+  '/cobit',
+  '/cobit/01-framework-intro',
+  '/cobit/02-principles',
 
   // CISSP
-  '/cissp/index.html',
+  '/cissp',
 
   // Cloud certs
-  '/aws-security/index.html',
-  '/azure-security/index.html',
-  '/gcp-security/index.html',
+  '/aws-security',
+  '/azure-security',
+  '/gcp-security',
 ];
 
 self.addEventListener('install', e => {
@@ -84,21 +100,27 @@ self.addEventListener('activate', e => {
   );
 });
 
-// Cache-first: serve from cache, fall back to network, lazily cache anything new.
-// Use e.request.url (string) for the network fetch so redirect:follow is the default —
-// Cloudflare Pages redirects /foo.html → /foo (pretty URLs) and navigation requests
-// have redirect:'manual' which causes opaqueredirect errors if we pass the Request object.
+// Cache-first: serve from cache using normalized key, fall back to network,
+// lazily cache new resources. API calls are passed through without caching.
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+
+  // Never intercept API calls — let them hit the network directly.
+  const url = new URL(e.request.url);
+  if (url.pathname.startsWith('/api/')) return;
+
+  const key = cacheKey(e.request.url);
+
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      if (cached) return cached;
-      return fetch(e.request.url).then(resp => {
-        if (!resp || resp.status !== 200 || resp.type !== 'basic') return resp;
-        const clone = resp.clone();
-        caches.open(CACHE).then(cache => cache.put(e.request, clone));
-        return resp;
-      });
-    })
+    caches.open(CACHE).then(cache =>
+      cache.match(key).then(cached => {
+        if (cached) return cached;
+        return fetch(e.request.url).then(resp => {
+          if (!resp || resp.status !== 200 || resp.type !== 'basic') return resp;
+          cache.put(key, resp.clone());
+          return resp;
+        });
+      })
+    )
   );
 });
