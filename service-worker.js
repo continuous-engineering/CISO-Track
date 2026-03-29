@@ -4,7 +4,7 @@
    All other pages are cached lazily on first visit.
    ============================================= */
 
-const CACHE = 'cert-study-guides-v3';
+const CACHE = 'cert-study-guides-v4';
 
 // ONLY files that actually exist right now.
 // Pages not yet authored are cached lazily on first visit.
@@ -84,13 +84,16 @@ self.addEventListener('activate', e => {
   );
 });
 
-// Cache-first: serve from cache, fall back to network, lazily cache anything new
+// Cache-first: serve from cache, fall back to network, lazily cache anything new.
+// Use e.request.url (string) for the network fetch so redirect:follow is the default —
+// Cloudflare Pages redirects /foo.html → /foo (pretty URLs) and navigation requests
+// have redirect:'manual' which causes opaqueredirect errors if we pass the Request object.
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
     caches.match(e.request).then(cached => {
       if (cached) return cached;
-      return fetch(e.request).then(resp => {
+      return fetch(e.request.url).then(resp => {
         if (!resp || resp.status !== 200 || resp.type !== 'basic') return resp;
         const clone = resp.clone();
         caches.open(CACHE).then(cache => cache.put(e.request, clone));
