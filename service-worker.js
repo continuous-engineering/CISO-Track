@@ -5,7 +5,7 @@
    API calls (/api/*) are never cached.
    ============================================= */
 
-const CACHE = 'cert-study-guides-v6';
+const CACHE = 'cert-study-guides-v7';
 
 /**
  * Normalize a URL to its Cloudflare Pretty URL form.
@@ -116,6 +116,17 @@ self.addEventListener('fetch', e => {
       cache.match(key).then(cached => {
         if (cached) return cached;
         return fetch(e.request.url).then(resp => {
+          // If CF redirected (e.g. /index → /), re-fetch the final URL.
+          // Returning a redirected response to a navigate request fails with
+          // "redirect mode is not follow".
+          if (resp.redirected) {
+            return fetch(resp.url).then(final => {
+              if (final.status === 200 && final.type === 'basic') {
+                cache.put(cacheKey(final.url), final.clone());
+              }
+              return final;
+            });
+          }
           if (!resp || resp.status !== 200 || resp.type !== 'basic') return resp;
           cache.put(key, resp.clone());
           return resp;
