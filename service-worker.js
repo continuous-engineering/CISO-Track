@@ -5,7 +5,7 @@
    API calls (/api/*) are never cached.
    ============================================= */
 
-const CACHE = 'cert-study-guides-v5';
+const CACHE = 'cert-study-guides-v6';
 
 /**
  * Normalize a URL to its Cloudflare Pretty URL form.

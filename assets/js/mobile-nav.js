@@ -12,19 +12,19 @@
   const MOBILE_BREAKPOINT = 768;
 
   const CLOUD_LINKS = [
-    { label: 'CCSK v5',      href: '/ccsk/index.html',         badge: 'ccsk' },
-    { label: 'AWS Security', href: '/aws-security/index.html', badge: 'aws' },
-    { label: 'AZ-500',       href: '/azure-security/index.html', badge: 'azure' },
-    { label: 'GCP Security', href: '/gcp-security/index.html', badge: 'gcp' },
-    { label: 'COBIT 2019',   href: '/cobit/index.html',        badge: 'cobit' },
+    { label: 'CCSK v5',      href: '/ccsk/',         badge: 'ccsk' },
+    { label: 'AWS Security', href: '/aws-security/', badge: 'aws' },
+    { label: 'AZ-500',       href: '/azure-security/', badge: 'azure' },
+    { label: 'GCP Security', href: '/gcp-security/', badge: 'gcp' },
+    { label: 'COBIT 2019',   href: '/cobit/',        badge: 'cobit' },
   ];
 
   const MORE_LINKS = [
-    { label: 'CISSP',            href: '/cissp/index.html',     badge: 'cissp' },
-    { label: 'Stats & Progress', href: '/index.html#stats',     badge: 'stats' },
-    { label: 'Shared Concepts',  href: '/shared/index.html',    badge: 'shared' },
-    { label: 'Exam Dates',       href: '/exam-dates.html',      badge: 'dates' },
-    { label: 'Study Schedule',   href: '/schedule.html',        badge: 'schedule' },
+    { label: 'CISSP',            href: '/cissp/',     badge: 'cissp' },
+    { label: 'Stats & Progress', href: '/#stats',     badge: 'stats' },
+    { label: 'Shared Concepts',  href: '/shared/',    badge: 'shared' },
+    { label: 'Exam Dates',       href: '/exam-dates',      badge: 'dates' },
+    { label: 'Study Schedule',   href: '/schedule',        badge: 'schedule' },
   ];
 
   /* ── SVG ICONS ──────────────────────────────── */
@@ -106,10 +106,10 @@
     const path = getPathname();
     const target = href.toLowerCase().replace(/\/+$/, '');
     // Exact match or "current path starts with target directory"
-    if (target === '' || target === '/index.html' || target === '/') {
-      return path === '/' || path === '/index.html' || path.endsWith('/index.html') && !path.includes('/cism') && !path.includes('/ccsk') && !path.includes('/cobit') && !path.includes('/cissp') && !path.includes('/aws') && !path.includes('/azure') && !path.includes('/gcp');
+    if (target === '' || target === '/' || target === '/') {
+      return path === '/' || path === '/' || path.endsWith('/') && !path.includes('/cism') && !path.includes('/ccsk') && !path.includes('/cobit') && !path.includes('/cissp') && !path.includes('/aws') && !path.includes('/azure') && !path.includes('/gcp');
     }
-    return path === target || path.startsWith(target.replace('/index.html', '/'));
+    return path === target || path.startsWith(target.replace('/', '/'));
   }
 
   function isCismPage() {
@@ -145,23 +145,23 @@
     const cismActive = isCismPage();
     const path = getPathname();
 
-    const homeActive     = path === '/' || path === '/index.html' || (path.endsWith('/index.html') && !path.match(/\/(cism|ccsk|cobit|cissp|aws|azure|gcp)\//));
+    const homeActive     = path === '/' || path === '/' || (path.endsWith('/') && !path.match(/\/(cism|ccsk|cobit|cissp|aws|azure|gcp)\//));
     const scheduleActive = path.includes('/schedule');
 
     return `
       <nav class="mobile-bottom-nav" id="mbn-root" role="navigation" aria-label="Main navigation">
 
-        <a href="/index.html" class="mbn-item${homeActive ? ' active' : ''}" aria-label="Home">
+        <a href="/" class="mbn-item${homeActive ? ' active' : ''}" aria-label="Home">
           ${ICONS.home}
           <span>Home</span>
         </a>
 
-        <a href="/schedule.html" class="mbn-item${scheduleActive ? ' active' : ''}" aria-label="Schedule">
+        <a href="/schedule" class="mbn-item${scheduleActive ? ' active' : ''}" aria-label="Schedule">
           ${ICONS.schedule}
           <span>Schedule</span>
         </a>
 
-        <a href="/cism/index.html" class="mbn-item mbn-cism${cismActive ? ' active' : ''}" aria-label="CISM">
+        <a href="/cism/" class="mbn-item mbn-cism${cismActive ? ' active' : ''}" aria-label="CISM">
           ${ICONS.cism}
           <span>CISM</span>
         </a>

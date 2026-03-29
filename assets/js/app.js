@@ -194,7 +194,7 @@ async function loadResumeWidget() {
     el.innerHTML = `<div class="card" style="border-color:var(--accent);">
       <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.5rem;">Day 1 — Start Here</div>
       <h2 style="font-size:1.1rem;margin-bottom:0.75rem;">CISM Orientation</h2>
-      <a href="cism/index.html" class="btn btn-primary">Begin →</a>
+      <a href="cism/" class="btn btn-primary">Begin →</a>
     </div>`;
     return;
   }
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!footer) return;
   const line = document.createElement('div');
   line.style.cssText = 'font-size:0.7rem;color:var(--text-muted);margin-top:0.6rem;line-height:1.5;opacity:0.7';
-  line.innerHTML = 'AI-generated from publicly available information &middot; Not affiliated with any certification body or vendor &middot; For exam prep only &mdash; verify against official materials &middot; <a href="/index.html#site-disclaimer" style="color:inherit;text-decoration:underline">full disclaimer</a>';
+  line.innerHTML = 'AI-generated from publicly available information &middot; Not affiliated with any certification body or vendor &middot; For exam prep only &mdash; verify against official materials &middot; <a href="/#site-disclaimer" style="color:inherit;text-decoration:underline">full disclaimer</a>';
   footer.appendChild(line);
 });
 
