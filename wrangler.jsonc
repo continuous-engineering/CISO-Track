@@ -3,7 +3,7 @@
   // Deploy with: npx wrangler pages deploy .
   // Bindings are managed here (CF Pages detected wrangler.jsonc and locks
   // out the dashboard binding UI when this file is present).
-  "name": "cert-study-guides",
+  "name": "certification-track",
   "pages_build_output_dir": ".",
   "compatibility_date": "2025-01-01",
   "r2_buckets": [
