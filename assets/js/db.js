@@ -19,7 +19,7 @@ async function remoteGet(store) {
 }
 
 function remotePut(store, obj) {
-  fetch(`${API_BASE}/${store}`, {
+  return fetch(`${API_BASE}/${store}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${API_KEY}` },
     body: JSON.stringify(obj)
@@ -198,7 +198,7 @@ const CertDB = {
   async setSetting(key, value) {
     await ensureLoaded('settings');
     _mem.settings[key] = value;
-    persist('settings');
+    await remotePut('settings', _mem.settings);
   },
   async getSetting(key) {
     await ensureLoaded('settings');
