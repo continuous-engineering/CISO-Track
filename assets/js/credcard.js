@@ -17,7 +17,7 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
-function buildCredCanvas(codename, dateStr, site) {
+async function buildCredCanvas(codename, dateStr, site) {
   const W = 900, H = 480;
   const canvas = document.createElement('canvas');
   canvas.width = W * 2; canvas.height = H * 2;
@@ -52,12 +52,23 @@ function buildCredCanvas(codename, dateStr, site) {
   ctx.strokeStyle = 'rgba(88,166,255,0.25)'; ctx.lineWidth = 1;
   roundRect(ctx, 0.5, 0.5, W - 1, H - 1, 16); ctx.stroke();
 
-  // CE badge
-  const markGrad = ctx.createLinearGradient(40, 36, 68, 64);
-  markGrad.addColorStop(0, C.accent); markGrad.addColorStop(1, C.purple);
-  ctx.fillStyle = markGrad; roundRect(ctx, 40, 36, 32, 32, 8); ctx.fill();
-  ctx.fillStyle = '#000'; ctx.font = 'bold 11px system-ui,sans-serif';
-  ctx.textAlign = 'center'; ctx.fillText('CE', 56, 57);
+  // CE logo (continuous.engineering orbital SVG, rendered inline)
+  const _ceSize = 32, _ceX = 40, _ceY = 36;
+  const _ceSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+    <circle cx="20" cy="20" r="20" fill="#0f0f12"/>
+    <circle cx="20" cy="20" r="17" stroke="#6366f1" stroke-width="1" opacity="0.35"/>
+    <circle cx="20" cy="20" r="11" stroke="#6366f1" stroke-width="1" opacity="0.55"/>
+    <circle cx="20" cy="20" r="5" stroke="#6366f1" stroke-width="1" opacity="0.75"/>
+    <circle cx="20" cy="20" r="3.2" fill="#818cf8"/>
+    <circle cx="10" cy="13" r="2.5" fill="#f59e0b"/>
+    <circle cx="34" cy="15" r="2" fill="#4ade80"/>
+  </svg>`;
+  const _ceBlob = new Blob([_ceSvg], {type: 'image/svg+xml'});
+  const _ceUrl = URL.createObjectURL(_ceBlob);
+  const _ceImg = new Image(_ceSize, _ceSize);
+  await new Promise(resolve => { _ceImg.onload = resolve; _ceImg.src = _ceUrl; });
+  ctx.drawImage(_ceImg, _ceX, _ceY, _ceSize, _ceSize);
+  URL.revokeObjectURL(_ceUrl);
 
   // Issuer
   ctx.textAlign = 'left';
@@ -122,8 +133,8 @@ function buildCredCanvas(codename, dateStr, site) {
   return canvas;
 }
 
-function downloadCredCard(codename, dateStr, site) {
-  const canvas = buildCredCanvas(codename, dateStr, site);
+async function downloadCredCard(codename, dateStr, site) {
+  const canvas = await buildCredCanvas(codename, dateStr, site);
   const link = document.createElement('a');
   link.download = 'CertStudyGuides-' + codename + '.png';
   link.href = canvas.toDataURL('image/png');
@@ -131,8 +142,8 @@ function downloadCredCard(codename, dateStr, site) {
 }
 
 /* Render card as an <img> into a container element */
-function renderCredCardInto(container, codename, dateStr, site) {
-  const canvas = buildCredCanvas(codename, dateStr, site);
+async function renderCredCardInto(container, codename, dateStr, site) {
+  const canvas = await buildCredCanvas(codename, dateStr, site);
   const img = document.createElement('img');
   img.src = canvas.toDataURL('image/png');
   img.style.cssText = 'width:100%;height:auto;display:block;border-radius:12px;';
